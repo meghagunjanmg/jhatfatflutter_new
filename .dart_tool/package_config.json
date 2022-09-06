@@ -1,0 +1,854 @@
+{
+  "configVersion": 2,
+  "packages": [
+    {
+      "name": "archive",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/archive-3.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "args",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/args-2.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "async",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.9.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "boolean_selector",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/boolean_selector-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "carousel_slider",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/carousel_slider-4.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "characters",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/characters-1.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "checked_yaml",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/checked_yaml-2.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "circular_bottom_navigation",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/circular_bottom_navigation-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "cli_util",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/cli_util-0.3.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "clock",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/clock-1.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "collection",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.16.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "crypto",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/crypto-3.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "csslib",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/csslib-0.17.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "cupertino_icons",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "dbus",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/dbus-0.7.8",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
+      "name": "eventify",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/eventify-1.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "fake_async",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/fake_async-1.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "ffi",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/ffi-2.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "file",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/file-6.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "firebase_auth",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.7.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "firebase_auth_platform_interface",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth_platform_interface-6.6.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "firebase_auth_web",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth_web-4.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "firebase_core",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-1.21.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "firebase_core_platform_interface",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_platform_interface-4.5.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "firebase_core_web",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-1.7.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "firebase_messaging",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_messaging-13.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "firebase_messaging_platform_interface",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_messaging_platform_interface-4.1.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "firebase_messaging_web",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_messaging_web-3.1.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "fl_country_code_picker",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/fl_country_code_picker-0.0.2+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "flutter",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/packages/flutter",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "flutter_datetime_picker",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_datetime_picker-1.5.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_google_places_hoc081098",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_google_places_hoc081098-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "flutter_html",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_html-3.0.0-alpha.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_launcher_icons",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_launcher_icons-0.10.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_lints",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_lints-2.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "flutter_local_notifications",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications-9.9.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_local_notifications_linux",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications_linux-0.5.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_local_notifications_platform_interface",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications_platform_interface-5.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_localizations",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/packages/flutter_localizations",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "flutter_paystack",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_paystack-1.0.5+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_phoenix",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_phoenix-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "flutter_plugin_android_lifecycle",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-2.0.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_polyline_points",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_polyline_points-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_share",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_share-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_test",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/packages/flutter_test",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "flutter_web_plugins",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/packages/flutter_web_plugins",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "fluttertoast",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/fluttertoast-8.0.9",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "geocoder2",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/geocoder2-1.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
+      "name": "geocoding",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/geocoding-2.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "geocoding_platform_interface",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/geocoding_platform_interface-2.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "geolocator",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/geolocator-9.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
+      "name": "geolocator_android",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/geolocator_android-4.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
+      "name": "geolocator_apple",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/geolocator_apple-2.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
+      "name": "geolocator_platform_interface",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/geolocator_platform_interface-4.0.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
+      "name": "geolocator_web",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/geolocator_web-2.1.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
+      "name": "geolocator_windows",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/geolocator_windows-0.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
+      "name": "google_api_headers",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/google_api_headers-1.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "google_fonts",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/google_fonts-3.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "google_maps_flutter",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter-2.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "google_maps_flutter_android",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter_android-2.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "google_maps_flutter_ios",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter_ios-2.1.11",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "google_maps_flutter_platform_interface",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter_platform_interface-2.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "google_maps_webservice",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_webservice-0.0.20-nullsafety.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "horizontal_calendar_view_widget",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/horizontal_calendar_view_widget-2.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "html",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/html-0.15.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "http",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/http-0.13.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "http_parser",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "image",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/image-3.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
+      "name": "intl",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.17.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "js",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/js-0.6.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "json_annotation",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/json_annotation-4.6.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "lints",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/lints-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "listenable_stream",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/listenable_stream-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "location",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/location-4.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "location_platform_interface",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/location_platform_interface-2.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "location_web",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/location_web-3.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "matcher",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/matcher-0.12.12",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "material_color_utilities",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/material_color_utilities-0.1.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.13"
+    },
+    {
+      "name": "meta",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/meta-1.8.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "numerus",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/numerus-1.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "package_info_plus",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/package_info_plus-1.4.3+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "package_info_plus_linux",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/package_info_plus_linux-1.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "package_info_plus_macos",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/package_info_plus_macos-1.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "package_info_plus_platform_interface",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/package_info_plus_platform_interface-1.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "package_info_plus_web",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/package_info_plus_web-1.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "package_info_plus_windows",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/package_info_plus_windows-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "page_transition",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/page_transition-2.0.9",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "path",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/path-1.8.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "path_provider",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-2.0.11",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "path_provider_android",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_android-2.0.20",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "path_provider_ios",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_ios-2.0.11",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "path_provider_linux",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-2.1.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "path_provider_macos",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-2.0.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "path_provider_platform_interface",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_platform_interface-2.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "path_provider_windows",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-2.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "petitparser",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/petitparser-5.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "pin_code_text_field",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/pin_code_text_field-1.8.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "platform",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/platform-3.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "plugin_platform_interface",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-2.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "process",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/process-4.2.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "razorpay_flutter",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/razorpay_flutter-1.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "rxdart",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.27.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "rxdart_ext",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart_ext-0.2.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "scrollable_positioned_list",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/scrollable_positioned_list-0.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "shared_preferences",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-2.0.15",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "shared_preferences_android",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_android-2.0.12",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "shared_preferences_ios",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_ios-2.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "shared_preferences_linux",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_linux-2.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "shared_preferences_macos",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-2.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "shared_preferences_platform_interface",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_platform_interface-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "shared_preferences_web",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-2.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "shared_preferences_windows",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_windows-2.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "shimmer_animation",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/shimmer_animation-2.1.0+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "sky_engine",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/bin/cache/pkg/sky_engine",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "source_span",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.9.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "sqflite",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/sqflite-2.0.3+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "sqflite_common",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/sqflite_common-2.2.1+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "stack_trace",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/stack_trace-1.10.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "stream_channel",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/stream_channel-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "stream_transform",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/stream_transform-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "string_scanner",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/string_scanner-1.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "synchronized",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/synchronized-3.0.0+3",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "term_glyph",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/term_glyph-1.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "test_api",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/test_api-0.4.12",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "timezone",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/timezone-0.8.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "toast",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/toast-0.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "typed_data",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/typed_data-1.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "url_launcher",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-6.1.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "url_launcher_android",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_android-6.0.17",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "url_launcher_ios",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_ios-6.0.17",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "url_launcher_linux",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_linux-3.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "url_launcher_macos",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_macos-3.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "url_launcher_platform_interface",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_platform_interface-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "url_launcher_web",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_web-2.0.13",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "url_launcher_windows",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_windows-3.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "vector_math",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/vector_math-2.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "win32",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/win32-2.7.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "xdg_directories",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/xdg_directories-0.2.0+2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "xml",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/xml-6.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "yaml",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/yaml-3.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "jhatfat",
+      "rootUri": "../",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    }
+  ],
+  "generated": "2022-09-05T19:41:21.892112Z",
+  "generator": "pub",
+  "generatorVersion": "2.18.0"
+}

@@ -1,0 +1,603 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.jhatfat"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="33" />
+10    <!--
+11         The INTERNET permission is required for development. Specifically,
+12         the Flutter tool needs it to communicate with the running application
+13         to allow setting breakpoints, to provide hot reload, etc.
+14    -->
+15    <uses-permission android:name="android.permission.INTERNET" />
+15-->/home/megha/Desktop/jhatfatflutter/android/app/src/debug/AndroidManifest.xml:7:5-66
+15-->/home/megha/Desktop/jhatfatflutter/android/app/src/debug/AndroidManifest.xml:7:22-64
+16    <uses-permission android:name="android.permission.WAKE_LOCK" />
+16-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:10:5-68
+16-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:10:22-65
+17    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Permissions options for the `notification` group -->
+17-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:11:5-79
+17-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:11:22-76
+18    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+18-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:13:5-77
+18-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:13:22-74
+19    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+19-->[:geolocator_android] /home/megha/Desktop/jhatfatflutter/build/geolocator_android/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-77
+19-->[:geolocator_android] /home/megha/Desktop/jhatfatflutter/build/geolocator_android/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-74
+20    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+20-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-81
+20-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-78
+21    <uses-permission android:name="android.permission.VIBRATE" />
+21-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:10:5-66
+21-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:10:22-63
+22    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+22-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:11:5-81
+22-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:11:22-78
+23    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+23-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:12:5-79
+23-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:12:22-76
+24    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+24-->[:location] /home/megha/Desktop/jhatfatflutter/build/location/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-81
+24-->[:location] /home/megha/Desktop/jhatfatflutter/build/location/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-78
+25    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+25-->[:location] /home/megha/Desktop/jhatfatflutter/build/location/intermediates/merged_manifest/debug/AndroidManifest.xml:10:5-79
+25-->[:location] /home/megha/Desktop/jhatfatflutter/build/location/intermediates/merged_manifest/debug/AndroidManifest.xml:10:22-76
+26    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+26-->[com.google.firebase:firebase-messaging:23.0.7] /home/megha/.gradle/caches/transforms-3/8a88ccf0b9a2acf6449055a4d64dadfc/transformed/jetified-firebase-messaging-23.0.7/AndroidManifest.xml:29:5-82
+26-->[com.google.firebase:firebase-messaging:23.0.7] /home/megha/.gradle/caches/transforms-3/8a88ccf0b9a2acf6449055a4d64dadfc/transformed/jetified-firebase-messaging-23.0.7/AndroidManifest.xml:29:22-79
+27
+28    <queries>
+28-->[com.razorpay:checkout:1.6.19] /home/megha/.gradle/caches/transforms-3/f46536463b1254775f93a2fdd80e004c/transformed/jetified-checkout-1.6.19/AndroidManifest.xml:11:5-37:15
+29        <intent>
+29-->[com.razorpay:checkout:1.6.19] /home/megha/.gradle/caches/transforms-3/f46536463b1254775f93a2fdd80e004c/transformed/jetified-checkout-1.6.19/AndroidManifest.xml:12:9-18:18
+30            <action android:name="android.intent.action.VIEW" />
+30-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:34:17-69
+30-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:34:25-66
+31
+32            <data
+32-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:39:17-42:51
+33                android:mimeType="*/*"
+34                android:scheme="*" />
+34-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:42:21-48
+35        </intent>
+36        <intent>
+36-->[com.razorpay:checkout:1.6.19] /home/megha/.gradle/caches/transforms-3/f46536463b1254775f93a2fdd80e004c/transformed/jetified-checkout-1.6.19/AndroidManifest.xml:19:9-28:18
+37            <action android:name="android.intent.action.VIEW" />
+37-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:34:17-69
+37-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:34:25-66
+38
+39            <category android:name="android.intent.category.BROWSABLE" />
+39-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:37:17-78
+39-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:37:27-75
+40
+41            <data
+41-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:39:17-42:51
+42                android:host="pay"
+42-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:40:21-49
+43                android:mimeType="*/*"
+44                android:scheme="upi" />
+44-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:42:21-48
+45        </intent>
+46        <intent>
+46-->[com.razorpay:checkout:1.6.19] /home/megha/.gradle/caches/transforms-3/f46536463b1254775f93a2fdd80e004c/transformed/jetified-checkout-1.6.19/AndroidManifest.xml:29:9-31:18
+47            <action android:name="android.intent.action.MAIN" />
+47-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:32:17-68
+47-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:32:25-66
+48        </intent>
+49        <intent>
+49-->[com.razorpay:checkout:1.6.19] /home/megha/.gradle/caches/transforms-3/f46536463b1254775f93a2fdd80e004c/transformed/jetified-checkout-1.6.19/AndroidManifest.xml:32:9-36:18
+50            <action android:name="android.intent.action.SEND" />
+50-->[com.razorpay:checkout:1.6.19] /home/megha/.gradle/caches/transforms-3/f46536463b1254775f93a2fdd80e004c/transformed/jetified-checkout-1.6.19/AndroidManifest.xml:33:13-65
+50-->[com.razorpay:checkout:1.6.19] /home/megha/.gradle/caches/transforms-3/f46536463b1254775f93a2fdd80e004c/transformed/jetified-checkout-1.6.19/AndroidManifest.xml:33:21-62
+51
+52            <data android:mimeType="*/*" />
+52-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:39:17-42:51
+53        </intent>
+54        <!-- Needs to be explicitly declared on Android R+ -->
+55        <package android:name="com.google.android.apps.maps" />
+55-->[com.google.android.gms:play-services-maps:18.0.2] /home/megha/.gradle/caches/transforms-3/95f836bc5966badd1250ea9af0d4d03d/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:33:9-64
+55-->[com.google.android.gms:play-services-maps:18.0.2] /home/megha/.gradle/caches/transforms-3/95f836bc5966badd1250ea9af0d4d03d/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:33:18-61
+56    </queries>
+57
+58    <uses-feature
+58-->[com.google.android.gms:play-services-maps:18.0.2] /home/megha/.gradle/caches/transforms-3/95f836bc5966badd1250ea9af0d4d03d/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:26:5-28:35
+59        android:glEsVersion="0x00020000"
+59-->[com.google.android.gms:play-services-maps:18.0.2] /home/megha/.gradle/caches/transforms-3/95f836bc5966badd1250ea9af0d4d03d/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:27:9-41
+60        android:required="true" />
+60-->[com.google.android.gms:play-services-maps:18.0.2] /home/megha/.gradle/caches/transforms-3/95f836bc5966badd1250ea9af0d4d03d/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:28:9-32
+61
+62    <application
+62-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:4:4-41:19
+63        android:name="com.jhatfat.Application"
+63-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:6:9-36
+64        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+64-->[androidx.core:core:1.8.0] /home/megha/.gradle/caches/transforms-3/0ce731f8c62e88af9af421907435d7da/transformed/core-1.8.0/AndroidManifest.xml:24:18-86
+65        android:debuggable="true"
+66        android:icon="@mipmap/launcher_icon"
+66-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:7:9-45
+67        android:label="@string/app_name" >
+67-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:5:9-41
+68        <meta-data
+68-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:8:8-9:45
+69            android:name="com.google.android.geo.API_KEY"
+69-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:8:19-64
+70            android:value="@string/map_key" />
+70-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:9:12-43
+71        <meta-data
+71-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:10:8-121
+72            android:name="com.google.android.gms.version"
+72-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:10:19-64
+73            android:value="@integer/google_play_services_version" />
+73-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:10:65-118
+74        <!-- Necessary for apps that target Android 9.0 or higher -->
+75        <uses-library
+75-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:12:8-87
+76            android:name="org.apache.http.legacy"
+76-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:12:22-59
+77            android:required="false" />
+77-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:12:60-84
+78
+79        <activity
+79-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:14:9-35:20
+80            android:name="com.jhatfat.MainActivity"
+80-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:15:13-41
+81            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+81-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:19:13-163
+82            android:exported="true"
+82-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:16:13-36
+83            android:hardwareAccelerated="true"
+83-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:20:13-47
+84            android:launchMode="singleTop"
+84-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:17:13-43
+85            android:theme="@style/LaunchTheme"
+85-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:18:13-47
+86            android:windowSoftInputMode="adjustResize" >
+86-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:21:13-55
+87
+88            <!--
+89                 Specifies an Android theme to apply to this Activity as soon as
+90                 the Android process has started. This theme is visible to the user
+91                 while the Flutter UI initializes. After that, this theme continues
+92                 to determine the Window background behind the Flutter UI.
+93            -->
+94            <meta-data
+94-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:26:13-29:17
+95                android:name="io.flutter.embedding.android.NormalTheme"
+95-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:27:15-70
+96                android:resource="@style/NormalTheme" />
+96-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:28:15-52
+97
+98            <intent-filter>
+98-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:31:13-34:29
+99                <action android:name="android.intent.action.MAIN" />
+99-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:32:17-68
+99-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:32:25-66
+100
+101                <category android:name="android.intent.category.LAUNCHER" />
+101-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:33:17-76
+101-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:33:27-74
+102            </intent-filter>
+103        </activity>
+104        <!--
+105             Don't delete the meta-data below.
+106             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+107        -->
+108        <meta-data
+108-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:38:9-40:33
+109            android:name="flutterEmbedding"
+109-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:39:13-44
+110            android:value="2" />
+110-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:40:13-30
+111
+112        <activity
+112-->[:flutter_paystack] /home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-12:54
+113            android:name="co.paystack.flutterpaystack.AuthActivity"
+113-->[:flutter_paystack] /home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-68
+114            android:theme="@style/Paystack.Dialog" />
+114-->[:flutter_paystack] /home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-51
+115
+116        <service
+116-->[:firebase_auth] /home/megha/Desktop/jhatfatflutter/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-14:19
+117            android:name="com.google.firebase.components.ComponentDiscoveryService"
+117-->[:firebase_auth] /home/megha/Desktop/jhatfatflutter/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:10:18-89
+118            android:directBootAware="true"
+118-->[com.google.firebase:firebase-common:20.1.1] /home/megha/.gradle/caches/transforms-3/fccaa6a289edc53f66333a729d5bb147/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:35:13-43
+119            android:exported="false" >
+119-->[com.google.firebase:firebase-messaging:23.0.7] /home/megha/.gradle/caches/transforms-3/8a88ccf0b9a2acf6449055a4d64dadfc/transformed/jetified-firebase-messaging-23.0.7/AndroidManifest.xml:55:13-37
+120            <meta-data
+120-->[:firebase_auth] /home/megha/Desktop/jhatfatflutter/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-13:85
+121                android:name="com.google.firebase.components:io.flutter.plugins.firebase.auth.FlutterFirebaseAuthRegistrar"
+121-->[:firebase_auth] /home/megha/Desktop/jhatfatflutter/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:12:17-124
+122                android:value="com.google.firebase.components.ComponentRegistrar" />
+122-->[:firebase_auth] /home/megha/Desktop/jhatfatflutter/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:13:17-82
+123            <meta-data
+123-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:38:13-40:85
+124                android:name="com.google.firebase.components:io.flutter.plugins.firebase.messaging.FlutterFirebaseAppRegistrar"
+124-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:39:17-128
+125                android:value="com.google.firebase.components.ComponentRegistrar" />
+125-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:40:17-82
+126            <meta-data
+126-->[:firebase_core] /home/megha/Desktop/jhatfatflutter/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-13:85
+127                android:name="com.google.firebase.components:io.flutter.plugins.firebase.core.FlutterFirebaseCoreRegistrar"
+127-->[:firebase_core] /home/megha/Desktop/jhatfatflutter/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:12:17-124
+128                android:value="com.google.firebase.components.ComponentRegistrar" />
+128-->[:firebase_core] /home/megha/Desktop/jhatfatflutter/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:13:17-82
+129            <meta-data
+129-->[com.google.firebase:firebase-messaging:23.0.7] /home/megha/.gradle/caches/transforms-3/8a88ccf0b9a2acf6449055a4d64dadfc/transformed/jetified-firebase-messaging-23.0.7/AndroidManifest.xml:56:13-58:85
+130                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
+130-->[com.google.firebase:firebase-messaging:23.0.7] /home/megha/.gradle/caches/transforms-3/8a88ccf0b9a2acf6449055a4d64dadfc/transformed/jetified-firebase-messaging-23.0.7/AndroidManifest.xml:57:17-119
+131                android:value="com.google.firebase.components.ComponentRegistrar" />
+131-->[com.google.firebase:firebase-messaging:23.0.7] /home/megha/.gradle/caches/transforms-3/8a88ccf0b9a2acf6449055a4d64dadfc/transformed/jetified-firebase-messaging-23.0.7/AndroidManifest.xml:58:17-82
+132            <meta-data
+132-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:67:13-69:85
+133                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+133-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:68:17-109
+134                android:value="com.google.firebase.components.ComponentRegistrar" />
+134-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:69:17-82
+135            <meta-data
+135-->[com.google.firebase:firebase-datatransport:18.1.5] /home/megha/.gradle/caches/transforms-3/137a281a71892f573d568cfe1d7648df/transformed/jetified-firebase-datatransport-18.1.5/AndroidManifest.xml:28:13-30:85
+136                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
+136-->[com.google.firebase:firebase-datatransport:18.1.5] /home/megha/.gradle/caches/transforms-3/137a281a71892f573d568cfe1d7648df/transformed/jetified-firebase-datatransport-18.1.5/AndroidManifest.xml:29:17-115
+137                android:value="com.google.firebase.components.ComponentRegistrar" />
+137-->[com.google.firebase:firebase-datatransport:18.1.5] /home/megha/.gradle/caches/transforms-3/137a281a71892f573d568cfe1d7648df/transformed/jetified-firebase-datatransport-18.1.5/AndroidManifest.xml:30:17-82
+138            <meta-data
+138-->[com.google.firebase:firebase-installations:17.0.1] /home/megha/.gradle/caches/transforms-3/d697f3efc8c8ea9d972258c27b5b196d/transformed/jetified-firebase-installations-17.0.1/AndroidManifest.xml:18:13-20:85
+139                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+139-->[com.google.firebase:firebase-installations:17.0.1] /home/megha/.gradle/caches/transforms-3/d697f3efc8c8ea9d972258c27b5b196d/transformed/jetified-firebase-installations-17.0.1/AndroidManifest.xml:19:17-127
+140                android:value="com.google.firebase.components.ComponentRegistrar" />
+140-->[com.google.firebase:firebase-installations:17.0.1] /home/megha/.gradle/caches/transforms-3/d697f3efc8c8ea9d972258c27b5b196d/transformed/jetified-firebase-installations-17.0.1/AndroidManifest.xml:20:17-82
+141        </service>
+142        <service
+142-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:16:9-19:72
+143            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingBackgroundService"
+143-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:17:13-107
+144            android:exported="false"
+144-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:18:13-37
+145            android:permission="android.permission.BIND_JOB_SERVICE" />
+145-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:19:13-69
+146        <service
+146-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:20:9-26:19
+147            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingService"
+147-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:21:13-97
+148            android:exported="false" >
+148-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:22:13-37
+149            <intent-filter>
+149-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:23:13-25:29
+150                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+150-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:24:17-78
+150-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:24:25-75
+151            </intent-filter>
+152        </service>
+153
+154        <receiver
+154-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:28:9-35:20
+155            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingReceiver"
+155-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:29:13-98
+156            android:exported="true"
+156-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:30:13-36
+157            android:permission="com.google.android.c2dm.permission.SEND" >
+157-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:31:13-73
+158            <intent-filter>
+158-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:32:13-34:29
+159                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+159-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:33:17-81
+159-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:33:25-78
+160            </intent-filter>
+161        </receiver>
+162
+163        <provider
+163-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:43:9-47:38
+164            android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingInitProvider"
+164-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:44:13-102
+165            android:authorities="com.jhatfat.flutterfirebasemessaginginitprovider"
+165-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:45:13-88
+166            android:exported="false"
+166-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:46:13-37
+167            android:initOrder="99" />
+167-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:47:13-35
+168
+169        <service
+169-->[:geolocator_android] /home/megha/Desktop/jhatfatflutter/build/geolocator_android/intermediates/merged_manifest/debug/AndroidManifest.xml:12:9-16:56
+170            android:name="com.baseflow.geolocator.GeolocatorLocationService"
+170-->[:geolocator_android] /home/megha/Desktop/jhatfatflutter/build/geolocator_android/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-77
+171            android:enabled="true"
+171-->[:geolocator_android] /home/megha/Desktop/jhatfatflutter/build/geolocator_android/intermediates/merged_manifest/debug/AndroidManifest.xml:14:13-35
+172            android:exported="false"
+172-->[:geolocator_android] /home/megha/Desktop/jhatfatflutter/build/geolocator_android/intermediates/merged_manifest/debug/AndroidManifest.xml:15:13-37
+173            android:foregroundServiceType="location" />
+173-->[:geolocator_android] /home/megha/Desktop/jhatfatflutter/build/geolocator_android/intermediates/merged_manifest/debug/AndroidManifest.xml:16:13-53
+174
+175        <receiver
+175-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:16:9-18:40
+176            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver"
+176-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:17:13-97
+177            android:exported="false" />
+177-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:18:13-37
+178        <receiver
+178-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:19:9-28:20
+179            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver"
+179-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:20:13-101
+180            android:exported="false" >
+180-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:21:13-37
+181            <intent-filter>
+181-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:22:13-27:29
+182                <action android:name="android.intent.action.BOOT_COMPLETED" />
+182-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:23:17-79
+182-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:23:25-76
+183                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+183-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:24:17-84
+183-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:24:25-81
+184                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+184-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:25:17-82
+184-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:25:25-79
+185                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+185-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:26:17-82
+185-->[:flutter_local_notifications] /home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_manifest/debug/AndroidManifest.xml:26:25-79
+186            </intent-filter>
+187        </receiver>
+188
+189        <activity
+189-->[:url_launcher_android] /home/megha/Desktop/jhatfatflutter/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-13:74
+190            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+190-->[:url_launcher_android] /home/megha/Desktop/jhatfatflutter/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-74
+191            android:exported="false"
+191-->[:url_launcher_android] /home/megha/Desktop/jhatfatflutter/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-37
+192            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+192-->[:url_launcher_android] /home/megha/Desktop/jhatfatflutter/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-71
+193
+194        <service
+194-->[:location] /home/megha/Desktop/jhatfatflutter/build/location/intermediates/merged_manifest/debug/AndroidManifest.xml:13:9-17:56
+195            android:name="com.lyokone.location.FlutterLocationService"
+195-->[:location] /home/megha/Desktop/jhatfatflutter/build/location/intermediates/merged_manifest/debug/AndroidManifest.xml:14:13-71
+196            android:enabled="true"
+196-->[:location] /home/megha/Desktop/jhatfatflutter/build/location/intermediates/merged_manifest/debug/AndroidManifest.xml:15:13-35
+197            android:exported="false"
+197-->[:location] /home/megha/Desktop/jhatfatflutter/build/location/intermediates/merged_manifest/debug/AndroidManifest.xml:16:13-37
+198            android:foregroundServiceType="location" />
+198-->[:location] /home/megha/Desktop/jhatfatflutter/build/location/intermediates/merged_manifest/debug/AndroidManifest.xml:17:13-53
+199
+200        <uses-library
+200-->[androidx.window:window:1.0.0-beta04] /home/megha/.gradle/caches/transforms-3/542a859793ec57d6a4d40865c7efc6d9/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:25:9-27:40
+201            android:name="androidx.window.extensions"
+201-->[androidx.window:window:1.0.0-beta04] /home/megha/.gradle/caches/transforms-3/542a859793ec57d6a4d40865c7efc6d9/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:26:13-54
+202            android:required="false" />
+202-->[androidx.window:window:1.0.0-beta04] /home/megha/.gradle/caches/transforms-3/542a859793ec57d6a4d40865c7efc6d9/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:27:13-37
+203        <uses-library
+203-->[androidx.window:window:1.0.0-beta04] /home/megha/.gradle/caches/transforms-3/542a859793ec57d6a4d40865c7efc6d9/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:28:9-30:40
+204            android:name="androidx.window.sidecar"
+204-->[androidx.window:window:1.0.0-beta04] /home/megha/.gradle/caches/transforms-3/542a859793ec57d6a4d40865c7efc6d9/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:29:13-51
+205            android:required="false" />
+205-->[androidx.window:window:1.0.0-beta04] /home/megha/.gradle/caches/transforms-3/542a859793ec57d6a4d40865c7efc6d9/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:30:13-37
+206
+207        <receiver
+207-->[com.google.firebase:firebase-messaging:23.0.7] /home/megha/.gradle/caches/transforms-3/8a88ccf0b9a2acf6449055a4d64dadfc/transformed/jetified-firebase-messaging-23.0.7/AndroidManifest.xml:32:9-39:20
+208            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+208-->[com.google.firebase:firebase-messaging:23.0.7] /home/megha/.gradle/caches/transforms-3/8a88ccf0b9a2acf6449055a4d64dadfc/transformed/jetified-firebase-messaging-23.0.7/AndroidManifest.xml:33:13-78
+209            android:exported="true"
+209-->[com.google.firebase:firebase-messaging:23.0.7] /home/megha/.gradle/caches/transforms-3/8a88ccf0b9a2acf6449055a4d64dadfc/transformed/jetified-firebase-messaging-23.0.7/AndroidManifest.xml:34:13-36
+210            android:permission="com.google.android.c2dm.permission.SEND" >
+210-->[com.google.firebase:firebase-messaging:23.0.7] /home/megha/.gradle/caches/transforms-3/8a88ccf0b9a2acf6449055a4d64dadfc/transformed/jetified-firebase-messaging-23.0.7/AndroidManifest.xml:35:13-73
+211            <intent-filter>
+211-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:32:13-34:29
+212                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+212-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:33:17-81
+212-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:33:25-78
+213            </intent-filter>
+214        </receiver>
+215        <!--
+216             FirebaseMessagingService performs security checks at runtime,
+217             but set to not exported to explicitly avoid allowing another app to call it.
+218        -->
+219        <service
+219-->[com.google.firebase:firebase-messaging:23.0.7] /home/megha/.gradle/caches/transforms-3/8a88ccf0b9a2acf6449055a4d64dadfc/transformed/jetified-firebase-messaging-23.0.7/AndroidManifest.xml:45:9-52:19
+220            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+220-->[com.google.firebase:firebase-messaging:23.0.7] /home/megha/.gradle/caches/transforms-3/8a88ccf0b9a2acf6449055a4d64dadfc/transformed/jetified-firebase-messaging-23.0.7/AndroidManifest.xml:46:13-82
+221            android:directBootAware="true"
+221-->[com.google.firebase:firebase-messaging:23.0.7] /home/megha/.gradle/caches/transforms-3/8a88ccf0b9a2acf6449055a4d64dadfc/transformed/jetified-firebase-messaging-23.0.7/AndroidManifest.xml:47:13-43
+222            android:exported="false" >
+222-->[com.google.firebase:firebase-messaging:23.0.7] /home/megha/.gradle/caches/transforms-3/8a88ccf0b9a2acf6449055a4d64dadfc/transformed/jetified-firebase-messaging-23.0.7/AndroidManifest.xml:48:13-37
+223            <intent-filter android:priority="-500" >
+223-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:23:13-25:29
+224                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+224-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:24:17-78
+224-->[:firebase_messaging] /home/megha/Desktop/jhatfatflutter/build/firebase_messaging/intermediates/merged_manifest/debug/AndroidManifest.xml:24:25-75
+225            </intent-filter>
+226        </service>
+227
+228        <activity
+228-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:27:9-44:20
+229            android:name="com.google.firebase.auth.internal.GenericIdpActivity"
+229-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:28:13-80
+230            android:excludeFromRecents="true"
+230-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:29:13-46
+231            android:exported="true"
+231-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:30:13-36
+232            android:launchMode="singleTask"
+232-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:31:13-44
+233            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+233-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:32:13-72
+234            <intent-filter>
+234-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:33:13-43:29
+235                <action android:name="android.intent.action.VIEW" />
+235-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:34:17-69
+235-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:34:25-66
+236
+237                <category android:name="android.intent.category.DEFAULT" />
+237-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:36:17-76
+237-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:36:27-73
+238                <category android:name="android.intent.category.BROWSABLE" />
+238-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:37:17-78
+238-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:37:27-75
+239
+240                <data
+240-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:39:17-42:51
+241                    android:host="firebase.auth"
+241-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:40:21-49
+242                    android:path="/"
+242-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:41:21-37
+243                    android:scheme="genericidp" />
+243-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:42:21-48
+244            </intent-filter>
+245        </activity>
+246        <activity
+246-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:45:9-62:20
+247            android:name="com.google.firebase.auth.internal.RecaptchaActivity"
+247-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:46:13-79
+248            android:excludeFromRecents="true"
+248-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:47:13-46
+249            android:exported="true"
+249-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:48:13-36
+250            android:launchMode="singleTask"
+250-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:49:13-44
+251            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+251-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:50:13-72
+252            <intent-filter>
+252-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:51:13-61:29
+253                <action android:name="android.intent.action.VIEW" />
+253-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:34:17-69
+253-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:34:25-66
+254
+255                <category android:name="android.intent.category.DEFAULT" />
+255-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:36:17-76
+255-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:36:27-73
+256                <category android:name="android.intent.category.BROWSABLE" />
+256-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:37:17-78
+256-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:37:27-75
+257
+258                <data
+258-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:39:17-42:51
+259                    android:host="firebase.auth"
+259-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:40:21-49
+260                    android:path="/"
+260-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:41:21-37
+261                    android:scheme="recaptcha" />
+261-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:42:21-48
+262            </intent-filter>
+263        </activity>
+264
+265        <provider
+265-->[com.google.firebase:firebase-common:20.1.1] /home/megha/.gradle/caches/transforms-3/fccaa6a289edc53f66333a729d5bb147/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:26:9-31:39
+266            android:name="com.google.firebase.provider.FirebaseInitProvider"
+266-->[com.google.firebase:firebase-common:20.1.1] /home/megha/.gradle/caches/transforms-3/fccaa6a289edc53f66333a729d5bb147/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:27:13-77
+267            android:authorities="com.jhatfat.firebaseinitprovider"
+267-->[com.google.firebase:firebase-common:20.1.1] /home/megha/.gradle/caches/transforms-3/fccaa6a289edc53f66333a729d5bb147/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:28:13-72
+268            android:directBootAware="true"
+268-->[com.google.firebase:firebase-common:20.1.1] /home/megha/.gradle/caches/transforms-3/fccaa6a289edc53f66333a729d5bb147/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:29:13-43
+269            android:exported="false"
+269-->[com.google.firebase:firebase-common:20.1.1] /home/megha/.gradle/caches/transforms-3/fccaa6a289edc53f66333a729d5bb147/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:30:13-37
+270            android:initOrder="100" />
+270-->[com.google.firebase:firebase-common:20.1.1] /home/megha/.gradle/caches/transforms-3/fccaa6a289edc53f66333a729d5bb147/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:31:13-36
+271
+272        <receiver
+272-->[com.razorpay:checkout:1.6.19] /home/megha/.gradle/caches/transforms-3/f46536463b1254775f93a2fdd80e004c/transformed/jetified-checkout-1.6.19/AndroidManifest.xml:40:9-46:20
+273            android:name="com.razorpay.RzpTokenReceiver"
+273-->[com.razorpay:checkout:1.6.19] /home/megha/.gradle/caches/transforms-3/f46536463b1254775f93a2fdd80e004c/transformed/jetified-checkout-1.6.19/AndroidManifest.xml:41:13-57
+274            android:exported="false" >
+274-->[com.razorpay:checkout:1.6.19] /home/megha/.gradle/caches/transforms-3/f46536463b1254775f93a2fdd80e004c/transformed/jetified-checkout-1.6.19/AndroidManifest.xml:42:13-37
+275            <intent-filter>
+275-->[com.razorpay:checkout:1.6.19] /home/megha/.gradle/caches/transforms-3/f46536463b1254775f93a2fdd80e004c/transformed/jetified-checkout-1.6.19/AndroidManifest.xml:43:13-45:29
+276                <action android:name="rzp.device_token.share" />
+276-->[com.razorpay:checkout:1.6.19] /home/megha/.gradle/caches/transforms-3/f46536463b1254775f93a2fdd80e004c/transformed/jetified-checkout-1.6.19/AndroidManifest.xml:44:17-65
+276-->[com.razorpay:checkout:1.6.19] /home/megha/.gradle/caches/transforms-3/f46536463b1254775f93a2fdd80e004c/transformed/jetified-checkout-1.6.19/AndroidManifest.xml:44:25-62
+277            </intent-filter>
+278        </receiver>
+279
+280        <activity
+280-->[com.razorpay:checkout:1.6.19] /home/megha/.gradle/caches/transforms-3/f46536463b1254775f93a2fdd80e004c/transformed/jetified-checkout-1.6.19/AndroidManifest.xml:48:9-60:20
+281            android:name="com.razorpay.CheckoutActivity"
+281-->[com.razorpay:checkout:1.6.19] /home/megha/.gradle/caches/transforms-3/f46536463b1254775f93a2fdd80e004c/transformed/jetified-checkout-1.6.19/AndroidManifest.xml:49:13-57
+282            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+282-->[com.razorpay:checkout:1.6.19] /home/megha/.gradle/caches/transforms-3/f46536463b1254775f93a2fdd80e004c/transformed/jetified-checkout-1.6.19/AndroidManifest.xml:50:13-83
+283            android:exported="true"
+283-->[com.razorpay:checkout:1.6.19] /home/megha/.gradle/caches/transforms-3/f46536463b1254775f93a2fdd80e004c/transformed/jetified-checkout-1.6.19/AndroidManifest.xml:51:13-36
+284            android:theme="@style/CheckoutTheme" >
+284-->[com.razorpay:checkout:1.6.19] /home/megha/.gradle/caches/transforms-3/f46536463b1254775f93a2fdd80e004c/transformed/jetified-checkout-1.6.19/AndroidManifest.xml:52:13-49
+285            <intent-filter>
+285-->[com.razorpay:checkout:1.6.19] /home/megha/.gradle/caches/transforms-3/f46536463b1254775f93a2fdd80e004c/transformed/jetified-checkout-1.6.19/AndroidManifest.xml:53:13-59:29
+286                <action android:name="android.intent.action.MAIN" />
+286-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:32:17-68
+286-->/home/megha/Desktop/jhatfatflutter/android/app/src/main/AndroidManifest.xml:32:25-66
+287
+288                <data
+288-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:39:17-42:51
+289                    android:host="rzp.io"
+289-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:40:21-49
+290                    android:scheme="io.rzp" />
+290-->[com.google.firebase:firebase-auth:21.0.7] /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/AndroidManifest.xml:42:21-48
+291            </intent-filter>
+292        </activity>
+293
+294        <meta-data
+294-->[com.razorpay:checkout:1.6.19] /home/megha/.gradle/caches/transforms-3/f46536463b1254775f93a2fdd80e004c/transformed/jetified-checkout-1.6.19/AndroidManifest.xml:62:9-64:58
+295            android:name="com.razorpay.plugin.googlepay_all"
+295-->[com.razorpay:checkout:1.6.19] /home/megha/.gradle/caches/transforms-3/f46536463b1254775f93a2fdd80e004c/transformed/jetified-checkout-1.6.19/AndroidManifest.xml:63:13-61
+296            android:value="com.razorpay.RzpGpayMerged" />
+296-->[com.razorpay:checkout:1.6.19] /home/megha/.gradle/caches/transforms-3/f46536463b1254775f93a2fdd80e004c/transformed/jetified-checkout-1.6.19/AndroidManifest.xml:64:13-55
+297
+298        <activity
+298-->[com.google.android.gms:play-services-auth:17.0.0] /home/megha/.gradle/caches/transforms-3/364fc305d144bf7e28bcc1b4f448958e/transformed/jetified-play-services-auth-17.0.0/AndroidManifest.xml:23:9-27:75
+299            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+299-->[com.google.android.gms:play-services-auth:17.0.0] /home/megha/.gradle/caches/transforms-3/364fc305d144bf7e28bcc1b4f448958e/transformed/jetified-play-services-auth-17.0.0/AndroidManifest.xml:24:13-93
+300            android:excludeFromRecents="true"
+300-->[com.google.android.gms:play-services-auth:17.0.0] /home/megha/.gradle/caches/transforms-3/364fc305d144bf7e28bcc1b4f448958e/transformed/jetified-play-services-auth-17.0.0/AndroidManifest.xml:25:13-46
+301            android:exported="false"
+301-->[com.google.android.gms:play-services-auth:17.0.0] /home/megha/.gradle/caches/transforms-3/364fc305d144bf7e28bcc1b4f448958e/transformed/jetified-play-services-auth-17.0.0/AndroidManifest.xml:26:13-37
+302            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+302-->[com.google.android.gms:play-services-auth:17.0.0] /home/megha/.gradle/caches/transforms-3/364fc305d144bf7e28bcc1b4f448958e/transformed/jetified-play-services-auth-17.0.0/AndroidManifest.xml:27:13-72
+303        <!--
+304            Service handling Google Sign-In user revocation. For apps that do not integrate with
+305            Google Sign-In, this service will never be started.
+306        -->
+307        <service
+307-->[com.google.android.gms:play-services-auth:17.0.0] /home/megha/.gradle/caches/transforms-3/364fc305d144bf7e28bcc1b4f448958e/transformed/jetified-play-services-auth-17.0.0/AndroidManifest.xml:33:9-36:110
+308            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+308-->[com.google.android.gms:play-services-auth:17.0.0] /home/megha/.gradle/caches/transforms-3/364fc305d144bf7e28bcc1b4f448958e/transformed/jetified-play-services-auth-17.0.0/AndroidManifest.xml:34:13-89
+309            android:exported="true"
+309-->[com.google.android.gms:play-services-auth:17.0.0] /home/megha/.gradle/caches/transforms-3/364fc305d144bf7e28bcc1b4f448958e/transformed/jetified-play-services-auth-17.0.0/AndroidManifest.xml:35:13-36
+310            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION" />
+310-->[com.google.android.gms:play-services-auth:17.0.0] /home/megha/.gradle/caches/transforms-3/364fc305d144bf7e28bcc1b4f448958e/transformed/jetified-play-services-auth-17.0.0/AndroidManifest.xml:36:13-107
+311
+312        <activity
+312-->[com.google.android.gms:play-services-base:18.0.1] /home/megha/.gradle/caches/transforms-3/19fea4fb28dedd992824e13cc158e7a1/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
+313            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+313-->[com.google.android.gms:play-services-base:18.0.1] /home/megha/.gradle/caches/transforms-3/19fea4fb28dedd992824e13cc158e7a1/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:19-85
+314            android:exported="false"
+314-->[com.google.android.gms:play-services-base:18.0.1] /home/megha/.gradle/caches/transforms-3/19fea4fb28dedd992824e13cc158e7a1/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:22:19-43
+315            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+315-->[com.google.android.gms:play-services-base:18.0.1] /home/megha/.gradle/caches/transforms-3/19fea4fb28dedd992824e13cc158e7a1/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:21:19-78
+316
+317        <service
+317-->[com.google.android.datatransport:transport-backend-cct:3.1.6] /home/megha/.gradle/caches/transforms-3/2e73c289e8f397b5e9ef1611970a65f0/transformed/jetified-transport-backend-cct-3.1.6/AndroidManifest.xml:29:9-35:19
+318            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+318-->[com.google.android.datatransport:transport-backend-cct:3.1.6] /home/megha/.gradle/caches/transforms-3/2e73c289e8f397b5e9ef1611970a65f0/transformed/jetified-transport-backend-cct-3.1.6/AndroidManifest.xml:30:13-103
+319            android:exported="false" >
+319-->[com.google.android.datatransport:transport-backend-cct:3.1.6] /home/megha/.gradle/caches/transforms-3/2e73c289e8f397b5e9ef1611970a65f0/transformed/jetified-transport-backend-cct-3.1.6/AndroidManifest.xml:31:13-37
+320            <meta-data
+320-->[com.google.android.datatransport:transport-backend-cct:3.1.6] /home/megha/.gradle/caches/transforms-3/2e73c289e8f397b5e9ef1611970a65f0/transformed/jetified-transport-backend-cct-3.1.6/AndroidManifest.xml:32:13-34:39
+321                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+321-->[com.google.android.datatransport:transport-backend-cct:3.1.6] /home/megha/.gradle/caches/transforms-3/2e73c289e8f397b5e9ef1611970a65f0/transformed/jetified-transport-backend-cct-3.1.6/AndroidManifest.xml:33:17-94
+322                android:value="cct" />
+322-->[com.google.android.datatransport:transport-backend-cct:3.1.6] /home/megha/.gradle/caches/transforms-3/2e73c289e8f397b5e9ef1611970a65f0/transformed/jetified-transport-backend-cct-3.1.6/AndroidManifest.xml:34:17-36
+323        </service>
+324        <service
+324-->[com.google.android.datatransport:transport-runtime:3.1.6] /home/megha/.gradle/caches/transforms-3/d4f56a978fb59fe51dd5978580562a45/transformed/jetified-transport-runtime-3.1.6/AndroidManifest.xml:26:9-30:19
+325            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+325-->[com.google.android.datatransport:transport-runtime:3.1.6] /home/megha/.gradle/caches/transforms-3/d4f56a978fb59fe51dd5978580562a45/transformed/jetified-transport-runtime-3.1.6/AndroidManifest.xml:27:13-117
+326            android:exported="false"
+326-->[com.google.android.datatransport:transport-runtime:3.1.6] /home/megha/.gradle/caches/transforms-3/d4f56a978fb59fe51dd5978580562a45/transformed/jetified-transport-runtime-3.1.6/AndroidManifest.xml:28:13-37
+327            android:permission="android.permission.BIND_JOB_SERVICE" >
+327-->[com.google.android.datatransport:transport-runtime:3.1.6] /home/megha/.gradle/caches/transforms-3/d4f56a978fb59fe51dd5978580562a45/transformed/jetified-transport-runtime-3.1.6/AndroidManifest.xml:29:13-69
+328        </service>
+329
+330        <receiver
+330-->[com.google.android.datatransport:transport-runtime:3.1.6] /home/megha/.gradle/caches/transforms-3/d4f56a978fb59fe51dd5978580562a45/transformed/jetified-transport-runtime-3.1.6/AndroidManifest.xml:32:9-34:40
+331            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+331-->[com.google.android.datatransport:transport-runtime:3.1.6] /home/megha/.gradle/caches/transforms-3/d4f56a978fb59fe51dd5978580562a45/transformed/jetified-transport-runtime-3.1.6/AndroidManifest.xml:33:13-132
+332            android:exported="false" />
+332-->[com.google.android.datatransport:transport-runtime:3.1.6] /home/megha/.gradle/caches/transforms-3/d4f56a978fb59fe51dd5978580562a45/transformed/jetified-transport-runtime-3.1.6/AndroidManifest.xml:34:13-37
+333    </application>
+334
+335</manifest>

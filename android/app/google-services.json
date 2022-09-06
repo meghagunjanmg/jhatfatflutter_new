@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "147590035506",
+    "project_id": "jhatfat",
+    "storage_bucket": "jhatfat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:147590035506:android:3fc8ad80c32e0fbea8e42b",
+        "android_client_info": {
+          "package_name": "com.jhatfat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "147590035506-jdve4da93272qqo507k8gkg09aopgjp2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jhatfat",
+            "certificate_hash": "3cc0946787c40a075d721cc68141d59c545794c7"
+          }
+        },
+        {
+          "client_id": "147590035506-v5kbgb2s6uirqnslcmq40fagp7pmnsf2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jhatfat",
+            "certificate_hash": "a258eb0ac7b319371548d51bf991aace23d51591"
+          }
+        },
+        {
+          "client_id": "147590035506-b64l4b3g0an8aldv32l58pvm8g5fbbns.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTsuo3QSNdQmKWM3KUGQpYo-BrSWvNRjQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "147590035506-b64l4b3g0an8aldv32l58pvm8g5fbbns.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
