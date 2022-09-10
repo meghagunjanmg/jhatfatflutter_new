@@ -1761,6 +1761,7 @@ drawable abc_textfield_search_activated_mtrl_alpha
 drawable abc_textfield_search_default_mtrl_alpha
 drawable abc_textfield_search_material
 drawable abc_vector_test
+drawable app_icon
 drawable avd_hide_password
 drawable avd_show_password
 drawable btn_checkbox_checked_mtrl
@@ -2492,7 +2493,6 @@ layout text_view_with_theme_line_height
 layout text_view_without_line_height
 layout toast_custom
 layout wallet_test_layout
-mipmap ic_launcher
 mipmap launcher_icon
 plurals mtrl_badge_content_description
 raw keep

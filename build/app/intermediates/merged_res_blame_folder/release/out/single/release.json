@@ -148,10 +148,6 @@
         "source": "/home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/res/drawable-xhdpi-v4/abc_list_longpressed_holo.9.png"
     },
     {
-        "merged": "/home/megha/Desktop/jhatfatflutter/build/app/intermediates/merged_res/release/mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "/home/megha/Desktop/jhatfatflutter/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
-    },
-    {
         "merged": "/home/megha/Desktop/jhatfatflutter/build/app/intermediates/merged_res/release/drawable-hdpi-v4_abc_popup_background_mtrl_mult.9.png.flat",
         "source": "/home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/res/drawable-hdpi-v4/abc_popup_background_mtrl_mult.9.png"
     },
@@ -170,10 +166,6 @@
     {
         "merged": "/home/megha/Desktop/jhatfatflutter/build/app/intermediates/merged_res/release/color_mtrl_calendar_selected_range.xml.flat",
         "source": "/home/megha/.gradle/caches/transforms-3/761820c4e0eefc7de03e7c1fd0be13ee/transformed/material-1.4.0-alpha01/res/color/mtrl_calendar_selected_range.xml"
-    },
-    {
-        "merged": "/home/megha/Desktop/jhatfatflutter/build/app/intermediates/merged_res/release/mipmap-mdpi_ic_launcher.png.flat",
-        "source": "/home/megha/Desktop/jhatfatflutter/android/app/src/main/res/mipmap-mdpi/ic_launcher.png"
     },
     {
         "merged": "/home/megha/Desktop/jhatfatflutter/build/app/intermediates/merged_res/release/animator_mtrl_extended_fab_change_size_expand_motion_spec.xml.flat",
@@ -700,6 +692,10 @@
         "source": "/home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/res/drawable-hdpi-v4/abc_btn_switch_to_on_mtrl_00012.9.png"
     },
     {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/app/intermediates/merged_res/release/drawable_app_icon.png.flat",
+        "source": "/home/megha/Desktop/jhatfatflutter/android/app/src/main/res/drawable/app_icon.png"
+    },
+    {
         "merged": "/home/megha/Desktop/jhatfatflutter/build/app/intermediates/merged_res/release/layout_mtrl_alert_dialog_title.xml.flat",
         "source": "/home/megha/.gradle/caches/transforms-3/761820c4e0eefc7de03e7c1fd0be13ee/transformed/material-1.4.0-alpha01/res/layout/mtrl_alert_dialog_title.xml"
     },
@@ -766,10 +762,6 @@
     {
         "merged": "/home/megha/Desktop/jhatfatflutter/build/app/intermediates/merged_res/release/drawable_tooltip_frame_light.xml.flat",
         "source": "/home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/res/drawable/tooltip_frame_light.xml"
-    },
-    {
-        "merged": "/home/megha/Desktop/jhatfatflutter/build/app/intermediates/merged_res/release/mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "/home/megha/Desktop/jhatfatflutter/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
     },
     {
         "merged": "/home/megha/Desktop/jhatfatflutter/build/app/intermediates/merged_res/release/raw_keep.xml.flat",
@@ -1614,10 +1606,6 @@
     {
         "merged": "/home/megha/Desktop/jhatfatflutter/build/app/intermediates/merged_res/release/anim_btn_checkbox_to_unchecked_icon_null_animation.xml.flat",
         "source": "/home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/res/anim/btn_checkbox_to_unchecked_icon_null_animation.xml"
-    },
-    {
-        "merged": "/home/megha/Desktop/jhatfatflutter/build/app/intermediates/merged_res/release/mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "/home/megha/Desktop/jhatfatflutter/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
     },
     {
         "merged": "/home/megha/Desktop/jhatfatflutter/build/app/intermediates/merged_res/release/drawable-mdpi-v4_notification_bg_low_normal.9.png.flat",
@@ -2490,10 +2478,6 @@
     {
         "merged": "/home/megha/Desktop/jhatfatflutter/build/app/intermediates/merged_res/release/drawable-hdpi-v4_abc_textfield_activated_mtrl_alpha.9.png.flat",
         "source": "/home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/res/drawable-hdpi-v4/abc_textfield_activated_mtrl_alpha.9.png"
-    },
-    {
-        "merged": "/home/megha/Desktop/jhatfatflutter/build/app/intermediates/merged_res/release/mipmap-hdpi_ic_launcher.png.flat",
-        "source": "/home/megha/Desktop/jhatfatflutter/android/app/src/main/res/mipmap-hdpi/ic_launcher.png"
     },
     {
         "merged": "/home/megha/Desktop/jhatfatflutter/build/app/intermediates/merged_res/release/drawable-xhdpi-v4_common_google_signin_btn_text_light_normal_background.9.png.flat",

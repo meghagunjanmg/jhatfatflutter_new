@@ -1160,7 +1160,7 @@
     <string name="common_signin_button_text">Sign in</string>
     <string name="common_signin_button_text_long">Sign in with Google</string>
     <string name="copy_toast_msg">Link copied to clipboard</string>
-    <string name="default_notification_channel_id">1234</string>
+    <string name="default_notification_channel_id">123456</string>
     <string name="default_web_client_id" translatable="false">147590035506-b64l4b3g0an8aldv32l58pvm8g5fbbns.apps.googleusercontent.com</string>
     <string name="error_icon_content_description">Error</string>
     <string name="exposed_dropdown_menu_content_description">Show dropdown menu</string>

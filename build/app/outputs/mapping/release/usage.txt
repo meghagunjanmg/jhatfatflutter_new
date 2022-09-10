@@ -22264,6 +22264,18 @@ com.jhatfat.R$style
 com.jhatfat.R$styleable
 com.jhatfat.R$xml
 com.jhatfat.R
+com.jrai.flutter_keyboard_visibility.BuildConfig
+com.jrai.flutter_keyboard_visibility.R$attr
+com.jrai.flutter_keyboard_visibility.R$color
+com.jrai.flutter_keyboard_visibility.R$dimen
+com.jrai.flutter_keyboard_visibility.R$drawable
+com.jrai.flutter_keyboard_visibility.R$id
+com.jrai.flutter_keyboard_visibility.R$integer
+com.jrai.flutter_keyboard_visibility.R$layout
+com.jrai.flutter_keyboard_visibility.R$string
+com.jrai.flutter_keyboard_visibility.R$style
+com.jrai.flutter_keyboard_visibility.R$styleable
+com.jrai.flutter_keyboard_visibility.R
 com.lyokone.location.BuildConfig
 com.lyokone.location.FlutterLocation:
     private static final int GPS_ENABLE_REQUEST
