@@ -993,19 +993,6 @@ library {
 }
 library {
   maven_library {
-    groupId: "commons-io"
-    artifactId: "commons-io"
-    version: "2.6"
-  }
-  digests {
-    sha256: "\370w\323\004f\n\302\241B\363\206[\255\374\227\035\354~\327<t|\177\215]/Q9\312se\023"
-  }
-  repo_index {
-    value: 1
-  }
-}
-library {
-  maven_library {
     groupId: "androidx.media"
     artifactId: "media"
     version: "1.1.0"
@@ -1050,6 +1037,19 @@ library {
   }
   digests {
     sha256: "KK\345\333\203[\001]_\306/7\231\032\022\250\367\230\204E\312\006.\360IE\021%\273L\017\271"
+  }
+  repo_index {
+    value: 1
+  }
+}
+library {
+  maven_library {
+    groupId: "commons-io"
+    artifactId: "commons-io"
+    version: "2.6"
+  }
+  digests {
+    sha256: "\370w\323\004f\n\302\241B\363\206[\255\374\227\035\354~\327<t|\177\215]/Q9\312se\023"
   }
   repo_index {
     value: 1
@@ -1271,7 +1271,7 @@ library {
 }
 library {
   digests {
-    sha256: "\25725c\316\203g\341\263\223-{\034\355\020~\337?\227-4\343j\361\n\250,\322T\204\235#"
+    sha256: "\341-5\374r\332\244W\306\250#\262\033\260\306n\344^\201Z\217\350az*\301>\a\200\223F@"
   }
 }
 library_dependencies {
@@ -1751,13 +1751,13 @@ library_dependencies {
   library_dep_index: 59
 }
 library_dependencies {
-  library_index: 83
+  library_index: 82
   library_dep_index: 7
   library_dep_index: 9
 }
 library_dependencies {
-  library_index: 85
-  library_dep_index: 86
+  library_index: 84
+  library_dep_index: 85
 }
 library_dependencies {
   library_index: 87
@@ -1838,7 +1838,7 @@ module_dependencies {
   dependency_index: 82
   dependency_index: 83
   dependency_index: 84
-  dependency_index: 85
+  dependency_index: 86
   dependency_index: 87
   dependency_index: 93
   dependency_index: 54
@@ -1861,6 +1861,16 @@ repositories {
 repositories {
   maven_repo {
     url: "https://storage.googleapis.com/download.flutter.io"
+  }
+}
+repositories {
+  maven_repo {
+    url: "https://dl.google.com/dl/android/maven2/"
+  }
+}
+repositories {
+  maven_repo {
+    url: "https://repo.maven.apache.org/maven2/"
   }
 }
 repositories {

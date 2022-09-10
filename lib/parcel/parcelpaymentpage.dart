@@ -20,13 +20,10 @@ import 'package:jhatfat/bean/paymentstatus.dart';
 class PaymentParcelPage extends StatefulWidget {
   final dynamic vendor_ids;
   final dynamic cart_id;
-  final dynamic charges;
-  final dynamic distance;
   final double totalAmount;
   final List<PaymentViaParcel> tagObjs;
 
-  PaymentParcelPage(this.vendor_ids, this.cart_id, this.totalAmount,
-      this.tagObjs, this.charges, this.distance);
+  PaymentParcelPage(this.vendor_ids, this.cart_id, this.totalAmount, this.tagObjs);
 
   @override
   State<StatefulWidget> createState() {
@@ -892,15 +889,14 @@ class PaymentParcelPageState extends State<PaymentParcelPage> {
       'wallet': iswallet ? 'yes' : 'no',
       'payment_status': paymentStatus,
       'cart_id': '${cart_id}',
-      'total_price':
-      '${(double.parse('${double.parse('${widget.distance}').toStringAsFixed(2)}') * double.parse('${widget.charges}'))}',
+      'total_price':'${totalAmount}'
     }).then((value) {
       if (value != null && value.statusCode == 200) {
         var jsonData = jsonDecode(value.body);
         if (jsonData['status'] == "1") {
           CartDetail details = CartDetail.fromJson(jsonData['data']);
           hitNavigator(cart_id, '${paymentMethod}', '${paymentStatus}', cart_id,
-              '${(double.parse('${double.parse('${widget.distance}').toStringAsFixed(2)}') * double.parse('${widget.charges}'))}');
+              '${totalAmount}');
         } else {
           setState(() {
             showDialogBox = false;
@@ -930,7 +926,7 @@ class PaymentParcelPageState extends State<PaymentParcelPage> {
 
     http.post(myUri, body: {
       'cart_id': '${cart_id}',
-    }).then((value) {
+    }).then((value) async {
       setState(() {
         showDialogBox = false;
       });
@@ -938,6 +934,17 @@ class PaymentParcelPageState extends State<PaymentParcelPage> {
         return OrderPlaced(
             payment_method, payment_status, cart_id, rem_price, currency, "4");
       }));
+
+      SharedPreferences prefs =
+          await SharedPreferences.getInstance();
+
+      prefs.remove("pickupLocation");
+      prefs.remove("dropLocation");
+      prefs.remove("dlt");
+      prefs.remove("dln");
+      prefs.remove("plt");
+      prefs.remove("pln");
+
     }).catchError((e) {
       setState(() {
         showDialogBox = false;

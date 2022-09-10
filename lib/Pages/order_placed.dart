@@ -44,7 +44,7 @@ class OrderPlaced extends StatelessWidget {
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
               return HomeOrderAccount();
-            }), (Route<dynamic> route) => false);
+            }), (Route<dynamic> route) => true);
         return true; //
       },
 

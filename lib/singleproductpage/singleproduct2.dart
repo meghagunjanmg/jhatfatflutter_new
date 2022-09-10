@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:jhatfat/Routes/routes.dart';
 import 'package:jhatfat/Themes/colors.dart';
@@ -8,6 +9,8 @@ import 'package:jhatfat/baseurlp/baseurl.dart';
 import 'package:jhatfat/bean/productlistvarient.dart';
 import 'package:jhatfat/bean/searchlist.dart';
 import 'package:jhatfat/databasehelper/dbhelper.dart';
+
+import '../bean/resturantbean/restaurantcartitem.dart';
 
 class SingleProductPage_2 extends StatefulWidget {
   final ProductVarient productWithVarient;
@@ -26,6 +29,7 @@ class SingleProductPage_2 extends StatefulWidget {
 
 class SingleProductState2 extends State<SingleProductPage_2> {
   var currentIndex = 0;
+  int restrocart = 0;
 
   bool isCartCount = false;
 
@@ -58,6 +62,7 @@ class SingleProductState2 extends State<SingleProductPage_2> {
   void initState() {
     super.initState();
     getCartCount();
+    getCartItem2();
   }
 
   void getCartCount() {
@@ -73,6 +78,39 @@ class SingleProductState2 extends State<SingleProductPage_2> {
         }
       });
     });
+  }
+  void getCartItem2() async {
+    DatabaseHelper db = DatabaseHelper.instance;
+    db.getResturantOrderList().then((value) {
+      List<RestaurantCartItem> tagObjs =
+      value.map((tagJson) => RestaurantCartItem.fromJson(tagJson)).toList();
+      if(tagObjs.isNotEmpty) {
+        setState(() {
+          restrocart=1;
+        });
+      }
+    });
+  }
+
+  showMyDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return new AlertDialog(
+            content: Text(
+              'Please order Grocery and Food in seperate orders',
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+              ),
+            ],
+          );
+        }
+    );
   }
 
   @override
@@ -328,49 +366,55 @@ class SingleProductState2 extends State<SingleProductPage_2> {
                                               height: 30.0,
                                               child: TextButton(
                                                 onPressed: () {
-                                                  setState(() {
-                                                    if (widget
-                                                            .productVarintList[
-                                                                index]
-                                                            .stock >
-                                                        widget
-                                                            .productVarintList[
-                                                                index]
-                                                            .add_qnty) {
-                                                      widget
-                                                          .productVarintList[
-                                                              index]
-                                                          .add_qnty++;
-                                                      addOrMinusProduct(
-                                                          widget
-                                                              .productWithVarient
-                                                              .product_name,
-                                                          widget
-                                                              .productVarintList[
-                                                                  index]
-                                                              .unit,
-                                                          double.parse(
-                                                              '${widget.productVarintList[index].price}'),
-                                                          int.parse(
-                                                              '${widget.productVarintList[index].quantity}'),
-                                                          widget
-                                                              .productVarintList[
-                                                                  index]
-                                                              .add_qnty,
-                                                          widget
-                                                              .productVarintList[
-                                                                  index]
-                                                              .varient_image,
-                                                          widget
-                                                              .productVarintList[
-                                                                  index]
-                                                              .varient_id);
-                                                    } else {
-                                                      Toast.show(
-                                                          "No more stock available!",
-                                                       duration: Toast.lengthShort, gravity:  Toast.bottom);
-                                                    }
-                                                  });
+    if(restrocart==1){
+    print("ALREADY");
+    showMyDialog(context);
+    }
+    else {
+      setState(() {
+        if (widget
+            .productVarintList[
+        index]
+            .stock >
+            widget
+                .productVarintList[
+            index]
+                .add_qnty) {
+          widget
+              .productVarintList[
+          index]
+              .add_qnty++;
+          addOrMinusProduct(
+              widget
+                  .productWithVarient
+                  .product_name,
+              widget
+                  .productVarintList[
+              index]
+                  .unit,
+              double.parse(
+                  '${widget.productVarintList[index].price}'),
+              int.parse(
+                  '${widget.productVarintList[index].quantity}'),
+              widget
+                  .productVarintList[
+              index]
+                  .add_qnty,
+              widget
+                  .productVarintList[
+              index]
+                  .varient_image,
+              widget
+                  .productVarintList[
+              index]
+                  .varient_id);
+        } else {
+          Toast.show(
+              "No more stock available!",
+              duration: Toast.lengthShort, gravity: Toast.bottom);
+        }
+      });
+    }
                                                 },
                                                 child: Text(
                                                   'Add',
@@ -518,9 +562,13 @@ class SingleProductState2 extends State<SingleProductPage_2> {
       varient_image, varient_id) async {
     DatabaseHelper db = DatabaseHelper.instance;
     Future<int?> existing = db.getcount(int.parse('${varient_id}'));
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? store_name = prefs.getString('store_name');
+
     existing.then((value) {
       var vae = {
         DatabaseHelper.productName: product_name,
+        DatabaseHelper.storeName: store_name,
         DatabaseHelper.price: (price * itemCount),
         DatabaseHelper.unit: unit,
         DatabaseHelper.quantitiy: quantity,

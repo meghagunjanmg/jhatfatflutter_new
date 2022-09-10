@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:jhatfat/HomeOrderAccount/home_order_account.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -17,6 +18,7 @@ import 'package:jhatfat/baseurlp/baseurl.dart';
 import 'package:jhatfat/parcel/PickMap.dart';
 import 'package:jhatfat/parcel/parcel_details.dart';
 
+import '../HomeOrderAccount/Home/UI/home2.dart';
 import 'checkoutparcel.dart';
 
 
@@ -171,6 +173,14 @@ class AddressTile2 extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: CustomAppBar(
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.push(context,MaterialPageRoute(builder: (context) => new HomeOrderAccount()));
+              /* Write listener code here */ },
+            child: Icon(
+              Icons.arrow_back,  // add custom icons also
+            ),
+          ),
           titleWidget: Text(
             'Set Pick & Drop Location',
             style: TextStyle(fontSize: 16.7, color: black_color),
@@ -244,13 +254,11 @@ class AddressTile2 extends StatelessWidget {
             ),
           ),
         ),
-
-        Padding(
-          padding: const EdgeInsets.only(bottom: 200,left: 50,right: 50),
-        ),
-        Container(
+      Container(
           alignment: Alignment.center,
           height: 50,
+          width: 20,
+          margin: const EdgeInsets.all(12),
           child:
           Row(
             children:
@@ -270,9 +278,9 @@ class AddressTile2 extends StatelessWidget {
            child: RichText(
               text: TextSpan(
                 text: "By confirming i accept this order does not contain illegal/restricted items.\nDelivery partner may ask to verify the contents of the package and could \nchoose to refuse the task if the items are not verified",
-                style: TextStyle(color: Colors.black, fontSize: 12),
+                style: TextStyle(color: Colors.black, fontSize: 10),
                 children: <TextSpan>[
-                  TextSpan(text: ' Terms & Condition', style: TextStyle( fontSize: 12,color: Colors.green)),
+                  TextSpan(text: ' Terms & Condition', style: TextStyle( fontSize: 10,color: Colors.green)),
                 ],
               ),
             ),
@@ -303,78 +311,64 @@ class AddressTile2 extends StatelessWidget {
               ],  //Text// Checkbox
             ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(18.0),
-        child: (value) ?
-        Container(
-          alignment: Alignment.center,
-          height: 150,
-          child:
-          ElevatedButton(
-            style:
-            ButtonStyle(
-              padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 20,horizontal: 100)),
-              backgroundColor:
-              MaterialStateProperty.all<Color>(kMainColor),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ParcelDetails(
-                          54,
-                          "jhatfat",
-                          22,
-                          pickup,
-                          pickuplat,
-                          pickuplng,
-                          drop,
-                          droplat,
-                          droplng,
-                          "id",
-                          20,
-                          20.000000)));
-            },
-          child: Text(
-            'Continue',
-            style:
-            TextStyle(color: kWhiteColor, fontWeight: FontWeight.w400),
-          ),
-        )
-        )
-            :
-        Container(
-          alignment: Alignment.center,
-            height: 150,
-            child:
-            ElevatedButton(
-            style:
-              ButtonStyle(
+        (value) ?
+          Container(
+              alignment: Alignment.center,
+              height: 150,
+              margin: EdgeInsets.all(12),
+              child:
+              ElevatedButton(
+                style:
+                ButtonStyle(
                   padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 20,horizontal: 100)),
                   backgroundColor:
-                  MaterialStateProperty.all<Color>(Colors.grey),
+                  MaterialStateProperty.all<Color>(kMainColor),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
-              ),),
+                  ),),
+                onPressed: () {
+                  callApi(pickup,pickuplat,pickuplng,drop,droplat,droplng);
 
-    onPressed: () {
+                },
+                child: Text(
+                  'Continue',
+                  style:
+                  TextStyle(color: kWhiteColor, fontWeight: FontWeight.w400),
+                ),
+              )
+          )
+              :
+          Container(
+            margin: EdgeInsets.all(12),
+            alignment: Alignment.center,
+            height: 150,
+            child:
+            ElevatedButton(
+              style:
+              ButtonStyle(
+                padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 20,horizontal: 100)),
+                backgroundColor:
+                MaterialStateProperty.all<Color>(Colors.grey),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),),
 
-    },
-    child: Text(
-    'Continue',
-    style:
-    TextStyle(color: kWhiteColor, fontWeight: FontWeight.w400),
-    ),
-    ),
-        ),
-        ),
-    ],
+              onPressed: () {
+
+              },
+              child: Text(
+                'Continue',
+                style:
+                TextStyle(color: kWhiteColor, fontWeight: FontWeight.w400),
+              ),
+            ),
+          ),
+
+      ],
 
     ),
       )
@@ -383,6 +377,61 @@ class AddressTile2 extends StatelessWidget {
     );
   }
 
+  Future<void> callApi(String pickup, String pickuplat, String pickuplng, String drop, String droplat, String droplng) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    dynamic userId = prefs.getInt('user_id');
+    dynamic userphone = prefs.getString('user_phone');
+    dynamic username = prefs.getString('user_name');
+
+    var chargeList = parcel_detail2;
+    var client = http.Client();
+    Uri myUri = Uri.parse(chargeList);
+
+    client.post(myUri, body: {
+      'vendor_id':'54',
+      'source_address': pickup,
+      'source_lat': pickuplat,
+      'source_lng': pickuplng,
+      'content':parcelcontroler.text.toString(),
+      'description': instructioncontroler.text.toString(),
+      'source_phone': userphone,
+      'source_name': username,
+      'destination_address': drop,
+      'destination_lat': droplat,
+      'destination_lng': droplng,
+      'user_id': '${userId}',
+
+    }).then((value) {
+      print(value.toString());
+      if (value.statusCode == 200) {
+        var jsonData = jsonDecode(value.body);
+        if (jsonData['status'] == "1") {
+          var cart_id = jsonData['cart_id'];
+          var distance = jsonData['distance'];
+          var charges = jsonData['charges'];
+          var description = jsonData['description'];
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ParcelCheckOut(
+                      '54',
+                      "jhatfat",
+                      distance,
+                      pickup,
+                      drop,
+                      charges,
+                      cart_id,
+                      description
+                  )));
+
+        }
+      }
+    }).catchError((e) {
+      print(e);
+      //pr.hide();
+    });
+  }
 
   double calculateDistance(lat1, lon1, lat2, lon2) {
     var p = 0.017453292519943295;

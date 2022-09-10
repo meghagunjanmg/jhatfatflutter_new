@@ -21,6 +21,8 @@ import 'package:jhatfat/databasehelper/dbhelper.dart';
 import 'package:jhatfat/restaturantui/pages/restaurant.dart';
 import 'package:jhatfat/restaturantui/widigit/column_builder.dart';
 
+import '../bean/cartitem.dart';
+
 class SearchRestaurantStore extends StatefulWidget {
   dynamic currencySymbol;
 
@@ -584,6 +586,8 @@ class SearchRestaurantStoreState extends State<SearchRestaurantStore> {
       ),
     );
   }
+
+
 
   hitNavigator(BuildContext context, vendor_name, vendor_id, distance,
       StoresRestaurant nearStor) async {
@@ -1353,6 +1357,9 @@ Future productDescriptionModalBottomSheet(context, height, SearchProuduct item,
             setAddOrMinusProdcutQty(SearchVaritant items, BuildContext context,
                 index, produtId, productName, qty) async {
               print('tb - ${qty}');
+
+
+
               DatabaseHelper db = DatabaseHelper.instance;
               db.getRestProductcount('${items.variant_id}').then((value) {
                 print('value d - $value');
@@ -2268,4 +2275,5 @@ Future productDescriptionModalBottomSheet(context, height, SearchProuduct item,
           },
         );
       });
+
 }

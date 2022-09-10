@@ -14,95 +14,35 @@ import 'package:jhatfat/Routes/routes.dart';
 import 'package:jhatfat/Themes/colors.dart';
 import 'package:jhatfat/Themes/style.dart';
 import 'package:location/location.dart' as loc;
+import 'package:toast/toast.dart';
+
+import 'bean/cartitem.dart';
+import 'databasehelper/dbhelper.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
-  //setFirebase();
+
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool? result = prefs.getBool('islogin');
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: kMainTextColor.withOpacity(0.5),
   ));
+  await PushNotificationService().setupInteractedMessage();
+
   runApp(
       Phoenix(child: (result != null && result) ? GoMarketHome() : GoMarket()));
+
+
+  RemoteMessage? initialMessage =
+  await FirebaseMessaging.instance.getInitialMessage();
+  if (initialMessage != null) {
+    // App received a notification when it was killed
+  }
 }
 
-//FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-//
-// void setFirebase() async {
-//
-//   FirebaseMessaging messaging = FirebaseMessaging();
-//   iosPermission(messaging);
-//   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-//   var initializationSettingsAndroid =
-//   AndroidInitializationSettings('logo_user');
-//   var initializationSettingsIOS = IOSInitializationSettings(
-//       onDidReceiveLocalNotification: onDidReceiveLocalNotification);
-//   var initializationSettings = InitializationSettings(
-//       android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
-//   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-//       onSelectNotification: selectNotification);
-//   messaging.getToken().then((value) {
-//     debugPrint('token: $value');
-//   });
-//   messaging.configure(
-//       onMessage: (Map<String, dynamic> message) async {
-//         _showNotification(
-//             flutterLocalNotificationsPlugin,
-//             '${message['notification']['title']}',
-//             '${message['notification']['body']}');
-//       },
-//       onBackgroundMessage: myBackgroundMessageHandler,
-//       onLaunch: (Map<String, dynamic> message) async {},
-//       onResume: (Map<String, dynamic> message) async {});
-// }
-//
-// Future onDidReceiveLocalNotification(
-//     int id, String title, String body, String payload) async {
-//   // var message = jsonDecode('${payload}');
-//   _showNotification(flutterLocalNotificationsPlugin, '${title}', '${body}');
-// }
-//
-// Future<void> _showNotification(
-//     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
-//     dynamic title,
-//     dynamic body) async {
-//   const AndroidNotificationDetails androidPlatformChannelSpecifics =
-//   AndroidNotificationDetails('7458', 'Notify', 'Notify On Shopping',
-//       importance: Importance.max,
-//       priority: Priority.high,
-//       ticker: 'ticker');
-//   const IOSNotificationDetails iOSPlatformChannelSpecifics =
-//   IOSNotificationDetails(presentSound: false);
-//   // IOSNotificationDetails iosDetail = IOSNotificationDetails(presentAlert: true);
-//
-//   const NotificationDetails platformChannelSpecifics = NotificationDetails(
-//       android: androidPlatformChannelSpecifics,
-//       iOS: iOSPlatformChannelSpecifics);
-//   await flutterLocalNotificationsPlugin.show(
-//       0, '${title}', '${body}', platformChannelSpecifics,
-//       payload: 'item x');
-// }
-//
-// Future selectNotification(String payload) async {}
-//
-// Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) async {
-//   _showNotification(
-//       flutterLocalNotificationsPlugin,
-//       '${message['notification']['title']}',
-//       '${message['notification']['body']}');
-// }
-//
-// void iosPermission(firebaseMessaging) {
-//   firebaseMessaging.requestNotificationPermissions(
-//       IosNotificationSettings(sound: true, badge: true, alert: true));
-//   firebaseMessaging.onIosSettingsRegistered.listen((event) {
-//     print('${event.provisional}');
-//   });
-// }
-
 class GoMarket extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -124,6 +64,7 @@ class GoMarket extends StatelessWidget {
 }
 
 class GoMarketHome extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -142,7 +83,82 @@ class GoMarketHome extends StatelessWidget {
       routes: PageRoutes().routes(),
     );
   }
-
-
-
 }
+
+
+
+class PushNotificationService {
+  Future<void> setupInteractedMessage() async {
+    await Firebase.initializeApp();
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      if (message.data['type'] == 'chat') {
+        // Navigator.pushNamed(context, '/chat',
+        //     arguments: ChatArguments(message));
+      }
+    });
+    await enableIOSNotifications();
+    await registerNotificationListeners();
+  }
+
+  registerNotificationListeners() async {
+    AndroidNotificationChannel channel = androidNotificationChannel();
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
+    var androidSettings =
+    new AndroidInitializationSettings('app_icon');
+
+    var iOSSettings = IOSInitializationSettings(
+      requestSoundPermission: false,
+      requestBadgePermission: false,
+      requestAlertPermission: false,
+    );
+    var initSetttings =
+    InitializationSettings(android: androidSettings, iOS: iOSSettings);
+    flutterLocalNotificationsPlugin.initialize(initSetttings,
+        onSelectNotification: (message) async {
+
+        });
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage? message) {
+      print(message);
+      RemoteNotification? notification = message!.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              '123456', // id
+              'High Importance Notifications',
+              icon: android.smallIcon,
+              priority: Priority.high,
+              playSound: true,
+            ),
+          ),
+        );
+      }
+    });
+  }
+}
+enableIOSNotifications() async {
+  await FirebaseMessaging.instance
+      .setForegroundNotificationPresentationOptions(
+    alert: true, // Required to display a heads up notification
+    badge: true,
+    sound: true,
+  );
+}
+androidNotificationChannel() => const AndroidNotificationChannel(
+  '123456', // id
+  'High Importance Notifications', // description
+  importance: Importance.max,
+  playSound: true,
+);
+
+

@@ -32,43 +32,40 @@ class CardContent extends StatelessWidget {
           );
     },
       child: Container(
-          height: 200,
-          width: 200,
-          child: Column(
-            mainAxisSize:MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-
-              Container(
-                height: 60,
-                width: 90,
+          height: 120,
+          width: 120,
+          child:
+            Card(
+            elevation: 2,
+            child: Container(
+                height: 120,
+                width: 120,
                 child: Image.network(
                   '$image',
-                  height: 50,
-                  width: 50,
+                  height: 120,
+                  width: 120,
                   fit: BoxFit.fill,
                   alignment: Alignment.center,
                 ),
               ),
 
-              Padding(
-                padding: const EdgeInsets.only(left: 0.0, right: 0.0,top: 5,bottom: 5),
-                child: Text(
-                  "$text",
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  style: const TextStyle(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w700,
-                      fontStyle: FontStyle.normal,
-                      wordSpacing: 0,
-                      height: 1),
-                ),
-              ),
-            ],
-          )
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 0.0, right: 0.0,top: 5,bottom: 5),
+              //   child: Text(
+              //     "$text",
+              //     textAlign: TextAlign.center,
+              //     overflow: TextOverflow.ellipsis,
+              //     maxLines: 2,
+              //     style: const TextStyle(
+              //         fontSize: 12.0,
+              //         fontWeight: FontWeight.w700,
+              //         fontStyle: FontStyle.normal,
+              //         wordSpacing: 0,
+              //         height: 1),
+              //   ),
+              // ),
+            )
+
       )
       );
 
@@ -99,7 +96,11 @@ class CardContent extends StatelessWidget {
 
 
 
-    } else if (ui_type == "pharmacy" ||
+    }
+
+
+
+      else if (ui_type == "pharmacy" ||
         ui_type == "Pharmacy" ||
         ui_type == "3") {
       prefs.setString("vendor_cat_id", '${vendor_category_id}');

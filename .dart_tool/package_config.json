@@ -200,6 +200,24 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "flutter_keyboard_visibility",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_keyboard_visibility-5.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_keyboard_visibility_platform_interface",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_keyboard_visibility_platform_interface-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "flutter_keyboard_visibility_web",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_keyboard_visibility_web-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_launcher_icons",
       "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_launcher_icons-0.10.0",
       "packageUri": "lib/",
@@ -270,6 +288,12 @@
       "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/packages/flutter_test",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+    },
+    {
+      "name": "flutter_typeahead",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_typeahead-3.2.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "flutter_web_plugins",
@@ -848,7 +872,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2022-09-05T19:41:21.892112Z",
+  "generated": "2022-09-08T08:19:00.554128Z",
   "generator": "pub",
   "generatorVersion": "2.18.0"
 }

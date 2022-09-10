@@ -4,7 +4,9 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:geocoder2/geocoder2.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart' as http;
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,6 +30,7 @@ import 'package:jhatfat/restaturantui/pages/rasturantlistpage.dart';
 import 'package:jhatfat/restaturantui/pages/recentproductorder.dart';
 import 'package:jhatfat/restaturantui/pages/restaurant.dart';
 import 'package:jhatfat/restaturantui/searchResturant.dart';
+import '../../bean/venderbean.dart';
 
 class Restaurant extends StatefulWidget {
   final String? pageTitle;
@@ -69,7 +72,7 @@ class RestaurantState extends State<Restaurant> {
 
   @override
   void initState() {
-
+    _getDemoLocation();
     super.initState();
     _hitServices();
 
@@ -456,7 +459,9 @@ class RestaurantState extends State<Restaurant> {
                     ),
                   ),
                   flexibleSpace: FlexibleSpaceBar(
-                    background: Container(
+                    background:
+
+                    Container(
                       padding: EdgeInsets.only(
                           left: fixPadding,
                           right: fixPadding,
@@ -468,56 +473,72 @@ class RestaurantState extends State<Restaurant> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      type: PageTransitionType.rightToLeft,
-                                      child: SearchRestaurantStore(
-                                          currencySymbol)))
-                              .then((value) {
-                            getCartCount();
-                          });
+                          // Navigator.push(
+                          //         context,
+                          //         PageTransition(
+                          //             type: PageTransitionType.rightToLeft,
+                          //             child: SearchRestaurantStore(
+                          //                 currencySymbol)))
+                          //     .then((value) {
+                          //   getCartCount();
+                          // });
                         },
-                        child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 20.0),
-                          padding: EdgeInsets.symmetric(
-                              vertical: 6.0, horizontal: 10.0),
-                          decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(color: kCardBackgroundColor),
-                              ],
-                              borderRadius: BorderRadius.circular(30.0),
-                              color: kCardBackgroundColor,
-                              border: Border.all(color: kCardBackgroundColor)),
-                          child: Padding(
-                            padding: EdgeInsets.all(fixPadding),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-//                                  Icon(
-//                                    Icons.search,
-//                                    color: kMainColor,
-//                                    size: 20.0,
-//                                  ),
-                                ImageIcon(
-                                  AssetImage('images/icons/ic_search.png'),
-                                  color: Colors.black,
-                                  size: 16,
+                        child:
+
+                        Container(
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width * 0.85,
+                          height: 52,
+                          padding: EdgeInsets.only(left: 5),
+
+                          child: TypeAheadField(
+                            textFieldConfiguration: TextFieldConfiguration(
+                              autofocus: false,
+                              style:
+                              DefaultTextStyle.of(context)
+                                  .style
+                                  .copyWith(fontStyle: FontStyle.italic),
+                              decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                    borderSide: BorderSide(color: Colors.black)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                    borderSide: BorderSide(color: Colors.black)),
+                                prefixIcon: Icon(
+                                  Icons.search,
+                                  color: Colors.white,
                                 ),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(left: fixPadding * 2),
-                                  child: Text(
-                                    'Do you want find something?',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline6!
-                                        .copyWith(color: kHintColor),
-                                  ),
-                                ),
-                              ],
+                                hintText: 'Search Restaurant...',
+                              ),
                             ),
+                            suggestionsCallback: (pattern) async {
+                              return await BackendService.getSuggestions(pattern,lat,lng);
+                            },
+                            itemBuilder: (context, Vendors suggestion) {
+                              return ListTile(
+                                  title: Text('${suggestion.str1}'),
+                                  subtitle: Text('${suggestion.str2}'
+                                  )
+                              );
+                            },
+                            onSuggestionSelected: (Vendors detail) async {
+                              for(int i=0;i<nearStores.length;i++)
+                              {
+                                if(nearStores.elementAt(i).vendor_id == detail.vendorId)
+                                {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Restaurant_Sub(
+                                                  nearStores.elementAt(i), currencySymbol)));
+                                }
+                              }
+                            },
                           ),
                         ),
                       ),
@@ -590,7 +611,7 @@ class RestaurantState extends State<Restaurant> {
                                               BorderRadius.circular(10.0),
                                         ),
                                         child: Image.network(
-                                          '${imageBaseUrl}${listImage[index].banner_image}',
+                                          '${imageBaseUrl}${listImage[index].bannerImage}',
                                           fit: BoxFit.fill,
                                         ),
                                       ),
@@ -1394,26 +1415,43 @@ class RestaurantState extends State<Restaurant> {
     String? longi = prefs.getString('lng');
     lat = double.parse(lati!);
     lng = double.parse(longi!);
-    GeoData data = await Geocoder2.getDataFromCoordinates(
-        latitude: lat,
-        longitude: lng,
-        googleMapApiKey:apiKey);
 
-      if (data.city != null && data.city.isNotEmpty) {
-        setState(() {
-          this.lat = lat;
-          this.lng = lng;
-          String city = '${data.city}';
-          cityName = '${city.toUpperCase()} (${data.city})';
-        });
-      } else if (data.state != null &&
-          data.state.isNotEmpty) {
-        this.lat = lat;
-        this.lng = lng;
-        String city = '${data.state}';
-        cityName = '${data.state}';
-      }
-    }
+    print("LATLONG" + lat.toString() + lng.toString());
+    List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
+
+    print("LATLONG" + placemarks.toString());
+
+    setState(() {
+      cityName = (placemarks
+          .elementAt(0)
+          .subLocality
+          .toString()) + " ( " + (placemarks
+          .elementAt(0)
+          .locality
+          .toString()) + " )".toUpperCase();
+    });
+  }
+    //
+    // GeoData data = await Geocoder2.getDataFromCoordinates(
+    //     latitude: lat,
+    //     longitude: lng,
+    //     googleMapApiKey:apiKey);
+    //
+    //   if (data.city != null && data.city.isNotEmpty) {
+    //     setState(() {
+    //       this.lat = lat;
+    //       this.lng = lng;
+    //       String city = '${data.city}';
+    //       cityName = '${city.toUpperCase()} (${data.city})';
+    //     });
+    //   } else if (data.state != null &&
+    //       data.state.isNotEmpty) {
+    //     this.lat = lat;
+    //     this.lng = lng;
+    //     String city = '${data.state}';
+    //     cityName = '${data.state}';
+    //   }
+    // }
   }
 
   double calculateDistance(lat1, lon1, lat2, lon2){
@@ -1424,6 +1462,37 @@ class RestaurantState extends State<Restaurant> {
             (1 - c((lon2 - lon1) * p))/2;
     return 12742 * asin(sqrt(a));
   }
+class BackendService {
+  static Future<List<Vendors>> getSuggestions(String query,double lat,double lng) async {
+    if (query.isEmpty && query.length < 4) {
+      print('Query needs to be at least 3 chars');
+      return Future.value([]);
+    }
+
+
+    var url = restSearch_key;
+    Uri myUri = Uri.parse(url);
+    var response = await http.post(myUri, body: {
+      'lat': lat.toString(),
+      'lng': lng.toString(),
+      'prod_name': query
+    });
+
+    List<Vendors> vendors = [];
+
+    if (response.statusCode == 200) {
+      Iterable json1 = jsonDecode(response.body)['vendor'];
+
+
+      if (json1.isNotEmpty) {
+        vendors.clear();
+        vendors =
+        List<Vendors>.from(json1.map((model) => Vendors.fromJson(model)));
+      }
+    }
+    return Future.value(vendors);
+  }
+}
 
   String calculateTime(lat1, lon1, lat2, lon2){
     double kms = calculateDistance(lat1, lon1, lat2, lon2);

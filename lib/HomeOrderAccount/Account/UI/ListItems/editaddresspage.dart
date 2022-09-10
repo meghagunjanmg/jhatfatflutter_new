@@ -211,304 +211,302 @@ class EditAddresspageState extends State<EditAddresspage> {
         backgroundColor: Colors.white,
         titleSpacing: 0.0,
         title: Text(
-          'Edit Address',
+          'Update Address',
           style: Theme.of(context).textTheme.bodyText1,
         ),
       ),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height - 77,
-        child: Column(
-          children: [
-            Container(
-              height: (MediaQuery.of(context).size.height - 77) * 0.9,
-              // padding: EdgeInsets.symmetric(horizontal: 30),
-              child: Stack(
-                children: [
-                  SingleChildScrollView(
-                    primary: true,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.95,
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            border: Border.all(color: kHintColor, width: 1),
+      body:
+      SingleChildScrollView(
+        child:
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height - 10,
+          child: Column(
+            children: [
+              Container(
+                height: (MediaQuery.of(context).size.height - 77) * 0.6,
+                child: Stack(
+                  children: [
+                    SingleChildScrollView(
+                      primary: true,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 30,
                           ),
-                          child: DropdownButton<String>(
-                            hint: Text(addressType),
-                            isExpanded: true,
-                            underline: Container(
-                              height: 0.0,
-                              color: scaffoldBgColor,
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.95,
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              border: Border.all(color: kHintColor, width: 1),
                             ),
-                            items: addressTyp.map((value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                addressType = value!;
-                              });
-                              print(addressType);
-                            },
+                            child: DropdownButton<String>(
+                              hint: Text(addressType),
+                              isExpanded: true,
+                              underline: Container(
+                                height: 0.0,
+                                color: scaffoldBgColor,
+                              ),
+                              items: addressTyp.map((value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  addressType = value!;
+                                });
+                                print(addressType);
+                              },
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.45,
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                border: Border.all(color: kHintColor, width: 1),
-                              ),
-                              child: DropdownButton<CityList>(
-                                hint: Text(
-                                  selectCity,
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 1,
-                                ),
-                                isExpanded: true,
-                                underline: Container(
-                                  height: 0.0,
-                                  color: scaffoldBgColor,
-                                ),
-                                items: cityListt.map((value) {
-                                  return DropdownMenuItem<CityList>(
-                                    value: value,
-                                    child: Text(value.city_name,
-                                        overflow: TextOverflow.clip),
-                                  );
-                                }).toList(),
-                                onChanged: (value) {
-                                  setState(() {
-                                    selectCity = value!.city_name;
-                                    selectCityId = value.city_id;
-                                    areaList.clear();
-                                    selectAreaId = '';
-                                    selectArea = 'Select near by area';
-                                  });
-                                  getAreaList(value!.city_id);
-                                  print(value);
-                                },
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.45,
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                border: Border.all(color: kHintColor, width: 1),
-                              ),
-                              child: DropdownButton<AreaList>(
-                                hint: Text(
-                                  selectArea,
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 1,
-                                ),
-                                isExpanded: true,
-                                underline: Container(
-                                  height: 0.0,
-                                  color: scaffoldBgColor,
-                                ),
-                                items: areaList.map((values) {
-                                  return DropdownMenuItem<AreaList>(
-                                    value: values,
-                                    child: Text(
-                                      values.area_name,
-                                      overflow: TextOverflow.clip,
-                                    ),
-                                  );
-                                }).toList(),
-                                onChanged: (area) {
-                                  setState(() {
-                                    selectArea = area!.area_name;
-                                    selectAreaId = area.area_id;
-                                  });
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.45,
-                              child: EntryField(
-                                  textCapitalization: TextCapitalization.words,
-                                  hint: 'house No',
+                          SizedBox(
+                            height: 15,
+                          ),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.45,
+                                child:
+                                TextFormField(
                                   controller: houseController,
                                   maxLines: 1,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide:
-                                        BorderSide(color: kHintColor, width: 1),
-                                  )),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.45,
-                              child: EntryField(
-                                  textCapitalization: TextCapitalization.words,
-                                  hint: 'Enter your pincode or zipcode',
-                                  controller: pincodeController,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide:
-                                        BorderSide(color: kHintColor, width: 1),
-                                  )),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.95,
-                          child: EntryField(
-                              textCapitalization: TextCapitalization.words,
-                              hint: 'state',
-                              controller: stateController,
-                              maxLines: 1,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide:
-                                    BorderSide(color: kHintColor, width: 1),
-                              )),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: EntryField(
-                              textCapitalization: TextCapitalization.words,
-                              hint: 'Address Line 1',
-                              controller: streetController,
-                              minLines: 5,
-                              contentPadding:
-                                  EdgeInsets.only(left: 20, top: 20, bottom: 0),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide:
-                                    BorderSide(color: kHintColor, width: 1),
-                              )),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Positioned.fill(
-                      child: Visibility(
-                    visible: showDialogBox,
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height - 100,
-                        alignment: Alignment.center,
-                        child: SizedBox(
-                          height: 120,
-                          width: MediaQuery.of(context).size.width * 0.9,
-                          child: Material(
-                            elevation: 5,
-                            borderRadius: BorderRadius.circular(20),
-                            clipBehavior: Clip.hardEdge,
-                            child: Container(
-                              color: white_color,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  CircularProgressIndicator(),
-                                  SizedBox(
-                                    width: 20,
+                                  decoration: InputDecoration(
+                                    hintText:'house No',
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderSide:
+                                      BorderSide(color: Colors.black, width: 1),
+                                    ),
+                                    hintStyle: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: kHintColor,
+                                        fontSize: 16),
                                   ),
-                                  Text(
-                                    'Loading please wait!....',
-                                    style: TextStyle(
-                                        color: kMainTextColor,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 20),
-                                  )
-                                ],
+                                ),
+
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.45,
+                                child:
+                                TextFormField(
+                                  controller: pincodeController,
+                                  maxLines: 1,
+                                  decoration: InputDecoration(
+                                    hintText:'Enter your pincode or zipcode',
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderSide:
+                                      BorderSide(color: Colors.black, width: 1),
+                                    ),
+                                    hintStyle: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: kHintColor,
+                                        fontSize: 16),
+                                  ),
+                                ),
+
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.45,
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  border: Border.all(color: kHintColor, width: 1),
+                                ),
+                                child: DropdownButton<CityList>(
+                                  hint: Text(
+                                    selectCity,
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 1,
+                                  ),
+                                  isExpanded: true,
+                                  underline: Container(
+                                    height: 0.0,
+                                    color: scaffoldBgColor,
+                                  ),
+                                  items: cityListt.map((value) {
+                                    return DropdownMenuItem<CityList>(
+                                      value: value,
+                                      child: Text(value.city_name,
+                                          overflow: TextOverflow.clip),
+                                    );
+                                  }).toList(),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectCity = value!.city_name;
+                                      selectCityId = value.city_id;
+                                      areaList.clear();
+                                      selectArea = 'Select near by area';
+                                      selectAreaId = '';
+                                    });
+                                    getAreaList(value!.city_id);
+                                    print(value);
+                                  },
+                                ),
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.45,
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+
+                                child:
+
+                                TextFormField(
+                                  controller: stateController,
+                                  maxLines: 1,
+                                  decoration: InputDecoration(
+                                    hintText:'state',
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderSide:
+                                      BorderSide(color: Colors.black, width: 1),
+                                    ),
+                                    hintStyle: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: kHintColor,
+                                        fontSize: 16),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child:
+                            TextFormField(
+                              controller: streetController,
+                              maxLines: 5,
+                              decoration: InputDecoration(
+                                hintText:'Address Line 1',
+                                contentPadding:
+                                EdgeInsets.only(left: 20, top: 20, bottom: 0),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide:
+                                  BorderSide(color: Colors.black, width: 1),
+                                ),
+                                hintStyle: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: kHintColor,
+                                    fontSize: 16),
+                              ),
+                            ),
+
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned.fill(
+                        child: Visibility(
+                          visible: showDialogBox,
+                          child: GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height - 100,
+                              alignment: Alignment.center,
+                              child: SizedBox(
+                                height: 120,
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                child: Material(
+                                  elevation: 5,
+                                  borderRadius: BorderRadius.circular(20),
+                                  clipBehavior: Clip.hardEdge,
+                                  child: Container(
+                                    color: white_color,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        CircularProgressIndicator(),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Text(
+                                          'Loading please wait!....',
+                                          style: TextStyle(
+                                              color: kMainTextColor,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 20),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                    ),
-                  )),
-                ],
+                        )),
+                  ],
+                ),
               ),
-            ),
-            Container(
-              height: (MediaQuery.of(context).size.height - 77) * 0.1,
-              padding: EdgeInsets.symmetric(horizontal: 30),
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: GestureDetector(
-                  onTap: () {
-                    if (addressType != null &&
-                        addressType != 'Select address type' &&
-                        selectAreaId != null &&
-                        selectAreaId != '' &&
-                        selectAreaId != null &&
-                        selectAreaId != '' &&
-                        houseController.text != null &&
-                        houseController.text != '' &&
-                        streetController.text != null &&
-                        streetController.text != '' &&
-                        pincodeController.text != null &&
-                        pincodeController.text != '' &&
-                        stateController.text != null &&
-                        stateController.text != '') {
-                      setState(() {
-                        showDialogBox = true;
-                      });
-                      addAddres(
-                          selectAreaId,
-                          selectCityId,
-                          houseController.text,
-                          '${streetController.text}${street1Controller.text}',
-                          pincodeController.text,
-                          stateController.text,
-                          context);
-                    } else {
-                      Toast.show('Enter all details carefully', duration: Toast.lengthShort, gravity:  Toast.bottom);
-                    }
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 52,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        color: kMainColor),
-                    child: Text(
-                      'Update address',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w300,
-                        color: kWhiteColor,
+              Container(
+                height: (MediaQuery.of(context).size.height - 77) * 0.1,
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: GestureDetector(
+                    onTap: () {
+                      if (addressType != null &&
+                          addressType != 'Select address type' &&
+                          houseController.text != null &&
+                          houseController.text != '' &&
+                          streetController.text != null &&
+                          streetController.text != '' &&
+                          pincodeController.text != null &&
+                          pincodeController.text != '' &&
+                          stateController.text != null &&
+                          stateController.text != '') {
+                        setState(() {
+                          showDialogBox = true;
+                        });
+                        addAddres(
+                            selectAreaId,
+                            selectCityId,
+                            houseController.text,
+                            '${streetController.text}',
+                            pincodeController.text,
+                            stateController.text,
+                            context);
+                      } else {
+                        Toast.show('Enter all details carefully', duration: Toast.lengthShort, gravity:  Toast.bottom);
+                      }
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 52,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(50)),
+                          color: kMainColor),
+                      child: Text(
+                        'Update Address',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w300,
+                          color: kWhiteColor,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -543,19 +541,23 @@ class EditAddresspageState extends State<EditAddresspage> {
           setState(() {
             showDialogBox = false;
           });
-          Toast.show('Address updated Successfully',  duration: Toast.lengthShort, gravity:  Toast.bottom);
-          Navigator.of(context).pop();
+          Navigator.pop(context);
         } else {
+          print(jsonData['message']);
           setState(() {
             showDialogBox = false;
           });
         }
       } else {
+        print(value.body.toString());
+
         setState(() {
           showDialogBox = false;
         });
       }
     }).catchError((e) {
+      print(e.toString());
+
       setState(() {
         showDialogBox = false;
       });

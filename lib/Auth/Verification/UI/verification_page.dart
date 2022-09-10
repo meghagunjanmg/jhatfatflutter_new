@@ -144,7 +144,7 @@ class _OtpVerifyState extends State<OtpVerify> {
                         children: <Widget>[
                           SizedBox(height: 10.0),
                           PinCodeTextField(
-                            autofocus: true,
+                            autofocus: false,
                             controller: _controller,
                             hideCharacter: false,
                             highlight: true,

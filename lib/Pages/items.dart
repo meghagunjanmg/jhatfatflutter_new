@@ -16,6 +16,8 @@ import 'package:jhatfat/bean/subcategorylist.dart';
 import 'package:jhatfat/databasehelper/dbhelper.dart';
 import 'package:jhatfat/singleproductpage/singleproductpage.dart';
 
+import '../bean/resturantbean/restaurantcartitem.dart';
+
 class ItemsPage extends StatefulWidget {
   final dynamic pageTitle;
   final dynamic category_name;
@@ -33,6 +35,8 @@ class ItemsPage extends StatefulWidget {
 class _ItemsPageState extends State<ItemsPage>
     with SingleTickerProviderStateMixin {
   int itemCount = 0;
+  int restrocart = 0;
+
   List<Tab> tabs = <Tab>[];
 
    dynamic pageTitle;
@@ -108,11 +112,32 @@ class _ItemsPageState extends State<ItemsPage>
     super.initState();
     hitServices();
     getCartCount();
+    getCartItem2();
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+  showMyDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return new AlertDialog(
+            content: Text(
+              'Please order Grocery and Food in seperate orders',
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+              ),
+            ],
+          );
+        }
+    );
   }
 
   void getCartCount() {
@@ -131,6 +156,20 @@ class _ItemsPageState extends State<ItemsPage>
 
     getCatC();
   }
+
+  void getCartItem2() async {
+    DatabaseHelper db = DatabaseHelper.instance;
+    db.getResturantOrderList().then((value) {
+      List<RestaurantCartItem> tagObjs =
+      value.map((tagJson) => RestaurantCartItem.fromJson(tagJson)).toList();
+      if(tagObjs.isNotEmpty) {
+        setState(() {
+          restrocart=1;
+        });
+      }
+    });
+  }
+
 
   void getCatC() async {
     DatabaseHelper db = DatabaseHelper.instance;
@@ -585,54 +624,64 @@ class _ItemsPageState extends State<ItemsPage>
                                         ),
 
                                         onPressed: () {
-                                          setState(() {
-                                            var stock = int.parse(
-                                                '${productVarientList[index].data[productVarientList[index].selectPos].stock}');
-                                            if (stock >
-                                                productVarientList[
-                                                index]
-                                                    .add_qnty) {
-                                              productVarientList[
-                                              index]
-                                                  .add_qnty++;
-                                              addOrMinusProduct
-                                                (
-                                                  productVarientList[
-                                                  index]
-                                                      .product_name,
-                                                  productVarientList[
-                                                  index]
-                                                      .data[productVarientList[
-                                                  index]
-                                                      .selectPos]
-                                                      .unit,
-                                                  double.parse(
-                                                      '${productVarientList[index].data[productVarientList[index].selectPos].price}'),
-                                                  int.parse(
-                                                      '${productVarientList[index].data[productVarientList[index].selectPos].quantity}'),
-                                                  productVarientList[
-                                                  index]
-                                                      .add_qnty,
-                                                  productVarientList[
-                                                  index]
-                                                      .data[productVarientList[
-                                                  index]
-                                                      .selectPos]
-                                                      .varient_image,
-                                                  productVarientList[
-                                                  index]
-                                                      .data[productVarientList[
-                                                  index]
-                                                      .selectPos]
-                                                      .varient_id);
-                                            } else {
-                                              // Toast.show(
-                                              //     "No more stock available!",
-                                              //     context,
-                                              //     gravity: Toast
-                                              //         .BOTTOM);
-                                            }
-                                          });
+
+    if(restrocart==1){
+    print("ALREADY");
+    showMyDialog(context);
+    }
+    else {
+      setState(() {
+        var stock = int.parse(
+            '${productVarientList[index].data[productVarientList[index]
+                .selectPos].stock}');
+        if (stock >
+            productVarientList[
+            index]
+                .add_qnty) {
+          productVarientList[
+          index]
+              .add_qnty++;
+          addOrMinusProduct
+            (
+              productVarientList[
+              index]
+                  .product_name,
+              productVarientList[
+              index]
+                  .data[productVarientList[
+              index]
+                  .selectPos]
+                  .unit,
+              double.parse(
+                  '${productVarientList[index].data[productVarientList[index]
+                      .selectPos].price}'),
+              int.parse(
+                  '${productVarientList[index].data[productVarientList[index]
+                      .selectPos].quantity}'),
+              productVarientList[
+              index]
+                  .add_qnty,
+              productVarientList[
+              index]
+                  .data[productVarientList[
+              index]
+                  .selectPos]
+                  .varient_image,
+              productVarientList[
+              index]
+                  .data[productVarientList[
+              index]
+                  .selectPos]
+                  .varient_id);
+        } else {
+          // Toast.show(
+          //     "No more stock available!",
+          //     context,
+          //     gravity: Toast
+          //         .BOTTOM);
+        }
+      });
+    }
                                         },
                                       ),
                                     )
@@ -1247,7 +1296,7 @@ class BottomSheetWidgetState extends State<BottomSheetWidget> {
     DatabaseHelper db = DatabaseHelper.instance;
     Future<int?> existing = db.getcount(int.parse('${varient_id}'));
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? storename = prefs.getString('store_name');
+    String? store_name = prefs.getString('store_name');
 
     existing.then((value) {
       var vae = {

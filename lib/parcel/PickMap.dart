@@ -311,6 +311,7 @@ class SetLocationState extends State<SetLocation> {
                     setState(() {
                       markers[MarkerId('location')] = marker;
                     });
+
                   },
                   onCameraIdle: () {
                     getMapLoc();
@@ -318,6 +319,16 @@ class SetLocationState extends State<SetLocation> {
                   onCameraMove: (post) {
                     lat = post.target.latitude;
                     lng = post.target.longitude;
+
+                    final marker = Marker(
+                      markerId: MarkerId('location'),
+                      position: LatLng(lat, lng),
+                      icon: BitmapDescriptor.defaultMarker,
+                    );
+                    setState(() {
+                      markers[MarkerId('location')] = marker;
+                    });
+
                   },
                 ),
                 // Align(

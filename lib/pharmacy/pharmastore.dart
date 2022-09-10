@@ -35,10 +35,11 @@ class StoresPharmaPageState extends State<StoresPharmaPage> {
   List<NearStores> nearStores = [];
   List<NearStores> nearStoresSearch = [];
   List<NearStores> nearStoresShimmer = [
-    NearStores("", "", "", "", "", "", "", "", "", "", "", ""),
-    NearStores("", "", "", "", "", "", "", "", "", "", "", ""),
-    NearStores("", "", "", "", "", "", "", "", "", "", "", ""),
-    NearStores("", "", "", "", "", "", "", "", "", "", "", "")
+    NearStores("", "", 0, "", "", "", "", "", "", "", "", ""),
+    NearStores("", "", 0, "", "", "", "", "", "", "", "", ""),
+    NearStores("", "", 0, "", "", "", "", "", "", "", "", ""),
+    NearStores("", "", 0, "", "", "", "", "", "", "", "", ""),
+
   ];
   double userLat = 0.0;
   double userLng = 0.0;

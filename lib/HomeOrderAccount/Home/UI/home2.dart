@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:geocoder2/geocoder2.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -32,6 +34,8 @@ import 'package:jhatfat/pharmacy/pharmastore.dart';
 import 'package:jhatfat/restaturantui/ui/resturanthome.dart';
 
 import '../../../Themes/constantfile.dart';
+import '../../../restaturantui/pages/restaurant.dart';
+import 'appcategory/appcategory.dart';
 
 
 class HomePage2 extends StatelessWidget {
@@ -39,6 +43,7 @@ class HomePage2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Home();
   }
+
 }
 
 class Home extends StatefulWidget {
@@ -47,13 +52,17 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String cityName = 'NO LOCATION SELECTED';
+  String? cityName = 'NO LOCATION SELECTED';
+  String? currency = '';
+  late List<NearStores> rest_nearStores = [];
 
   String pickImage = '';
   String subsImage = '';
-  var lat = 30.316504;
-  var lng = 78.03336;
+  String bigImage = '';
+  var lat = 30.3253;
+  var lng = 78.0413;
   List<BannerDetails> listImage = [];
+  List<BannerDetails> pickBannerImage = [];
   List<VendorList> nearStores = [];
   List<VendorList> newnearStores = [];
   List<VendorList> nearStoresShimmer = [
@@ -75,10 +84,58 @@ class _HomeState extends State<Home> {
   List<NearStores> nearStores1 = [];
   List<NearStores> nearStoresSearch1 = [];
   List<NearStores> nearStoresShimmer1 = [
-    NearStores("", "", "", "", "", "", "", "", "", "", "", ""),
-    NearStores("", "", "", "", "", "", "", "", "", "", "", ""),
-    NearStores("", "", "", "", "", "", "", "", "", "", "", ""),
-    NearStores("", "", "", "", "", "", "", "", "", "", "", "")
+    NearStores(
+        "",
+        "",
+        0,
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""),
+    NearStores(
+        "",
+        "",
+        0,
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""),
+    NearStores(
+        "",
+        "",
+        0,
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""),
+    NearStores(
+        "",
+        "",
+        0,
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "")
   ];
   List<String> listImages1 = ['', '', '', '', ''];
   double userLat = 0.0;
@@ -88,8 +145,17 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    super.initState();
     _getLocation(context);
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    messaging.getToken().then((value) {
+      print(value);
+    });
+    getCurrency();
+
+    hitRestaurantService();
+
+    super.initState();
+
   }
 
   void _getLocation(context) async {
@@ -103,77 +169,56 @@ class _HomeState extends State<Home> {
       if (isLocationServiceEnableds) {
         Position position = await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.best);
-        double lat = position.latitude;
-       /// double lat = 29.006057;
-        double lng = position.longitude;
-       /// double lng = 77.027535;
-        prefs.setString("lat", lat.toStringAsFixed(8));
-        prefs.setString("lng", lng.toStringAsFixed(8));
 
-        print("LATLONG" + lat.toString() + lng.toString());
-        List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
+        double lt = position.latitude;
+        String latstring = lt.toStringAsFixed(8); // '2.35'
+        double lats = double.parse(latstring);
 
-        print("LATLONG" + placemarks.toString());
+        double ln = position.longitude;
+        String lanstring = ln.toStringAsFixed(8); // '2.35'
+        double lngs = double.parse(lanstring);
 
-        String city;
-        placemarks.map((e) =>
-        {
+        prefs.setString("lat", latstring);
+        prefs.setString("lng", lanstring);
+
         setState(() {
-        this.lat = lat;
-        this.lng = lng;
-        String city = '${e.locality}';
-        cityName = '${city.toUpperCase()} (${e.subLocality})';
-        })
+          lat = lats;
+          lng = lngs;
         });
-        print("LATLONG" + "CITY " + cityName);
+
+        //double lat = position.latitude;
+        //double lat = 29.006057;
+        //double lng = position.longitude;
+        //double lng = 77.027535;
+
+        List<Placemark> placemarks = await placemarkFromCoordinates(lats, lngs);
+        setState(() {
+          cityName = (placemarks.elementAt(0).subLocality.toString())+" ( " + (placemarks.elementAt(0).locality.toString()) + " )".toUpperCase();
+            });
+
+        // GeoData data = await Geocoder2.getDataFromCoordinates(
+        //     latitude: lats,
+        //     longitude: lngs,
+        //     googleMapApiKey: apiKey);
+        //
+        // if (data.city != null && data.city.isNotEmpty) {
+        //   setState(() {
+        //     cityName = data.city.toUpperCase();
+        //   });
+        // } else if (data.state != null &&
+        //     data.state.isNotEmpty) {
+        //   setState(() {
+        //     cityName = data.state.toUpperCase();
+        //   });
 
 
 
 
-        GeoData data = await Geocoder2.getDataFromCoordinates(
-            latitude: lat,
-            longitude: lng,
-            googleMapApiKey:apiKey);
 
-        if (data.city != null && data.city.isNotEmpty) {
-          setState(() {
-            this.lat = lat;
-            this.lng = lng;
-            String city = '${data.city}';
-            cityName = '${city.toUpperCase()} (${data.city})';
-          });
-        } else if (data.state != null &&
-            data.state.isNotEmpty) {
-          this.lat = lat;
-          this.lng = lng;
-          String city = '${data.state}';
-          cityName = '${data.state}';
-        }
-
-
-        hitService(lat.toString(), lng.toString());
-            hitBannerUrl();
-
-
-        // final coordinates = new Coordinates(lat, lng);
-        // await Geocoder.local
-        //     .findAddressesFromCoordinates(coordinates)
-        //     .then((value) {
-        //   if (value[0].locality != null && value[0].locality.isNotEmpty) {
-        //     setState(() {
-        //       this.lat = lat;
-        //       this.lng = lng;
-        //       String city = '${value[0].locality}';
-        //       cityName = '${city.toUpperCase()} (${value[0].subLocality})';
-        //     });
-        //   } else if (value[0].subAdminArea != null &&
-        //       value[0].subAdminArea.isNotEmpty) {
-        //     this.lat = lat;
-        //     this.lng = lng;
-        //     String city = '${value[0].subAdminArea}';
-        //     cityName = '${city.toUpperCase()}';
-        //   }
-        // }).catchError((e) {});
+          hitService(lat.toString(), lng.toString());
+          hitBannerUrl();
+        pickbanner();
+          hitRestaurantService();
 
       } else {
         await Geolocator.openLocationSettings().then((value) {
@@ -233,6 +278,10 @@ class _HomeState extends State<Home> {
       if (value.statusCode == 200 && jsonData['status'] == "1") {
         preferences.setString(
             'curency', '${jsonData['data'][0]['currency_sign']}');
+
+        setState(() {
+          currency = '${jsonData['data'][0]['currency_sign']}';
+        });
       }
     }).catchError((e) {});
   }
@@ -244,16 +293,17 @@ class _HomeState extends State<Home> {
         preferredSize: Size.fromHeight(60.0),
         child: CustomAppBar(
           actions: <Widget>[
-        IconButton(
-        icon: Icon(
-          Icons.account_circle,
-          color: Colors.white,
-        ),
-        onPressed: () {
-          Navigator.pushNamed(context, PageRoutes.accountPage);
-          // do something
-        },
-      )],
+            IconButton(
+              icon: Icon(
+                Icons.account_circle,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, PageRoutes.accountPage);
+                // do something
+              },
+            )
+          ],
           color: kMainColor,
           leading: Padding(
             padding: const EdgeInsets.only(left: 20.0),
@@ -266,15 +316,16 @@ class _HomeState extends State<Home> {
           titleWidget:
           GestureDetector(
             onTap: () async {
-              print("SENDINGLATLNG  "+lat.toString()+lng.toString());
-              BackLatLng back  = await Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LocationPage(lat, lng)));
+              print("SENDINGLATLNG  " + lat.toString() + lng.toString());
+              BackLatLng back = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => LocationPage(lat, lng)));
 
               getBackResult(back.lat, back.lng);
-              },
+            },
             child: Text(
-              cityName,
+              cityName!,
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -284,8 +335,14 @@ class _HomeState extends State<Home> {
         ),
       ),
       body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
+        height: MediaQuery
+            .of(context)
+            .size
+            .height,
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
@@ -298,14 +355,18 @@ class _HomeState extends State<Home> {
                   children: <Widget>[
                     Text(
                       "Get Delivered",
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .bodyText1,
                     ),
                     SizedBox(
                       width: 5.0,
                     ),
                     Text(
                       "everything you need",
-                      style: Theme.of(context)
+                      style: Theme
+                          .of(context)
                           .textTheme
                           .bodyText1!
                           .copyWith(fontWeight: FontWeight.normal),
@@ -317,37 +378,111 @@ class _HomeState extends State<Home> {
                   height: 20
               ),
               Container(
-                width: MediaQuery.of(context).size.width * 0.85,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width * 0.85,
                 height: 52,
                 padding: EdgeInsets.only(left: 5),
-                decoration: BoxDecoration(
-                    color: scaffoldBgColor,
-                    borderRadius: BorderRadius.circular(50)),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: kHintColor,
-                    ),
-                    hintText: 'Search store...',
-                  ),
-                  controller: searchController,
-                  cursorColor: kMainColor,
-                  autofocus: false,
-                  onTap: (){
 
-                  },
+              child: TypeAheadField(
+                textFieldConfiguration: TextFieldConfiguration(
+                  autofocus: false,
+                  style: DefaultTextStyle.of(context)
+                      .style
+                      .copyWith(fontStyle: FontStyle.italic),
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        borderSide: BorderSide(color: Colors.black)),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        borderSide: BorderSide(color: Colors.black)),
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: kHintColor,
+                          ),
+                          hintText: 'Search Store,Restaurant...',
+                        ),
                 ),
+                suggestionsCallback: (pattern) async {
+                  return await BackendService.getSuggestions(pattern,lat,lng);
+                },
+                itemBuilder: (context, Vendors suggestion) {
+                  return ListTile(
+                      title: Text('${suggestion.str1}'),
+                    subtitle: Text('${suggestion.str2}'
+                    )
+                  );
+                },
+                onSuggestionSelected: (Vendors detail) async {
+                  if (detail.uiType == "grocery" || detail.uiType == "Grocery" ||
+                      detail.uiType == 1) {
+                    Navigator.push(context, MaterialPageRoute
+                      (builder: (context) =>
+                    new AppCategory(detail.vendorName.toString(), detail.vendorId, detail.distance)));
+                  }
+                  else if (detail.uiType == "resturant" ||
+                      detail.uiType == "Resturant" ||
+                      detail.uiType == 2) {
+
+                    for(int i=0;i<rest_nearStores.length;i++)
+                      {
+                      if(rest_nearStores.elementAt(i).vendor_id == detail.vendorId)
+                        {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Restaurant_Sub(
+                                          rest_nearStores.elementAt(i), currency)));
+                        }
+                      }
+                  }
+
+   },
               ),
+              ),
+              // Container(
+              //   width: MediaQuery
+              //       .of(context)
+              //       .size
+              //       .width * 0.85,
+              //   height: 52,
+              //   padding: EdgeInsets.only(left: 5),
+              //   decoration: BoxDecoration(
+              //       color: scaffoldBgColor,
+              //       borderRadius: BorderRadius.circular(50)),
+              //   child: TextFormField(
+              //     decoration: InputDecoration(
+              //       border: InputBorder.none,
+              //       prefixIcon: Icon(
+              //         Icons.search,
+              //         color: kHintColor,
+              //       ),
+              //       hintText: 'Search store...',
+              //     ),
+              //     controller: searchController,
+              //     cursorColor: kMainColor,
+              //     keyboardType: TextInputType.text,
+              //     textInputAction: TextInputAction.done,
+              //     autofocus: false,
+              //       onChanged: (value) {
+              //               if(value.length>5) callSearch();
+              //       },
+              //     onTap: () {
+              //
+              //     },
+              //   ),
+              // ),
 
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5),
+                padding: EdgeInsets.all(20),
                 child: GridView.count(
                   crossAxisCount: 3,
-                  crossAxisSpacing: 0.0,
-                  mainAxisSpacing: 0.0,
-                  //childAspectRatio: 500/200,
+                    crossAxisSpacing: 0,
+                    mainAxisSpacing: 0,
+                  childAspectRatio: 100/90,
                   controller: ScrollController(keepScrollOffset: false),
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
@@ -357,7 +492,10 @@ class _HomeState extends State<Home> {
                     return ReusableCard(
                       cardChild: CardContent(
                         image: '${imageBaseUrl}${e.categoryImage}',
-                        text: '${e.categoryName}', uiType: e.uiType, vendorCategoryId: '${e.vendorCategoryId}', context: context,
+                        text: '${e.categoryName}',
+                        uiType: e.uiType,
+                        vendorCategoryId: '${e.vendorCategoryId}',
+                        context: context,
                       ),
                     );
                   }).toList()
@@ -381,55 +519,17 @@ class _HomeState extends State<Home> {
                   }).toList(),
                 ),
               ),
-
-              Padding(
-                padding: EdgeInsets.only(top: 5, bottom: 2),
-                child: Builder(
-                  builder: (context) {
-                    return InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, PageRoutes.subscription);
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 5, vertical: 10),
-                        child: Material(
-                          borderRadius:
-                          BorderRadius.circular(20.0),
-                          clipBehavior: Clip.hardEdge,
-                          child: Container(
-                            height: 150,
-                            width: MediaQuery.of(context)
-                                .size
-                                .width *
-                                0.90,
-//                                            padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 10.0),
-                            decoration: BoxDecoration(
-                              color: white_color,
-                              borderRadius:
-                              BorderRadius.circular(20.0),
-                            ),
-                            child: Image.network(
-                              subsImage,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-
-                ),
-              ),
-
               Padding(
                 padding: EdgeInsets.only(top: 2, bottom: 2),
                 child: Builder(
                   builder: (context) {
                     return InkWell(
                       onTap: () {
-                        hitService1();
-                      },
+                        Navigator.push(context, MaterialPageRoute
+                          (builder: (context) =>
+                        new AppCategory(pickBannerImage[0].vendorName, pickBannerImage[0].vendorId, "22")));
+
+                        },
                       child: Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: 5, vertical: 10),
@@ -438,8 +538,9 @@ class _HomeState extends State<Home> {
                           BorderRadius.circular(20.0),
                           clipBehavior: Clip.hardEdge,
                           child: Container(
-                            height: 150,
-                            width: MediaQuery.of(context)
+                            height: 100,
+                            width: MediaQuery
+                                .of(context)
                                 .size
                                 .width *
                                 0.90,
@@ -462,13 +563,55 @@ class _HomeState extends State<Home> {
                 ),
               ),
 
+              Padding(
+                padding: EdgeInsets.only(top: 5, bottom: 2),
+                child: Builder(
+                  builder: (context) {
+                    return InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, PageRoutes.subscription);
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 5, vertical: 10),
+                        child: Material(
+                          borderRadius:
+                          BorderRadius.circular(20.0),
+                          clipBehavior: Clip.hardEdge,
+                          child: Container(
+                            height: 100,
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width *
+                                0.90,
+//                                            padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 10.0),
+                            decoration: BoxDecoration(
+                              color: white_color,
+                              borderRadius:
+                              BorderRadius.circular(20.0),
+                            ),
+                            child: Image.network(
+                              subsImage,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+
+                ),
+              ),
+
+
               Visibility(
                 visible: (!isFetch && listImage.length == 0) ? false : true,
                 child: Padding(
                   padding: EdgeInsets.only(top: 10, bottom: 5),
                   child: CarouselSlider(
                       options: CarouselOptions(
-                        height: 170.0,
+                        height: 200.0,
                         autoPlay: true,
                         initialPage: 0,
                         viewportFraction: 0.9,
@@ -484,7 +627,9 @@ class _HomeState extends State<Home> {
                         return Builder(
                           builder: (context) {
                             return InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                hitbannerVendor(e);
+                              },
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 5, vertical: 10),
@@ -494,7 +639,9 @@ class _HomeState extends State<Home> {
                                   BorderRadius.circular(20.0),
                                   clipBehavior: Clip.hardEdge,
                                   child: Container(
-                                    width: MediaQuery.of(context)
+                                    height: 200,
+                                    width: MediaQuery
+                                        .of(context)
                                         .size
                                         .width *
                                         0.90,
@@ -505,7 +652,7 @@ class _HomeState extends State<Home> {
                                       BorderRadius.circular(20.0),
                                     ),
                                     child: Image.network(
-                                      imageBaseUrl + e.banner_image,
+                                      imageBaseUrl + e.bannerImage,
                                       fit: BoxFit.fill,
                                     ),
                                   ),
@@ -518,8 +665,12 @@ class _HomeState extends State<Home> {
                           : listImages.map((e) {
                         return Builder(builder: (context) {
                           return Container(
+                            height: 200,
                             width:
-                            MediaQuery.of(context).size.width * 0.90,
+                            MediaQuery
+                                .of(context)
+                                .size
+                                .width * 0.90,
                             margin: EdgeInsets.symmetric(horizontal: 5.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20.0),
@@ -542,16 +693,62 @@ class _HomeState extends State<Home> {
                       }).toList()),
                 ),
               ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
 
-          children : const <Widget>[Text(
-                'For any confusion call 8178218314',
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 10),
-              )
-        ])
+
+
+              Padding(
+                padding: EdgeInsets.only(top: 2, bottom: 2),
+                child: Builder(
+                  builder: (context) {
+                    return InkWell(
+                      onTap: () {
+                        ////hitService1();
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 5, vertical: 10),
+                        child: Material(
+                          borderRadius:
+                          BorderRadius.circular(20.0),
+                          clipBehavior: Clip.hardEdge,
+                          child: Container(
+                            height: 250,
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width *
+                                0.90,
+//                                            padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 10.0),
+                            decoration: BoxDecoration(
+                              color: white_color,
+                              borderRadius:
+                              BorderRadius.circular(20.0),
+                            ),
+                            child: Image.network(
+                              bigImage,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+
+                ),
+              ),
+
+
+
+
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const <Widget>[Text(
+                    'For any assistance call 8178218314',
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 12),
+                  )
+                  ])
 
 
               // Padding(
@@ -617,76 +814,90 @@ class _HomeState extends State<Home> {
     prefs.setString("lng", lngss.toStringAsFixed(8));
     double lats = double.parse(prefs.getString('lat')!);
     double lngs = double.parse(prefs.getString('lng')!);
-    // final coordinates = new Coordinates(lats, lngs);
-    // await Geocoder.local
-    //     .findAddressesFromCoordinates(coordinates)
-    //     .then((value) {
-    //   if (value[0].locality != null && value[0].locality.isNotEmpty) {
-    //     setState(() {
-    //       this.lat = lat;
-    //       this.lng = lng;
-    //       String city = '${value[0].locality}';
-    //       cityName = '${city.toUpperCase()} (${value[0].subLocality})';
-    //     });
-    //   } else if (value[0].subAdminArea != null &&
-    //       value[0].subAdminArea.isNotEmpty) {
-    //     this.lat = lat;
-    //     this.lng = lng;
-    //     String city = '${value[0].subAdminArea}';
-    //     cityName = '${city.toUpperCase()}';
-    //   }
 
-    print("LATLONG"+lat.toString()+lng.toString());
+    print("LATLONG" + lat.toString() + lng.toString());
     List<Placemark> placemarks = await placemarkFromCoordinates(lats, lngs);
 
-    print("LATLONG"+placemarks.toString());
-
-    String city;
-    placemarks.map((e) =>
-    {
-      setState(() {
-        this.lat = lats;
-        this.lng = lngs;
-        String city = '${e.locality}';
-        cityName = '${city.toUpperCase()} (${e.subLocality})';
-      })
+    print("LATLONG" + placemarks.toString());
+    //
+    // String city;
+    // placemarks.map((e) =>
+    // {
+    //   setState(() {
+    //     this.lat = lat;
+    //     this.lng = lng;
+    //     String city = '${e.locality}';
+    //     cityName = '${city.toUpperCase()} (${e.subLocality})';
+    //   })
+    // });
+    //
+    // GeoData data = await Geocoder2.getDataFromCoordinates(
+    //     latitude: lats,
+    //     longitude: lngs,
+    //     googleMapApiKey: apiKey);
+    //
+    // if (data.city != null && data.city.isNotEmpty) {
+    //   setState(() {
+    //     lat = lats;
+    //     lng = lngs;
+    //     String city = '${data.city}';
+    //     cityName = '${city.toUpperCase()} (${data.city})';
+    //   });
+    // } else if (data.state != null &&
+    //     data.state.isNotEmpty) {
+    //   lat = lats;
+    //   lng = lngs;
+    //   String city = '${data.state}';
+    //   cityName = '${data.state}';
+    // }
+    //
+    setState(() {
+      cityName = (placemarks.elementAt(0).subLocality.toString())+" ( " + (placemarks.elementAt(0).locality.toString()) + " )".toUpperCase();
     });
-    print("LATLONG" + "CITY " + cityName);
-
-    GeoData data = await Geocoder2.getDataFromCoordinates(
-        latitude: lats,
-        longitude: lngs,
-        googleMapApiKey:apiKey);
-
-    if (data.city != null && data.city.isNotEmpty) {
-      setState(() {
-        this.lat = lat;
-        this.lng = lng;
-        String city = '${data.city}';
-        cityName = '${city.toUpperCase()} (${data.city})';
-      });
-    } else if (data.state != null &&
-        data.state.isNotEmpty) {
-      this.lat = lat;
-      this.lng = lng;
-      String city = '${data.state}';
-      cityName = '${data.state}';
-    }
 
 
 
-    hitService(lat.toString(),lng.toString());
-      hitBannerUrl();
+    hitService(lat.toString(), lng.toString());
+    hitBannerUrl();
+    pickbanner();
+
   }
 
-  void hitService(String lat,String lng) async {
+
+
+  Future<void> pickbanner() async {
+    var url2 = pickdropbanner;
+    Uri myUri2 = Uri.parse(url2);
+    var response = await http.get(myUri2);
+    try {
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body);
+        if (jsonData['status'] == "1") {
+          var tagObjsJson = jsonDecode(response.body)['data'] as List;
+          List<BannerDetails> tagObjs = tagObjsJson
+              .map((tagJson) => BannerDetails.fromJson(tagJson))
+              .toList();
+          setState(() {
+              pickBannerImage.clear();
+              pickBannerImage = tagObjs;
+            pickImage = imageBaseUrl + tagObjs[0].bannerImage;
+          });
+        }
+      }
+    } on Exception catch (_) {
+
+    }
+  }
+
+  void hitService(String lat, String lng) async {
     var endpointUrl = vendorUrl;
     Map<String, String> queryParams = {
-      'lat': lat,
-      'lng': lng
+      'lat': lat.toString(),
+      'lng': lng.toString()
     };
     String queryString = Uri(queryParameters: queryParams).query;
-    var requestUrl = endpointUrl + '?' + queryString; // result - https://www.myurl.com/api/v1/user?param1=1&param2=2
+    var requestUrl = endpointUrl + '?' +
+        queryString; // result - https://www.myurl.com/api/v1/user?param1=1&param2=2
     print(requestUrl);
     Uri myUri = Uri.parse(requestUrl);
 
@@ -709,20 +920,20 @@ class _HomeState extends State<Home> {
         }
       } on Exception catch (_) {
         Timer(Duration(seconds: 5), () {
-          hitService(lat, lng);
+          hitService(lat.toString(), lng.toString());
         });
       }
     }
 
 
-
     var endpointUrl1 = newvendorUrl;
     Map<String, String> queryParams1 = {
-      'lat': lat,
-      'lng': lng
+      'lat': lat.toString(),
+      'lng': lng.toString()
     };
     String queryString1 = Uri(queryParameters: queryParams1).query;
-    var requestUrl1 = endpointUrl1 + '?' + queryString1; // result - https://www.myurl.com/api/v1/user?param1=1&param2=2
+    var requestUrl1 = endpointUrl1 + '?' +
+        queryString1; // result - https://www.myurl.com/api/v1/user?param1=1&param2=2
     print(requestUrl1);
     Uri myUri1 = Uri.parse(requestUrl1);
     var response1 = await http.get(myUri1);
@@ -743,12 +954,11 @@ class _HomeState extends State<Home> {
         }
       } on Exception catch (_) {
         Timer(Duration(seconds: 5), () {
-          hitService(lat, lng);
+          hitService(lat.toString(), lng.toString());
         });
       }
     }
   }
-
 
 
   void hitBannerUrl() async {
@@ -792,19 +1002,20 @@ class _HomeState extends State<Home> {
       });
     });
 
-    var url2 = pickdropbanner;
-    Uri myUri2 = Uri.parse(url2);
-    var response = await http.get(myUri2);
+
+    var url3 = bigbanner;
+    Uri myUri3 = Uri.parse(url3);
+    var response3 = await http.get(myUri3);
     try {
-      if (response.statusCode == 200) {
-        var jsonData = jsonDecode(response.body);
+      if (response3.statusCode == 200) {
+        var jsonData = jsonDecode(response3.body);
         if (jsonData['status'] == "1") {
-          var tagObjsJson = jsonDecode(response.body)['data'] as List;
+          var tagObjsJson = jsonDecode(response3.body)['data'] as List;
           List<BannerDetails> tagObjs = tagObjsJson
               .map((tagJson) => BannerDetails.fromJson(tagJson))
               .toList();
           setState(() {
-            pickImage = imageBaseUrl + tagObjs[0].banner_image;
+            bigImage = imageBaseUrl + tagObjs[0].bannerImage;
           });
         }
       }
@@ -825,15 +1036,13 @@ class _HomeState extends State<Home> {
               .map((tagJson) => BannerDetails.fromJson(tagJson))
               .toList();
           setState(() {
-            subsImage = imageBaseUrl + tagObjs[0].banner_image;
+            subsImage = imageBaseUrl + tagObjs[0].bannerImage;
           });
         }
       }
     } on Exception catch (_) {
 
     }
-
-
   }
 
   void hitNavigator(context, category_name, ui_type, vendor_category_id) async {
@@ -918,34 +1127,198 @@ class _HomeState extends State<Home> {
       });
       print(e);
       Timer(Duration(seconds: 5), () {
-        hitService(lat.toString(),lng.toString());
+        hitService(lat.toString(), lng.toString());
       });
     });
 
 
     hitNavigator1(
         context,
-        lat,lng,
+        lat, lng,
         nearStores1[0].vendor_name,
         nearStores1[0].vendor_id,
         nearStores1[0].distance);
-
   }
 
+  void getData() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    setState(() {
+      cityName = pref.getString("addr")!;
+    });
+  }
+
+  void hitbannerVendor(BannerDetails detail) async {
+    print(detail.vendorName.toString());
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (detail.uiType == "grocery" || detail.uiType == "Grocery" ||
+        detail.uiType == 1) {
+      Navigator.push(context, MaterialPageRoute
+        (builder: (context) =>
+      new AppCategory(detail.vendorName, detail.vendorId, "22")));
+    }
+
+
+    else if (detail.uiType == "resturant" ||
+        detail.uiType == "Resturant" ||
+        detail.uiType == 2) {
+
+      for(int i=0;i<rest_nearStores.length;i++)
+      {
+        if(rest_nearStores.elementAt(i).vendor_id == detail.vendorId)
+        {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      Restaurant_Sub(
+                          rest_nearStores.elementAt(i), currency))
+          );
+        }
+      }
+    }
+  }
+
+  void hitRestaurantService() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    print(
+        'data - ${prefs.getString('lat')} - ${prefs.getString('lng')} - ${prefs
+            .getString('vendor_cat_id')} - ${prefs.getString('ui_type')}');
+    var url = nearByStore;
+    Uri myUri = Uri.parse(url);
+    http.post(myUri, body: {
+      'lat': '${prefs.getString('lat')}',
+      'lng': '${prefs.getString('lng')}',
+      'vendor_category_id': '12',
+      'ui_type': '2'
+    }).then((value) {
+      print('${value.statusCode} ${value.body}');
+      if (value.statusCode == 200) {
+        var jsonData = jsonDecode(value.body);
+        if (jsonData['status'] == "1") {
+          var tagObjsJson = jsonDecode(value.body)['data'] as List;
+          List<NearStores> tagObjs = tagObjsJson
+              .map((tagJson) => NearStores.fromJson(tagJson))
+              .toList();
+
+          setState(() {
+            rest_nearStores.clear();
+            rest_nearStores = tagObjs;
+          });
+          print('Response Body: - '+rest_nearStores.toString());
+
+        } else {
+
+        }
+      } else {
+
+      }
+    }).catchError((e) {
+      print(e);
+      Timer(Duration(seconds: 5), () {
+        hitRestaurantService();
+      });
+    });
+  }
+  hitNavigator1(BuildContext context,lat,lng,vendor_name, vendor_id, distance) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("pr_vendor_id", '${vendor_id}');
+    prefs.setString("pr_store_name", '${vendor_name}');
+
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      return ParcelLocation();
+    }));
+
+    // Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) =>
+    //             AddressFrom(vendor_name, vendor_id, distance)));
+  }
+
+  void callSearch() {
+    var url = Search_key;
+    Uri myUri = Uri.parse(url);
+    http.post(myUri, body: {'lat': lat.toString(),'lng':lng.toString(),'prod_name':searchController.text.toString()}).
+    then((value) {
+      if (value.statusCode == 200) {
+        var jsonData = jsonDecode(value.body);
+        print('Response Body: - ${value.body}');
+        if (jsonData['status'] == "1") {
+          var tagObjsJson = jsonDecode(value.body)['vendor'] as List;
+          List<Vendors> tagObjs = tagObjsJson
+              .map((tagJson) => Vendors.fromJson(tagJson))
+              .toList();
+          if (tagObjs.isNotEmpty) {
+                          print(tagObjs.elementAt(0).vendorName);
+          }
+        }
+      }
+    });
+  }
 }
-hitNavigator1(BuildContext context,lat,lng,vendor_name, vendor_id, distance) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setString("pr_vendor_id", '${vendor_id}');
-  prefs.setString("pr_store_name", '${vendor_name}');
+class BackendService {
+  static Future<List<Vendors>> getSuggestions(String query,double lat,double lng) async {
+    if (query.isEmpty && query.length < 2) {
+      print('Query needs to be at least 3 chars');
+      return Future.value([]);
+    }
 
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-    return ParcelLocation();
-  }));
 
-  // Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //         builder: (context) =>
-  //             AddressFrom(vendor_name, vendor_id, distance)));
+    var url = Search_key;
+    Uri myUri = Uri.parse(url);
+    var response = await http.post(myUri, body: {
+      'lat': lat.toString(),
+      'lng': lng.toString(),
+      'prod_name': query
+    });
+
+    List<Vendors> vendors = [];
+    List<Vendors> resturant = [];
+    List<Vendors> product = [];
+    List<Vendors> cat = [];
+    List<Vendors> restcat = [];
+
+    if (response.statusCode == 200) {
+      Iterable json1 = jsonDecode(response.body)['vendor'];
+      Iterable json2 = jsonDecode(response.body)['restproduct'];
+      Iterable json3 = jsonDecode(response.body)['product'];
+      Iterable json4 = jsonDecode(response.body)['cat'];
+      Iterable json5 = jsonDecode(response.body)['restcat'];
+
+
+      if (json1.isNotEmpty) {
+        vendors.clear();
+        vendors =
+        List<Vendors>.from(json1.map((model) => Vendors.fromJson(model)));
+      }
+      if (json2.isNotEmpty) {
+        resturant.clear();
+        resturant =
+        List<Vendors>.from(json2.map((model) => Vendors.fromJson(model)));
+        vendors.addAll(resturant);
+      }
+      if (json3.isNotEmpty) {
+        product.clear();
+        product =
+        List<Vendors>.from(json3.map((model) => Vendors.fromJson(model)));
+        vendors.addAll(product);
+      }
+      if (json4.isNotEmpty) {
+        cat.clear();
+        cat =
+        List<Vendors>.from(json4.map((model) => Vendors.fromJson(model)));
+        vendors.addAll(cat);
+      }
+      if (json5.isNotEmpty) {
+        restcat.clear();
+        restcat =
+        List<Vendors>.from(json5.map((model) => Vendors.fromJson(model)));
+        vendors.addAll(restcat);
+      }
+
+    }
+    return Future.value(vendors);
+  }
 }
-

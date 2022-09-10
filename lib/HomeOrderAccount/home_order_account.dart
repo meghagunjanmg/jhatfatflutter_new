@@ -11,11 +11,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jhatfat/HomeOrderAccount/Account/UI/account_page.dart';
 import 'package:jhatfat/HomeOrderAccount/Order/UI/order_page.dart';
 import 'package:jhatfat/HomeOrderAccount/offer/ui/offerui.dart';
-import 'package:jhatfat/Pages/view_cart.dart';
+import 'package:jhatfat/Pages/view_cart_d.dart';
 import 'package:jhatfat/Themes/colors.dart';
 import 'package:jhatfat/baseurlp/baseurl.dart';
 import 'package:jhatfat/restaturantui/ui/resturanthome.dart';
 
+import '../Pages/oneViewCart.dart';
 import '../parcel/ParcelLocation.dart';
 import 'Home/UI/home2.dart';
 
@@ -65,19 +66,21 @@ class _HomeOrderAccountState extends State<HomeOrderAccount> {
   }
 
   List<TabItem> tabItems = List.of([
-    new TabItem(Icons.home, "Home", Colors.blue, labelStyle: TextStyle(fontWeight: FontWeight.normal,fontSize: 12)),
-     new TabItem(Icons.restaurant, "Resturant", Colors.blue, labelStyle: TextStyle(fontWeight: FontWeight.normal,fontSize: 12)),
-     new TabItem(Icons.reorder, "Order", Colors.blue,labelStyle: TextStyle(fontWeight: FontWeight.normal,fontSize: 12)),
-    // new TabItem(Icons.account_circle, "Account", Colors.blue,labelStyle: TextStyle(fontWeight: FontWeight.normal,fontSize: 12)),
-     new TabItem(Icons.shopping_cart, "Cart", Colors.blue, labelStyle: TextStyle(fontWeight: FontWeight.bold,fontSize: 12)),
+    new TabItem(Icons.home, "Home", Colors.blue, labelStyle: TextStyle(fontWeight: FontWeight.normal,fontSize: 10)),
+     new TabItem(Icons.restaurant, "Resturant", Colors.blue, labelStyle: TextStyle(fontWeight: FontWeight.normal,fontSize: 10)),
+   ///  new TabItem(Icons.reorder, "Order", Colors.blue,labelStyle: TextStyle(fontWeight: FontWeight.normal,fontSize: 10)),
+     new TabItem(Icons.pin_drop, "Pick & Drop", Colors.blue,labelStyle: TextStyle(fontWeight: FontWeight.normal,fontSize: 10)),
+     new TabItem(Icons.shopping_cart, "Cart", Colors.blue, labelStyle: TextStyle(fontWeight: FontWeight.bold,fontSize: 10)),
   ]);
 
   final List<Widget> _children = [
      HomePage2(),
      Restaurant("Urbanby Resturant"),
-     OrderPage(),
-     //AccountPage(),
-     ViewCart(),
+     ///OrderPage(),
+     ParcelLocation(),
+
+        oneViewCart(),
+    // ViewCart(),
 
   ];
 
@@ -138,21 +141,13 @@ class _HomeOrderAccountState extends State<HomeOrderAccount> {
         Position position = await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.best);
         double lat = position.latitude;
-        //double lat = 29.006057;
         double lng = position.longitude;
-        //double lng = 77.027535;
         prefs.setString("lat", lat.toStringAsFixed(8));
         prefs.setString("lng", lng.toStringAsFixed(8));
 
-        print("LATLONG"+lat.toString()+lng.toString());
         List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
+        prefs.setString("addr", placemarks.elementAt(0).locality.toString());
 
-        print("LATLONG"+placemarks.toString());
-
-        placemarks.map((e) =>
-        {
-          prefs.setString("currentloc", (e.locality.toString())+(e.administrativeArea.toString()))
-        });
 
       } else {
         await Geolocator.openLocationSettings().then((value) {

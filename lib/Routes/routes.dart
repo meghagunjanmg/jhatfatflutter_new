@@ -12,19 +12,20 @@ import 'package:jhatfat/HomeOrderAccount/home_order_account.dart';
 import 'package:jhatfat/HomeOrderAccount/offer/ui/offerui.dart';
 import 'package:jhatfat/Maps/UI/livetrack.dart';
 import 'package:jhatfat/Maps/UI/location_page.dart';
-import 'package:jhatfat/Pages/view_cart.dart';
+import 'package:jhatfat/Pages/view_cart_d.dart';
 import 'package:jhatfat/parcel/DropMap.dart';
 import 'package:jhatfat/parcel/ParcelLocation.dart';
 import 'package:jhatfat/parcel/PickMap.dart';
 import 'package:jhatfat/pharmacy/pharmacart.dart';
 import 'package:jhatfat/restaturantui/pages/rasturantlistpage.dart';
-import 'package:jhatfat/restaturantui/resturant_cart.dart';
+import 'package:jhatfat/restaturantui/resturant_cart_d.dart';
 import 'package:jhatfat/settingpack/settings.dart';
 import 'package:jhatfat/subscription/subscription.dart';
 import 'package:jhatfat/walletrewardreffer/reffer/ui/reffernearn.dart';
 import 'package:jhatfat/walletrewardreffer/reward/ui/reward.dart';
 import 'package:jhatfat/walletrewardreffer/wallet/ui/wallet.dart';
 
+import '../Pages/oneViewCart.dart';
 import '../restaturantui/ui/resturanthome.dart';
 
 class PageRoutes {
@@ -70,12 +71,12 @@ class PageRoutes {
       supportPage: (context) => SupportPage(),
       loginNavigator: (context) => LoginNavigator(),
       orderMapPage: (context) => OrderMapPage(),
-      viewCart: (context) => ViewCart(),
+      viewCart: (context) => oneViewCart(),
       wallet: (context) => Wallet(),
       reward: (context) => Reward(),
       reffernearn: (context) => RefferScreen(),
       settings: (context) => Settings(),
-      restviewCart: (context) => RestuarantViewCart(),
+      restviewCart: (context) => oneViewCart(),
       pharmacart: (context) => PharmaViewCart(),
       offers: (context) => OfferScreen(),
       parcellocation: (context) => ParcelLocation(),

@@ -9,6 +9,8 @@ import 'package:jhatfat/bean/resturantbean/addonidlist.dart';
 import 'package:jhatfat/bean/resturantbean/popular_item.dart';
 import 'package:jhatfat/databasehelper/dbhelper.dart';
 
+import '../../bean/cartitem.dart';
+
 Future productDescriptionModalBottomSheet(context, height, PopularItem item, currencySymbol, priced) {
   int initialItemCount = 0;
   double itemPrice = 0.0;
@@ -36,6 +38,7 @@ Future productDescriptionModalBottomSheet(context, height, PopularItem item, cur
     }
   });
 
+
   return showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -43,9 +46,12 @@ Future productDescriptionModalBottomSheet(context, height, PopularItem item, cur
       builder: (BuildContext bc) {
         return StatefulBuilder(
           builder: (context, setState) {
+
             setAddOrMinusProdcutQty(PopularItem items, BuildContext context,
                 produtId, productName, qty) async {
               print('tb - ${qty}');
+
+
               DatabaseHelper db = DatabaseHelper.instance;
               db.getRestProductcount('${items.variant_id}').then((value) {
                 print('value d - $value');

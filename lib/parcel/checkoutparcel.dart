@@ -16,10 +16,9 @@ class ParcelCheckOut extends StatefulWidget {
   final dynamic distance;
   final dynamic senderAddress;
   final dynamic receiverAddress;
-  final dynamic beanDetails;
-  final dynamic distanced;
   final dynamic charges;
   final dynamic cart_id;
+  final dynamic description;
 
   ParcelCheckOut(
       this.vendor_id,
@@ -27,10 +26,11 @@ class ParcelCheckOut extends StatefulWidget {
       this.distance,
       this.senderAddress,
       this.receiverAddress,
-      this.beanDetails,
-      this.distanced,
       this.charges,
-      this.cart_id);
+      this.cart_id,
+      this.description,
+
+      );
 
   @override
   State<StatefulWidget> createState() {
@@ -169,7 +169,7 @@ class ParcelCheckoutState extends State<ParcelCheckOut> {
               alignment: Alignment.centerLeft,
               width: MediaQuery.of(context).size.width,
               padding: EdgeInsets.only(top: 20.0, bottom: 20.0, left: 10),
-              child: Text('${widget.beanDetails.toString()}'),
+              child: Text('${widget.description.toString()}'),
             ),
             SizedBox(
               height: 10,
@@ -209,7 +209,7 @@ class ParcelCheckoutState extends State<ParcelCheckOut> {
                     children: [
                       Text('Distance'),
                       Text(
-                          '${(double.parse('${double.parse('${widget.distanced}').toStringAsFixed(2)}') > 1) ? double.parse('${double.parse('${widget.distanced}').toStringAsFixed(2)}') : 1} KM'),
+                          '${double.parse('${widget.distance}')}'+' KM'),
                     ],
                   ),
                 ],
@@ -256,7 +256,7 @@ class ParcelCheckoutState extends State<ParcelCheckOut> {
                     children: [
                       Text('Parcel Charges'),
                       Text(
-                          '${currency} ${(double.parse('${double.parse('${widget.distanced}').toStringAsFixed(2)}') > 1) ? (double.parse('${double.parse('${widget.distanced}').toStringAsFixed(2)}') * double.parse('${widget.charges}')) : double.parse('${widget.charges}')}'),
+                          '${currency}'+'${widget.charges}'),
                     ],
                   ),
                 ],
@@ -336,27 +336,15 @@ class ParcelCheckoutState extends State<ParcelCheckOut> {
           List<PaymentViaParcel> tagObjs = tagObjsJson
               .map((tagJson) => PaymentViaParcel.fromJson(tagJson))
               .toList();
-          double amout = (double.parse(
-                      '${double.parse('${widget.distanced}').toStringAsFixed(2)}') >
-                  1)
-              ? (double.parse(
-                      '${double.parse('${widget.distanced}').toStringAsFixed(2)}') *
-                  double.parse('${widget.charges}'))
-              : double.parse('${widget.charges}');
-          print(
-              '${amout} - ${widget.vendor_id} - ${widget.cart_id} - ${widget.charges} - ${double.parse('${widget.distanced}').toStringAsFixed(2)} - ${tagObjs.toString()}');
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
+          double? c = double.tryParse(widget.charges.toString());
+
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
             return PaymentParcelPage(
                 widget.vendor_id,
                 widget.cart_id,
-                amout,
-                tagObjs,
-                widget.charges,
-                (double.parse(
-                            '${double.parse('${widget.distanced}').toStringAsFixed(2)}') >
-                        1)
-                    ? double.parse('${widget.distanced}').toStringAsFixed(2)
-                    : 1);
+                c!,
+                tagObjs
+            );
           }));
         }
       }

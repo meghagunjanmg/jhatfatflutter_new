@@ -96,6 +96,15 @@ class _AccountState extends State<Account> {
             }
         ),
         BuildListTile(
+            image: 'images/account/ic_orders.png',
+            text: 'Orders',
+            onTap: () async {
+              Navigator.pushNamed(context, PageRoutes.orderPage);
+            }
+        ),
+
+
+        BuildListTile(
             image: 'images/account/reffernearn.png',
             text: 'Refer n earn',
             onTap: () async {

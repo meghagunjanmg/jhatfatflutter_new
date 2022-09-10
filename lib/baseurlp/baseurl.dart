@@ -3,6 +3,7 @@ var imageBaseUrl = "http://jhatfat.umbeo.com/";
 
 var pickdropbanner = baseUrl + "parbanner";
 var subsbanner = baseUrl + "subsbanner";
+var bigbanner = baseUrl + "bigbanner";
 var registerApi = baseUrl + "user_register";
 var verifyPhone = baseUrl + "verify_phone";
 var userRegistration = baseUrl + "checkuser";
@@ -30,6 +31,9 @@ var selectAddress = baseUrl + "select_address";
 var removeAddress = baseUrl + "remove_address";
 var editAddress = baseUrl + "edit_address";
 var vendorBanner = baseUrl + "vendorbanner";
+var Search_key = baseUrl + "search";
+var restSearch_key = baseUrl + "searchrest";
+var RestSearch_key = baseUrl + "restsearch";
 var onGoingOrdersUrl = baseUrl + "ongoingorders";
 var completeOrders = baseUrl + "completed_orders1";
 var cancelOrders = baseUrl + "cancelorderhistory";

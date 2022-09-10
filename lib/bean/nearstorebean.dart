@@ -2,7 +2,7 @@ class NearStores{
 
   dynamic vendor_name;
   dynamic vendor_phone;
-  dynamic vendor_id;
+  int? vendor_id;
   dynamic vendor_logo;
   dynamic vendor_category_id;
   dynamic distance;

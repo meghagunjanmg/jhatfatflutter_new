@@ -5,8 +5,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
-  static final _databaseName = "jhatfattables.db";
-  static final _databaseVersion = 1;
+  static final _databaseName = "jhatfattable.db";
+  static final _databaseVersion = 2;
 
   static final table = 'producttable';
   static final pharmatable = 'pharmaproduct';

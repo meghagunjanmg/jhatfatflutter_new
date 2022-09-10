@@ -577,19 +577,19 @@ class ParcelDetailsState extends State<ParcelDetails> {
         var jsonData = jsonDecode(value.body);
         if (jsonData['status'] == "1") {
           var cart_id = jsonData['cart_id'];
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ParcelCheckOut(
-                      widget.vendor_id,
-                      widget.vendor_name,
-                      widget.distance,
-                      widget.senderAddress,
-                      widget.receiverAddress,
-                      beanDetails,
-                      widget.distanced,
-                      widget.charges,
-                      cart_id)));
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (context) => ParcelCheckOut(
+          //             widget.vendor_id,
+          //             widget.vendor_name,
+          //             widget.distance,
+          //             widget.senderAddress,
+          //             widget.receiverAddress,
+          //             beanDetails,
+          //             widget.distanced,
+          //             widget.charges,
+          //             cart_id)));
         }
       }
     }).catchError((e) {
@@ -632,19 +632,19 @@ class ParcelDetailsState extends State<ParcelDetails> {
         var jsonData = jsonDecode(value.body);
         if (jsonData['status'] == "1") {
           var cart_id = jsonData['cart_id'];
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ParcelCheckOut(
-                      widget.vendor_id,
-                      widget.vendor_name,
-                      widget.distance,
-                      widget.senderAddress,
-                      widget.receiverAddress,
-                      beanDetails,
-                      widget.distanced,
-                      widget.charges,
-                      cart_id)));
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (context) => ParcelCheckOut(
+          //             widget.vendor_id,
+          //             widget.vendor_name,
+          //             widget.distance,
+          //             widget.senderAddress,
+          //             widget.receiverAddress,
+          //             beanDetails,
+          //             widget.distanced,
+          //             widget.charges,
+          //             cart_id)));
 
         }
       }

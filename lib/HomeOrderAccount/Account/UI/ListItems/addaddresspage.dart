@@ -1,9 +1,13 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder2/geocoder2.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
@@ -16,7 +20,6 @@ import '../../../../Themes/constantfile.dart';
 
 class AddAddressPage extends StatefulWidget {
   final dynamic vendorId;
-
   AddAddressPage(this.vendorId);
 
   @override
@@ -44,6 +47,19 @@ class AddAddressState extends State<AddAddressPage> {
   bool showDialogBox = false;
   dynamic selectAreaId;
   dynamic selectCityId;
+  dynamic lat;
+  dynamic lng;
+  CameraPosition? kGooglePlex;
+
+
+  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+
+  bool isCard = false;
+  Completer<GoogleMapController> _controller = Completer();
+
+  var isVisible = false;
+
+  var currentAddress = '';
 
   @override
   void initState() {
@@ -54,6 +70,7 @@ class AddAddressState extends State<AddAddressPage> {
 
   void _getLocation(context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.whileInUse ||
         permission == LocationPermission.always) {
@@ -62,20 +79,23 @@ class AddAddressState extends State<AddAddressPage> {
       if (isLocationServiceEnableds) {
         Position position = await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.high);
-        double lat = position.latitude;
+         double lat = position.latitude;
         double lng = position.longitude;
-        prefs.setString("lat", lat.toStringAsFixed(8));
-        prefs.setString("lng", lng.toStringAsFixed(8));
+
+         setState(() {
+           this.lat = lat;
+           this.lng = lng;
+         });
         GeoData data = await Geocoder2.getDataFromCoordinates(
             latitude: lat,
             longitude: lng,
             googleMapApiKey:apiKey);
 
         setState(() {
-            if (data.postalCode != null && data.postalCode.isNotEmpty) {
+            if (data.postalCode.isNotEmpty) {
               pincodeController.text = data.postalCode;
             }
-            if (data.state != null && data.state.isNotEmpty) {
+            if (data.state.isNotEmpty) {
               stateController.text = data.state;
             }
           });
@@ -101,6 +121,7 @@ class AddAddressState extends State<AddAddressPage> {
     } else if (permission == LocationPermission.deniedForever) {
       await Geolocator.openAppSettings().then((value) {
         _getLocation(context);
+
       }).catchError((e) {
         Toast.show('Location permission is required!', duration: Toast.lengthShort, gravity:  Toast.bottom);
       });
@@ -164,19 +185,73 @@ class AddAddressState extends State<AddAddressPage> {
           style: Theme.of(context).textTheme.bodyText1,
         ),
       ),
-      body: Container(
+      body:
+      SingleChildScrollView(
+        child:
+      Container(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height - 77,
+        height: MediaQuery.of(context).size.height - 10,
         child: Column(
+
           children: [
             Container(
-              height: (MediaQuery.of(context).size.height - 77) * 0.9,
               child: Stack(
                 children: [
                   SingleChildScrollView(
                     primary: true,
                     child: Column(
                       children: [
+                        Container(
+                          height: 400,
+                          child:
+                          GoogleMap(
+                            gestureRecognizers: < Factory < OneSequenceGestureRecognizer >> [
+                              new Factory < OneSequenceGestureRecognizer > (
+                                    () => new EagerGestureRecognizer(),
+                              ),
+                            ].toSet(),
+                            mapType: MapType.normal,
+                            initialCameraPosition: CameraPosition(
+                              target: LatLng(lat,lng),
+                              zoom: 14.0,
+                            ),
+                            zoomControlsEnabled: true,
+                            myLocationButtonEnabled: true,
+                            compassEnabled: false,
+                            mapToolbarEnabled: false,
+                            buildingsEnabled: false,
+                            markers: markers.values.toSet(),
+                            onMapCreated: (GoogleMapController controller) {
+                              _controller.complete(controller);
+                              final marker = Marker(
+                                markerId: MarkerId('location'),
+                                position: LatLng(lat, lng),
+                                icon: BitmapDescriptor.defaultMarker,
+                              );
+                              setState(() {
+                                markers[MarkerId('location')] = marker;
+                              });
+
+                            },
+                            onCameraIdle: () {
+                              getMapLoc();
+                            },
+                            onCameraMove: (post) {
+                              lat = post.target.latitude;
+                              lng = post.target.longitude;
+
+                              final marker = Marker(
+                                markerId: MarkerId('location'),
+                                position: LatLng(lat, lng),
+                                icon: BitmapDescriptor.defaultMarker,
+                              );
+                              setState(() {
+                                markers[MarkerId('location')] = marker;
+                              });
+                            },
+                          ),
+                        ),
+
                         SizedBox(
                           height: 30,
                         ),
@@ -211,87 +286,7 @@ class AddAddressState extends State<AddAddressPage> {
                         SizedBox(
                           height: 15,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.45,
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                border: Border.all(color: kHintColor, width: 1),
-                              ),
-                              child: DropdownButton<CityList>(
-                                hint: Text(
-                                  selectCity,
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 1,
-                                ),
-                                isExpanded: true,
-                                underline: Container(
-                                  height: 0.0,
-                                  color: scaffoldBgColor,
-                                ),
-                                items: cityListt.map((value) {
-                                  return DropdownMenuItem<CityList>(
-                                    value: value,
-                                    child: Text(value.city_name,
-                                        overflow: TextOverflow.clip),
-                                  );
-                                }).toList(),
-                                onChanged: (value) {
-                                  setState(() {
-                                    selectCity = value!.city_name;
-                                    selectCityId = value.city_id;
-                                    areaList.clear();
-                                    selectArea = 'Select near by area';
-                                    selectAreaId = '';
-                                  });
-                                  getAreaList(value!.city_id);
-                                  print(value);
-                                },
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.45,
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                border: Border.all(color: kHintColor, width: 1),
-                              ),
-                              child: DropdownButton<AreaList>(
-                                hint: Text(
-                                  selectArea,
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 1,
-                                ),
-                                isExpanded: true,
-                                underline: Container(
-                                  height: 0.0,
-                                  color: scaffoldBgColor,
-                                ),
-                                items: areaList.map((values) {
-                                  return DropdownMenuItem<AreaList>(
-                                    value: values,
-                                    child: Text(
-                                      values.area_name,
-                                      overflow: TextOverflow.clip,
-                                    ),
-                                  );
-                                }).toList(),
-                                onChanged: (area) {
-                                  setState(() {
-                                    selectArea = area!.area_name;
-                                    selectAreaId = area.area_id;
-                                  });
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -342,32 +337,78 @@ class AddAddressState extends State<AddAddressPage> {
                         SizedBox(
                           height: 15,
                         ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.95,
-                          child:
-                          TextFormField(
-                            controller: stateController,
-                            maxLines: 1,
-                            decoration: InputDecoration(
-                              hintText:'state',
-                              border: OutlineInputBorder(
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.45,
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.0),
-                                borderSide:
-                                BorderSide(color: Colors.black, width: 1),
+                                border: Border.all(color: kHintColor, width: 1),
                               ),
-                              hintStyle: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  color: kHintColor,
-                                  fontSize: 16),
+                              child: DropdownButton<CityList>(
+                                hint: Text(
+                                  selectCity,
+                                  overflow: TextOverflow.clip,
+                                  maxLines: 1,
+                                ),
+                                isExpanded: true,
+                                underline: Container(
+                                  height: 0.0,
+                                  color: scaffoldBgColor,
+                                ),
+                                items: cityListt.map((value) {
+                                  return DropdownMenuItem<CityList>(
+                                    value: value,
+                                    child: Text(value.city_name,
+                                        overflow: TextOverflow.clip),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectCity = value!.city_name;
+                                    selectCityId = value.city_id;
+                                    areaList.clear();
+                                    selectArea = 'Select near by area';
+                                    selectAreaId = '';
+                                  });
+                                  getAreaList(value!.city_id);
+                                  print(value);
+                                },
+                              ),
                             ),
-                          ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.45,
+                              padding: EdgeInsets.symmetric(horizontal: 10),
 
+                              child:
+
+                              TextFormField(
+                                controller: stateController,
+                                maxLines: 1,
+                                decoration: InputDecoration(
+                                  hintText:'state',
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide:
+                                    BorderSide(color: Colors.black, width: 1),
+                                  ),
+                                  hintStyle: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: kHintColor,
+                                      fontSize: 16),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 15,
                         ),
+
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          padding: EdgeInsets.symmetric(horizontal: 10,vertical: 20),
                           child:
                           TextFormField(
                             controller: streetController,
@@ -375,7 +416,7 @@ class AddAddressState extends State<AddAddressPage> {
                             decoration: InputDecoration(
                               hintText:'Address Line 1',
                               contentPadding:
-                              EdgeInsets.only(left: 20, top: 20, bottom: 0),
+                              EdgeInsets.only(left: 20, top: 20, bottom: 20),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                                 borderSide:
@@ -399,10 +440,9 @@ class AddAddressState extends State<AddAddressPage> {
                       onTap: () {},
                       child: Container(
                         width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height - 100,
+                        height: MediaQuery.of(context).size.height,
                         alignment: Alignment.center,
                         child: SizedBox(
-                          height: 120,
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: Material(
                             elevation: 5,
@@ -485,8 +525,10 @@ class AddAddressState extends State<AddAddressPage> {
                 ),
               ),
             ),
+
           ],
         ),
+      ),
       ),
     );
   }
@@ -506,8 +548,8 @@ class AddAddressState extends State<AddAddressPage> {
       'street': '$street',
       'state': '$state',
       'pin': '$pincode',
-      'lat': '${prefs.getString('lat')}',
-      'lng': '${prefs.getString('lng')}',
+      'lat': lat,
+      'lng': lng,
       'address_type': '${addressType}',
     }).then((value) {
       print('Response Body: - ${value.body}');
@@ -533,7 +575,8 @@ class AddAddressState extends State<AddAddressPage> {
             pincodeController.clear();
             stateController.clear();
           });
-          Toast.show('Address Saved Successfully',  duration: Toast.lengthShort, gravity:  Toast.bottom);
+
+          Navigator.pop(context);
         } else {
           setState(() {
             showDialogBox = false;
@@ -551,4 +594,26 @@ class AddAddressState extends State<AddAddressPage> {
       print(e);
     });
   }
+
+  void getMapLoc() async {
+    _getCameraMoveLocation(LatLng(lat, lng));
+  }
+
+  void _getCameraMoveLocation(LatLng data) async {
+    Timer(Duration(seconds: 1), () async {
+      lat = data.latitude;
+      lng = data.longitude;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("lat", data.latitude.toStringAsFixed(8));
+      prefs.setString("lng", data.longitude.toStringAsFixed(8));
+      GeoData data1 = await Geocoder2.getDataFromCoordinates(
+          latitude: lat,
+          longitude: lng,
+          googleMapApiKey: apiKey);
+      setState(() {
+        currentAddress = data1.address;
+      });
+    });
+  }
+
 }

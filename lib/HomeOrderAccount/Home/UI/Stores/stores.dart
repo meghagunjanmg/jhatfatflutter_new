@@ -34,10 +34,10 @@ class StoresPageState extends State<StoresPage> {
   List<NearStores> nearStores = [];
   List<NearStores> nearStoresSearch = [];
   List<NearStores> nearStoresShimmer = [
-    NearStores("", "", "", "", "", "", "", "", "", "", "", ""),
-    NearStores("", "", "", "", "", "", "", "", "", "", "", ""),
-    NearStores("", "", "", "", "", "", "", "", "", "", "", ""),
-    NearStores("", "", "", "", "", "", "", "", "", "", "", "")
+    NearStores("", "", 0, "", "", "", "", "", "", "", "", ""),
+    NearStores("", "", 0, "", "", "", "", "", "", "", "", ""),
+    NearStores("", "", 0, "", "", "", "", "", "", "", "", ""),
+    NearStores("", "", 0, "", "", "", "", "", "", "", "", ""),
   ];
   List<String> listImages = ['', '', '', '', ''];
   bool isFetch = true;
@@ -597,7 +597,9 @@ class StoresPageState extends State<StoresPage> {
                   AppCategory(vendor_name, vendor_id, distance))).then((value) {
         getCartCount();
       });
-    } else {
+    }
+
+    else {
       prefs.setString("vendor_id", '${vendor_id}');
       prefs.setString("store_name", '${vendor_name}');
       Navigator.push(

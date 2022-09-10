@@ -51,6 +51,10 @@ class Vendors {
   String? about;
   String? vendorLoc;
   double? distance;
+  dynamic uiType;
+  dynamic category_name;
+  dynamic str1;
+  dynamic str2;
 
   Vendors(
       {this.vendorName,
@@ -64,7 +68,13 @@ class Vendors {
         this.onlineStatus,
         this.about,
         this.vendorLoc,
-        this.distance});
+        this.distance,
+        this.uiType,
+        this.category_name,
+        this.str1,
+        this.str2,
+
+      });
 
   Vendors.fromJson(Map<String, dynamic> json) {
     vendorName = json['vendor_name'];
@@ -79,6 +89,10 @@ class Vendors {
     about = json['about'];
     vendorLoc = json['vendor_loc'];
     distance = json['distance'];
+    uiType = json['ui_type'];
+    category_name = json['category_name'];
+    str1 = json['str1'];
+    str2 = json['str2'];
   }
 
   Map<String, dynamic> toJson() {
@@ -95,6 +109,10 @@ class Vendors {
     data['about'] = about;
     data['vendor_loc'] = vendorLoc;
     data['distance'] = distance;
+    data['ui_type'] = uiType;
+    data['category_name'] = category_name;
+    data['str1'] = str1;
+    data['str2'] = str2;
     return data;
   }
 }
