@@ -10,6 +10,7 @@ import 'package:jhatfat/bean/resturantbean/categoryresturantlist.dart';
 import 'package:jhatfat/databasehelper/dbhelper.dart';
 
 import '../../bean/cartitem.dart';
+import '../../bean/resturantbean/restaurantcartitem.dart';
 
 class JuiceList extends StatefulWidget {
   final CategoryResturant item;
@@ -32,6 +33,8 @@ class JuiceList extends StatefulWidget {
 class _JuiceListState extends State<JuiceList> {
   int currentIndex = -1;
    int grocercart = 0;
+  List<RestaurantCartItem> cartListII = [];
+
 
   _JuiceListState();
 
@@ -39,7 +42,36 @@ class _JuiceListState extends State<JuiceList> {
   void initState() {
     super.initState();
     getCartItem();
+    getResCartItem();
   }
+
+  void getResCartItem() async {
+    DatabaseHelper db = DatabaseHelper.instance;
+    db.getResturantOrderList().then((value) {
+      List<RestaurantCartItem> tagObjs =
+      value.map((tagJson) => RestaurantCartItem.fromJson(tagJson)).toList();
+      setState(() {
+        cartListII = List.from(tagObjs);
+      });
+      print('cart value :- ${cartListII.toString()}');
+      for (int i = 0; i < cartListII.length; i++) {
+        print('${cartListII[i].varient_id}');
+        db
+            .getAddOnListWithPrice(int.parse('${cartListII[i].varient_id}'))
+            .then((values) {
+          print('${values}');
+          List<AddonCartItem> tagObjsd =
+          values.map((tagJson) => AddonCartItem.fromJson(tagJson)).toList();
+          if (tagObjsd != null) {
+            setState(() {
+              cartListII[i].addon = tagObjsd;
+            });
+          }
+        });
+      }
+    });
+  }
+
   showMyDialog(BuildContext context) {
     showDialog(
         context: context,
@@ -148,17 +180,262 @@ class _JuiceListState extends State<JuiceList> {
                             left: fixPadding,
                             right: fixPadding,
                             top: fixPadding),
-                        child: Text(
+                        child:
+                        Text(
                           '(${widget.categoryListNew[index].variant[0].quantity} ${widget.categoryListNew[index].variant[0].unit})',
                           style: listItemSubTitleStyle,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
+
                       Padding(
                         padding: EdgeInsets.only(
                             top: fixPadding, left: fixPadding),
-                        child: Row(
+                        child:
+                        (widget.categoryListNew[index].variant[0]
+                            .addOnQty !=
+                            0)?
+                        Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment:
+                          CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              '${widget.currencySymbol} ${widget.categoryListNew[index].variant[0].price}',
+                              // '',
+                              style: priceStyle,
+                            ),
+                            Spacer(),
+
+                            InkWell(
+                              // onTap: decrementItem,
+                              onTap: () {
+                                {
+                                  currentIndex = index;
+                                  print(index);
+                                  DatabaseHelper db =
+                                      DatabaseHelper.instance;
+                                  db.getRestProdQty(
+                                      '${widget.categoryListNew[index].variant[0].variant_id}')
+                                      .then((value) {
+                                    if (value != null) {
+                                      setState(() {
+                                        widget.categoryListNew[index].variant[0].addOnQty = value;
+                                      });
+                                    } else {
+                                      if (widget.categoryListNew[index].variant[0].addOnQty > 0) {
+                                        setState(() {
+                                          widget.categoryListNew[index].variant[0].addOnQty = 0;
+                                        });
+                                      }
+                                    }
+                                    db.getAddOnList(
+                                        '${widget.categoryListNew[index].variant[0].variant_id}')
+                                        .then((valued) {
+                                      List<AddonList> addOnlist = [];
+                                      if (valued != null &&
+                                          valued.length > 0) {
+                                        addOnlist = valued
+                                            .map((e) =>
+                                            AddonList.fromJson(e))
+                                            .toList();
+                                        for (int i = 0;
+                                        i < widget.categoryListNew[index].addons.length;
+                                        i++) {
+                                          int ind = addOnlist.indexOf(
+                                              AddonList(
+                                                  '${widget.categoryListNew[index].addons[i].addon_id}'));
+                                          if (ind != null && ind >= 0) {
+                                            setState(() {
+                                              widget.categoryListNew[index].addons[i].isAdd =
+                                              true;
+                                            });
+                                          }
+                                        }
+                                      }
+
+                                      db.calculateTotalRestAdonA(
+                                          '${widget.categoryListNew[index].variant[0].variant_id}')
+                                          .then((value1) {
+                                        double priced = 0.0;
+                                        if (value != null) {
+                                          var tagObjsJson =
+                                          value1 as List;
+                                          dynamic totalAmount_1 =
+                                          tagObjsJson[0]['Total'];
+                                          if (totalAmount_1 != null) {
+                                            setState(() {
+                                              priced = double.parse(
+                                                  '${totalAmount_1}');
+                                            });
+                                          }
+                                        }
+                                        if(grocercart==1){
+                                          print("ALREADY");
+                                          showMyDialog(context);
+                                        }
+                                        else {
+                                          productDescriptionModalBottomSheets(
+                                              context,
+                                              grocercart,
+                                              height,
+                                              widget.categoryListNew[index],
+                                              0,
+                                              addOnlist,
+                                              widget.currencySymbol,
+                                              priced,
+                                              widget
+                                                  .onVerificationDone())
+                                              .then((value) {
+                                            widget.onVerificationDone();
+                                          });
+                                        }
+                                      });
+                                    });
+                                  });
+                                }
+                              },
+                              child: Container(
+                                height: 26.0,
+                                width: 26.0,
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.circular(
+                                      13.0),
+                                  color: (widget.categoryListNew[index].variant[0]
+                                      .addOnQty ==
+                                      0)
+                                      ? Colors.grey[300]
+                                      : kMainColor,
+                                ),
+                                child: Icon(
+                                  Icons.remove,
+                                  color: (widget.categoryListNew[index].variant[0]
+                                      .addOnQty ==
+                                      0)
+                                      ? kMainTextColor
+                                      : kWhiteColor,
+                                  size: 15.0,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  right: 8.0, left: 8.0),
+                              child: Text(
+                                  '${widget.categoryListNew[index].variant[0]
+                                      .addOnQty}'),
+                            ),
+                            InkWell(
+                              // onTap: incrementItem(),
+                              onTap: () {
+                                {
+                                  currentIndex = index;
+                                  print(index);
+                                  DatabaseHelper db =
+                                      DatabaseHelper.instance;
+                                  db.getRestProdQty(
+                                      '${widget.categoryListNew[index].variant[0].variant_id}')
+                                      .then((value) {
+                                    if (value != null) {
+                                      setState(() {
+                                        widget.categoryListNew[index].variant[0].addOnQty = value;
+                                      });
+                                    } else {
+                                      if (widget.categoryListNew[index].variant[0].addOnQty > 0) {
+                                        setState(() {
+                                          widget.categoryListNew[index].variant[0].addOnQty = 0;
+                                        });
+                                      }
+                                    }
+                                    db.getAddOnList(
+                                        '${widget.categoryListNew[index].variant[0].variant_id}')
+                                        .then((valued) {
+                                      List<AddonList> addOnlist = [];
+                                      if (valued != null &&
+                                          valued.length > 0) {
+                                        addOnlist = valued
+                                            .map((e) =>
+                                            AddonList.fromJson(e))
+                                            .toList();
+                                        for (int i = 0;
+                                        i < widget.categoryListNew[index].addons.length;
+                                        i++) {
+                                          int ind = addOnlist.indexOf(
+                                              AddonList(
+                                                  '${widget.categoryListNew[index].addons[i].addon_id}'));
+                                          if (ind != null && ind >= 0) {
+                                            setState(() {
+                                              widget.categoryListNew[index].addons[i].isAdd =
+                                              true;
+                                            });
+                                          }
+                                        }
+                                      }
+
+                                      db.calculateTotalRestAdonA(
+                                          '${widget.categoryListNew[index].variant[0].variant_id}')
+                                          .then((value1) {
+                                        double priced = 0.0;
+                                        if (value != null) {
+                                          var tagObjsJson =
+                                          value1 as List;
+                                          dynamic totalAmount_1 =
+                                          tagObjsJson[0]['Total'];
+                                          if (totalAmount_1 != null) {
+                                            setState(() {
+                                              priced = double.parse(
+                                                  '${totalAmount_1}');
+                                            });
+                                          }
+                                        }
+                                        if(grocercart==1){
+                                          print("ALREADY");
+                                          showMyDialog(context);
+                                        }
+                                        else {
+                                          productDescriptionModalBottomSheets(
+                                              context,
+                                              grocercart,
+                                              height,
+                                              widget.categoryListNew[index],
+                                              0,
+                                              addOnlist,
+                                              widget.currencySymbol,
+                                              priced,
+                                              widget
+                                                  .onVerificationDone())
+                                              .then((value) {
+                                            widget.onVerificationDone();
+                                          });
+                                        }
+                                      });
+                                    });
+                                  });
+                                }
+                              },
+                              child: Container(
+                                height: 26.0,
+                                width: 26.0,
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.circular(
+                                      13.0),
+                                  color: kMainColor,
+                                ),
+                                child: Icon(
+                                  Icons.add,
+                                  color: kWhiteColor,
+                                  size: 15.0,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                            :
+                        Row(
                           mainAxisAlignment:
                           MainAxisAlignment.spaceBetween,
                           crossAxisAlignment:
@@ -171,16 +448,11 @@ class _JuiceListState extends State<JuiceList> {
                             ),
                             InkWell(
                               onTap: () {
-
                                 currentIndex = index;
-
                                 print(index);
-
-
                                 DatabaseHelper db =
                                     DatabaseHelper.instance;
-                                db
-                                    .getRestProdQty(
+                                db.getRestProdQty(
                                     '${widget.categoryListNew[index].variant[0].variant_id}')
                                     .then((value) {
                                   if (value != null) {
@@ -194,8 +466,7 @@ class _JuiceListState extends State<JuiceList> {
                                       });
                                     }
                                   }
-                                  db
-                                      .getAddOnList(
+                                  db.getAddOnList(
                                       '${widget.categoryListNew[index].variant[0].variant_id}')
                                       .then((valued) {
                                     List<AddonList> addOnlist = [];
@@ -220,8 +491,7 @@ class _JuiceListState extends State<JuiceList> {
                                       }
                                     }
 
-                                    db
-                                        .calculateTotalRestAdonA(
+                                    db.calculateTotalRestAdonA(
                                         '${widget.categoryListNew[index].variant[0].variant_id}')
                                         .then((value1) {
                                       double priced = 0.0;
@@ -237,13 +507,11 @@ class _JuiceListState extends State<JuiceList> {
                                           });
                                         }
                                       }
-
-
                                       if(grocercart==1){
                                         print("ALREADY");
                                         showMyDialog(context);
                                       }
-                                       else {
+                                      else {
                                         productDescriptionModalBottomSheets(
                                             context,
                                             grocercart,
@@ -264,28 +532,42 @@ class _JuiceListState extends State<JuiceList> {
                                 });
                               },
                               child: Container(
-                                height: 20.0,
-                                width: 20.0,
+                                height: 30.0,
+                                width: 30.0,
                                 decoration: BoxDecoration(
                                   borderRadius:
                                   BorderRadius.circular(10.0),
                                   color: kMainColor,
                                 ),
+
+                                child: Container(
+                                height: 25.0,
+                                width: 25.0,
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.circular(
+                                      13.0),
+                                  color: kMainColor,
+                                ),
                                 child: Icon(
                                   Icons.add,
                                   color: kWhiteColor,
-                                  size: 15.0,
+                                  size: 20.0,
                                 ),
+                              ),
                               ),
                             ),
                           ],
                         ),
                       ),
+
                     ],
                   ),
                 ),
               ],
             );
+
+
           },
           separatorBuilder: (context, indi) {
             return Divider(
@@ -770,6 +1052,9 @@ Future productDescriptionModalBottomSheets(
                                 child: Image.network(
                                   imageBaseUrl + item.product_image,
                                   fit: BoxFit.fill,
+                              errorBuilder: (context, exception,stackTrace) {
+                          return Container();
+                          },
                                 ),
                               ),
                               Container(
@@ -790,7 +1075,9 @@ Future productDescriptionModalBottomSheets(
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
-                                    Padding(
+                                    (item.description==null)?
+            Text('')
+                                    :Padding(
                                       padding: EdgeInsets.only(
                                           right: fixPadding * 2,
                                           left: fixPadding,

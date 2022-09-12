@@ -5049,9 +5049,10 @@ int styleable WalletFragmentStyle_maskedWalletDetailsLogoImageType 8
 int styleable WalletFragmentStyle_maskedWalletDetailsLogoTextColor 9
 int styleable WalletFragmentStyle_maskedWalletDetailsTextAppearance 10
 int xml file_provider_path 0x7f120000
-int xml image_share_filepaths 0x7f120001
-int xml standalone_badge 0x7f120002
-int xml standalone_badge_gravity_bottom_end 0x7f120003
-int xml standalone_badge_gravity_bottom_start 0x7f120004
-int xml standalone_badge_gravity_top_start 0x7f120005
-int xml standalone_badge_offset 0x7f120006
+int xml flutter_image_picker_file_paths 0x7f120001
+int xml image_share_filepaths 0x7f120002
+int xml standalone_badge 0x7f120003
+int xml standalone_badge_gravity_bottom_end 0x7f120004
+int xml standalone_badge_gravity_bottom_start 0x7f120005
+int xml standalone_badge_gravity_top_start 0x7f120006
+int xml standalone_badge_offset 0x7f120007

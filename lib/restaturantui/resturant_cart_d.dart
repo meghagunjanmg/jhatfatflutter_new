@@ -255,14 +255,16 @@ class _RestuarantViewCartState extends State<RestuarantViewCart> {
           // )
         ],
       ),
-      body: (!isCartFetch && cartListI != null && cartListI.length > 0)
+      body:
+      (!isCartFetch && cartListI != null && cartListI.length > 0)
           ? Stack(
         children: <Widget>[
           Column(
             children: [
               Expanded(
                 flex: 1,
-                child: ListView(
+                child:
+                ListView(
                   shrinkWrap: true,
                   primary: true,
                   children: <Widget>[

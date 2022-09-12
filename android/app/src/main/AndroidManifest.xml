@@ -1,7 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.jhatfat">
-   <application
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
         android:label="@string/app_name"
         android:name=".Application"
         android:icon="@mipmap/launcher_icon">

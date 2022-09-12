@@ -20,16 +20,17 @@ import '../bean/resturantbean/restaurantcartitem.dart';
 
 class ItemsPage extends StatefulWidget {
   final dynamic pageTitle;
+  final dynamic vendor_id;
   final dynamic category_name;
   final dynamic category_id;
   final dynamic distance;
 
   ItemsPage(
-      this.pageTitle, this.category_name, this.category_id, this.distance);
+      this.pageTitle,this.vendor_id ,this.category_name, this.category_id, this.distance);
 
   @override
   _ItemsPageState createState() =>
-      _ItemsPageState(pageTitle, category_name, category_id);
+      _ItemsPageState(pageTitle,vendor_id, category_name, category_id);
 }
 
 class _ItemsPageState extends State<ItemsPage>
@@ -40,6 +41,7 @@ class _ItemsPageState extends State<ItemsPage>
   List<Tab> tabs = <Tab>[];
 
    dynamic pageTitle;
+   dynamic vendor_id;
    dynamic category_name;
    dynamic category_id;
 
@@ -104,7 +106,7 @@ class _ItemsPageState extends State<ItemsPage>
   bool isFetchList = false;
   bool isSearchOpen = false;
 
-  _ItemsPageState(this.pageTitle, this.category_name, this.category_id);
+  _ItemsPageState(this.pageTitle,this.vendor_id, this.category_name, this.category_id);
 
 
   @override
@@ -645,6 +647,12 @@ class _ItemsPageState extends State<ItemsPage>
             (
               productVarientList[
               index]
+                  .is_id,
+              productVarientList[
+              index]
+                  .is_pres,
+              productVarientList[
+              index]
                   .product_name,
               productVarientList[
               index]
@@ -707,7 +715,12 @@ class _ItemsPageState extends State<ItemsPage>
                                                     .add_qnty--;
                                               });
                                               addOrMinusProduct(
-
+                                                  productVarientList[
+                                                  index]
+                                                      .is_id,
+                                                  productVarientList[
+                                                  index]
+                                                      .is_pres,
                                                   productVarientList[
                                                   index]
                                                       .product_name,
@@ -769,6 +782,12 @@ class _ItemsPageState extends State<ItemsPage>
                                                   index]
                                                       .add_qnty++;
                                                   addOrMinusProduct(
+                                                      productVarientList[
+                                                      index]
+                                                          .is_id,
+                                                      productVarientList[
+                                                      index]
+                                                          .is_pres,
                                                       productVarientList[
                                                       index]
                                                           .product_name,
@@ -923,8 +942,8 @@ class _ItemsPageState extends State<ItemsPage>
     );
   }
 
-  void addOrMinusProduct(product_name, unit, price, quantity, itemCount,
-      varient_image, varient_id) async {
+  void addOrMinusProduct(is_id,is_pres,product_name, unit, price, quantity, itemCount,
+      varient_image, varient_id,) async {
     DatabaseHelper db = DatabaseHelper.instance;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? storename = prefs.getString('store_name');
@@ -938,6 +957,8 @@ class _ItemsPageState extends State<ItemsPage>
         DatabaseHelper.quantitiy: quantity,
         DatabaseHelper.addQnty: itemCount,
         DatabaseHelper.productImage: varient_image,
+        DatabaseHelper.is_id: is_id,
+        DatabaseHelper.is_pres: is_pres,
         DatabaseHelper.varientId: varient_id
       };
       if (value == 0) {
@@ -1071,6 +1092,7 @@ class _ItemsPageState extends State<ItemsPage>
   void setList(List<ProductWithVarient> tagObjs) {
     for (int i = 0; i < tagObjs.length; i++) {
       if (tagObjs[i].data.length > 0) {
+        print("PRES: "+tagObjs[i].is_pres.toString());
         DatabaseHelper db = DatabaseHelper.instance;
         db
             .getVarientCount(int.parse(
@@ -1098,12 +1120,14 @@ class BottomSheetWidget extends StatefulWidget {
   final String product_name;
   final String store_name;
   final String category_name;
+  final dynamic is_pres;
+  final dynamic is_id;
   final dynamic currency;
   final List<VarientList> datas;
   List<VarientList> newdatas = [];
 
   BottomSheetWidget(
-      this.product_name, this.store_name,this.datas, this.category_name, this.currency) {
+      this.product_name, this.store_name,this.datas, this.category_name, this.currency,this.is_pres,this.is_id) {
     newdatas.clear();
     newdatas.addAll(datas);
     newdatas.removeAt(0);
@@ -1111,7 +1135,7 @@ class BottomSheetWidget extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return BottomSheetWidgetState(product_name,store_name, newdatas);
+    return BottomSheetWidgetState(product_name,store_name, newdatas,is_pres,is_id);
   }
 }
 
@@ -1119,8 +1143,10 @@ class BottomSheetWidgetState extends State<BottomSheetWidget> {
   final String product_name;
   final String store_name;
   final List<VarientList> data;
+  final dynamic is_pres;
+  final dynamic is_id;
 
-  BottomSheetWidgetState(this.product_name,this.store_name, this.data) {
+  BottomSheetWidgetState(this.product_name,this.store_name, this.data,this.is_pres,this.is_id) {
     setList(data);
   }
 
@@ -1204,7 +1230,10 @@ class BottomSheetWidgetState extends State<BottomSheetWidget> {
                               int.parse('${data[index].quantity}'),
                               data[index].add_qnty,
                               data[index].varient_image,
-                              data[index].varient_id);
+                              data[index].varient_id,
+                              widget.store_name,
+                            is_pres,is_id
+                          );
                         } else {
                           // Toast.show("No more stock available!", context,
                           //     gravity: Toast.BOTTOM);
@@ -1234,7 +1263,11 @@ class BottomSheetWidgetState extends State<BottomSheetWidget> {
                               int.parse('${data[index].quantity}'),
                               data[index].add_qnty,
                               data[index].varient_image,
-                              data[index].varient_id);
+                              data[index].varient_id,
+                              widget.store_name,
+                              is_pres,is_id
+
+                          );
                         },
                         child: Icon(
                           Icons.remove,
@@ -1260,7 +1293,12 @@ class BottomSheetWidgetState extends State<BottomSheetWidget> {
                                   int.parse('${data[index].quantity}'),
                                   data[index].add_qnty,
                                   data[index].varient_image,
-                                  data[index].varient_id);
+                                  data[index].varient_id,
+                                  widget.store_name,
+                                  is_pres,
+                                  is_id
+
+                              );
                             } else {
                               // Toast.show(
                               //     "No more stock available!", context,
@@ -1292,22 +1330,26 @@ class BottomSheetWidgetState extends State<BottomSheetWidget> {
   }
 
   void addOrMinusProduct(product_name, unit, price, quantity, itemCount,
-      varient_image, varient_id) async {
+      varient_image, varient_id,vendor_name,is_pres,is_id) async {
+
+    print("Pres :"+is_pres.toString());
+
     DatabaseHelper db = DatabaseHelper.instance;
     Future<int?> existing = db.getcount(int.parse('${varient_id}'));
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? store_name = prefs.getString('store_name');
 
     existing.then((value) {
       var vae = {
-        DatabaseHelper.storeName : store_name,
+        DatabaseHelper.storeName : vendor_name,
         DatabaseHelper.productName: product_name,
         DatabaseHelper.price: (price * itemCount),
         DatabaseHelper.unit: unit,
         DatabaseHelper.quantitiy: quantity,
         DatabaseHelper.addQnty: itemCount,
         DatabaseHelper.productImage: varient_image,
-        DatabaseHelper.varientId: varient_id
+        DatabaseHelper.varientId: varient_id,
+        DatabaseHelper.is_pres: 0,
+        DatabaseHelper.is_id: 0
       };
       if (value == 0) {
         db.insert(vae);

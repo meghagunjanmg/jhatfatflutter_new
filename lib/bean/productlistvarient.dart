@@ -3,12 +3,14 @@ class ProductWithVarient{
   dynamic product_name;
   dynamic products_image;
   dynamic add_qnty;
+  dynamic is_pres;
+  dynamic is_id;
   List<VarientList> data;
   dynamic selectPos;
 
 
   ProductWithVarient(
-      this.product_id, this.product_name, this.products_image, this.add_qnty,this.data,this.selectPos);
+      this.product_id, this.product_name, this.products_image, this.add_qnty,this.is_pres,this.is_id,this.data,this.selectPos);
 
   factory ProductWithVarient.fromJson(dynamic json){
     var tagObjsJson = json['data'] as List;
@@ -16,12 +18,12 @@ class ProductWithVarient{
     if(tagObjsJson!=null){
        _tags = tagObjsJson.map((tagJson) => VarientList.fromJson(tagJson)).toList();
     }
-    return ProductWithVarient(json['product_id'], json['product_name'], json['products_image'], 0,_tags,0);
+    return ProductWithVarient(json['product_id'], json['product_name'], json['products_image'], 0, json['is_pres'], json['is_id'],_tags,0);
   }
 
   @override
   String toString() {
-    return 'ProductWithVarient{product_id: $product_id, product_name: $product_name, products_image: $products_image, add_qnty: $add_qnty, data: $data}';
+    return 'ProductWithVarient{product_id: $product_id, product_name: $product_name, products_image: $products_image, add_qnty: $add_qnty,is_press: $is_pres,is_id: $is_id ,data: $data}';
   }
 }
 

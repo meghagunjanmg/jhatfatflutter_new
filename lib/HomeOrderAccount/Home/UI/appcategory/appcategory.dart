@@ -438,6 +438,7 @@ class AppCategoryState extends State<AppCategory> {
                                 hitNavigator(
                                     context,
                                     pageTitle,
+                                    vendor_id,
                                     e.category_name,
                                     e.category_id,
                                     widget.distance);
@@ -587,13 +588,13 @@ class AppCategoryState extends State<AppCategory> {
     }
   }
 
-  void hitNavigator(context, pageTitle, category_name, category_id, distance) {
+  void hitNavigator(context, pageTitle,vendor_id, category_name, category_id, distance) {
     print(pageTitle+" "+category_name+" "+category_id.toString()+" "+distance.toString());
     Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    ItemsPage(pageTitle, category_name, category_id, distance)))
+                    ItemsPage(pageTitle,vendor_id, category_name, category_id, distance)))
         .then((value) {
       getCartCount();
     });

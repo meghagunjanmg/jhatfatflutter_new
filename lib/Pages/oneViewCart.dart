@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:horizontal_calendar_view_widget/date_helper.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
@@ -113,8 +115,6 @@ class _oneViewCartState extends State<oneViewCart> {
         .month}-${firstDate.year}';
 
     hitDateCounter(date);
-
-
   }
 
   void getResCartItem() async {
@@ -179,8 +179,7 @@ class _oneViewCartState extends State<oneViewCart> {
       List<CartItem> tagObjs =
       value.map((tagJson) => CartItem.fromJson(tagJson)).toList();
       if (tagObjs.isEmpty) {
-        setState(() {
-        });
+        setState(() {});
       }
       setState(() {
         isCartFetch = false;
@@ -289,7 +288,177 @@ class _oneViewCartState extends State<oneViewCart> {
     });
   }
 
-  void addOrMinusProduct2(product_name, unit, price, quantity, itemCount,
+  void addOrMinusProduct2(store_name, product_id, product_name, unit, price,
+      quantity, itemCount,
+      varient_id, index, price_d) async {
+
+    print("addminus "+itemCount+" "+product_id);
+
+    DatabaseHelper db = DatabaseHelper.instance;
+    Future<int?> existing = db.getRestProductcount(int.parse(varient_id));
+    existing.then((value) {
+      var vae = {
+        DatabaseHelper.productId: product_id,
+        DatabaseHelper.storeName: store_name,
+        DatabaseHelper.productName: product_name,
+        DatabaseHelper.price: (price_d * itemCount),
+        DatabaseHelper.unit: unit,
+        DatabaseHelper.quantitiy: quantity,
+        DatabaseHelper.addQnty: itemCount,
+        DatabaseHelper.varientId: int.parse(varient_id)
+      };
+
+      print('value we - $value');
+
+      if (value == 0) {
+        db.insertRaturantOrder(vae);
+      } else {
+        if (itemCount == 0) {
+          db.deleteResProduct(int.parse(varient_id)).then((value) {
+            db.deleteAddOn(int.parse(varient_id));
+          });
+        } else {
+          db.updateRestProductData(vae, int.parse(varient_id));
+        }
+      }
+      getCatC();
+      if (itemCount == 0) {
+        getResCartItem();
+      }
+    });
+  }
+
+  Widget timewidget(BuildContext context, double itemHeight, double itemWidth) {
+    return Column(
+        children: <Widget>[
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.all(10.0),
+            color: kCardBackgroundColor,
+            child: Text('Time Slot',
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .headline6!
+                    .copyWith(
+                    color: Color(0xff616161),
+                    letterSpacing: 0.67)),
+          ),
+          Divider(
+            color: kCardBackgroundColor,
+            thickness: 6.7,
+          ),
+          (!isFetchingTime && radioList.length > 0)
+              ? Container(
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
+            padding: EdgeInsets.only(right: 5, left: 5),
+            child: GridView.builder(
+              itemCount: radioList.length,
+              gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 4.0,
+                mainAxisSpacing: 4.0,
+                childAspectRatio:
+                (itemWidth / itemHeight),
+              ),
+              controller: ScrollController(
+                  keepScrollOffset: false),
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      idd1 = index;
+                      print('${radioList[idd1]}');
+                    });
+                  },
+                  child: SizedBox(
+                    height: 100,
+                    child: Container(
+                      margin: EdgeInsets.only(
+                          right: 5,
+                          left: 5,
+                          top: 5,
+                          bottom: 5),
+                      height: 30,
+                      width: 100,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: (idd1 == index)
+                              ? kMainColor
+                              : kWhiteColor,
+                          shape: BoxShape.rectangle,
+                          borderRadius:
+                          BorderRadius.circular(20),
+                          border: Border.all(
+                              color: (idd1 == index)
+                                  ? kMainColor
+                                  : kMainColor)),
+                      child: Text(
+                        '${radioList[index].toString()}',
+                        style: TextStyle(
+                            color: (idd1 == index)
+                                ? kWhiteColor
+                                : kMainTextColor,
+                            fontSize: 12),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          )
+              :
+          Container(
+            height: 120,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment:
+              CrossAxisAlignment.center,
+              children: [
+                isFetchingTime
+                    ? CircularProgressIndicator()
+                    : Container(
+                  width: 0.5,
+                ),
+                isFetchingTime
+                    ? SizedBox(
+                  width: 10,
+                )
+                    : Container(
+                  width: 0.5,
+                ),
+                Text(
+                  (isFetchingTime)
+                      ? 'Fetching time slot'
+                      : 'No time slot present now check other date..',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: kMainTextColor),
+                )
+              ],
+            ),
+          )
+        ]
+    );
+  }
+
+
+
+
+
+  void addOrMinusProduct1(product_name, unit, price, quantity, itemCount,
       varient_id, index, price_d) async {
     DatabaseHelper db = DatabaseHelper.instance;
     Future<int?> existing = db.getRestProductcount(int.parse(varient_id));
@@ -320,144 +489,22 @@ class _oneViewCartState extends State<oneViewCart> {
       }
       getCatC();
       if (itemCount == 0) {
-        getResCartItem();
+        getCartItem();
       }
+
     });
-  }
-  Widget timewidget(BuildContext context,double itemHeight,double itemWidth) {
-    return Column(
-        children: <Widget>[
-    Container(
-      alignment: Alignment.centerLeft,
-      padding: EdgeInsets.all(10.0),
-      color: kCardBackgroundColor,
-      child: Text('Time Slot',
-          style: Theme
-              .of(context)
-              .textTheme
-              .headline6!
-              .copyWith(
-              color: Color(0xff616161),
-              letterSpacing: 0.67)),
-    ),
-    Divider(
-    color: kCardBackgroundColor,
-    thickness: 6.7,
-    ),
-    (!isFetchingTime && radioList.length > 0)
-    ? Container(
-    width: MediaQuery
-        .of(context)
-        .size
-        .width,
-    padding: EdgeInsets.only(right: 5, left: 5),
-    child: GridView.builder(
-    itemCount: radioList.length,
-    gridDelegate:
-    SliverGridDelegateWithFixedCrossAxisCount(
-    crossAxisCount: 3,
-    crossAxisSpacing: 4.0,
-    mainAxisSpacing: 4.0,
-    childAspectRatio:
-    (itemWidth / itemHeight),
-    ),
-    controller: ScrollController(
-    keepScrollOffset: false),
-    shrinkWrap: true,
-    scrollDirection: Axis.vertical,
-    itemBuilder: (context, index) {
-    return GestureDetector(
-    onTap: () {
-    setState(() {
-    idd1 = index;
-    print('${radioList[idd1]}');
-    });
-    },
-    child: SizedBox(
-    height: 100,
-    child: Container(
-    margin: EdgeInsets.only(
-    right: 5,
-    left: 5,
-    top: 5,
-    bottom: 5),
-    height: 30,
-    width: 100,
-    alignment: Alignment.center,
-    decoration: BoxDecoration(
-    color: (idd1 == index)
-    ? kMainColor
-        : kWhiteColor,
-    shape: BoxShape.rectangle,
-    borderRadius:
-    BorderRadius.circular(20),
-    border: Border.all(
-    color: (idd1 == index)
-    ? kMainColor
-        : kMainColor)),
-    child: Text(
-    '${radioList[index].toString()}',
-    style: TextStyle(
-    color: (idd1 == index)
-    ? kWhiteColor
-        : kMainTextColor,
-    fontSize: 12),
-    ),
-    ),
-    ),
-    );
-    },
-    ),
-    )
-        :
-    Container(
-    height: 120,
-    width: MediaQuery
-        .of(context)
-        .size
-        .width,
-    alignment: Alignment.center,
-    child: Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment:
-    CrossAxisAlignment.center,
-    children: [
-    isFetchingTime
-    ? CircularProgressIndicator()
-        : Container(
-    width: 0.5,
-    ),
-    isFetchingTime
-    ? SizedBox(
-    width: 10,
-    )
-        : Container(
-    width: 0.5,
-    ),
-    Text(
-    (isFetchingTime)
-    ? 'Fetching time slot'
-        : 'No time slot present now check other date..',
-    style: TextStyle(
-    fontSize: 18,
-    fontWeight: FontWeight.w600,
-    color: kMainTextColor),
-    )
-    ],
-    ),
-    )
-    ]
-    );
   }
 
-  Widget cartOrderItemListTile(BuildContext context,
+  Widget cartOrderItemListTile(
+      BuildContext context,
       String title,
       dynamic price,
       int itemCount,
       dynamic qnty,
       dynamic unit,
       dynamic index,
-      List<AddonCartItem> addon,) {
+      List<AddonCartItem> addon,
+      ) {
     String selected;
     return Column(
       children: <Widget>[
@@ -465,14 +512,13 @@ class _oneViewCartState extends State<oneViewCart> {
             padding: const EdgeInsets.only(left: 7.0, top: 10.3),
             child: ListTile(
               // contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
-              title: Row(
+              title:Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     title,
-                    style: Theme
-                        .of(context)
+                    style: Theme.of(context)
                         .textTheme
                         .subtitle2!
                         .copyWith(color: kMainTextColor),
@@ -480,8 +526,7 @@ class _oneViewCartState extends State<oneViewCart> {
                   // SizedBox(width: 30,),
                   Text(
                     '${currency} ${price}',
-                    style: Theme
-                        .of(context)
+                    style: Theme.of(context)
                         .textTheme
                         .subtitle2!
                         .copyWith(color: kMainTextColor),
@@ -497,7 +542,7 @@ class _oneViewCartState extends State<oneViewCart> {
                     child: Row(
                       children: <Widget>[
                         InkWell(
-                          onTap: () {
+                          onTap: (){
                             int addQ = int.parse(
                                 '${cartListII[index].add_qnty}');
                             var price_d = double.parse(
@@ -507,7 +552,7 @@ class _oneViewCartState extends State<oneViewCart> {
                             cartListII[index].price =
                             (price_d * addQ);
                             cartListII[index].add_qnty = addQ;
-                            addOrMinusProduct2(
+                            addOrMinusProduct1(
                                 cartListII[index].product_name,
                                 cartListII[index].unit,
                                 cartListII[index].price,
@@ -527,13 +572,10 @@ class _oneViewCartState extends State<oneViewCart> {
                         ),
                         SizedBox(width: 8.0),
                         Text('$itemCount',
-                            style: Theme
-                                .of(context)
-                                .textTheme
-                                .caption),
+                            style: Theme.of(context).textTheme.caption),
                         SizedBox(width: 8.0),
                         InkWell(
-                          onTap: () {
+                          onTap: (){
                             int addQ = int.parse(
                                 '${cartListII[index].add_qnty}');
                             var price_d = double.parse(
@@ -543,7 +585,7 @@ class _oneViewCartState extends State<oneViewCart> {
                             cartListII[index].price =
                             (price_d * addQ);
                             cartListII[index].add_qnty = addQ;
-                            addOrMinusProduct2(
+                            addOrMinusProduct1(
                                 cartListII[index].product_name,
                                 cartListII[index].unit,
                                 cartListII[index].price,
@@ -579,10 +621,7 @@ class _oneViewCartState extends State<oneViewCart> {
                         ),
                         child: Text(
                           '${qnty} ${unit}',
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .caption,
+                          style: Theme.of(context).textTheme.caption,
                         ),
                       ),
                       // Spacer(),
@@ -603,10 +642,8 @@ class _oneViewCartState extends State<oneViewCart> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '${addon[indexd].addonName} ($currency ${addon[indexd]
-                              .price})',
-                          style: Theme
-                              .of(context)
+                          '${addon[indexd].addonName} ($currency ${addon[indexd].price})',
+                          style: Theme.of(context)
                               .textTheme
                               .subtitle2!
                               .copyWith(color: kMainTextColor),
@@ -707,6 +744,8 @@ class _oneViewCartState extends State<oneViewCart> {
                             cartListI[index].qnty,
                             cartListI[index].unit,
                             cartListI[index].store_name,
+                            cartListI[index].is_id,
+                            cartListI[index].is_pres,
                             index,
                           );
                         },
@@ -719,7 +758,7 @@ class _oneViewCartState extends State<oneViewCart> {
                         itemCount: cartListI.length)
                         : Container(),
 
-                    (cartListII.length > 0)
+                    (cartListII.isNotEmpty)
                         ?
                     ListView.separated(
                         primary: false,
@@ -756,9 +795,9 @@ class _oneViewCartState extends State<oneViewCart> {
 
                     (cartListI.isNotEmpty)
                         ?
-                    timewidget(context,itemHeight,itemWidth)
-                    :
-                        Container(),
+                    timewidget(context, itemHeight, itemWidth)
+                        :
+                    Container(),
 
                     Divider(
                       color: kCardBackgroundColor,
@@ -960,11 +999,13 @@ class _oneViewCartState extends State<oneViewCart> {
                                 fontWeight: FontWeight.w400)),
 
                         onPressed: () {
+                          if (cartListI.isNotEmpty) {
+                            createCart(context);
+                          }
 
-                          if (cartListI.isNotEmpty) {createCart(context);}
-
-                          else if (cartListII.isNotEmpty) {createResCart(context);}
-
+                          else if (cartListII.isNotEmpty) {
+                            createResCart(context);
+                          }
                         },
                         child: Text("Pay $currency "
                             "$totalAmount")
@@ -1191,7 +1232,7 @@ class _oneViewCartState extends State<oneViewCart> {
             'time_slot': '${radioList[idd1]}',
             'ui_type': ui_type
           }).then((value) {
-            print('order'+value.body);
+            print('order' + value.body);
             if (value.statusCode == 200) {
               var jsonData = jsonDecode(value.body);
               if (jsonData['status'] == "1") {
@@ -1246,8 +1287,8 @@ class _oneViewCartState extends State<oneViewCart> {
     }
   }
 
-  void getVendorPayment2(
-      String vendorId, CartDetail details, String orderArray) async {
+  void getVendorPayment2(String vendorId, CartDetail details,
+      String orderArray) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       currency = preferences.getString('curency')!;
@@ -1285,14 +1326,15 @@ class _oneViewCartState extends State<oneViewCart> {
     });
   }
 
-  void addOrMinusProduct(product_name, unit, price, quantity, itemCount,
+  void addOrMinusProduct(store_name, product_name, unit, price, quantity,
+      itemCount,
       varient_image, varient_id, index, price_d) async {
     DatabaseHelper db = DatabaseHelper.instance;
     Future<int?> existing = db.getcount(int.parse(varient_id));
     existing.then((value) {
       var vae = {
         DatabaseHelper.productName: product_name,
-        DatabaseHelper.storeName: product_name,
+        DatabaseHelper.storeName: store_name,
         DatabaseHelper.price: (price_d * itemCount),
         DatabaseHelper.unit: unit,
         DatabaseHelper.quantitiy: quantity,
@@ -1318,8 +1360,7 @@ class _oneViewCartState extends State<oneViewCart> {
     });
   }
 
-  Widget cartOrderItemListTile1(
-      BuildContext context,
+  Widget cartOrderItemListTile1(BuildContext context,
       currency,
       String title,
       dynamic price,
@@ -1327,8 +1368,9 @@ class _oneViewCartState extends State<oneViewCart> {
       int qnty,
       dynamic unit,
       dynamic store_name,
-      dynamic index
-      ) {
+      dynamic is_id,
+      dynamic is_pres,
+      dynamic index) {
     String selected;
     return Column(
       children: <Widget>[
@@ -1341,7 +1383,8 @@ class _oneViewCartState extends State<oneViewCart> {
                 children: [
                   Text(
                     store_name,
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .subtitle2!
                         .copyWith(color: kMainTextColor),
@@ -1349,7 +1392,8 @@ class _oneViewCartState extends State<oneViewCart> {
 
                   Text(
                     title,
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .subtitle1!
                         .copyWith(color: kMainTextColor),
@@ -1357,12 +1401,68 @@ class _oneViewCartState extends State<oneViewCart> {
 
                   Text(
                     '${currency} ${price}',
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .subtitle1!
                         .copyWith(color: kMainTextColor),
                   ),
+
+                  (is_id == 1) ?
+                      new GestureDetector(
+                        onTap: (){_settingModalBottomSheet(context);},
+
+                  child: Container(
+                    height: 30.0,
+                    padding: EdgeInsets.symmetric(horizontal: 18.0),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: kCardBackgroundColor,
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    child: Text(
+                      'Upload ID Proof',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .caption,
+                    ),
+
+                  )
+                      )
+                      :
+                  Container(
+
+                  ),
+                  (is_pres == 1) ?
+                  new GestureDetector(
+                      onTap: (){_settingModalBottomSheet(context);},
+
+                      child:
+                      Container(
+                    height: 30.0,
+                    padding: EdgeInsets.symmetric(horizontal: 18.0),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: kCardBackgroundColor,
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    child: Text(
+                      'Upload Prescription',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .caption,
+                    ),
+
+                  )
+                  )
+                      :
+                  Container(
+                  ),
+
                 ],
+
               ),
               subtitle: Padding(
                 padding: const EdgeInsets.only(top: 15.0, bottom: 14.2),
@@ -1380,7 +1480,10 @@ class _oneViewCartState extends State<oneViewCart> {
                         ),
                         child: Text(
                           '${qnty} ${unit}',
-                          style: Theme.of(context).textTheme.caption,
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .caption,
                         ),
 
                       ),
@@ -1395,24 +1498,26 @@ class _oneViewCartState extends State<oneViewCart> {
                         child: Row(
                           children: <Widget>[
                             InkWell(
-                               onTap:() { setState(() {
-                                 var price_d = cartListI[index].price /
-                                     cartListI[index].add_qnty;
-                                 cartListI[index].add_qnty--;
-                                 cartListI[index].price = (price_d *
-                                     cartListI[index].add_qnty);
-                                 addOrMinusProduct(
-                                     cartListI[index].product_name,
-                                     cartListI[index].unit,
-                                     cartListI[index].price,
-                                     cartListI[index].qnty,
-                                     cartListI[index].add_qnty,
-                                     cartListI[index].product_img,
-                                     cartListI[index].varient_id,
-                                     index,
-                                     price_d);
-                               });
-                               },
+                              onTap: () {
+                                setState(() {
+                                  var price_d = cartListI[index].price /
+                                      cartListI[index].add_qnty;
+                                  cartListI[index].add_qnty--;
+                                  cartListI[index].price = (price_d *
+                                      cartListI[index].add_qnty);
+                                  addOrMinusProduct(
+                                      cartListI[index].store_name,
+                                      cartListI[index].product_name,
+                                      cartListI[index].unit,
+                                      cartListI[index].price,
+                                      cartListI[index].qnty,
+                                      cartListI[index].add_qnty,
+                                      cartListI[index].product_img,
+                                      cartListI[index].varient_id,
+                                      index,
+                                      price_d);
+                                });
+                              },
                               child: Icon(
                                 Icons.remove,
                                 color: kMainColor,
@@ -1422,28 +1527,32 @@ class _oneViewCartState extends State<oneViewCart> {
                             ),
                             SizedBox(width: 8.0),
                             Text('$itemCount',
-                                style: Theme.of(context).textTheme.caption),
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .caption),
                             SizedBox(width: 8.0),
                             InkWell(
-                                onTap: (){
-                                  setState(() {
-                                    var price_d = cartListI[index].price /
-                                        cartListI[index].add_qnty;
-                                    cartListI[index].add_qnty++;
-                                    cartListI[index].price = (price_d *
-                                        cartListI[index].add_qnty);
-                                    addOrMinusProduct(
-                                        cartListI[index].product_name,
-                                        cartListI[index].unit,
-                                        cartListI[index].price,
-                                        cartListI[index].qnty,
-                                        cartListI[index].add_qnty,
-                                        cartListI[index].product_img,
-                                        cartListI[index].varient_id,
-                                        index,
-                                        price_d);
-                                  });
-                                },
+                              onTap: () {
+                                setState(() {
+                                  var price_d = cartListI[index].price /
+                                      cartListI[index].add_qnty;
+                                  cartListI[index].add_qnty++;
+                                  cartListI[index].price = (price_d *
+                                      cartListI[index].add_qnty);
+                                  addOrMinusProduct(
+                                      cartListI[index].store_name,
+                                      cartListI[index].product_name,
+                                      cartListI[index].unit,
+                                      cartListI[index].price,
+                                      cartListI[index].qnty,
+                                      cartListI[index].add_qnty,
+                                      cartListI[index].product_img,
+                                      cartListI[index].varient_id,
+                                      index,
+                                      price_d);
+                                });
+                              },
                               child: Icon(
                                 Icons.add,
                                 color: kMainColor,
@@ -1453,13 +1562,67 @@ class _oneViewCartState extends State<oneViewCart> {
                           ],
                         ),
                       ),
-
                       // Spacer(),
                     ]),
               ),
+
             ))
       ],
     );
+  }
+  //********************** IMAGE PICKER
+  Future imageSelector(BuildContext context, String pickerType) async {
+    XFile? imageFile = null;
+    ImagePicker picker = new ImagePicker();
+    switch (pickerType) {
+      case "gallery":
+
+      /// GALLERY IMAGE PICKER
+        imageFile = (await picker.pickImage(
+            source: ImageSource.gallery, imageQuality: 90));
+        break;
+
+      case "camera": // CAMERA CAPTURE CODE
+        imageFile = (await picker.pickImage(
+            source: ImageSource.camera, imageQuality: 90));
+        break;
+    }
+
+    if (imageFile != null) {
+      print("You selected  image : " + imageFile.path);
+      setState(() {
+        debugPrint("SELECTED IMAGE PICK   $imageFile");
+      });
+    } else {
+      print("You have not taken image");
+    }
+  }
+
+  // Image picker
+  void _settingModalBottomSheet(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return Container(
+            child: new Wrap(
+              children: <Widget>[
+                new ListTile(
+                    title: new Text('Gallery'),
+                    onTap: () => {
+                      imageSelector(context, "gallery"),
+                      Navigator.pop(context),
+                    }),
+                new ListTile(
+                  title: new Text('Camera'),
+                  onTap: () => {
+                    imageSelector(context, "camera"),
+                    Navigator.pop(context)
+                  },
+                ),
+              ],
+            ),
+          );
+        });
   }
 
   void hitDateCounter(date) async {
@@ -1514,7 +1677,6 @@ class _oneViewCartState extends State<oneViewCart> {
       cartListI.clear();
       getCartItem();
       getCatC();
-
     });
 
     db.deleteAllRestProdcut().then((value) {
@@ -1525,5 +1687,4 @@ class _oneViewCartState extends State<oneViewCart> {
       });
     });
   }
-
 }

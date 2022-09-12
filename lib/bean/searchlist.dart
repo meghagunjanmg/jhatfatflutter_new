@@ -151,6 +151,8 @@ class ProductVarient{
   dynamic vendor_id;
   dynamic type;
   dynamic vendor_name;
+  dynamic is_id;
+  dynamic is_pres;
   List<VarientList> data;
   dynamic add_qnty;
 
@@ -165,6 +167,8 @@ class ProductVarient{
       this.vendor_id,
       this.type,
       this.vendor_name,
+      this.is_pres,
+      this.is_id,
       this.data,
       this.add_qnty);
 
@@ -172,9 +176,9 @@ class ProductVarient{
     var tagObjsJsond = json['varients'] as List;
     if(tagObjsJsond.length>0){
       List<VarientList> _tags = tagObjsJsond.map((tagJson) => VarientList.fromJson(tagJson)).toList();
-      return ProductVarient(json['product_id'], json['subcat_id'],json['product_name'], json['products_image'], json['created_at'],json['updated_at'],json['vendor_id'],'producttype',json['vendor_name'],_tags,0);
+      return ProductVarient(json['product_id'], json['subcat_id'],json['product_name'], json['products_image'], json['created_at'],json['updated_at'],json['vendor_id'],'producttype',json['vendor_name'],json['is_id'],json['is_pres'],_tags,0);
     }else{
-      return ProductVarient(json['product_id'], json['subcat_id'],json['product_name'], json['products_image'], json['created_at'],json['updated_at'],json['vendor_id'],'producttype',json['vendor_name'],[],0);
+      return ProductVarient(json['product_id'], json['subcat_id'],json['product_name'], json['products_image'], json['created_at'],json['updated_at'],json['vendor_id'],'producttype',json['vendor_name'],json['is_id'],json['is_pres'],[],0);
     }
   }
 

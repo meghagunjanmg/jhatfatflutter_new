@@ -386,6 +386,12 @@ class SingleProductState extends State<SingleProductPage> {
                                                         addOrMinusProduct(
                                                             widget
                                                                 .productWithVarient
+                                                                .is_id,
+                                                            widget
+                                                                .productWithVarient
+                                                                .is_pres,
+                                                            widget
+                                                                .productWithVarient
                                                                 .product_name,
                                                             widget
                                                                 .productVarintList[
@@ -457,6 +463,12 @@ class SingleProductState extends State<SingleProductPage> {
                                                       addOrMinusProduct(
                                                           widget
                                                               .productWithVarient
+                                                              .is_id,
+                                                          widget
+                                                              .productWithVarient
+                                                              .is_pres,
+                                                          widget
+                                                              .productWithVarient
                                                               .product_name,
                                                           widget
                                                               .productVarintList[
@@ -514,6 +526,12 @@ class SingleProductState extends State<SingleProductPage> {
                                                           addOrMinusProduct(
                                                               widget
                                                                   .productWithVarient
+                                                                  .is_id,
+                                                              widget
+                                                                  .productWithVarient
+                                                                  .is_pres,
+                                                              widget
+                                                                  .productWithVarient
                                                                   .product_name,
                                                               widget
                                                                   .productVarintList[
@@ -566,7 +584,7 @@ class SingleProductState extends State<SingleProductPage> {
     );
   }
 
-  void addOrMinusProduct(product_name, unit, price, quantity, itemCount,
+  void addOrMinusProduct(is_id,is_pres,product_name, unit, price, quantity, itemCount,
       varient_image, varient_id) async {
 //    addMinus = true;
     DatabaseHelper db = DatabaseHelper.instance;
@@ -583,6 +601,8 @@ class SingleProductState extends State<SingleProductPage> {
         DatabaseHelper.quantitiy: quantity,
         DatabaseHelper.addQnty: itemCount,
         DatabaseHelper.productImage: varient_image,
+        DatabaseHelper.is_pres: is_pres,
+        DatabaseHelper.is_id: is_id,
         DatabaseHelper.varientId: int.parse('${varient_id}')
       };
       if (value == 0) {

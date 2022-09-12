@@ -490,6 +490,8 @@ class DealProductState extends State<DealProducts>
         DatabaseHelper.quantitiy: quantity,
         DatabaseHelper.addQnty: itemCount,
         DatabaseHelper.productImage: varient_image,
+        DatabaseHelper.is_pres: 0,
+        DatabaseHelper.is_id: 0,
         DatabaseHelper.varientId: int.parse('${varient_id}')
       };
       if (value == 0) {

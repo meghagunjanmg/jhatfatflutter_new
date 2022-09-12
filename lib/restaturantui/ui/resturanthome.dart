@@ -1027,14 +1027,15 @@ class RestaurantState extends State<Restaurant> {
         prefs.getString("res_vendor_id") != null &&
         prefs.getString("res_vendor_id") != "" &&
         prefs.getString("res_vendor_id") != '${item.vendor_id}') {
-      ///showAlertDialog(context, item, currencySymbol);
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Restaurant_Sub(item, currencySymbol)))
-          .then((value) {
-        getCartCount();
-      });
+      showAlertDialog(context, item, currencySymbol);
+
+      // Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (context) => Restaurant_Sub(item, currencySymbol)))
+      //     .then((value) {
+      //   getCartCount();
+      // });
     } else {
       prefs.setString("res_vendor_id", '${item.vendor_id}');
       prefs.setString("store_resturant_name", '${item.vendor_name}');
@@ -1050,13 +1051,12 @@ class RestaurantState extends State<Restaurant> {
 
   showAlertDialog(BuildContext context, NearStores item, currencySymbol) {
     // set up the buttons
-    // Widget no = FlatButton(
-    //   padding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
-    //   child: Text("OK"),
-    //   onPressed: () {
-    //     Navigator.of(context, rootNavigator: true).pop('dialog');
-    //   },
-    // );
+    Widget no = TextButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context, rootNavigator: true).pop('dialog');
+      },
+    );
 
     Widget clear = GestureDetector(
       onTap: () {
@@ -1082,31 +1082,30 @@ class RestaurantState extends State<Restaurant> {
       ),
     );
 
-    Widget no = GestureDetector(
-      onTap: () {
-        Navigator.of(context, rootNavigator: true).pop('dialog');
-      },
-      child: Card(
-        elevation: 2,
-        clipBehavior: Clip.hardEdge,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-        child: Container(
-          padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-          decoration: BoxDecoration(
-              color: kGreenColor,
-              borderRadius: BorderRadius.all(Radius.circular(20))),
-          child: Text(
-            'No',
-            style: TextStyle(fontSize: 13, color: kWhiteColor),
-          ),
-        ),
-      ),
-    );
-
-    // Widget yes = FlatButton(
-    //   padding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
+    // Widget no = GestureDetector(
+    //   onTap: () {
+    //     Navigator.of(context, rootNavigator: true).pop('dialog');
+    //   },
+    //   child: Card(
+    //     elevation: 2,
+    //     clipBehavior: Clip.hardEdge,
+    //     shape: RoundedRectangleBorder(
+    //       borderRadius: BorderRadius.all(Radius.circular(20)),
+    //     ),
+    //     child: Container(
+    //       padding: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+    //       decoration: BoxDecoration(
+    //           color: kGreenColor,
+    //           borderRadius: BorderRadius.all(Radius.circular(20))),
+    //       child: Text(
+    //         'No',
+    //         style: TextStyle(fontSize: 13, color: kWhiteColor),
+    //       ),
+    //     ),
+    //   ),
+    // );
+    //
+    // Widget yes = TextButton(
     //   child: Text("OK"),
     //   onPressed: () {
     //     Navigator.of(context, rootNavigator: true).pop('dialog');
@@ -1121,14 +1120,14 @@ class RestaurantState extends State<Restaurant> {
       actions: [clear, no],
     );
 
-    // show the dialog
-    // showDialog(
-    //   context: context,
-    //   barrierDismissible: false,
-    //   builder: (BuildContext context) {
-    //     return alert;
-    //   },
-    // );
+    ///show the dialog
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
   void deleteAllRestProduct(
