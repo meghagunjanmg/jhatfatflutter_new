@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:horizontal_calendar_view_widget/date_helper.dart';
 import 'package:http/http.dart' as http;
@@ -35,6 +36,7 @@ class _oneViewCartState extends State<oneViewCart> {
   String vendorCatId = '';
   String uiType = '';
   dynamic vendorId = '';
+  final number = new ValueNotifier(0);
 
 
   List<CartItem> cartListI = [];
@@ -56,6 +58,13 @@ class _oneViewCartState extends State<oneViewCart> {
   bool isFetchingTime = false;
   int idd = 0;
   int idd1 = 0;
+
+
+  int is_id_req=0;
+  int is_pres_req=0;
+
+  String? iduploaded = null;
+  String? presuploaded = null;
 
 
   void getResStoreName() async {
@@ -178,14 +187,19 @@ class _oneViewCartState extends State<oneViewCart> {
     db.queryAllRows().then((value) {
       List<CartItem> tagObjs =
       value.map((tagJson) => CartItem.fromJson(tagJson)).toList();
+
+
       if (tagObjs.isEmpty) {
         setState(() {});
       }
-      setState(() {
-        isCartFetch = false;
-        cartListI.clear();
-        cartListI = tagObjs;
+      else {setState(() {
+      isCartFetch = false;
+      cartListI.clear();
+      cartListI = tagObjs;
       });
+      }
+
+
     });
   }
 
@@ -455,9 +469,6 @@ class _oneViewCartState extends State<oneViewCart> {
   }
 
 
-
-
-
   void addOrMinusProduct1(product_name, unit, price, quantity, itemCount,
       varient_id, index, price_d) async {
     DatabaseHelper db = DatabaseHelper.instance;
@@ -487,10 +498,22 @@ class _oneViewCartState extends State<oneViewCart> {
           db.updateRestProductData(vae, int.parse(varient_id));
         }
       }
+
+
+      db.queryAllRows().then((value) {
+        List<CartItem> tagObjs =
+        value.map((tagJson) => CartItem.fromJson(tagJson)).toList();
+        setidpres(tagObjs);
+      });
+
       getCatC();
+
+
+
       if (itemCount == 0) {
         getCartItem();
       }
+
 
     });
   }
@@ -505,6 +528,7 @@ class _oneViewCartState extends State<oneViewCart> {
       dynamic index,
       List<AddonCartItem> addon,
       ) {
+
     String selected;
     return Column(
       children: <Widget>[
@@ -680,6 +704,7 @@ class _oneViewCartState extends State<oneViewCart> {
     getCartItem();
     getResCartItem();
     getCatC();
+    setidpres(cartListI);
 
     var size = MediaQuery
         .of(context)
@@ -729,7 +754,8 @@ class _oneViewCartState extends State<oneViewCart> {
                       color: kCardBackgroundColor,
                     ),
 
-                    (cartListI.length > 0)
+                    Column(
+                        children: <Widget>[ (cartListI.length > 0)
                         ? ListView.separated(
                         primary: false,
                         shrinkWrap: true,
@@ -755,9 +781,89 @@ class _oneViewCartState extends State<oneViewCart> {
                             thickness: 1.0,
                           );
                         },
-                        itemCount: cartListI.length)
-                        : Container(),
+                        itemCount: cartListI.length) : Container(),
+                      (is_id_req == 1) ?
+                    new GestureDetector(
+                        onTap: (){ __settingModalBottomSheet(context); },
+                        child:
+                        (iduploaded!=null)
+                                                ?
+                      Container(
+                          height: 30.0,
+                          padding: EdgeInsets.all(4),
+                          margin: EdgeInsets.all(12),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: kCardBackgroundColor,
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          child: Text(
+                            'Id proof uploaded',
+                            style: TextStyle(color: Colors.green,fontSize: 18,fontWeight: FontWeight.w300),
+                          ),
 
+                        )
+                            :                      Container(
+                          height: 30.0,
+                          padding: EdgeInsets.all(4),
+                          margin: EdgeInsets.all(12),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: kCardBackgroundColor,
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          child: Text(
+                            'Upload ID Proof',
+                              style: TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.w300),
+                          ),
+
+                        )
+
+                    )
+                        :
+                    Container(
+                    ),
+        (is_pres_req == 1) ?
+        new GestureDetector(
+            onTap: (){_settingModalBottomSheet(context);},
+            child:
+            (presuploaded!=null)?
+            Container(
+              height: 30.0,
+              padding: EdgeInsets.all(4),
+              margin: EdgeInsets.all(12),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: kCardBackgroundColor,
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              child: Text(
+                'Prescription uploaded',
+                  style: TextStyle(color: Colors.green,fontSize: 18,fontWeight: FontWeight.w300),
+              ),
+            )
+                :
+            Container(
+              height: 30.0,
+              padding: EdgeInsets.all(4),
+              margin: EdgeInsets.all(12),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: kCardBackgroundColor,
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              child: Text(
+                'Upload Prescription',
+                style: TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.w300),
+              ),
+            )
+
+        )
+            :
+        Container(
+        ),
+    ]
+    ),
                     (cartListII.isNotEmpty)
                         ?
                     ListView.separated(
@@ -1358,6 +1464,7 @@ class _oneViewCartState extends State<oneViewCart> {
         }
       });
     });
+    getCartItem();
   }
 
   Widget cartOrderItemListTile1(BuildContext context,
@@ -1371,6 +1478,7 @@ class _oneViewCartState extends State<oneViewCart> {
       dynamic is_id,
       dynamic is_pres,
       dynamic index) {
+
     String selected;
     return Column(
       children: <Widget>[
@@ -1406,59 +1514,6 @@ class _oneViewCartState extends State<oneViewCart> {
                         .textTheme
                         .subtitle1!
                         .copyWith(color: kMainTextColor),
-                  ),
-
-                  (is_id == 1) ?
-                      new GestureDetector(
-                        onTap: (){_settingModalBottomSheet(context);},
-
-                  child: Container(
-                    height: 30.0,
-                    padding: EdgeInsets.symmetric(horizontal: 18.0),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: kCardBackgroundColor,
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: Text(
-                      'Upload ID Proof',
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .caption,
-                    ),
-
-                  )
-                      )
-                      :
-                  Container(
-
-                  ),
-                  (is_pres == 1) ?
-                  new GestureDetector(
-                      onTap: (){_settingModalBottomSheet(context);},
-
-                      child:
-                      Container(
-                    height: 30.0,
-                    padding: EdgeInsets.symmetric(horizontal: 18.0),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: kCardBackgroundColor,
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: Text(
-                      'Upload Prescription',
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .caption,
-                    ),
-
-                  )
-                  )
-                      :
-                  Container(
                   ),
 
                 ],
@@ -1589,6 +1644,35 @@ class _oneViewCartState extends State<oneViewCart> {
     }
 
     if (imageFile != null) {
+      presuploaded=imageFile.path;
+      print("You selected  image : " + imageFile.path);
+      setState(() {
+        debugPrint("SELECTED IMAGE PICK   $imageFile");
+      });
+    } else {
+      print("You have not taken image");
+    }
+  }
+
+  Future imageSelector1(BuildContext context, String pickerType) async {
+    XFile? imageFile = null;
+    ImagePicker picker = new ImagePicker();
+    switch (pickerType) {
+      case "gallery":
+
+      /// GALLERY IMAGE PICKER
+        imageFile = (await picker.pickImage(
+            source: ImageSource.gallery, imageQuality: 90));
+        break;
+
+      case "camera": // CAMERA CAPTURE CODE
+        imageFile = (await picker.pickImage(
+            source: ImageSource.camera, imageQuality: 90));
+        break;
+    }
+
+    if (imageFile != null) {
+      iduploaded=imageFile.path;
       print("You selected  image : " + imageFile.path);
       setState(() {
         debugPrint("SELECTED IMAGE PICK   $imageFile");
@@ -1624,6 +1708,34 @@ class _oneViewCartState extends State<oneViewCart> {
           );
         });
   }
+
+
+  void __settingModalBottomSheet(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return Container(
+            child: new Wrap(
+              children: <Widget>[
+                new ListTile(
+                    title: new Text('Gallery'),
+                    onTap: () => {
+                      imageSelector1(context, "gallery"),
+                      Navigator.pop(context),
+                    }),
+                new ListTile(
+                  title: new Text('Camera'),
+                  onTap: () => {
+                    imageSelector1(context, "camera"),
+                    Navigator.pop(context)
+                  },
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
 
   void hitDateCounter(date) async {
     setState(() {
@@ -1686,5 +1798,26 @@ class _oneViewCartState extends State<oneViewCart> {
         getCatC();
       });
     });
+  }
+
+  void setidpres(List<CartItem> cartListI) {
+    setState(() {
+      is_id_req=0;
+      is_pres_req=0;
+    });
+    if(cartListI.isNotEmpty){
+      for(int i=0;i<cartListI.length;i++) {
+        if(cartListI[i].is_pres==1) {
+            setState(() {
+              is_pres_req = 1;
+            });
+        }
+        if(cartListI[i].is_id==1) {
+          setState(() {
+            is_id_req = 1;
+          });
+        }
+      }
+    }
   }
 }
