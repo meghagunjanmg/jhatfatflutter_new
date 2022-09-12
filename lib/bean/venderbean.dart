@@ -55,6 +55,7 @@ class Vendors {
   dynamic category_name;
   dynamic str1;
   dynamic str2;
+  dynamic product_id;
 
   Vendors(
       {this.vendorName,
@@ -73,6 +74,7 @@ class Vendors {
         this.category_name,
         this.str1,
         this.str2,
+        this.product_id,
 
       });
 
@@ -93,6 +95,7 @@ class Vendors {
     category_name = json['category_name'];
     str1 = json['str1'];
     str2 = json['str2'];
+    product_id = json['product_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -113,6 +116,7 @@ class Vendors {
     data['category_name'] = category_name;
     data['str1'] = str1;
     data['str2'] = str2;
+    data['product_id'] = product_id;
     return data;
   }
 }

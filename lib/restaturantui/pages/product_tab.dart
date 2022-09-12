@@ -20,6 +20,7 @@ import 'package:jhatfat/restaturantui/helper/juice_list.dart';
 import 'package:jhatfat/restaturantui/widigit/column_builder.dart';
 
 import '../../HomeOrderAccount/Home/UI/home2.dart';
+import '../../bean/cartitem.dart';
 import '../../bean/venderbean.dart';
 
 class ProductTabData extends StatefulWidget {
@@ -35,6 +36,7 @@ final dynamic currencySymbol;
 class _ProductTabDataState extends State<ProductTabData> {
   final itemKey = GlobalKey();
   final scrollController = ScrollController();
+  int grocercart = 0;
 
   List<CategoryResturant> categoryList = [];
   List<CategoryResturant> categoryList2 = [];
@@ -47,11 +49,24 @@ class _ProductTabDataState extends State<ProductTabData> {
   @override
   void initState() {
     // hitPopularitem();
+    getCartItem();
     hitSliderUrl();
     hitResturantItem();
     super.initState();
   }
-
+  void getCartItem() async {
+    DatabaseHelper db = DatabaseHelper.instance;
+    db.queryAllRows().then((value) {
+      List<CartItem> tagObjs =
+      value.map((tagJson) => CartItem.fromJson(tagJson)).toList();
+      if (tagObjs.isNotEmpty) {
+        print("ALREADY G");
+        setState(() {
+          grocercart = 1;
+        });
+      }
+    });
+  }
   void hitResturantItem() async {
     setState(() {
       isFetch = true;
@@ -341,7 +356,23 @@ class _ProductTabDataState extends State<ProductTabData> {
                   );
                 },
                 onSuggestionSelected: (Vendors detail) {
+                  for(int i=0;i<categoryList.length;i++)
+                  {
+                    if(detail.product_id.toString()==categoryList[i].product_id.toString() ||
+                        detail.str1.toString().trim().toLowerCase()==categoryList[i].product_name.toString().trim().toLowerCase()
+                    )
+                    {
+                           CallSearch(categoryList[i],i);
+                           print("CLICKED: " + categoryList[i].toString());
+                    }
 
+                    // else{
+                    //   print("CLICKED: " +detail.product_id.toString());
+                    //   print("CLICKED: " +categoryList[i].product_id.toString());
+                    //   print("CLICKED: " +detail.str1.toString().trim().toLowerCase());
+                    //   print("CLICKED: " +categoryList[i].product_name.toString().trim().toLowerCase());
+                    // }
+                  }
                 //  print("clicked "+detai);
                 },
               ),
@@ -350,7 +381,6 @@ class _ProductTabDataState extends State<ProductTabData> {
             shrinkWrap: true,
             primary: false,
                 controller: scrollController,
-
                 itemBuilder: (context, index) {
              var item = categoryList2[index];
               //var item = categoryList2[index].product_id;
@@ -785,6 +815,118 @@ class _ProductTabDataState extends State<ProductTabData> {
       });
     });
   }
+
+  void CallSearch(CategoryResturant categoryListNew, int index) {
+    {
+      print(index);
+      DatabaseHelper db =
+          DatabaseHelper.instance;
+      db.getRestProdQty(
+          '${categoryListNew.variant[0].variant_id}')
+          .then((value) {
+        if (value != null) {
+          setState(() {
+            categoryListNew.variant[0].addOnQty = value;
+          });
+        } else {
+          if (categoryListNew.variant[0].addOnQty > 0) {
+            setState(() {
+              categoryListNew.variant[0].addOnQty = 0;
+            });
+          }
+        }
+      db.calculateTotalRestAdonA(
+          '${categoryListNew.variant[0].variant_id}')
+          .then((value1) {
+        double priced = 0.0;
+        if (value != null) {
+          var tagObjsJson =
+          value1 as List;
+          dynamic totalAmount_1 =
+          tagObjsJson[0]['Total'];
+          if (totalAmount_1 != null) {
+            setState(() {
+              priced = double.parse(
+                  '${totalAmount_1}');
+            });
+          }
+        }
+
+
+
+        db.getAddOnList(
+            '${categoryListNew.variant[0].variant_id}')
+            .then((valued) {
+          List<AddonList> addOnlist = [];
+          if (valued != null &&
+              valued.length > 0) {
+            addOnlist = valued
+                .map((e) =>
+                AddonList.fromJson(e))
+                .toList();
+            for (int i = 0;
+            i < categoryListNew.addons.length;
+            i++) {
+              int ind = addOnlist.indexOf(
+                  AddonList(
+                      '${categoryListNew.addons[i].addon_id}'));
+              if (ind != null && ind >= 0) {
+                setState(() {
+                  categoryListNew.addons[i].isAdd =
+                  true;
+                });
+              }
+            }
+          }
+
+          if(grocercart==1){
+        print("ALREADY");
+        showMyDialog(context);
+      }
+      else {
+        productDescriptionModalBottomSheets(
+            context,
+            grocercart,
+            MediaQuery
+                .of(context)
+                .size
+                .height,
+            categoryListNew,
+            0, addOnlist,
+            widget.currencySymbol,
+            priced,
+            widget
+                .onVerificationDone())
+            .then((value) {
+          widget.onVerificationDone();
+        });
+      }
+          });
+        });
+      });
+    }
+  }
+  showMyDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return new AlertDialog(
+            content: Text(
+              'Please order Grocery and Food in seperate orders',
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+              ),
+            ],
+          );
+        }
+    );
+  }
+
 }
 
   class BackendService {
