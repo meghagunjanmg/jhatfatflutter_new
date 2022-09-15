@@ -30,6 +30,7 @@ import 'package:jhatfat/restaturantui/pages/rasturantlistpage.dart';
 import 'package:jhatfat/restaturantui/pages/recentproductorder.dart';
 import 'package:jhatfat/restaturantui/pages/restaurant.dart';
 import 'package:jhatfat/restaturantui/searchResturant.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 import '../../bean/venderbean.dart';
 
 class Restaurant extends StatefulWidget {
@@ -58,6 +59,7 @@ class RestaurantState extends State<Restaurant> {
   List<NearStores> nearStores = [];
   List<NearStores> nearStoresSearch = [];
 
+  static String id = 'exploreScreen';
 
   String currentAddress = "76A, New York, US.";
   bool address1 = true;
@@ -77,7 +79,12 @@ class RestaurantState extends State<Restaurant> {
     _hitServices();
 
   }
+  void callThisMethod(bool isVisible){
+    debugPrint('_HomeScreenState.callThisMethod: isVisible: ${isVisible}');
+    _getDemoLocation();
+    _hitServices();
 
+  }
   void _hitServices() {
     getCurrentSymbol();
     _getDemoLocation();
@@ -312,7 +319,13 @@ class RestaurantState extends State<Restaurant> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return Container(
+    return  VisibilityDetector(
+        key: Key(RestaurantState.id),
+    onVisibilityChanged: (VisibilityInfo info) {
+    bool isVisible = info.visibleFraction != 0;
+    callThisMethod(isVisible);
+    },
+    child:Container(
       color: kMainColor,
       child: SafeArea(
         child: Scaffold(
@@ -1016,6 +1029,7 @@ class RestaurantState extends State<Restaurant> {
           ),
         ),
       ),
+    )
     );
   }
 

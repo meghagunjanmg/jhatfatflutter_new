@@ -86,6 +86,7 @@ class DatabaseHelper {
             $columnId INTEGER PRIMARY KEY,
             $productName TEXT NOT NULL,
             $storeName TEXT NOT NULL,
+            $vendor_id TEXT NOT NULL,
             $quantitiy INTEGER NOT NULL,
             $price REAL NOT NULL,
             $unit TEXT NOT NULL,
@@ -126,7 +127,6 @@ class DatabaseHelper {
     batch.execute('''
           CREATE TABLE $addontable (
           $columnId INTEGER PRIMARY KEY,
-        
             $varientId TEXT NOT NULL,
             $storeName TEXT NOT NULL,
             $addonid TEXT NOT NULL,

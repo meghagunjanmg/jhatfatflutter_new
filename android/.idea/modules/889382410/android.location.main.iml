@@ -13,7 +13,6 @@
           <stringArguments>
             <stringArg name="classpath">
               <args>
-                <arg>$MODULE_DIR$/../../../../build/location/intermediates/compile_r_class_jar/debug/R.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/5de5525a9056a0343c06e645afe28966/transformed/jetified-play-services-location-16.0.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/265a8fdbef8c1bc323f988ff9c7b3abd/transformed/jetified-flutter_embedding_debug-1.0.0-5e9e0e0aa8be4ff69facadd706b713f0bb54d5b3.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/a64aeac6708bdcb59f4f258d34ea5f37/transformed/jetified-core-ktx-1.3.2-api.jar</arg>

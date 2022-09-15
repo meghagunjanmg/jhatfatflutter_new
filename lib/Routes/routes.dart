@@ -10,7 +10,6 @@ import 'package:jhatfat/HomeOrderAccount/Home/UI/order_placed_map.dart';
 import 'package:jhatfat/HomeOrderAccount/Order/UI/order_page.dart';
 import 'package:jhatfat/HomeOrderAccount/home_order_account.dart';
 import 'package:jhatfat/HomeOrderAccount/offer/ui/offerui.dart';
-import 'package:jhatfat/Maps/UI/livetrack.dart';
 import 'package:jhatfat/Maps/UI/location_page.dart';
 import 'package:jhatfat/Pages/view_cart_d.dart';
 import 'package:jhatfat/parcel/DropMap.dart';
@@ -62,7 +61,6 @@ class PageRoutes {
     return {
       homeOrderAccountPage: (context) => HomeOrderAccount(),
       subscription: (context) => Subscription(),
-      livetrack: (context) => LiveTrack(),
       homePage: (context) => HomePage2(),
       orderPage: (context) => OrderPage(),
       accountPage: (context) => AccountPage(),

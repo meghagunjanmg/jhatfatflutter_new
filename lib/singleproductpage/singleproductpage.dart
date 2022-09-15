@@ -416,7 +416,9 @@ class SingleProductState extends State<SingleProductPage> {
                                                             widget
                                                                 .productVarintList[
                                                             index]
-                                                                .varient_id);
+                                                                .varient_id,
+                                                        widget.productVarintList[index].vendor_id
+                                                        );
                                                       } else {
                                                         Toast.show(
                                                             "No more stock available!",
@@ -489,7 +491,9 @@ class SingleProductState extends State<SingleProductPage> {
                                                           widget
                                                               .productVarintList[
                                                                   index]
-                                                              .varient_id);
+                                                              .varient_id,
+                                                          widget.productVarintList[index].vendor_id
+                                                      );
                                                     },
                                                     child: Icon(
                                                       Icons.remove,
@@ -552,7 +556,9 @@ class SingleProductState extends State<SingleProductPage> {
                                                               widget
                                                                   .productVarintList[
                                                                       index]
-                                                                  .varient_id);
+                                                                  .varient_id,
+                                                              widget.productVarintList[index].vendor_id
+                                                          );
                                                         } else {
                                                           Toast.show(
                                                               "No more stock available!",
@@ -585,7 +591,7 @@ class SingleProductState extends State<SingleProductPage> {
   }
 
   void addOrMinusProduct(is_id,is_pres,product_name, unit, price, quantity, itemCount,
-      varient_image, varient_id) async {
+      varient_image, varient_id,vendorid) async {
 //    addMinus = true;
     DatabaseHelper db = DatabaseHelper.instance;
     Future<int?> existing = db.getcount(int.parse('${varient_id}'));
@@ -596,6 +602,7 @@ class SingleProductState extends State<SingleProductPage> {
       var vae = {
         DatabaseHelper.productName: product_name,
         DatabaseHelper.storeName: store_name,
+        DatabaseHelper.vendor_id: vendorid,
         DatabaseHelper.price: (price * itemCount),
         DatabaseHelper.unit: unit,
         DatabaseHelper.quantitiy: quantity,

@@ -22,6 +22,7 @@ import 'package:jhatfat/bean/cartitem.dart';
 import 'package:jhatfat/bean/orderarray.dart';
 import 'package:jhatfat/bean/paymentstatus.dart';
 import 'package:jhatfat/databasehelper/dbhelper.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 import '../bean/resturantbean/restaurantcartitem.dart';
 import '../restaturantui/pages/payment_restaurant_page.dart';
@@ -36,8 +37,8 @@ class _oneViewCartState extends State<oneViewCart> {
   String vendorCatId = '';
   String uiType = '';
   dynamic vendorId = '';
-  final number = new ValueNotifier(0);
 
+  static String id = 'exploreScreen';
 
   List<CartItem> cartListI = [];
   List<RestaurantCartItem> cartListII = [];
@@ -135,13 +136,11 @@ class _oneViewCartState extends State<oneViewCart> {
         cartListII = List.from(tagObjs);
         isCartFetch = true;
       });
-      print('cart value :- ${cartListII.toString()}');
       for (int i = 0; i < cartListII.length; i++) {
         print('${cartListII[i].varient_id}');
         db
             .getAddOnListWithPrice(int.parse('${cartListII[i].varient_id}'))
             .then((values) {
-          print('${values}');
           List<AddonCartItem> tagObjsd =
           values.map((tagJson) => AddonCartItem.fromJson(tagJson)).toList();
           if (tagObjsd != null) {
@@ -205,8 +204,6 @@ class _oneViewCartState extends State<oneViewCart> {
 
   void getCatC() async {
     if (cartListI.isNotEmpty) {
-      print("object*******");
-
       DatabaseHelper db = DatabaseHelper.instance;
       db.calculateTotal().then((value) {
         var tagObjsJson = value as List;
@@ -222,25 +219,25 @@ class _oneViewCartState extends State<oneViewCart> {
     }
 
     if (cartListII.isNotEmpty) {
-      print("object");
       DatabaseHelper db = DatabaseHelper.instance;
       db.calculateTotalRest().then((value) {
         db.calculateTotalRestAdon().then((valued) {
           var tagObjsJson = value as List;
           var tagObjsJsond = valued as List;
+          print("restadd "+tagObjsJson.toString()+" "+tagObjsJsond.toString());
+
           setState(() {
-            if (value != null) {
-              dynamic totalAmount_1 = tagObjsJson[0]['Total'];
-              print('T--${totalAmount_1}');
-              if (valued != null) {
-                dynamic totalAmount_2 = tagObjsJsond[0]['Total'];
-                print('T--${totalAmount_2}');
-                if (totalAmount_2 == null) {
-                  if (totalAmount_1 == null) {} else {
-                    totalAmount = totalAmount_1 + deliveryCharge;
-                  }
-                } else {}
+            dynamic totalAmount_1 = tagObjsJson[0]['Total'];
+            dynamic totalAmount_2 = tagObjsJsond[0]['Total'];
+
+            if (totalAmount_2 == null) {
+              if (totalAmount_1 == null) {}
+
+              else {
+                totalAmount = totalAmount_1+ deliveryCharge;
               }
+            } else {
+              totalAmount = totalAmount_1+ totalAmount_2 +deliveryCharge;
             }
           });
         });
@@ -306,8 +303,6 @@ class _oneViewCartState extends State<oneViewCart> {
       quantity, itemCount,
       varient_id, index, price_d) async {
 
-    print("addminus "+itemCount+" "+product_id);
-
     DatabaseHelper db = DatabaseHelper.instance;
     Future<int?> existing = db.getRestProductcount(int.parse(varient_id));
     existing.then((value) {
@@ -321,8 +316,6 @@ class _oneViewCartState extends State<oneViewCart> {
         DatabaseHelper.addQnty: itemCount,
         DatabaseHelper.varientId: int.parse(varient_id)
       };
-
-      print('value we - $value');
 
       if (value == 0) {
         db.insertRaturantOrder(vae);
@@ -388,7 +381,6 @@ class _oneViewCartState extends State<oneViewCart> {
                   onTap: () {
                     setState(() {
                       idd1 = index;
-                      print('${radioList[idd1]}');
                     });
                   },
                   child: SizedBox(
@@ -485,7 +477,6 @@ class _oneViewCartState extends State<oneViewCart> {
         DatabaseHelper.varientId: int.parse(varient_id)
       };
 
-      print('value we - $value');
 
       if (value == 0) {
         db.insertRaturantOrder(vae);
@@ -697,21 +688,41 @@ class _oneViewCartState extends State<oneViewCart> {
       getCatC();
     });
   }
-
-
   @override
-  Widget build(BuildContext context) {
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
     getCartItem();
     getResCartItem();
-    getCatC();
     setidpres(cartListI);
+    getCatC();
+
+  }
+  void callThisMethod(bool isVisible){
+    debugPrint('_HomeScreenState.callThisMethod: isVisible: ${isVisible}');
+
+    getCartItem();
+    getResCartItem();
+    setidpres(cartListI);
+    getCatC();
+
+  }
+  @override
+  Widget build(BuildContext context) {
 
     var size = MediaQuery
         .of(context)
         .size;
     final double itemHeight = (size.height - kToolbarHeight - 24) / 7;
     final double itemWidth = size.width / 2;
-    return Scaffold(
+    return
+      VisibilityDetector(
+          key: Key(_oneViewCartState.id),
+          onVisibilityChanged: (VisibilityInfo info) {
+            bool isVisible = info.visibleFraction != 0;
+            callThisMethod(isVisible);
+          },
+          child:Scaffold(
       appBar: AppBar(
         title:
         Text('Confirm Order', style: Theme
@@ -1195,6 +1206,7 @@ class _oneViewCartState extends State<oneViewCart> {
           ],
         ),
       ),
+          ),
     );
   }
 
@@ -1319,15 +1331,24 @@ class _oneViewCartState extends State<oneViewCart> {
       if (radioList.length > 0) {
         if (totalAmount > 0.0) {
           var url = addToCart;
+
           SharedPreferences pref = await SharedPreferences.getInstance();
           int? userId = pref.getInt('user_id');
-          String? vendorId = pref.getString('vendor_id');
+          ///String? vendorId = pref.getString('vendor_id');
           String? ui_type = pref.getString("ui_type");
+
           List<OrderArrayGrocery> orderArray = [];
-          for (CartItem item in cartListI) {
-            orderArray.add(OrderArrayGrocery(int.parse('${item.add_qnty}'),
-                int.parse('${item.varient_id}')));
-          }
+          // for (CartItem item in cartListI) {
+          //   orderArray.add(OrderArrayGrocery(int.parse('${item.add_qnty}'),
+          //       int.parse('${item.varient_id}')));
+          // }
+
+          for(int i=0;i<cartListI.length;i++)
+            {
+              vendorId = cartListI[i].vendor_id;
+              orderArray.add(OrderArrayGrocery(int.parse('${cartListI[i].add_qnty}'),
+                  int.parse('${cartListI[i].varient_id}')));
+            }
 
           Uri myUri = Uri.parse(url);
           http.post(myUri, body: {
@@ -1434,13 +1455,14 @@ class _oneViewCartState extends State<oneViewCart> {
 
   void addOrMinusProduct(store_name, product_name, unit, price, quantity,
       itemCount,
-      varient_image, varient_id, index, price_d) async {
+      varient_image, varient_id, index, price_d,vendorid) async {
     DatabaseHelper db = DatabaseHelper.instance;
     Future<int?> existing = db.getcount(int.parse(varient_id));
     existing.then((value) {
       var vae = {
         DatabaseHelper.productName: product_name,
         DatabaseHelper.storeName: store_name,
+        DatabaseHelper.vendor_id: vendorid,
         DatabaseHelper.price: (price_d * itemCount),
         DatabaseHelper.unit: unit,
         DatabaseHelper.quantitiy: quantity,
@@ -1570,7 +1592,9 @@ class _oneViewCartState extends State<oneViewCart> {
                                       cartListI[index].product_img,
                                       cartListI[index].varient_id,
                                       index,
-                                      price_d);
+                                      price_d,
+                                    cartListI[index].vendor_id
+                                  );
                                 });
                               },
                               child: Icon(
@@ -1605,7 +1629,9 @@ class _oneViewCartState extends State<oneViewCart> {
                                       cartListI[index].product_img,
                                       cartListI[index].varient_id,
                                       index,
-                                      price_d);
+                                      price_d,
+                                      cartListI[index].vendor_id
+                                  );
                                 });
                               },
                               child: Icon(

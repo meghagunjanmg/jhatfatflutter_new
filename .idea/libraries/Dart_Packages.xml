@@ -107,6 +107,27 @@
             </list>
           </value>
         </entry>
+        <entry key="cloud_firestore">
+          <value>
+            <list>
+              <option value="/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-2.5.4/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="cloud_firestore_platform_interface">
+          <value>
+            <list>
+              <option value="/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore_platform_interface-5.7.4/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="cloud_firestore_web">
+          <value>
+            <list>
+              <option value="/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore_web-2.8.7/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="collection">
           <value>
             <list>
@@ -772,6 +793,20 @@
             </list>
           </value>
         </entry>
+        <entry key="permission_handler">
+          <value>
+            <list>
+              <option value="/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler-8.3.0/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="permission_handler_platform_interface">
+          <value>
+            <list>
+              <option value="/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler_platform_interface-3.7.0/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="petitparser">
           <value>
             <list>
@@ -1066,6 +1101,13 @@
             </list>
           </value>
         </entry>
+        <entry key="visibility_detector">
+          <value>
+            <list>
+              <option value="/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/visibility_detector-0.2.2/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="win32">
           <value>
             <list>
@@ -1112,6 +1154,9 @@
       <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/circular_bottom_navigation-2.1.0/lib" />
       <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/cli_util-0.3.5/lib" />
       <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/clock-1.1.1/lib" />
+      <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-2.5.4/lib" />
+      <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore_platform_interface-5.7.4/lib" />
+      <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore_web-2.8.7/lib" />
       <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/collection-1.16.0/lib" />
       <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/cross_file-0.3.3+1/lib" />
       <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/crypto-3.0.2/lib" />
@@ -1203,6 +1248,8 @@
       <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-2.0.6/lib" />
       <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_platform_interface-2.0.4/lib" />
       <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-2.1.2/lib" />
+      <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler-8.3.0/lib" />
+      <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/permission_handler_platform_interface-3.7.0/lib" />
       <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/petitparser-5.0.0/lib" />
       <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/pin_code_text_field-1.8.0/lib" />
       <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/platform-3.1.0/lib" />
@@ -1244,6 +1291,7 @@
       <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_web-2.0.13/lib" />
       <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_windows-3.0.1/lib" />
       <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/vector_math-2.1.2/lib" />
+      <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/visibility_detector-0.2.2/lib" />
       <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/win32-2.7.0/lib" />
       <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/xdg_directories-0.2.0+2/lib" />
       <root url="file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c6/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/xml-6.1.0/lib" />

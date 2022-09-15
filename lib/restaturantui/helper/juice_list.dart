@@ -824,10 +824,11 @@ Future productDescriptionModalBottomSheets(
                   DatabaseHelper.varientId: '${variant_id}',
                   DatabaseHelper.addonid: '${addon.addon_id}',
                   DatabaseHelper.price: addon.addon_price,
-                  DatabaseHelper.addonName: addon.addon_name
+                  DatabaseHelper.addonName: addon.addon_name,
+                  DatabaseHelper.storeName: "Store",
                 };
                 await db.insertAddOn(vae).then((value) {
-                  print('addon add $value');
+                  print('ADDONADD $value');
                   if (value != null && value == 1) {
                     db.calculateTotalRestAdonA('${variant_id}').then((value1) {
                       double pricedd = 0.0;
@@ -907,8 +908,11 @@ Future productDescriptionModalBottomSheets(
                       }
                     });
                   }
+                  print("ADDONADD"+value.toString());
                   return value;
                 }).catchError((e) {
+                  print("ADDONADD"+e.toString());
+
                   return null;
                 });
               }
@@ -1232,6 +1236,7 @@ Future productDescriptionModalBottomSheets(
                             itemCount: item.addons.length,
                             itemBuilder: (context, indexw) {
                               // item.addons[index].isAdd = addOnlist.contains(AddonList(item.addons[index].addon_id))?true:false;
+                              var varl = false;
                               return Padding(
                                 padding: EdgeInsets.only(
                                     right: fixPadding, left: fixPadding),
@@ -1478,25 +1483,44 @@ Future productDescriptionModalBottomSheets(
                                                   gravity: Toast.bottom);
                                             }
                                           },
-                                          child: Container(
-                                            width: 26.0,
-                                            height: 26.0,
-                                            decoration: BoxDecoration(
-                                                color: (item.addons[indexw]
-                                                    .isAdd)
-                                                    ? kMainColor
-                                                    : kWhiteColor,
-                                                borderRadius:
-                                                BorderRadius.circular(
-                                                    13.0),
-                                                border: Border.all(
-                                                    width: 1.0,
-                                                    color: kHintColor
-                                                        .withOpacity(0.7))),
-                                            child: Icon(Icons.check,
-                                                color: kWhiteColor,
-                                                size: 15.0),
+                                          child:
+                                          Checkbox(
+                                            value: item.addons[indexw].isAdd,
+                                            onChanged: (bool? value) {
+                                              print("$value  value");
+                                              setState(() {
+                                                item.addons[indexw].isAdd = value;
+                                              });
+                                                if(value==true){
+                                                  setAddOnToDatabase(item.variant[0].isSelected, db, item.addons[indexw], item.variant[0].variant_id, indexw);
+                                                }
+                                                else{
+                                                  deleteAddOn(item.variant[0].isSelected, db, item.addons[indexw], item.variant[0].variant_id, indexw);
+
+                                                }
+
+                                            },
                                           ),
+                                          // Container(
+                                          //   width: 26.0,
+                                          //   height: 26.0,
+                                          //   decoration: BoxDecoration(
+                                          //       color: (item.addons[indexw]
+                                          //           .isAdd)
+                                          //           ? kMainColor
+                                          //           : kWhiteColor,
+                                          //       borderRadius:
+                                          //       BorderRadius.circular(
+                                          //           13.0),
+                                          //       border: Border.all(
+                                          //           width: 1.0,
+                                          //           color: kHintColor
+                                          //               .withOpacity(0.7))),
+                                          //   child:
+                                          //   Icon(Icons.check,
+                                          //       color: kWhiteColor,
+                                          //       size: 15.0),
+                                          // ),
                                         ),
                                         widthSpace,
                                         Text(

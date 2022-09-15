@@ -414,7 +414,9 @@ class SingleProductState2 extends State<SingleProductPage_2> {
               widget
                   .productVarintList[
               index]
-                  .varient_id);
+                  .varient_id,
+              widget.productVarintList[index].vendor_id
+          );
         } else {
           Toast.show(
               "No more stock available!",
@@ -484,7 +486,9 @@ class SingleProductState2 extends State<SingleProductPage_2> {
                                                           widget
                                                               .productVarintList[
                                                                   index]
-                                                              .varient_id);
+                                                              .varient_id,
+                                                          widget.productVarintList[index].vendor_id
+                                                      );
                                                     },
                                                     child: Icon(
                                                       Icons.remove,
@@ -548,7 +552,9 @@ class SingleProductState2 extends State<SingleProductPage_2> {
                                                               widget
                                                                   .productVarintList[
                                                                       index]
-                                                                  .varient_id);
+                                                                  .varient_id,
+                                                              widget.productVarintList[index].vendor_id
+                                                          );
                                                         } else {
                                                           Toast.show(
                                                               "No more stock available!",
@@ -578,7 +584,7 @@ class SingleProductState2 extends State<SingleProductPage_2> {
   }
 
   void addOrMinusProduct(is_id,is_pres,product_name, unit, price, quantity, itemCount,
-      varient_image, varient_id) async {
+      varient_image, varient_id,vendorid) async {
     DatabaseHelper db = DatabaseHelper.instance;
     Future<int?> existing = db.getcount(int.parse('${varient_id}'));
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -588,6 +594,7 @@ class SingleProductState2 extends State<SingleProductPage_2> {
       var vae = {
         DatabaseHelper.productName: product_name,
         DatabaseHelper.storeName: store_name,
+        DatabaseHelper.vendor_id: vendorid,
         DatabaseHelper.price: (price * itemCount),
         DatabaseHelper.unit: unit,
         DatabaseHelper.quantitiy: quantity,

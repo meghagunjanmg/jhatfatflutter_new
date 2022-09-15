@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jhatfat/Auth/login_navigator.dart';
 import 'package:jhatfat/HomeOrderAccount/home_order_account.dart';
@@ -22,6 +25,7 @@ import 'databasehelper/dbhelper.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
+  await Firebase.initializeApp();
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool? result = prefs.getBool('islogin');
@@ -29,6 +33,7 @@ Future<void> main() async {
     statusBarColor: kMainTextColor.withOpacity(0.5),
   ));
   await PushNotificationService().setupInteractedMessage();
+  _requestPermission();
 
   runApp(
       Phoenix(child: (result != null && result) ? GoMarketHome() : GoMarket()));
@@ -40,7 +45,16 @@ Future<void> main() async {
     // App received a notification when it was killed
   }
 }
-
+_requestPermission() async {
+  var status = await Permission.location.request();
+  if (status.isGranted) {
+    print('done');
+  } else if (status.isDenied) {
+    _requestPermission();
+  } else if (status.isPermanentlyDenied) {
+    openAppSettings();
+  }
+}
 class GoMarket extends StatelessWidget {
 
   @override
@@ -64,6 +78,8 @@ class GoMarket extends StatelessWidget {
 }
 
 class GoMarketHome extends StatelessWidget {
+
+
 
   @override
   Widget build(BuildContext context) {

@@ -27,7 +27,7 @@ class OrderPageState extends State<OrderPage> {
   List<OrderHistoryRestaurant> onRestGoingOrders = [];
   List<OrderHistoryRestaurant> onPharmaGoingOrders = [];
   List<TodayOrderParcel> onParcelGoingOrders = [];
-
+  var userId;
   String elseText = 'No ongoing order ...';
   dynamic currency = '';
 
@@ -300,7 +300,7 @@ class OrderPageState extends State<OrderPage> {
       onRestGoingOrders = onGoingOrderss;
     });
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    var userId = preferences.getInt('user_id');
+    userId = preferences.getInt('user_id');
     var url = user_completed_orders;
     Uri myUri = Uri.parse(url);
 
@@ -783,6 +783,7 @@ class OrderPageState extends State<OrderPage> {
                                                   ongoingOrders:
                                                       onGoingOrders[t],
                                                   currency: currency,
+                                                      user_id: "757",
                                                 ),
                                               ),
                                             ).then((value) {

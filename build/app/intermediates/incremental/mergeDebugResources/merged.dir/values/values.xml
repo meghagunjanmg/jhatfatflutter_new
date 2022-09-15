@@ -1170,6 +1170,7 @@
     <string name="fallback_menu_item_open_in_browser">Open in browser</string>
     <string name="fallback_menu_item_share_link">Share link</string>
     <string name="fcm_fallback_notification_channel_label">Miscellaneous</string>
+    <string name="firebase_database_url" translatable="false">https://jhatfat-default-rtdb.firebaseio.com</string>
     <string name="gcm_defaultSenderId" translatable="false">147590035506</string>
     <string name="google_api_key" translatable="false">AIzaSyCTsuo3QSNdQmKWM3KUGQpYo-BrSWvNRjQ</string>
     <string name="google_app_id" translatable="false">1:147590035506:android:3fc8ad80c32e0fbea8e42b</string>
@@ -1178,7 +1179,7 @@
     <string name="hide_bottom_view_on_scroll_behavior" translatable="false">com.google.android.material.behavior.HideBottomViewOnScrollBehavior</string>
     <string description="Content description for an icon that appears in the title area of a dialog" name="icon_content_description">Dialog Icon</string>
     <string name="item_view_role_description">Tab</string>
-    <string name="map_key">AIzaSyCRQIhsGS3xrGeopcSPW70zal2yNRIQAJc</string>
+    <string name="map_key">AIzaSyALFpEOD1-mnkRiWZcNK4adNCfxrHDKXYs</string>
     <string name="material_clock_display_divider" translatable="false">:</string>
     <string description="Description for the toggle to choose between AM and PM [CHAR_LIMIT=NONE] " name="material_clock_toggle_content_description">Select AM or PM</string>
     <string description="Description for button to switch to select the hour [CHAR_LIMIT=NONE]" name="material_hour_selection">Select hour</string>
