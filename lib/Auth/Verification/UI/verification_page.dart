@@ -270,19 +270,21 @@ class _OtpVerifyState extends State<OtpVerify> {
             prefs.setString("user_image", jsonData['data']['user_image']);
             prefs.setString("user_phone", jsonData['data']['user_phone']);
             prefs.setString("user_password", jsonData['data']['user_password']);
-            // prefs.setString(
-            //     "wallet_credits", jsonData['data']['wallet_credits']);
-            // prefs.setString("first_recharge_coupon",
-            //     jsonData['data']['first_recharge_coupon']);
-            // prefs.setBool("phoneverifed", true);
-            // prefs.setBool("islogin", true);
-            // prefs.setString("refferal_code", jsonData['data']['referral_code']);
-            // if (jsonData['currency'] != null) {
-            //   CurrencyData currencyData =
-            //       CurrencyData.fromJson(jsonData['currency']);
-            //   print('${currencyData.toString()}');
-            //   prefs.setString("curency", '${currencyData.currency_sign}');
-            // }
+            prefs.setString("id_proof", (jsonData['data']['id_proof']));
+
+            prefs.setString(
+                "wallet_credits", jsonData['data']['wallet_credits'].toString());
+            prefs.setString("first_recharge_coupon",
+                jsonData['data']['first_recharge_coupon'].toString());
+            prefs.setBool("phoneverifed", true);
+            prefs.setBool("islogin", true);
+            prefs.setString("refferal_code", jsonData['data']['referral_code'].toString());
+            if (jsonData['currency'] != null) {
+              CurrencyData currencyData =
+                  CurrencyData.fromJson(jsonData['currency']);
+              print('${currencyData.toString()}');
+              prefs.setString("curency", '${currencyData.currency_sign}');
+            }
            ///// widget.onVerificationDone();
 
             prefs.setBool("phoneverifed", true);

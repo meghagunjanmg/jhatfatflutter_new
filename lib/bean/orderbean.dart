@@ -178,6 +178,7 @@ dynamic order_cart_id;
 dynamic order_date;
 dynamic varient_image;
 dynamic description;
+dynamic vendor_name;
 
 
 RespectiveData(
@@ -192,15 +193,17 @@ RespectiveData(
       this.order_cart_id,
       this.order_date,
       this.varient_image,
-      this.description);
+      this.description,
+    this.vendor_name
+    );
 
 factory RespectiveData.fromJson(dynamic json){
   return RespectiveData(json['store_order_id'], json['product_name'], json['quantity'], json['unit'], json['varient_id'], json['qty'],
-      json['price'], json['total_mrp'], json['order_cart_id'], json['order_date'], json['varient_image'], json['description']);
+      json['price'], json['total_mrp'], json['order_cart_id'], json['order_date'], json['varient_image'], json['description'],json['vendor_name']);
 }
 
   @override
   String toString() {
-    return 'RespectiveData{store_order_id: $store_order_id, product_name: $product_name, quantity: $quantity, unit: $unit, varient_id: $varient_id, qty: $qty, price: $price, total_mrp: $total_mrp, order_cart_id: $order_cart_id, order_date: $order_date, varient_image: $varient_image, description: $description}';
+    return 'RespectiveData{store_order_id: $store_order_id, product_name: $product_name, quantity: $quantity, unit: $unit, varient_id: $varient_id, qty: $qty, price: $price, total_mrp: $total_mrp, order_cart_id: $order_cart_id, order_date: $order_date, varient_image: $varient_image, description: $description, vendor_name: $vendor_name}';
   }
 }

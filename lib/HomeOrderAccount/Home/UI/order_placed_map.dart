@@ -58,6 +58,7 @@ class _OrderMapState extends State<OrderMap> {
   @override
   void initState() {
     super.initState();
+    _getLocation();
 
     _originLatitude = double.parse(double.parse((widget.ongoingOrders.vendor_lat.toString())).toStringAsFixed(4));
     _originLongitude = double.parse(double.parse((widget.ongoingOrders.vendor_lng.toString())).toStringAsFixed(4));
@@ -66,6 +67,22 @@ class _OrderMapState extends State<OrderMap> {
     _destLongitude = double.parse(double.parse((widget.ongoingOrders.delivery_lng.toString())).toStringAsFixed(4));
 
     getDirections();
+
+
+
+  }
+
+  _getLocation() async {
+    try {
+      await FirebaseFirestore.instance.collection('location').doc(user_id.toString()).set({
+        'latitude': double.parse(double.parse((widget.ongoingOrders.vendor_lat.toString())).toStringAsFixed(4)),
+        'longitude': double.parse(double.parse((widget.ongoingOrders.vendor_lng.toString())).toStringAsFixed(4)),
+        'name': 'john'
+      }, SetOptions(merge: true));
+
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -88,7 +105,8 @@ class _OrderMapState extends State<OrderMap> {
                     : false,
                 child: Padding(
                   padding: EdgeInsets.only(right: 10, top: 10, bottom: 10),
-                  child: TextButton(
+                  child:
+                  TextButton(
                     onPressed: () {
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
@@ -141,7 +159,7 @@ class _OrderMapState extends State<OrderMap> {
                           (element) => element.id == widget.user_id)['latitude'],
                       snapshot.data!.docs.singleWhere(
                       (element) => element.id == widget.user_id)['longitude']),
-                  zoom: 8),
+                  zoom: 14),
               onMapCreated: (GoogleMapController controller) async {
                 setState(() {
                   _controller = controller;
@@ -173,7 +191,7 @@ class _OrderMapState extends State<OrderMap> {
     Expanded(
     child: ListTile(
     title: Text(
-    '${widget.ongoingOrders.vendor_name}',
+    '${widget.pageTitle}',
     style: orderMapAppBarTextStyle.copyWith(
     letterSpacing: 0.07),
     ),
@@ -243,7 +261,7 @@ class _OrderMapState extends State<OrderMap> {
     ),
     Expanded(
     child: Text(
-    '${widget.ongoingOrders.vendor_name}\t',
+    '${widget.pageTitle}\t',
     style: Theme.of(context)
         .textTheme
         .caption!
@@ -328,7 +346,7 @@ class _OrderMapState extends State<OrderMap> {
           snapshot.data!.docs.singleWhere(
                   (element) => element.id == widget.user_id)['longitude'],
         ),
-        zoom: 8)));
+        zoom: 14)));
 
     _addMarker(LatLng(_originLatitude, _originLongitude), "source",await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(90,90)), 'assets/delivery.png'));
     _addMarker(LatLng(_destLatitude, _destLongitude), "dest", BitmapDescriptor.defaultMarkerWithHue(90));

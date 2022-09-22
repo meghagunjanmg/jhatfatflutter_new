@@ -11,13 +11,10 @@ import 'package:jhatfat/HomeOrderAccount/Order/UI/order_page.dart';
 import 'package:jhatfat/HomeOrderAccount/home_order_account.dart';
 import 'package:jhatfat/HomeOrderAccount/offer/ui/offerui.dart';
 import 'package:jhatfat/Maps/UI/location_page.dart';
-import 'package:jhatfat/Pages/view_cart_d.dart';
 import 'package:jhatfat/parcel/DropMap.dart';
 import 'package:jhatfat/parcel/ParcelLocation.dart';
 import 'package:jhatfat/parcel/PickMap.dart';
-import 'package:jhatfat/pharmacy/pharmacart.dart';
 import 'package:jhatfat/restaturantui/pages/rasturantlistpage.dart';
-import 'package:jhatfat/restaturantui/resturant_cart_d.dart';
 import 'package:jhatfat/settingpack/settings.dart';
 import 'package:jhatfat/subscription/subscription.dart';
 import 'package:jhatfat/walletrewardreffer/reffer/ui/reffernearn.dart';
@@ -75,7 +72,6 @@ class PageRoutes {
       reffernearn: (context) => RefferScreen(),
       settings: (context) => Settings(),
       restviewCart: (context) => oneViewCart(),
-      pharmacart: (context) => PharmaViewCart(),
       offers: (context) => OfferScreen(),
       parcellocation: (context) => ParcelLocation(),
       restro: (context) => Restaurant("Urbanby Resturant"),

@@ -27,6 +27,9 @@ class OrderPageState extends State<OrderPage> {
   List<OrderHistoryRestaurant> onRestGoingOrders = [];
   List<OrderHistoryRestaurant> onPharmaGoingOrders = [];
   List<TodayOrderParcel> onParcelGoingOrders = [];
+
+  List<String> VendorName=[];
+
   var userId;
   String elseText = 'No ongoing order ...';
   dynamic currency = '';
@@ -55,8 +58,12 @@ class OrderPageState extends State<OrderPage> {
       elseText = 'No ongoing order today...';
       onGoingOrders.clear();
       onGoingOrders = onGoingOrderss;
+      VendorName.clear();
     });
-    var userId = preferences.getInt('user_id');
+    userId = preferences.getInt('user_id');
+    setState(() {
+      userId =  preferences.getInt('user_id');
+    });
     var url = onGoingOrdersUrl;
     Uri myUri = Uri.parse(url);
 
@@ -76,17 +83,39 @@ class OrderPageState extends State<OrderPage> {
           if (tagObjs.length > 0) {
             setState(() {
               onGoingOrders.clear();
+              VendorName.clear();
               onGoingOrders = tagObjs;
             });
+            String vendor = '';
+
+            for (int i = 0; i < onGoingOrders.length; i++) {
+              print("MAIN " + onGoingOrders[i].cart_id + " " +
+                  onGoingOrders[i].vendor_name);
+              for (int j = 0; j < onGoingOrders[i].data.length; j++) {
+                print("DATA " + onGoingOrders[i].data[j].order_cart_id + " " +
+                    onGoingOrders[i].data[j].vendor_name);
+                if (onGoingOrders[i].data[j].order_cart_id ==
+                    onGoingOrders[i].cart_id) {
+                  print("IF " + onGoingOrders[i].data[j].order_cart_id + " " +
+                      onGoingOrders[i].cart_id);
+                  vendor = vendor +","+ onGoingOrders[i].data[j].vendor_name;
+                }
+              }
+
+              VendorName.add(vendor);
+              vendor = '';
+              print("NAME " + i.toString() + " " + vendor);
+            }
           }
         }
+        if (countFetch == 4) {
+          setState(() {
+            isFetch = false;
+          });
+        }
       }
-      if (countFetch == 4) {
-        setState(() {
-          isFetch = false;
-        });
-      }
-    }).catchError((e) {
+    })
+      .catchError((e) {
       if (countFetch == 4) {
         setState(() {
           isFetch = false;
@@ -103,9 +132,10 @@ class OrderPageState extends State<OrderPage> {
       elseText = 'No canceled order till date...';
       onGoingOrders.clear();
       onGoingOrders = onGoingOrderss;
+      VendorName.clear();
     });
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    var userId = preferences.getInt('user_id');
+     userId = preferences.getInt('user_id');
     var url = cancelOrders;
     Uri myUri = Uri.parse(url);
     http.post(myUri, body: {'user_id': '$userId'}).then((value) {
@@ -122,13 +152,36 @@ class OrderPageState extends State<OrderPage> {
           List<OngoingOrders> tagObjs = tagObjsJson
               .map((tagJson) => OngoingOrders.fromJson(tagJson))
               .toList();
+          var name='';
           if (tagObjs.length > 0) {
             setState(() {
               onGoingOrders.clear();
+              VendorName.clear();
               onGoingOrders = tagObjs;
             });
+            String vendor = '';
+
+            for (int i = 0; i < onGoingOrders.length; i++) {
+              print("MAIN " + onGoingOrders[i].cart_id + " " +
+                  onGoingOrders[i].vendor_name);
+              for (int j = 0; j < onGoingOrders[i].data.length; j++) {
+                print("DATA " + onGoingOrders[i].data[j].order_cart_id + " " +
+                    onGoingOrders[i].data[j].vendor_name);
+                if (onGoingOrders[i].data[j].order_cart_id ==
+                    onGoingOrders[i].cart_id) {
+                  print("IF " + onGoingOrders[i].data[j].order_cart_id + " " +
+                      onGoingOrders[i].cart_id);
+                  vendor = vendor +","+ onGoingOrders[i].data[j].vendor_name;
+                }
+              }
+
+              VendorName.add(vendor);
+              vendor = '';
+              print("NAME " + i.toString() + " " + vendor);
+            }
           }
         }
+
       }
       if (countFetch == 4) {
         setState(() {
@@ -152,15 +205,17 @@ class OrderPageState extends State<OrderPage> {
       List<OngoingOrders> onGoingOrderss = [];
       onGoingOrders.clear();
       onGoingOrders = onGoingOrderss;
+      VendorName.clear();
     });
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    var userId = preferences.getInt('user_id');
+     userId = preferences.getInt('user_id');
     var url = completeOrders;
     Uri myUri = Uri.parse(url);
 
     http.post(myUri, body: {'user_id': '$userId'}).then((value) {
+      print('${value.body}');
+
       if (value.statusCode == 200 && value.body != null) {
-        print('${value.body}');
         if (value.body.contains("[{\"order_details\":\"no orders found\"}]") ||
             value.body.contains("{\"data\":[]}") ||
             value.body.contains("[{\"data\":\"No Cancelled Orders Yet\"}]")) {
@@ -172,11 +227,34 @@ class OrderPageState extends State<OrderPage> {
           List<OngoingOrders> tagObjs = tagObjsJson
               .map((tagJson) => OngoingOrders.fromJson(tagJson))
               .toList();
+          var name='';
           if (tagObjs.length > 0) {
+
             setState(() {
               onGoingOrders.clear();
+              VendorName.clear();
               onGoingOrders = tagObjs;
             });
+            String vendor = '';
+
+            for (int i = 0; i < onGoingOrders.length; i++) {
+              print("MAIN " + onGoingOrders[i].cart_id + " " +
+                  onGoingOrders[i].vendor_name);
+              for (int j = 0; j < onGoingOrders[i].data.length; j++) {
+                print("DATA " + onGoingOrders[i].data[j].order_cart_id + " " +
+                    onGoingOrders[i].data[j].vendor_name);
+                if (onGoingOrders[i].data[j].order_cart_id ==
+                    onGoingOrders[i].cart_id) {
+                  print("IF " + onGoingOrders[i].data[j].order_cart_id + " " +
+                      onGoingOrders[i].cart_id);
+                  vendor = vendor +","+ onGoingOrders[i].data[j].vendor_name;
+                }
+              }
+
+              VendorName.add(vendor);
+              vendor = '';
+              print("NAME " + i.toString() + " " + vendor);
+            }
           }
         }
       }
@@ -203,7 +281,7 @@ class OrderPageState extends State<OrderPage> {
       elseText = 'No ongoing order today...';
       onRestGoingOrders.clear();
     });
-    var userId = preferences.getInt('user_id');
+    userId = preferences.getInt('user_id');
     var url = user_ongoing_order;
     Uri myUri = Uri.parse(url);
     http.post(myUri, body: {'user_id': '$userId'}).then((value) {
@@ -225,6 +303,7 @@ class OrderPageState extends State<OrderPage> {
               onRestGoingOrders = tagObjs;
             });
           }
+
         }
       }
       if (countFetch == 4) {
@@ -251,7 +330,7 @@ class OrderPageState extends State<OrderPage> {
       onRestGoingOrders = onGoingOrderss;
     });
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    var userId = preferences.getInt('user_id');
+    userId = preferences.getInt('user_id');
     var url = user_cancel_order_history;
     Uri myUri = Uri.parse(url);
     http.post(myUri, body: {'user_id': '$userId'}).then((value) {
@@ -349,7 +428,7 @@ class OrderPageState extends State<OrderPage> {
       elseText = 'No ongoing order today...';
       onPharmaGoingOrders.clear();
     });
-    var userId = preferences.getInt('user_id');
+    userId = preferences.getInt('user_id');
     var url = pharmacy_user_ongoing_order;
     Uri myUri = Uri.parse(url);
     http.post(myUri, body: {'user_id': '$userId'}).then((value) {
@@ -397,7 +476,7 @@ class OrderPageState extends State<OrderPage> {
       onPharmaGoingOrders = onGoingOrderss;
     });
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    var userId = preferences.getInt('user_id');
+    userId = preferences.getInt('user_id');
     var url = pharmacy_user_cancel_order_history;
     Uri myUri = Uri.parse(url);
     http.post(myUri, body: {'user_id': '$userId'}).then((value) {
@@ -446,7 +525,7 @@ class OrderPageState extends State<OrderPage> {
       onPharmaGoingOrders = onGoingOrderss;
     });
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    var userId = preferences.getInt('user_id');
+     userId = preferences.getInt('user_id');
     var url = pharmacy_user_completed_orders;
     Uri myUri = Uri.parse(url);
 
@@ -496,7 +575,7 @@ class OrderPageState extends State<OrderPage> {
       elseText = 'No ongoing order today...';
       onParcelGoingOrders.clear();
     });
-    var userId = preferences.getInt('user_id');
+    userId = preferences.getInt('user_id');
     var url = parcel_user_ongoing_order;
     Uri myUri = Uri.parse(url);
 
@@ -544,7 +623,7 @@ class OrderPageState extends State<OrderPage> {
       onParcelGoingOrders.clear();
     });
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    var userId = preferences.getInt('user_id');
+    userId = preferences.getInt('user_id');
     var url = parcel_user_cancel_order;
     Uri myUri = Uri.parse(url);
 
@@ -592,7 +671,7 @@ class OrderPageState extends State<OrderPage> {
       onParcelGoingOrders.clear();
     });
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    var userId = preferences.getInt('user_id');
+    userId = preferences.getInt('user_id');
     var url = parcel_user_completed_order;
     Uri myUri = Uri.parse(url);
 
@@ -779,11 +858,11 @@ class OrderPageState extends State<OrderPage> {
                                                 builder: (context) =>
                                                     OrderMapPage(
                                                   pageTitle:
-                                                      '${onGoingOrders[t].vendor_name}',
+                                                     VendorName[t],
                                                   ongoingOrders:
                                                       onGoingOrders[t],
                                                   currency: currency,
-                                                      user_id: "757",
+                                                      user_id:onGoingOrders[t].cart_id.toString(),
                                                 ),
                                               ),
                                             ).then((value) {
@@ -895,7 +974,7 @@ class OrderPageState extends State<OrderPage> {
                                                     ),
                                                   ),
                                                   Text(
-                                                    '${onGoingOrders[t].vendor_name}',
+                                      VendorName[t],
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .caption!
@@ -983,6 +1062,7 @@ class OrderPageState extends State<OrderPage> {
                                                     ongoingOrders:
                                                         onRestGoingOrders[t],
                                                     currency: currency,
+                                                        user_id:onGoingOrders[t].cart_id.toString(),
                                                   ),
                                                 ),
                                               ).then((value) {
@@ -1384,7 +1464,7 @@ class OrderPageState extends State<OrderPage> {
                                         return GestureDetector(
                                           onTap: () {
                                             if (onParcelGoingOrders[t]
-                                                    .order_status ==
+                                                    .orderStatus ==
                                                 'Cancelled') {
                                             } else {
                                               Navigator.push(
@@ -1393,10 +1473,11 @@ class OrderPageState extends State<OrderPage> {
                                                   builder: (context) =>
                                                       OrderMapParcelPage (
                                                         pageTitle:
-                                                        '${onParcelGoingOrders[t].vendor_name}',
+                                                        '${onParcelGoingOrders[t].vendorName}',
                                                         ongoingOrders:
                                                         onParcelGoingOrders[t],
                                                         currency: currency,
+                                                        user_id: onParcelGoingOrders[t].cartId.toString()
                                                   ),
                                                 ),
                                               ).then((value) {
@@ -1429,7 +1510,7 @@ class OrderPageState extends State<OrderPage> {
                                                     Expanded(
                                                       child: ListTile(
                                                         title: Text(
-                                                          'Order Id - #${onParcelGoingOrders[t].cart_id}',
+                                                          'Order Id - #${onParcelGoingOrders[t].cartId}',
                                                           style: orderMapAppBarTextStyle
                                                               .copyWith(
                                                                   letterSpacing:
@@ -1438,13 +1519,13 @@ class OrderPageState extends State<OrderPage> {
                                                         subtitle: Text(
                                                           (onParcelGoingOrders[
                                                                               t]
-                                                                          .pickup_date !=
+                                                                          .pickupDate !=
                                                                       null &&
                                                                   onParcelGoingOrders[
                                                                               t]
-                                                                          .pickup_time !=
+                                                                          .pickupTime !=
                                                                       null)
-                                                              ? '${onParcelGoingOrders[t].pickup_date} | ${onParcelGoingOrders[t].pickup_time}'
+                                                              ? '${onParcelGoingOrders[t].pickupDate} | ${onParcelGoingOrders[t].pickupTime}'
                                                               : '',
                                                           style: Theme.of(
                                                                   context)
@@ -1464,7 +1545,7 @@ class OrderPageState extends State<OrderPage> {
                                                                   .center,
                                                           children: <Widget>[
                                                             Text(
-                                                              '${onParcelGoingOrders[t].order_status}',
+                                                              '${onParcelGoingOrders[t].orderStatus}',
                                                               style: orderMapAppBarTextStyle
                                                                   .copyWith(
                                                                       color:
@@ -1512,7 +1593,7 @@ class OrderPageState extends State<OrderPage> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      '${onParcelGoingOrders[t].vendor_name}',
+                                                      '${onParcelGoingOrders[t].vendorName}',
                                                       style: Theme.of(context)
                                                           .textTheme
                                                           .caption!
@@ -1540,7 +1621,7 @@ class OrderPageState extends State<OrderPage> {
                                                     ),
                                                     Expanded(
                                                       child: Text(
-                                                        '${onParcelGoingOrders[t].vendor_loc}',
+                                                        '${onParcelGoingOrders[t].vendorLoc}',
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .caption!

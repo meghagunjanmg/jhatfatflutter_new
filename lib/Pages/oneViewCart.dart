@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:horizontal_calendar_view_widget/date_helper.dart';
@@ -59,12 +60,15 @@ class _oneViewCartState extends State<oneViewCart> {
   bool isFetchingTime = false;
   int idd = 0;
   int idd1 = 0;
+  bool basketvalue = false;
 
 
-  int is_id_req=0;
-  int is_pres_req=0;
+  int is_id_req = 0;
+  int is_pres_req = 0;
+  int is_basket_req = 0;
 
   String? iduploaded = null;
+  String? iduploadedALready = null;
   String? presuploaded = null;
 
 
@@ -98,11 +102,23 @@ class _oneViewCartState extends State<oneViewCart> {
       storeName = storename!;
     });
   }
+  void getid() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? id_proof = prefs.getString('id_proof');
+    setState((){
+      iduploadedALready = id_proof.toString();
+    });
+  }
 
   @override
   void initState() {
     super.initState();
     getAddress(context);
+
+    iduploaded = null;
+    presuploaded = null;
+
+    getid();
 
     getResStoreName();
     getResCartItem();
@@ -191,14 +207,13 @@ class _oneViewCartState extends State<oneViewCart> {
       if (tagObjs.isEmpty) {
         setState(() {});
       }
-      else {setState(() {
-      isCartFetch = false;
-      cartListI.clear();
-      cartListI = tagObjs;
-      });
+      else {
+        setState(() {
+          isCartFetch = false;
+          cartListI.clear();
+          cartListI = tagObjs;
+        });
       }
-
-
     });
   }
 
@@ -224,7 +239,8 @@ class _oneViewCartState extends State<oneViewCart> {
         db.calculateTotalRestAdon().then((valued) {
           var tagObjsJson = value as List;
           var tagObjsJsond = valued as List;
-          print("restadd "+tagObjsJson.toString()+" "+tagObjsJsond.toString());
+          print("restadd " + tagObjsJson.toString() + " " +
+              tagObjsJsond.toString());
 
           setState(() {
             dynamic totalAmount_1 = tagObjsJson[0]['Total'];
@@ -234,10 +250,10 @@ class _oneViewCartState extends State<oneViewCart> {
               if (totalAmount_1 == null) {}
 
               else {
-                totalAmount = totalAmount_1+ deliveryCharge;
+                totalAmount = totalAmount_1 + deliveryCharge;
               }
             } else {
-              totalAmount = totalAmount_1+ totalAmount_2 +deliveryCharge;
+              totalAmount = totalAmount_1 + totalAmount_2 + deliveryCharge;
             }
           });
         });
@@ -302,7 +318,6 @@ class _oneViewCartState extends State<oneViewCart> {
   void addOrMinusProduct2(store_name, product_id, product_name, unit, price,
       quantity, itemCount,
       varient_id, index, price_d) async {
-
     DatabaseHelper db = DatabaseHelper.instance;
     Future<int?> existing = db.getRestProductcount(int.parse(varient_id));
     existing.then((value) {
@@ -500,26 +515,20 @@ class _oneViewCartState extends State<oneViewCart> {
       getCatC();
 
 
-
       if (itemCount == 0) {
         getCartItem();
       }
-
-
     });
   }
 
-  Widget cartOrderItemListTile(
-      BuildContext context,
+  Widget cartOrderItemListTile(BuildContext context,
       String title,
       dynamic price,
       int itemCount,
       dynamic qnty,
       dynamic unit,
       dynamic index,
-      List<AddonCartItem> addon,
-      ) {
-
+      List<AddonCartItem> addon,) {
     String selected;
     return Column(
       children: <Widget>[
@@ -527,13 +536,14 @@ class _oneViewCartState extends State<oneViewCart> {
             padding: const EdgeInsets.only(left: 7.0, top: 10.3),
             child: ListTile(
               // contentPadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
-              title:Row(
+              title: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     title,
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .subtitle2!
                         .copyWith(color: kMainTextColor),
@@ -541,7 +551,8 @@ class _oneViewCartState extends State<oneViewCart> {
                   // SizedBox(width: 30,),
                   Text(
                     '${currency} ${price}',
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .subtitle2!
                         .copyWith(color: kMainTextColor),
@@ -557,7 +568,7 @@ class _oneViewCartState extends State<oneViewCart> {
                     child: Row(
                       children: <Widget>[
                         InkWell(
-                          onTap: (){
+                          onTap: () {
                             int addQ = int.parse(
                                 '${cartListII[index].add_qnty}');
                             var price_d = double.parse(
@@ -587,10 +598,13 @@ class _oneViewCartState extends State<oneViewCart> {
                         ),
                         SizedBox(width: 8.0),
                         Text('$itemCount',
-                            style: Theme.of(context).textTheme.caption),
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .caption),
                         SizedBox(width: 8.0),
                         InkWell(
-                          onTap: (){
+                          onTap: () {
                             int addQ = int.parse(
                                 '${cartListII[index].add_qnty}');
                             var price_d = double.parse(
@@ -636,7 +650,10 @@ class _oneViewCartState extends State<oneViewCart> {
                         ),
                         child: Text(
                           '${qnty} ${unit}',
-                          style: Theme.of(context).textTheme.caption,
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .caption,
                         ),
                       ),
                       // Spacer(),
@@ -657,8 +674,10 @@ class _oneViewCartState extends State<oneViewCart> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '${addon[indexd].addonName} ($currency ${addon[indexd].price})',
-                          style: Theme.of(context)
+                          '${addon[indexd].addonName} ($currency ${addon[indexd]
+                              .price})',
+                          style: Theme
+                              .of(context)
                               .textTheme
                               .subtitle2!
                               .copyWith(color: kMainTextColor),
@@ -688,28 +707,67 @@ class _oneViewCartState extends State<oneViewCart> {
       getCatC();
     });
   }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
+    iduploaded = null;
+    presuploaded = null;
+    getid();
     getCartItem();
     getResCartItem();
     setidpres(cartListI);
     getCatC();
-
   }
-  void callThisMethod(bool isVisible){
-    debugPrint('_HomeScreenState.callThisMethod: isVisible: ${isVisible}');
 
+  void callThisMethod(bool isVisible) {
+    debugPrint('_HomeScreenState.callThisMethod: isVisible: ${isVisible}');
+    iduploaded = null;
+    presuploaded = null;
+    getid();
     getCartItem();
     getResCartItem();
     setidpres(cartListI);
     getCatC();
+  }
+  _showDialog() async{
+    List<CartItem> cartbasket=[];
+    for(int i=0;i<cartListI.length;i++){
+      if(cartListI[i].isBasket==1) cartbasket.add(cartListI[i]);
+    }
 
+
+    await showDialog<String>(
+      context: context,
+      builder: (BuildContext context){
+        return CupertinoAlertDialog(
+          title:  Text('Please select'),
+          actions: <Widget>[
+            CupertinoDialogAction(
+              isDestructiveAction: true,
+              onPressed: (){Navigator.of(context).pop('Cancel');},
+              child:  Text('Cancel'),
+            ),
+            CupertinoDialogAction(
+              isDestructiveAction: true,
+              onPressed: (){
+
+                Navigator.of(context).pop('Accept');},
+              child:  Text('Accept'),
+            ),
+          ],
+          content: SingleChildScrollView(
+            child: Material(
+              child:  MyDialogContent(cart: cartbasket),
+            ),
+          ),
+        );
+      },
+      barrierDismissible: false,
+    );
   }
   @override
   Widget build(BuildContext context) {
-
     var size = MediaQuery
         .of(context)
         .size;
@@ -717,497 +775,554 @@ class _oneViewCartState extends State<oneViewCart> {
     final double itemWidth = size.width / 2;
     return
       VisibilityDetector(
-          key: Key(_oneViewCartState.id),
-          onVisibilityChanged: (VisibilityInfo info) {
-            bool isVisible = info.visibleFraction != 0;
-            callThisMethod(isVisible);
-          },
-          child:Scaffold(
-      appBar: AppBar(
-        title:
-        Text('Confirm Order', style: Theme
-            .of(context)
-            .textTheme
-            .bodyText1),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 10, top: 10, bottom: 10),
-            child: TextButton(
-              onPressed: () {
-                if (!showDialogBox) {
-                  clearCart();
-                }
-              },
-              child: Text(
-                'Clear Cart',
-                style:
-                TextStyle(color: kMainColor, fontWeight: FontWeight.w400),
-              ),
-            ),
-          )
-        ],
-      ),
-      body: (!isCartFetch && cartListI.isNotEmpty || cartListII.isNotEmpty)
-
-          ?
-      Stack(
-        children: <Widget>[
-          Column(
-            children: [
-              Expanded(
-                flex: 1,
-                child: ListView(
-                  shrinkWrap: true,
-                  primary: true,
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.all(20.0),
-                      color: kCardBackgroundColor,
-                    ),
-
-                    Column(
-                        children: <Widget>[ (cartListI.length > 0)
-                        ? ListView.separated(
-                        primary: false,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return cartOrderItemListTile1(
-                            context,
-                            currency,
-                            '${cartListI[index].product_name}',
-                            (cartListI[index].price /
-                                cartListI[index].add_qnty),
-                            cartListI[index].add_qnty,
-                            cartListI[index].qnty,
-                            cartListI[index].unit,
-                            cartListI[index].store_name,
-                            cartListI[index].is_id,
-                            cartListI[index].is_pres,
-                            index,
-                          );
-                        },
-                        separatorBuilder: (context, index) {
-                          return Divider(
-                            color: kCardBackgroundColor,
-                            thickness: 1.0,
-                          );
-                        },
-                        itemCount: cartListI.length) : Container(),
-                      (is_id_req == 1) ?
-                    new GestureDetector(
-                        onTap: (){ __settingModalBottomSheet(context); },
-                        child:
-                        (iduploaded!=null)
-                                                ?
-                      Container(
-                          height: 30.0,
-                          padding: EdgeInsets.all(4),
-                          margin: EdgeInsets.all(12),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: kCardBackgroundColor,
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
-                          child: Text(
-                            'Id proof uploaded',
-                            style: TextStyle(color: Colors.green,fontSize: 18,fontWeight: FontWeight.w300),
-                          ),
-
-                        )
-                            :                      Container(
-                          height: 30.0,
-                          padding: EdgeInsets.all(4),
-                          margin: EdgeInsets.all(12),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: kCardBackgroundColor,
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
-                          child: Text(
-                            'Upload ID Proof',
-                              style: TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.w300),
-                          ),
-
-                        )
-
-                    )
-                        :
-                    Container(
-                    ),
-        (is_pres_req == 1) ?
-        new GestureDetector(
-            onTap: (){_settingModalBottomSheet(context);},
-            child:
-            (presuploaded!=null)?
-            Container(
-              height: 30.0,
-              padding: EdgeInsets.all(4),
-              margin: EdgeInsets.all(12),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: kCardBackgroundColor,
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-              child: Text(
-                'Prescription uploaded',
-                  style: TextStyle(color: Colors.green,fontSize: 18,fontWeight: FontWeight.w300),
-              ),
-            )
-                :
-            Container(
-              height: 30.0,
-              padding: EdgeInsets.all(4),
-              margin: EdgeInsets.all(12),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: kCardBackgroundColor,
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-              child: Text(
-                'Upload Prescription',
-                style: TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.w300),
-              ),
-            )
-
-        )
-            :
-        Container(
-        ),
-    ]
-    ),
-                    (cartListII.isNotEmpty)
-                        ?
-                    ListView.separated(
-                        primary: false,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return cartOrderItemListTile(
-                            context,
-                            '${cartListII[index].product_name}',
-                            (double.parse(
-                                '${cartListII[index].price}') /
-                                int.parse(
-                                    '${cartListII[index].add_qnty}')),
-                            int.parse('${cartListII[index].add_qnty}'),
-                            cartListII[index].qnty,
-                            cartListII[index].unit,
-                            index,
-                            // plus(index),
-                            cartListII[index].addon,
-                          );
-                        },
-                        separatorBuilder: (context, index) {
-                          return Divider(
-                            color: kCardBackgroundColor,
-                            thickness: 1.0,
-                          );
-                        },
-                        itemCount: cartListII.length)
-                        : Container(),
-
-                    Divider(
-                      color: kCardBackgroundColor,
-                      thickness: 6.7,
-                    ),
-
-                    (cartListI.isNotEmpty)
-                        ?
-                    timewidget(context, itemHeight, itemWidth)
-                        :
-                    Container(),
-
-                    Divider(
-                      color: kCardBackgroundColor,
-                      thickness: 6.7,
-                    ),
-                    Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 20.0),
-                      child: Text('PAYMENT INFO',
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .headline6!
-                              .copyWith(color: kDisabledColor)),
-                      color: Colors.white,
-                    ),
-                    Container(
-                      color: Colors.white,
-                      padding: EdgeInsets.symmetric(
-                          vertical: 4.0, horizontal: 20.0),
-                      child: Row(
-                          mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              'Sub Total',
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .caption,
-                            ),
-                            Text(
-                              '$currency ${totalAmount - deliveryCharge}',
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .caption,
-                            ),
-                          ]),
-                    ),
-                    Divider(
-                      color: kCardBackgroundColor,
-                      thickness: 1.0,
-                    ),
-                    Container(
-                      color: Colors.white,
-                      padding: EdgeInsets.symmetric(
-                          vertical: 4.0, horizontal: 20.0),
-                      child: Row(
-                          mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              'Service Fee',
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .caption,
-                            ),
-                            Text(
-                              '$currency $deliveryCharge',
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .caption,
-                            ),
-                          ]),
-                    ),
-                    Divider(
-                      color: kCardBackgroundColor,
-                      thickness: 1.0,
-                    ),
-                    Container(
-                      color: Colors.white,
-                      padding: EdgeInsets.symmetric(
-                          vertical: 4.0, horizontal: 20.0),
-                      child: Row(
-                          mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              'Amount to Pay',
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .caption!
-                                  .copyWith(fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              '$currency $totalAmount',
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .caption,
-                            ),
-                          ]),
-                    ),
-                    Container(
-                      height: 15.0,
-                      color: kCardBackgroundColor,
-                    ),
-                  ],
+        key: Key(_oneViewCartState.id),
+        onVisibilityChanged: (VisibilityInfo info) {
+          bool isVisible = info.visibleFraction != 0;
+          callThisMethod(isVisible);
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title:
+            Text('Confirm Order', style: Theme
+                .of(context)
+                .textTheme
+                .bodyText1),
+            actions: [
+              Padding(
+                padding: EdgeInsets.only(right: 10, top: 10, bottom: 10),
+                child: TextButton(
+                  onPressed: () {
+                    if (!showDialogBox) {
+                      clearCart();
+                    }
+                  },
+                  child: Text(
+                    'Clear Cart',
+                    style:
+                    TextStyle(color: kMainColor, fontWeight: FontWeight.w400),
+                  ),
                 ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Container(
-                      color: Colors.white,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: 20.0,
-                            right: 20.0,
-                            top: 13.0,
-                            bottom: 13.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: <Widget>[
-                            Row(
+              )
+            ],
+          ),
+          body: (!isCartFetch && cartListI.isNotEmpty || cartListII.isNotEmpty)
+
+              ?
+          Stack(
+            children: <Widget>[
+              Column(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: ListView(
+                      shrinkWrap: true,
+                      primary: true,
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.all(20.0),
+                          color: kCardBackgroundColor,
+                        ),
+
+                        Column(
+                            children: <Widget>[ (cartListI.length > 0)
+                                ? ListView.separated(
+                                primary: false,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return cartOrderItemListTile1(
+                                    context,
+                                    currency,
+                                    cartListI[index].isBasket,
+                                    '${cartListI[index].product_name}',
+                                    (cartListI[index].price /
+                                        cartListI[index].add_qnty),
+                                    cartListI[index].add_qnty,
+                                    cartListI[index].qnty,
+                                    cartListI[index].unit,
+                                    cartListI[index].store_name,
+                                    cartListI[index].is_id,
+                                    cartListI[index].is_pres,
+                                    index,
+                                  );
+                                },
+                                separatorBuilder: (context, index) {
+                                  return Divider(
+                                    color: kCardBackgroundColor,
+                                    thickness: 1.0,
+                                  );
+                                },
+                                itemCount: cartListI.length) : Container(),
+
+                              (is_id_req == 1) ?
+                              (iduploadedALready!.isNotEmpty)?
+
+                              GestureDetector(
+                                  onTap: () {
+                                    __settingModalBottomSheet(context);
+                                  },
+                                  child:
+                                  (iduploaded!=null)
+                                      ?
+                                  Container(
+                                    height: 30.0,
+                                    padding: EdgeInsets.all(4),
+                                    margin: EdgeInsets.all(12),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: kCardBackgroundColor,
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ),
+                                    child: Text(
+                                      'Id proof uploaded',
+                                      style: TextStyle(color: Colors.green,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w300),
+                                    ),
+
+                                  )
+                                      :
+                                  Container(
+                                    height: 30.0,
+                                    padding: EdgeInsets.all(4),
+                                    margin: EdgeInsets.all(12),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: kCardBackgroundColor,
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ),
+                                    child: Text(
+                                      'Upload ID Proof',
+                                      style: TextStyle(color: Colors.black,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w300),
+                                    ),
+
+                                  )
+                              )
+                                  :
+                              Container()
+                :
+            Container(),
+                              (is_pres_req == 1) ?
+                              new GestureDetector(
+                                  onTap: () {
+                                    _settingModalBottomSheet(context);
+                                  },
+                                  child:
+                                  (presuploaded != null) ?
+                                  Container(
+                                    height: 30.0,
+                                    padding: EdgeInsets.all(4),
+                                    margin: EdgeInsets.all(12),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: kCardBackgroundColor,
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ),
+                                    child: Text(
+                                      'Prescription uploaded',
+                                      style: TextStyle(color: Colors.green,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w300),
+                                    ),
+                                  )
+                                      :
+                                  Container(
+                                    height: 30.0,
+                                    padding: EdgeInsets.all(4),
+                                    margin: EdgeInsets.all(12),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: kCardBackgroundColor,
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ),
+                                    child: Text(
+                                      'Upload Prescription',
+                                      style: TextStyle(color: Colors.black,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w300),
+                                    ),
+                                  )
+
+                              )
+                                  :
+                              Container(
+                              ),
+
+
+                              (is_basket_req == 1) ?
+                              new GestureDetector(
+                                  onTap: () {
+                                    _showDialog();
+                                  },
+                                  child:
+                                  Container(
+                                    height: 30.0,
+                                    padding: EdgeInsets.all(4),
+                                    margin: EdgeInsets.all(12),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: kCardBackgroundColor,
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ),
+                                    child: Text(
+                                      'Special Basket',
+                                      style: TextStyle(color: Colors.black,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w300),
+                                    ),
+                                  )
+                              )
+                                  :
+                              Container(
+                              ),
+                            ]
+                        ),
+                        (cartListII.isNotEmpty)
+                            ?
+                        ListView.separated(
+                            primary: false,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return cartOrderItemListTile(
+                                context,
+                                '${cartListII[index].product_name}',
+                                (double.parse(
+                                    '${cartListII[index].price}') /
+                                    int.parse(
+                                        '${cartListII[index].add_qnty}')),
+                                int.parse('${cartListII[index].add_qnty}'),
+                                cartListII[index].qnty,
+                                cartListII[index].unit,
+                                index,
+                                // plus(index),
+                                cartListII[index].addon,
+                              );
+                            },
+                            separatorBuilder: (context, index) {
+                              return Divider(
+                                color: kCardBackgroundColor,
+                                thickness: 1.0,
+                              );
+                            },
+                            itemCount: cartListII.length)
+                            : Container(),
+
+                        Divider(
+                          color: kCardBackgroundColor,
+                          thickness: 6.7,
+                        ),
+
+                        (cartListI.isNotEmpty)
+                            ?
+                        timewidget(context, itemHeight, itemWidth)
+                            :
+                        Container(),
+
+                        Divider(
+                          color: kCardBackgroundColor,
+                          thickness: 6.7,
+                        ),
+                        Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 8.0, horizontal: 20.0),
+                          child: Text('PAYMENT INFO',
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .headline6!
+                                  .copyWith(color: kDisabledColor)),
+                          color: Colors.white,
+                        ),
+                        Container(
+                          color: Colors.white,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 4.0, horizontal: 20.0),
+                          child: Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Icon(
-                                  Icons.location_on,
-                                  color: Color(0xffc4c8c1),
-                                  size: 13.3,
+                                Text(
+                                  'Sub Total',
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .caption,
+                                ),
+                                Text(
+                                  '$currency ${totalAmount - deliveryCharge}',
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .caption,
+                                ),
+                              ]),
+                        ),
+                        Divider(
+                          color: kCardBackgroundColor,
+                          thickness: 1.0,
+                        ),
+                        Container(
+                          color: Colors.white,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 4.0, horizontal: 20.0),
+                          child: Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  'Service Fee',
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .caption,
+                                ),
+                                Text(
+                                  '$currency $deliveryCharge',
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .caption,
+                                ),
+                              ]),
+                        ),
+                        Divider(
+                          color: kCardBackgroundColor,
+                          thickness: 1.0,
+                        ),
+                        Container(
+                          color: Colors.white,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 4.0, horizontal: 20.0),
+                          child: Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  'Amount to Pay',
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .caption!
+                                      .copyWith(fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  '$currency $totalAmount',
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .caption,
+                                ),
+                              ]),
+                        ),
+                        Container(
+                          height: 15.0,
+                          color: kCardBackgroundColor,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Container(
+                          color: Colors.white,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: 20.0,
+                                right: 20.0,
+                                top: 13.0,
+                                bottom: 13.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: <Widget>[
+                                Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.location_on,
+                                      color: Color(0xffc4c8c1),
+                                      size: 13.3,
+                                    ),
+                                    SizedBox(
+                                      width: 11.0,
+                                    ),
+                                    Text('Deliver to',
+                                        style: Theme
+                                            .of(context)
+                                            .textTheme
+                                            .caption!
+                                            .copyWith(
+                                            color: kDisabledColor,
+                                            fontWeight: FontWeight.bold)),
+                                    Spacer(),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        SharedPreferences prefs =
+                                        await SharedPreferences
+                                            .getInstance();
+                                        String? vendorId =
+                                        prefs.getString('vendor_id');
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                                  return SavedAddressesPage(
+                                                      vendorId);
+                                                })).then((value) {
+                                          getAddress(context);
+                                        });
+                                      },
+                                      child: Text('CHANGE',
+                                          style: Theme
+                                              .of(context)
+                                              .textTheme
+                                              .caption!
+                                              .copyWith(
+                                              color: kMainColor,
+                                              fontWeight:
+                                              FontWeight.bold)),
+                                    ),
+                                  ],
                                 ),
                                 SizedBox(
-                                  width: 11.0,
+                                  height: 13.0,
                                 ),
-                                Text('Deliver to',
+                                Text(
+                                    '${addressDelivery?.address != null
+                                        ? '${addressDelivery?.address})'
+                                        : ''} \n ${(addressDelivery
+                                        ?.delivery_charge != null)
+                                        ? addressDelivery
+                                        ?.delivery_charge
+                                        : ''}'
+                                    ,
                                     style: Theme
                                         .of(context)
                                         .textTheme
                                         .caption!
                                         .copyWith(
-                                        color: kDisabledColor,
-                                        fontWeight: FontWeight.bold)),
-                                Spacer(),
-                                GestureDetector(
-                                  onTap: () async {
-                                    SharedPreferences prefs =
-                                    await SharedPreferences
-                                        .getInstance();
-                                    String? vendorId =
-                                    prefs.getString('vendor_id');
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) {
-                                              return SavedAddressesPage(
-                                                  vendorId);
-                                            })).then((value) {
-                                      getAddress(context);
-                                    });
-                                  },
-                                  child: Text('CHANGE',
-                                      style: Theme
-                                          .of(context)
-                                          .textTheme
-                                          .caption!
-                                          .copyWith(
-                                          color: kMainColor,
-                                          fontWeight:
-                                          FontWeight.bold)),
-                                ),
+                                        fontSize: 11.7,
+                                        color: Color(0xffb7b7b7)))
                               ],
                             ),
-                            SizedBox(
-                              height: 13.0,
-                            ),
-                            Text(
-                                '${addressDelivery?.address != null
-                                    ? '${addressDelivery?.address})'
-                                    : ''} \n ${(addressDelivery
-                                    ?.delivery_charge != null) ? addressDelivery
-                                    ?.delivery_charge : ''}'
-                                ,
-                                style: Theme
-                                    .of(context)
-                                    .textTheme
-                                    .caption!
-                                    .copyWith(
-                                    fontSize: 11.7,
-                                    color: Color(0xffb7b7b7)))
-                          ],
+                          ),
+                        ),
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                ),
+                                primary: kMainColor,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 150, vertical: 20),
+                                textStyle: TextStyle(color: kWhiteColor,
+                                    fontWeight: FontWeight.w400)),
+
+                            onPressed: () {
+                              if (cartListI.isNotEmpty) {
+                                if (is_id_req == 1 &&
+                                    iduploaded != null) createCart(context);
+                                if (is_pres_req == 1 &&
+                                    presuploaded != null) createCart(context);
+                                if (is_pres_req == 0 &&
+                                    is_id_req == 0) createCart(context);
+                                if (is_pres_req == 0 && is_id_req == 1 &&
+                                    iduploaded != null) createCart(context);
+                                if (is_id_req == 0 && is_pres_req == 1 &&
+                                    presuploaded != null) createCart(context);
+                              }
+
+                              else if (cartListII.isNotEmpty) {
+                                createResCart(context);
+                              }
+                            },
+                            child: Text("Pay $currency "
+                                "$totalAmount")
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Positioned.fill(
+                  child: Visibility(
+                    visible: showDialogBox,
+                    child: GestureDetector(
+                      onTap: () {},
+                      behavior: HitTestBehavior.opaque,
+                      child: Container(
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width,
+                        height: MediaQuery
+                            .of(context)
+                            .size
+                            .height - 100,
+                        alignment: Alignment.center,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: CircularProgressIndicator(),
                         ),
                       ),
                     ),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            primary: kMainColor,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 150, vertical: 20),
-                            textStyle: TextStyle(color: kWhiteColor,
-                                fontWeight: FontWeight.w400)),
-
-                        onPressed: () {
-                          if (cartListI.isNotEmpty) {
-                            createCart(context);
-                          }
-
-                          else if (cartListII.isNotEmpty) {
-                            createResCart(context);
-                          }
-                        },
-                        child: Text("Pay $currency "
-                            "$totalAmount")
-                    ),
-                  ],
-                ),
-              ),
+                  )),
             ],
-          ),
-          Positioned.fill(
-              child: Visibility(
-                visible: showDialogBox,
-                child: GestureDetector(
-                  onTap: () {},
-                  behavior: HitTestBehavior.opaque,
-                  child: Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width,
-                    height: MediaQuery
-                        .of(context)
-                        .size
-                        .height - 100,
-                    alignment: Alignment.center,
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
-                ),
-              )),
-        ],
-      )
-          : Container(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
-        height: MediaQuery
-            .of(context)
-            .size
-            .height - 64,
-        alignment: Alignment.center,
-        child: isCartFetch
-            ? CircularProgressIndicator()
-            : Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  'No item in cart\nClick to shop now',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20),
-                )),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  primary: kMainColor,
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                  textStyle: TextStyle(
-                      color: kWhiteColor, fontWeight: FontWeight.w400)),
+          )
+              : Container(
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
+            height: MediaQuery
+                .of(context)
+                .size
+                .height - 64,
+            alignment: Alignment.center,
+            child: isCartFetch
+                ? CircularProgressIndicator()
+                : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      'No item in cart\nClick to shop now',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 20),
+                    )),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      primary: kMainColor,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 50, vertical: 20),
+                      textStyle: TextStyle(
+                          color: kWhiteColor, fontWeight: FontWeight.w400)),
 
-              onPressed: () {
-                // clearCart();
-                Navigator.pushAndRemoveUntil(context,
-                    MaterialPageRoute(builder: (context) {
-                      return HomeOrderAccount();
-                    }), (Route<dynamic> route) => false);
-              },
-              child: Text(
-                'Shop Now',
-                style: TextStyle(
-                    color: kWhiteColor,
-                    fontWeight: FontWeight.w400),
-              ),
-            )
-          ],
-        ),
-      ),
+                  onPressed: () {
+                    // clearCart();
+                    Navigator.pushAndRemoveUntil(context,
+                        MaterialPageRoute(builder: (context) {
+                          return HomeOrderAccount();
+                        }), (Route<dynamic> route) => false);
+                  },
+                  child: Text(
+                    'Shop Now',
+                    style: TextStyle(
+                        color: kWhiteColor,
+                        fontWeight: FontWeight.w400),
+                  ),
+                )
+              ],
+            ),
           ),
-    );
+        ),
+      );
   }
 
   void createResCart(BuildContext context) async {
@@ -1326,7 +1441,34 @@ class _oneViewCartState extends State<oneViewCart> {
     });
   }
 
+  void uploadid(BuildContext context) async {
+    var url = idupload;
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    int? userId = pref.getInt('user_id');
+    Uri myUri = Uri.parse(url);
+    http.post(myUri, body: {
+      'user_id': userId.toString(),
+       'id_proof': iduploaded
+    }).then((value) {
+      if (value.statusCode == 200) {
+        var jsonData = jsonDecode(value.body);
+        if (jsonData['status'] == 1) {
+                    pref.setString("id_proof", iduploaded.toString());
+                    print(iduploaded.toString());
+
+                    setState((){
+                      iduploadedALready = iduploaded.toString();
+                      iduploaded = null;
+                    });
+        } else {}
+      } else {
+      }
+    }).catchError((_) {});
+  }
+
   void createCart(BuildContext context) async {
+   if(iduploaded!=null) uploadid(context);
+
     if (cartListI.length > 0) {
       if (radioList.length > 0) {
         if (totalAmount > 0.0) {
@@ -1334,30 +1476,26 @@ class _oneViewCartState extends State<oneViewCart> {
 
           SharedPreferences pref = await SharedPreferences.getInstance();
           int? userId = pref.getInt('user_id');
-          ///String? vendorId = pref.getString('vendor_id');
+          String? vendorId = pref.getString('vendor_id');
           String? ui_type = pref.getString("ui_type");
 
           List<OrderArrayGrocery> orderArray = [];
-          // for (CartItem item in cartListI) {
-          //   orderArray.add(OrderArrayGrocery(int.parse('${item.add_qnty}'),
-          //       int.parse('${item.varient_id}')));
-          // }
+           for (CartItem item in cartListI) {
+             orderArray.add(OrderArrayGrocery(int.parse('${item.add_qnty}'),
+                 int.parse('${item.varient_id}'),int.parse('${item.addedBasket}')));
+           }
 
-          for(int i=0;i<cartListI.length;i++)
-            {
-              vendorId = cartListI[i].vendor_id;
-              orderArray.add(OrderArrayGrocery(int.parse('${cartListI[i].add_qnty}'),
-                  int.parse('${cartListI[i].varient_id}')));
-            }
+           print(orderArray.toString()+" "+dateTimeSt.toString()+" "+radioList[idd1]+" "+presuploaded.toString());
 
           Uri myUri = Uri.parse(url);
           http.post(myUri, body: {
             'user_id': userId.toString(),
-            'vendor_id': vendorId,
             'order_array': orderArray.toString(),
             'delivery_date': dateTimeSt,
             'time_slot': '${radioList[idd1]}',
-            'ui_type': ui_type
+            'ui_type': ui_type,
+            if(presuploaded!=null)  'pres':presuploaded
+
           }).then((value) {
             print('order' + value.body);
             if (value.statusCode == 200) {
@@ -1491,7 +1629,8 @@ class _oneViewCartState extends State<oneViewCart> {
 
   Widget cartOrderItemListTile1(BuildContext context,
       currency,
-      String title,
+      isbasket,
+  String title,
       dynamic price,
       int itemCount,
       int qnty,
@@ -1501,13 +1640,18 @@ class _oneViewCartState extends State<oneViewCart> {
       dynamic is_pres,
       dynamic index) {
 
+    print("BASKET: "+isbasket.toString());
     String selected;
     return Column(
       children: <Widget>[
         Padding(
             padding: const EdgeInsets.only(left: 7.0, top: 13.3),
             child: ListTile(
-              title: Column(
+              title: 
+              Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+            Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -1537,9 +1681,10 @@ class _oneViewCartState extends State<oneViewCart> {
                         .subtitle1!
                         .copyWith(color: kMainTextColor),
                   ),
-
                 ],
+              ),
 
+             ]
               ),
               subtitle: Padding(
                 padding: const EdgeInsets.only(top: 15.0, bottom: 14.2),
@@ -1671,6 +1816,11 @@ class _oneViewCartState extends State<oneViewCart> {
 
     if (imageFile != null) {
       presuploaded=imageFile.path;
+      List<int> imageBytes = await imageFile.readAsBytes();
+
+      dynamic imageS = base64Encode(imageBytes);
+      presuploaded = imageS;
+
       print("You selected  image : " + imageFile.path);
       setState(() {
         debugPrint("SELECTED IMAGE PICK   $imageFile");
@@ -1699,6 +1849,11 @@ class _oneViewCartState extends State<oneViewCart> {
 
     if (imageFile != null) {
       iduploaded=imageFile.path;
+      List<int> imageBytes = await imageFile.readAsBytes();
+
+      dynamic imageS = base64Encode(imageBytes);
+      iduploaded = imageS;
+
       print("You selected  image : " + imageFile.path);
       setState(() {
         debugPrint("SELECTED IMAGE PICK   $imageFile");
@@ -1843,7 +1998,73 @@ class _oneViewCartState extends State<oneViewCart> {
             is_id_req = 1;
           });
         }
+
+
+        if(cartListI[i].isBasket==1) {
+          setState(() {
+            is_basket_req = 1;
+          });
+        }
       }
     }
+  }
+}
+
+
+class MyDialogContent extends StatefulWidget {
+  MyDialogContent({
+    Key? key,
+    required this.cart,
+  }): super(key: key);
+
+  final List<CartItem> cart;
+
+  @override
+  _MyDialogContentState createState() => new _MyDialogContentState();
+}
+
+class _MyDialogContentState extends State<MyDialogContent> {
+
+  @override
+  void initState(){
+    super.initState();
+  }
+
+  _getContent(){
+    bool _selectedIndex = false;
+
+    if (widget.cart.length == 0){
+      return new Container();
+    }
+
+    return Column(
+        children: List<CheckboxListTile>.generate(
+            widget.cart.length,
+                (int index){
+                  if(widget.cart[index].addedBasket==0){
+                    _selectedIndex= false;
+                  }
+
+                  return  CheckboxListTile(
+                value: (widget.cart[index].addedBasket==0)?true:false,
+                ///groupValue: _selectedIndex,
+                title: Text(widget.cart[index].product_name),
+                onChanged: (bool? value) {
+                  setState((){
+                    (value==true)?
+                    widget.cart[index].addedBasket=1
+                        :
+                    widget.cart[index].addedBasket=0;
+                  });
+                },
+              );
+            }
+        )
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _getContent();
   }
 }

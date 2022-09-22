@@ -428,12 +428,13 @@ class _HomeState extends State<Home> {
                   return await BackendService.getSuggestions(pattern,lat,lng);
                 },
                 itemBuilder: (context, Vendors suggestion) {
-                  return ListTile(
-                      title: Text('${suggestion.str1}'),
-                    subtitle: Text('${suggestion.str2}'
-                    )
-                  );
+                    return ListTile(
+                        title: Text('${suggestion.str1}'),
+                        subtitle: Text('${suggestion.str2}'
+                        )
+                    );
                 },
+                hideOnError: true,
                 onSuggestionSelected: (Vendors detail) async {
                   if (detail.uiType == "grocery" || detail.uiType == "Grocery" ||
                       detail.uiType == 1) {

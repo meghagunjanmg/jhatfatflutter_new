@@ -11,7 +11,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jhatfat/HomeOrderAccount/Account/UI/account_page.dart';
 import 'package:jhatfat/HomeOrderAccount/Order/UI/order_page.dart';
 import 'package:jhatfat/HomeOrderAccount/offer/ui/offerui.dart';
-import 'package:jhatfat/Pages/view_cart_d.dart';
 import 'package:jhatfat/Themes/colors.dart';
 import 'package:jhatfat/baseurlp/baseurl.dart';
 import 'package:jhatfat/restaturantui/ui/resturanthome.dart';

@@ -355,6 +355,7 @@ class _ProductTabDataState extends State<ProductTabData> {
                       )
                   );
                 },
+                hideOnError: true,
                 onSuggestionSelected: (Vendors detail) {
                   for(int i=0;i<categoryList.length;i++)
                   {

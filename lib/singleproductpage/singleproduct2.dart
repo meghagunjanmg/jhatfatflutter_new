@@ -391,7 +391,11 @@ class SingleProductState2 extends State<SingleProductPage_2> {
               widget
                   .productWithVarient
                   .is_pres,
-
+              widget
+                  .productWithVarient
+                  .isbasket,
+              widget
+                  .productWithVarient,
               widget
                   .productWithVarient
                   .product_name,
@@ -415,7 +419,6 @@ class SingleProductState2 extends State<SingleProductPage_2> {
                   .productVarintList[
               index]
                   .varient_id,
-              widget.productVarintList[index].vendor_id
           );
         } else {
           Toast.show(
@@ -464,6 +467,9 @@ class SingleProductState2 extends State<SingleProductPage_2> {
                                                           widget
                                                               .productWithVarient
                                                               .is_pres,
+                                                          widget
+                                                              .productWithVarient
+                                                              .isbasket,
                                                           widget
                                                               .productWithVarient
                                                               .product_name,
@@ -532,6 +538,9 @@ class SingleProductState2 extends State<SingleProductPage_2> {
                                                                   .is_pres,
                                                               widget
                                                                   .productWithVarient
+                                                                  .isbasket,
+                                                              widget
+                                                                  .productWithVarient
                                                                   .product_name,
                                                               widget
                                                                   .productVarintList[
@@ -583,26 +592,28 @@ class SingleProductState2 extends State<SingleProductPage_2> {
     );
   }
 
-  void addOrMinusProduct(is_id,is_pres,product_name, unit, price, quantity, itemCount,
+  void addOrMinusProduct(is_id,is_pres,isbasket,product_name, unit, price, quantity, itemCount,
       varient_image, varient_id,vendorid) async {
     DatabaseHelper db = DatabaseHelper.instance;
     Future<int?> existing = db.getcount(int.parse('${varient_id}'));
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? store_name = prefs.getString('store_name');
+    String? storename = prefs.getString('store_name');
 
     existing.then((value) {
       var vae = {
         DatabaseHelper.productName: product_name,
-        DatabaseHelper.storeName: store_name,
+        DatabaseHelper.storeName: storename,
         DatabaseHelper.vendor_id: vendorid,
         DatabaseHelper.price: (price * itemCount),
         DatabaseHelper.unit: unit,
         DatabaseHelper.quantitiy: quantity,
         DatabaseHelper.addQnty: itemCount,
         DatabaseHelper.productImage: varient_image,
-        DatabaseHelper.is_pres: is_pres,
         DatabaseHelper.is_id: is_id,
-        DatabaseHelper.varientId: int.parse('${varient_id}')
+        DatabaseHelper.is_pres: is_pres,
+        DatabaseHelper.isBasket: isbasket,
+        DatabaseHelper.varientId: varient_id
+
       };
       if (value == 0) {
         db.insert(vae);

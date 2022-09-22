@@ -16,6 +16,12 @@ class OrderHistoryRestaurant{
   dynamic delivery_boy_phone;
   dynamic vendor_name;
   dynamic address;
+  dynamic delivery_lat;
+  dynamic delivery_lng;
+  dynamic vendor_lat;
+  dynamic vendor_lng;
+
+
   List<ProductItemList> data;
 
   OrderHistoryRestaurant(
@@ -34,6 +40,11 @@ class OrderHistoryRestaurant{
       this.delivery_boy_phone,
       this.vendor_name,
       this.address,
+      this.delivery_lat,
+      this.delivery_lng,
+      this.vendor_lat,
+      this.vendor_lng,
+
       this.data);
 
   factory OrderHistoryRestaurant.fromJson(dynamic json){
@@ -42,12 +53,12 @@ class OrderHistoryRestaurant{
     if(jsonList!=null && jsonList.length>0){
       data1 = jsonList.map((e) => ProductItemList.fromJson(e)).toList();
     }
-    return OrderHistoryRestaurant(json['order_status'], json['delivery_date'], json['time_slot'], json['payment_method'], json['payment_status'], json['paid_by_wallet'], json['cart_id'], json['price'], json['del_charge'], json['remaining_amount'], json['coupon_discount'], json['delivery_boy_name'], json['delivery_boy_phone'], json['vendor_name'], json['address'], data1);
+    return OrderHistoryRestaurant(json['order_status'], json['delivery_date'], json['time_slot'], json['payment_method'], json['payment_status'], json['paid_by_wallet'], json['cart_id'], json['price'], json['del_charge'], json['remaining_amount'], json['coupon_discount'], json['delivery_boy_name'], json['delivery_boy_phone'], json['vendor_name'], json['address'],json['delivery_lat'],json['delivery_lng'],json['vendor_lat'],json['vendor_lng'], data1);
   }
 
   @override
   String toString() {
-    return '{order_status: $order_status, delivery_date: $delivery_date, time_slot: $time_slot, payment_method: $payment_method, payment_status: $payment_status, paid_by_wallet: $paid_by_wallet, cart_id: $cart_id, price: $price, del_charge: $del_charge, remaining_amount: $remaining_amount, coupon_discount: $coupon_discount, delivery_boy_name: $delivery_boy_name, delivery_boy_phone: $delivery_boy_phone, vendor_name: $vendor_name, address: $address, data: $data}';
+    return '{order_status: $order_status, delivery_date: $delivery_date, time_slot: $time_slot, payment_method: $payment_method, payment_status: $payment_status, paid_by_wallet: $paid_by_wallet, cart_id: $cart_id, price: $price, del_charge: $del_charge, remaining_amount: $remaining_amount, coupon_discount: $coupon_discount, delivery_boy_name: $delivery_boy_name, delivery_boy_phone: $delivery_boy_phone, vendor_name: $vendor_name, address: $address,delivery_lat: $delivery_lat,delivery_lng: $delivery_lng,vendor_lat: $vendor_lat,vendor_lng: $vendor_lng, data: $data}';
   }
 }
 

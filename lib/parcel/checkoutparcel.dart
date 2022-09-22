@@ -337,12 +337,14 @@ class ParcelCheckoutState extends State<ParcelCheckOut> {
               .map((tagJson) => PaymentViaParcel.fromJson(tagJson))
               .toList();
           double? c = double.tryParse(widget.charges.toString());
+          double? d = double.tryParse(widget.distance.toString());
+          double? t = c! * d!;
 
               Navigator.push(context, MaterialPageRoute(builder: (context) {
             return PaymentParcelPage(
                 widget.vendor_id,
                 widget.cart_id,
-                c!,
+                t!,
                 tagObjs
             );
           }));

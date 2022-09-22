@@ -153,6 +153,7 @@ class ProductVarient{
   dynamic vendor_name;
   dynamic is_id;
   dynamic is_pres;
+  dynamic isbasket;
   List<VarientList> data;
   dynamic add_qnty;
 
@@ -169,6 +170,7 @@ class ProductVarient{
       this.vendor_name,
       this.is_pres,
       this.is_id,
+      this.isbasket,
       this.data,
       this.add_qnty);
 
@@ -176,14 +178,14 @@ class ProductVarient{
     var tagObjsJsond = json['varients'] as List;
     if(tagObjsJsond.length>0){
       List<VarientList> _tags = tagObjsJsond.map((tagJson) => VarientList.fromJson(tagJson)).toList();
-      return ProductVarient(json['product_id'], json['subcat_id'],json['product_name'], json['products_image'], json['created_at'],json['updated_at'],json['vendor_id'],'producttype',json['vendor_name'],json['is_id'],json['is_pres'],_tags,0);
+      return ProductVarient(json['product_id'], json['subcat_id'],json['product_name'], json['products_image'], json['created_at'],json['updated_at'],json['vendor_id'],'producttype',json['vendor_name'],json['is_id'],json['is_pres'],json['isbasket'],_tags,0);
     }else{
-      return ProductVarient(json['product_id'], json['subcat_id'],json['product_name'], json['products_image'], json['created_at'],json['updated_at'],json['vendor_id'],'producttype',json['vendor_name'],json['is_id'],json['is_pres'],[],0);
+      return ProductVarient(json['product_id'], json['subcat_id'],json['product_name'], json['products_image'], json['created_at'],json['updated_at'],json['vendor_id'],'producttype',json['vendor_name'],json['is_id'],json['is_pres'],json['isbasket'],[],0);
     }
   }
 
   @override
   String toString() {
-    return 'ProductVarient{product_id: $product_id, subcat_id: $subcat_id, product_name: $product_name, products_image: $products_image, created_at: $created_at, updated_at: $updated_at, add_qnty: $add_qnty, vendor_id: $vendor_id, type: $type, data: $data}';
+    return 'ProductVarient{product_id: $product_id, subcat_id: $subcat_id, product_name: $product_name, products_image: $products_image, created_at: $created_at, updated_at: $updated_at, add_qnty: $add_qnty, vendor_id: $vendor_id, type: $type,is_id:$is_id,is_pres:$is_pres,isbasket:$isbasket, data: $data}';
   }
 }

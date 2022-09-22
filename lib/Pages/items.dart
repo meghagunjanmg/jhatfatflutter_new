@@ -653,6 +653,10 @@ class _ItemsPageState extends State<ItemsPage>
                   .is_pres,
               productVarientList[
               index]
+                  .isbasket,
+
+              productVarientList[
+              index]
                   .product_name,
               productVarientList[
               index]
@@ -680,7 +684,11 @@ class _ItemsPageState extends State<ItemsPage>
                   .data[productVarientList[
               index]
                   .selectPos]
-                  .varient_id);
+                  .varient_id,
+            productVarientList[
+            index]
+                .data[0].vendor_id
+          );
         } else {
           // Toast.show(
           //     "No more stock available!",
@@ -723,6 +731,9 @@ class _ItemsPageState extends State<ItemsPage>
                                                       .is_pres,
                                                   productVarientList[
                                                   index]
+                                                      .isbasket,
+                                                  productVarientList[
+                                                  index]
                                                       .product_name,
                                                   productVarientList[
                                                   index]
@@ -748,7 +759,11 @@ class _ItemsPageState extends State<ItemsPage>
                                                       .data[productVarientList[
                                                   index]
                                                       .selectPos]
-                                                      .varient_id);
+                                                      .varient_id,
+                                                productVarientList[
+                                                index]
+                                                    .data[0].vendor_id
+                                              );
                                             },
                                             child: Icon(
                                               Icons.remove,
@@ -790,6 +805,9 @@ class _ItemsPageState extends State<ItemsPage>
                                                           .is_pres,
                                                       productVarientList[
                                                       index]
+                                                          .isbasket,
+                                                      productVarientList[
+                                                      index]
                                                           .product_name,
                                                       productVarientList[
                                                       index]
@@ -812,7 +830,10 @@ class _ItemsPageState extends State<ItemsPage>
                                                       index]
                                                           .data[
                                                       productVarientList[index].selectPos]
-                                                          .varient_id);
+                                                          .varient_id,
+                                                    productVarientList[
+                                                    index]
+                                                        .data[0].vendor_id);
                                                 } else {
                                                   // Toast.show(
                                                   //     "No more stock available!",
@@ -942,8 +963,8 @@ class _ItemsPageState extends State<ItemsPage>
     );
   }
 
-  void addOrMinusProduct(is_id,is_pres,product_name, unit, price, quantity, itemCount,
-      varient_image, varient_id,) async {
+  void addOrMinusProduct(is_id,is_pres,isBasket,product_name, unit, price, quantity, itemCount,
+      varient_image, varient_id,vendor) async {
     DatabaseHelper db = DatabaseHelper.instance;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? storename = prefs.getString('store_name');
@@ -952,6 +973,7 @@ class _ItemsPageState extends State<ItemsPage>
       var vae = {
         DatabaseHelper.productName: product_name,
         DatabaseHelper.storeName: storename,
+        DatabaseHelper.vendor_id: vendor,
         DatabaseHelper.price: (price * itemCount),
         DatabaseHelper.unit: unit,
         DatabaseHelper.quantitiy: quantity,
@@ -959,6 +981,8 @@ class _ItemsPageState extends State<ItemsPage>
         DatabaseHelper.productImage: varient_image,
         DatabaseHelper.is_id: is_id,
         DatabaseHelper.is_pres: is_pres,
+        DatabaseHelper.isBasket: isBasket,
+        DatabaseHelper.addedBasket: 0,
         DatabaseHelper.varientId: varient_id
       };
       if (value == 0) {
@@ -1116,250 +1140,250 @@ class _ItemsPageState extends State<ItemsPage>
   }
 }
 
-class BottomSheetWidget extends StatefulWidget {
-  final String product_name;
-  final String store_name;
-  final String category_name;
-  final dynamic is_pres;
-  final dynamic is_id;
-  final dynamic currency;
-  final List<VarientList> datas;
-  List<VarientList> newdatas = [];
-
-  BottomSheetWidget(
-      this.product_name, this.store_name,this.datas, this.category_name, this.currency,this.is_pres,this.is_id) {
-    newdatas.clear();
-    newdatas.addAll(datas);
-    newdatas.removeAt(0);
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    return BottomSheetWidgetState(product_name,store_name, newdatas,is_pres,is_id);
-  }
-}
-
-class BottomSheetWidgetState extends State<BottomSheetWidget> {
-  final String product_name;
-  final String store_name;
-  final List<VarientList> data;
-  final dynamic is_pres;
-  final dynamic is_id;
-
-  BottomSheetWidgetState(this.product_name,this.store_name, this.data,this.is_pres,this.is_id) {
-    setList(data);
-  }
-
-  void setList(List<VarientList> tagObjs) {
-    for (int i = 0; i < tagObjs.length; i++) {
-      DatabaseHelper db = DatabaseHelper.instance;
-      db.getVarientCount(int.parse('${tagObjs[i].varient_id}')).then((value) {
-        print('print val $value');
-        if (value == null) {
-          setState(() {
-            tagObjs[i].add_qnty = 0;
-          });
-        } else {
-          setState(() {
-            tagObjs[i].add_qnty = value;
-          });
-        }
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        Container(
-          height: 80.7,
-          color: kCardBackgroundColor,
-          padding: EdgeInsets.all(10.0),
-          child: ListTile(
-            title: Text(product_name,
-                style: Theme.of(context)
-                    .textTheme
-                    .caption!
-                    .copyWith(fontSize: 15, fontWeight: FontWeight.w500)),
-            subtitle: Text('${widget.category_name}',
-                style:
-                Theme.of(context).textTheme.caption!.copyWith(fontSize: 15)),
-          ),
-        ),
-        ListView.separated(
-          shrinkWrap: true,
-          primary: true,
-          itemCount: data.length,
-          itemBuilder: (context, index) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Text(
-                      '${data[index].quantity} ${data[index].unit}  ${widget.currency} ${data[index].price}',
-                      style: Theme.of(context)
-                          .textTheme
-                          .caption!
-                          .copyWith(fontSize: 16.7),
-                    )
-                  ],
-                ),
-                data[index].add_qnty == 0
-                    ? Container(
-                  height: 30.0,
-                  child: TextButton(
-                    child: Text(
-                      'Add',
-                      style: Theme.of(context).textTheme.caption!.copyWith(
-                          color: kMainColor, fontWeight: FontWeight.bold),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        var stock = int.parse('${data[index].stock}');
-                        if (stock > data[index].add_qnty) {
-                          data[index].add_qnty++;
-                          addOrMinusProduct(
-                              product_name,
-                              data[index].unit,
-                              double.parse('${data[index].price}'),
-                              int.parse('${data[index].quantity}'),
-                              data[index].add_qnty,
-                              data[index].varient_image,
-                              data[index].varient_id,
-                              widget.store_name,
-                            is_pres,is_id
-                          );
-                        } else {
-                          // Toast.show("No more stock available!", context,
-                          //     gravity: Toast.BOTTOM);
-                        }
-                      });
-                    },
-                  ),
-                )
-                    : Container(
-                  height: 30.0,
-                  padding: EdgeInsets.symmetric(horizontal: 11.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: kMainColor),
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  child: Row(
-                    children: <Widget>[
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            data[index].add_qnty--;
-                          });
-                          addOrMinusProduct(
-                              product_name,
-                              data[index].unit,
-                              double.parse('${data[index].price}'),
-                              int.parse('${data[index].quantity}'),
-                              data[index].add_qnty,
-                              data[index].varient_image,
-                              data[index].varient_id,
-                              widget.store_name,
-                              is_pres,is_id
-
-                          );
-                        },
-                        child: Icon(
-                          Icons.remove,
-                          color: kMainColor,
-                          size: 20.0,
-                          //size: 23.3,
-                        ),
-                      ),
-                      SizedBox(width: 8.0),
-                      Text(data[index].add_qnty.toString(),
-                          style: Theme.of(context).textTheme.caption),
-                      SizedBox(width: 8.0),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            var stock = int.parse('${data[index].stock}');
-                            if (stock > data[index].add_qnty) {
-                              data[index].add_qnty++;
-                              addOrMinusProduct(
-                                  product_name,
-                                  data[index].unit,
-                                  double.parse('${data[index].price}'),
-                                  int.parse('${data[index].quantity}'),
-                                  data[index].add_qnty,
-                                  data[index].varient_image,
-                                  data[index].varient_id,
-                                  widget.store_name,
-                                  is_pres,
-                                  is_id
-
-                              );
-                            } else {
-                              // Toast.show(
-                              //     "No more stock available!", context,
-                              //     gravity: Toast.BOTTOM);
-                            }
-                          });
-                        },
-                        child: Icon(
-                          Icons.add,
-                          color: kMainColor,
-                          size: 20.0,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            );
-          },
-          separatorBuilder: (context, index) {
-            return Divider(
-              height: 20,
-              color: Colors.transparent,
-            );
-          },
-        ),
-      ],
-    );
-  }
-
-  void addOrMinusProduct(product_name, unit, price, quantity, itemCount,
-      varient_image, varient_id,vendor_name,is_pres,is_id) async {
-
-    print("Pres :"+is_pres.toString());
-
-    DatabaseHelper db = DatabaseHelper.instance;
-    Future<int?> existing = db.getcount(int.parse('${varient_id}'));
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    existing.then((value) {
-      var vae = {
-        DatabaseHelper.storeName : vendor_name,
-        DatabaseHelper.productName: product_name,
-        DatabaseHelper.price: (price * itemCount),
-        DatabaseHelper.unit: unit,
-        DatabaseHelper.quantitiy: quantity,
-        DatabaseHelper.addQnty: itemCount,
-        DatabaseHelper.productImage: varient_image,
-        DatabaseHelper.varientId: varient_id,
-        DatabaseHelper.is_pres: 0,
-        DatabaseHelper.is_id: 0
-      };
-      if (value == 0) {
-        db.insert(vae);
-      } else {
-        if (itemCount == 0) {
-          db.delete(int.parse('${varient_id}'));
-        } else {
-          db.updateData(vae, int.parse('${varient_id}'));
-        }
-      }
-    });
-  }
-}
+// class BottomSheetWidget extends StatefulWidget {
+//   final String product_name;
+//   final String store_name;
+//   final String category_name;
+//   final dynamic is_pres;
+//   final dynamic is_id;
+//   final dynamic currency;
+//   final List<VarientList> datas;
+//   List<VarientList> newdatas = [];
+//
+//   BottomSheetWidget(
+//       this.product_name, this.store_name,this.datas, this.category_name, this.currency,this.is_pres,this.is_id) {
+//     newdatas.clear();
+//     newdatas.addAll(datas);
+//     newdatas.removeAt(0);
+//   }
+//
+//   @override
+//   State<StatefulWidget> createState() {
+//     return BottomSheetWidgetState(product_name,store_name, newdatas,is_pres,is_id);
+//   }
+// }
+//
+// class BottomSheetWidgetState extends State<BottomSheetWidget> {
+//   final String product_name;
+//   final String store_name;
+//   final List<VarientList> data;
+//   final dynamic is_pres;
+//   final dynamic is_id;
+//
+//   BottomSheetWidgetState(this.product_name,this.store_name, this.data,this.is_pres,this.is_id) {
+//     setList(data);
+//   }
+//
+//   void setList(List<VarientList> tagObjs) {
+//     for (int i = 0; i < tagObjs.length; i++) {
+//       DatabaseHelper db = DatabaseHelper.instance;
+//       db.getVarientCount(int.parse('${tagObjs[i].varient_id}')).then((value) {
+//         print('print val $value');
+//         if (value == null) {
+//           setState(() {
+//             tagObjs[i].add_qnty = 0;
+//           });
+//         } else {
+//           setState(() {
+//             tagObjs[i].add_qnty = value;
+//           });
+//         }
+//       });
+//     }
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return ListView(
+//       children: <Widget>[
+//         Container(
+//           height: 80.7,
+//           color: kCardBackgroundColor,
+//           padding: EdgeInsets.all(10.0),
+//           child: ListTile(
+//             title: Text(product_name,
+//                 style: Theme.of(context)
+//                     .textTheme
+//                     .caption!
+//                     .copyWith(fontSize: 15, fontWeight: FontWeight.w500)),
+//             subtitle: Text('${widget.category_name}',
+//                 style:
+//                 Theme.of(context).textTheme.caption!.copyWith(fontSize: 15)),
+//           ),
+//         ),
+//         ListView.separated(
+//           shrinkWrap: true,
+//           primary: true,
+//           itemCount: data.length,
+//           itemBuilder: (context, index) {
+//             return Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: [
+//                 Row(
+//                   children: [
+//                     SizedBox(
+//                       width: 20,
+//                     ),
+//                     Text(
+//                       '${data[index].quantity} ${data[index].unit}  ${widget.currency} ${data[index].price}',
+//                       style: Theme.of(context)
+//                           .textTheme
+//                           .caption!
+//                           .copyWith(fontSize: 16.7),
+//                     )
+//                   ],
+//                 ),
+//                 data[index].add_qnty == 0
+//                     ? Container(
+//                   height: 30.0,
+//                   child: TextButton(
+//                     child: Text(
+//                       'Add',
+//                       style: Theme.of(context).textTheme.caption!.copyWith(
+//                           color: kMainColor, fontWeight: FontWeight.bold),
+//                     ),
+//                     onPressed: () {
+//                       setState(() {
+//                         var stock = int.parse('${data[index].stock}');
+//                         if (stock > data[index].add_qnty) {
+//                           data[index].add_qnty++;
+//                           addOrMinusProduct(
+//                               product_name,
+//                               data[index].unit,
+//                               double.parse('${data[index].price}'),
+//                               int.parse('${data[index].quantity}'),
+//                               data[index].add_qnty,
+//                               data[index].varient_image,
+//                               data[index].varient_id,
+//                               widget.store_name,
+//                             is_pres,is_id
+//                           );
+//                         } else {
+//                           // Toast.show("No more stock available!", context,
+//                           //     gravity: Toast.BOTTOM);
+//                         }
+//                       });
+//                     },
+//                   ),
+//                 )
+//                     : Container(
+//                   height: 30.0,
+//                   padding: EdgeInsets.symmetric(horizontal: 11.0),
+//                   decoration: BoxDecoration(
+//                     border: Border.all(color: kMainColor),
+//                     borderRadius: BorderRadius.circular(30.0),
+//                   ),
+//                   child: Row(
+//                     children: <Widget>[
+//                       InkWell(
+//                         onTap: () {
+//                           setState(() {
+//                             data[index].add_qnty--;
+//                           });
+//                           addOrMinusProduct(
+//                               product_name,
+//                               data[index].unit,
+//                               double.parse('${data[index].price}'),
+//                               int.parse('${data[index].quantity}'),
+//                               data[index].add_qnty,
+//                               data[index].varient_image,
+//                               data[index].varient_id,
+//                               widget.store_name,
+//                               is_pres,is_id
+//
+//                           );
+//                         },
+//                         child: Icon(
+//                           Icons.remove,
+//                           color: kMainColor,
+//                           size: 20.0,
+//                           //size: 23.3,
+//                         ),
+//                       ),
+//                       SizedBox(width: 8.0),
+//                       Text(data[index].add_qnty.toString(),
+//                           style: Theme.of(context).textTheme.caption),
+//                       SizedBox(width: 8.0),
+//                       InkWell(
+//                         onTap: () {
+//                           setState(() {
+//                             var stock = int.parse('${data[index].stock}');
+//                             if (stock > data[index].add_qnty) {
+//                               data[index].add_qnty++;
+//                               addOrMinusProduct(
+//                                   product_name,
+//                                   data[index].unit,
+//                                   double.parse('${data[index].price}'),
+//                                   int.parse('${data[index].quantity}'),
+//                                   data[index].add_qnty,
+//                                   data[index].varient_image,
+//                                   data[index].varient_id,
+//                                   widget.store_name,
+//                                   is_pres,
+//                                   is_id
+//
+//                               );
+//                             } else {
+//                               // Toast.show(
+//                               //     "No more stock available!", context,
+//                               //     gravity: Toast.BOTTOM);
+//                             }
+//                           });
+//                         },
+//                         child: Icon(
+//                           Icons.add,
+//                           color: kMainColor,
+//                           size: 20.0,
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 )
+//               ],
+//             );
+//           },
+//           separatorBuilder: (context, index) {
+//             return Divider(
+//               height: 20,
+//               color: Colors.transparent,
+//             );
+//           },
+//         ),
+//       ],
+//     );
+//   }
+//
+//   void addOrMinusProduct(product_name, unit, price, quantity, itemCount,
+//       varient_image, varient_id,vendor_name,is_pres,is_id) async {
+//
+//     print("Pres :"+is_pres.toString());
+//
+//     DatabaseHelper db = DatabaseHelper.instance;
+//     Future<int?> existing = db.getcount(int.parse('${varient_id}'));
+//     SharedPreferences prefs = await SharedPreferences.getInstance();
+//
+//     existing.then((value) {
+//       var vae = {
+//         DatabaseHelper.storeName : vendor_name,
+//         DatabaseHelper.productName: product_name,
+//         DatabaseHelper.price: (price * itemCount),
+//         DatabaseHelper.unit: unit,
+//         DatabaseHelper.quantitiy: quantity,
+//         DatabaseHelper.addQnty: itemCount,
+//         DatabaseHelper.productImage: varient_image,
+//         DatabaseHelper.varientId: varient_id,
+//         DatabaseHelper.is_pres: 0,
+//         DatabaseHelper.is_id: 0
+//       };
+//       if (value == 0) {
+//         db.insert(vae);
+//       } else {
+//         if (itemCount == 0) {
+//           db.delete(int.parse('${varient_id}'));
+//         } else {
+//           db.updateData(vae, int.parse('${varient_id}'));
+//         }
+//       }
+//     });
+//   }
+// }

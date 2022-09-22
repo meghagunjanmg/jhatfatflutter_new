@@ -1,10 +1,16 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jhatfat/Themes/colors.dart';
 import 'package:jhatfat/Themes/style.dart';
 import 'package:jhatfat/bean/resturantbean/orderhistorybean.dart';
 import 'package:jhatfat/restaturantui/pages/slideuprest.dart';
 import 'package:jhatfat/restaturantui/restcancelorder.dart';
+import 'package:location/location.dart' as loc;
 
 class OrderMapRestPage extends StatelessWidget {
   late final String? instruction;
@@ -12,11 +18,14 @@ class OrderMapRestPage extends StatelessWidget {
   late final OrderHistoryRestaurant? ongoingOrders;
   late final dynamic currency;
 
-  OrderMapRestPage({instruction, pageTitle, ongoingOrders, currency});
+  final dynamic user_id;
+
+  OrderMapRestPage(
+  { this.instruction, this.pageTitle, this.ongoingOrders, this.currency,this.user_id});
 
   @override
   Widget build(BuildContext context) {
-    return OrderMapRest(pageTitle!, ongoingOrders!, currency);
+    return OrderMapRest(pageTitle!, ongoingOrders!, currency,user_id);
   }
 }
 
@@ -24,85 +33,147 @@ class OrderMapRest extends StatefulWidget {
   final String pageTitle;
   final OrderHistoryRestaurant ongoingOrders;
   final dynamic currency;
+  final dynamic user_id;
 
-  OrderMapRest(this.pageTitle, this.ongoingOrders, this.currency);
+  OrderMapRest
+      (this.pageTitle, this.ongoingOrders, this.currency,this.user_id);
 
   @override
-  _OrderMapRestState createState() => _OrderMapRestState();
+  _OrderMapRestState createState() => _OrderMapRestState(user_id);
 }
 
 class _OrderMapRestState extends State<OrderMapRest> {
   bool showAction = false;
+  double _destLatitude = 30.3165, _destLongitude = 78.0322;
+  double _originLatitude = 0.0, _originLongitude = 0.0;
+  final loc.Location location = loc.Location();
+  late GoogleMapController _controller;
+  StreamSubscription<loc.LocationData>? _locationSubscription;
+
+  List<LatLng> polylineCoordinates = [];
+  Map<MarkerId, Marker> markers = {};
+  Map<PolylineId, Polyline> polylines = {};
+  PolylinePoints polylinePoints = PolylinePoints();
+  bool _added = false;
+  final dynamic user_id;
+
+  _OrderMapRestState(this.user_id);
+
 
   @override
   void initState() {
     super.initState();
+    _getLocation();
+
+    _originLatitude = double.parse(double.parse((widget.ongoingOrders.vendor_lat.toString())).toStringAsFixed(4));
+    _originLongitude = double.parse(double.parse((widget.ongoingOrders.vendor_lng.toString())).toStringAsFixed(4));
+
+    _destLatitude = double.parse(double.parse((widget.ongoingOrders.delivery_lat.toString())).toStringAsFixed(4));
+    _destLongitude = double.parse(double.parse((widget.ongoingOrders.delivery_lng.toString())).toStringAsFixed(4));
+
+    getDirections();
+
+
+
+  }
+
+  _getLocation() async {
+    try {
+      await FirebaseFirestore.instance.collection('location').doc(user_id.toString()).set({
+        'latitude': double.parse(double.parse((widget.ongoingOrders.vendor_lat.toString())).toStringAsFixed(4)),
+        'longitude': double.parse(double.parse((widget.ongoingOrders.vendor_lng.toString())).toStringAsFixed(4)),
+        'name': 'john'
+      }, SetOptions(merge: true));
+
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(52.0),
-        child: AppBar(
-          titleSpacing: 0.0,
-          title: Text(
-            'Order #${widget.ongoingOrders.cart_id}',
-            style: TextStyle(
-                fontSize: 18, color: black_color, fontWeight: FontWeight.w400),
-          ),
-          actions: [
-            Visibility(
-              visible: (widget.ongoingOrders.order_status == 'Pending' ||
-                  widget.ongoingOrders.order_status == 'Confirmed')
-                  ? true
-                  : false,
-              child: Padding(
-                padding: EdgeInsets.only(right: 10, top: 10, bottom: 10),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: kMainColor,
-                      foregroundColor : kMainColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      primary: Colors.purple,
-                      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                      textStyle:TextStyle(color: kWhiteColor, fontWeight: FontWeight.w400)),
-
-                  onPressed: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return CancelRestProduct(widget.ongoingOrders.cart_id);
-                    })).then((value){
-                      if(value){
-                        setState(() {
-                          widget.ongoingOrders.order_status = "Cancelled";
-                        });
-                      }
-                    });
-                  },
-                  child: Text(
-                    'Cancel',
-                    style: TextStyle(
-                        color: kWhiteColor, fontWeight: FontWeight.w400),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(52.0),
+          child: AppBar(
+            titleSpacing: 0.0,
+            title: Text(
+              'Order #${widget.ongoingOrders.cart_id}',
+              style: TextStyle(
+                  fontSize: 18, color: black_color, fontWeight: FontWeight.w400),
+            ),
+            actions: [
+              Visibility(
+                visible: (widget.ongoingOrders.order_status == 'Pending' ||
+                    widget.ongoingOrders.order_status == 'Confirmed')
+                    ? true
+                    : false,
+                child: Padding(
+                  padding: EdgeInsets.only(right: 10, top: 10, bottom: 10),
+                  child:
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) {
+                        return CancelRestProduct(widget.ongoingOrders.cart_id);
+                      })).then((value) {
+                        if (value) {
+                          setState(() {
+                            widget.ongoingOrders.order_status = "Cancelled";
+                          });
+                        }
+                      });
+                    },
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(
+                          color: kMainColor, fontWeight: FontWeight.w400),
+                    ),
                   ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
-      ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: Stack(
-              children: <Widget>[
-                Image.asset(
-                  'images/map.png',
-                  width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.fitWidth,
-                ),
+        body: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('location').snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (_added) {
+              mymap(snapshot);
+              _originLatitude =snapshot.data!.docs.singleWhere(
+                      (element) => element.id == widget.user_id)['latitude'];
+              _originLongitude =snapshot.data!.docs.singleWhere(
+                      (element) => element.id == widget.user_id)['longitude'];
+              getDirections();
+            }
+            if (!snapshot.hasData) {
+              return Center(child: CircularProgressIndicator());
+            }
+            return
+              Column(
+                children: <Widget>[
+                  Expanded(
+                    child: Stack(
+                      children: <Widget>[
+                        GoogleMap(
+                          mapType: MapType.normal,
+                          markers: Set<Marker>.of(markers.values),
+                          polylines: Set<Polyline>.of(polylines.values),
+                          initialCameraPosition: CameraPosition(
+                              target: LatLng(snapshot.data!.docs.singleWhere(
+                                      (element) => element.id == widget.user_id)['latitude'],
+                                  snapshot.data!.docs.singleWhere(
+                                          (element) => element.id == widget.user_id)['longitude']),
+                              zoom: 14),
+                          onMapCreated: (GoogleMapController controller) async {
+                            setState(() {
+                              _controller = controller;
+                              _added = true;
+                            });
+                            getDirections();
+                          },
+                        ),
+
                 Positioned(
                   top: 0.0,
                   width: MediaQuery.of(context).size.width,
@@ -269,9 +340,10 @@ class _OrderMapRestState extends State<OrderMapRest> {
               ],
             ),
           )
-        ],
-      ),
+    ],
     );
+    },
+    ));
   }
 
 //  GoogleMap buildGoogleMap(_OrderMapState state) {
@@ -289,4 +361,60 @@ class _OrderMapRestState extends State<OrderMapRest> {
 //      },
 //    );
 //  }
-}
+        _addMarker(LatLng position, String id, BitmapDescriptor descriptor) {
+      MarkerId markerId = MarkerId(id);
+      Marker marker =
+      Marker(markerId: markerId, icon: descriptor, position: position);
+      markers[markerId] = marker;
+    }
+
+    Future<void> mymap(AsyncSnapshot<QuerySnapshot> snapshot) async {
+
+      await _controller
+          .animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+          target: LatLng(
+            snapshot.data!.docs.singleWhere(
+                    (element) => element.id == widget.user_id)['latitude'],
+            snapshot.data!.docs.singleWhere(
+                    (element) => element.id == widget.user_id)['longitude'],
+          ),
+          zoom: 14)));
+
+      _addMarker(LatLng(_originLatitude, _originLongitude), "source",await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(90,90)), 'assets/delivery.png'));
+      _addMarker(LatLng(_destLatitude, _destLongitude), "dest", BitmapDescriptor.defaultMarkerWithHue(90));
+    }
+
+
+    getDirections() async {
+      List<LatLng> polylineCoordinates = [];
+
+      PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+        "AIzaSyALFpEOD1-mnkRiWZcNK4adNCfxrHDKXYs",
+        PointLatLng(_originLatitude, _originLongitude),
+        PointLatLng(_destLatitude, _destLongitude),
+        travelMode: TravelMode.driving,
+      );
+
+      if (result.points.isNotEmpty) {
+        result.points.forEach((PointLatLng point) {
+          polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+        });
+      } else {
+        print(result.errorMessage);
+      }
+      addPolyLine(polylineCoordinates);
+    }
+
+    addPolyLine(List<LatLng> polylineCoordinates) {
+      PolylineId id = PolylineId("poly");
+      Polyline polyline = Polyline(
+        polylineId: id,
+        color: kMainColor,
+        points: polylineCoordinates,
+        width: 5,
+      );
+      polylines[id] = polyline;
+      setState(() {});
+    }
+
+  }

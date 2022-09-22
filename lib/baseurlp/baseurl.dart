@@ -20,6 +20,7 @@ var vendorUrl = baseUrl + "vendorcategory";
 var newvendorUrl = baseUrl + "vendorcategorylist";
 var subscriptionList = baseUrl + "planlist";
 var addToCart = baseUrl + "order";
+var idupload = baseUrl + "upload_id";
 var timeSlots = baseUrl + "timeslot";
 var applyCoupon = baseUrl + "apply_coupon";
 var couponList = baseUrl + "coupon_list";

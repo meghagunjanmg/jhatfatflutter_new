@@ -267,7 +267,7 @@ int numberLimit = 10;
     String url = userRegistration;
     var client = http.Client();
     Uri myUri = Uri.parse(url);
-    client.post(myUri, body: {'user_phone': '${isoCode}${phoneNumber}'}).then((response) async{
+    client.post(myUri, body: {'user_phone': '${phoneNumber}'}).then((response) async{
       print('Response Body 1: - ${response.body} - ${response.statusCode}');
       if (response.statusCode == 200) {
         print('Response Body: - ${response.body}');

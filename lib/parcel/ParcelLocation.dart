@@ -17,6 +17,7 @@ import 'package:jhatfat/Themes/colors.dart';
 import 'package:jhatfat/baseurlp/baseurl.dart';
 import 'package:jhatfat/parcel/PickMap.dart';
 import 'package:jhatfat/parcel/parcel_details.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 import '../HomeOrderAccount/Home/UI/home2.dart';
 import 'checkoutparcel.dart';
@@ -101,6 +102,8 @@ class AddressTile2 extends StatelessWidget {
   String droplng = '';
   final parcelcontroler = TextEditingController();
   final instructioncontroler = TextEditingController();
+  final recievernamecontroler = TextEditingController();
+  final recievercontactcontroler = TextEditingController();
 
 
   void getData() async {
@@ -145,6 +148,7 @@ class AddressTile2 extends StatelessWidget {
 
     });
   }
+  static String id = 'exploreScreen';
 
 
   SetLocationState();
@@ -162,14 +166,38 @@ class AddressTile2 extends StatelessWidget {
     super.dispose();
     parcelcontroler.dispose();
     instructioncontroler.dispose();
+    callThisMethod();
+  }
+
+  void callThisMethod() async {
+    SharedPreferences prefs =
+        await SharedPreferences.getInstance();
+
+    prefs.remove("pickupLocation");
+    prefs.remove("dropLocation");
+    prefs.remove("dlt");
+    prefs.remove("dln");
+    prefs.remove("plt");
+    prefs.remove("pln");
+
+    setState((){
+      drop = "";
+      droplat = "";
+      droplng = "";
+      pickup = "";
+      pickuplat = "";
+      pickuplng = "";
+    });
 
   }
+
 
   @override
   Widget build(BuildContext context) {
     getData();
 
-    return Scaffold(
+    return
+      Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: CustomAppBar(
@@ -230,6 +258,29 @@ class AddressTile2 extends StatelessWidget {
         Padding(
           padding: EdgeInsets.all(18.0),
           child: TextField(
+            controller: recievernamecontroler,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Enter Receiver Name',
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.all(18.0),
+          child: TextField(
+            keyboardType: TextInputType.number,
+            maxLength: 10,
+            controller: recievercontactcontroler,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Enter Receiver Contact no.',
+
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.all(18.0),
+          child: TextField(
             controller: parcelcontroler,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
@@ -254,64 +305,34 @@ class AddressTile2 extends StatelessWidget {
             ),
           ),
         ),
-      Container(
-          alignment: Alignment.center,
-          height: 50,
-          width: 20,
-          margin: const EdgeInsets.all(12),
-          child:
-          Row(
-            children:
-          <Widget>[
-                Checkbox(
-                  value: this.value,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      this.value = value!;
-                    });
-                  },
-                ),
-          new GestureDetector(
-              onTap: (){
-                        Navigator.pushNamed(context, PageRoutes.tncPage);
-              },
-           child: RichText(
-              text: TextSpan(
-                text: "By confirming i accept this order does not contain illegal/restricted items.\nDelivery partner may ask to verify the contents of the package and could \nchoose to refuse the task if the items are not verified",
-                style: TextStyle(color: Colors.black, fontSize: 10),
-                children: <TextSpan>[
-                  TextSpan(text: ' Terms & Condition', style: TextStyle( fontSize: 10,color: Colors.green)),
-                ],
-              ),
-            ),
-          ),
 
-                  // new GestureDetector(
-                  //   onTap: (){
-                  //
-                  //   },
-                  //   child: Flexible(
-                  //       child:
-                  //       RichText(
-                  //         overflow: TextOverflow.ellipsis,
-                  //         text: TextSpan(
-                  //           text: 'By confirming i accept this order does not contain illegal/restricted items.Delivery partner may ask to verify the contents of the package and could choose to refuse the task if the items are not verified',
-                  //           style: TextStyle(fontSize: 12,color: Colors.black),
-                  //           children: const <TextSpan>[
-                  //             TextSpan(text: 'Terms ', style: TextStyle(fontSize: 12, color: Colors.black)),
-                  //           ],
-                  //         ),
-                  //       )
-                  //       // new Text(,
-                  //       //   style: TextStyle(fontSize: 12),
-                  //       // ),
-                  //   ),
-                  // )
-
-              ],  //Text// Checkbox
-            ),
+        Wrap(
+            children: <Widget>[
+        CheckboxListTile(
+        subtitle: GestureDetector(
+    onTap: (){
+      Navigator.pushNamed(context, PageRoutes.tncPage);
+    },
+      child: Text(
+      'Terms & Condition.',
+          style: TextStyle(color: Colors.green, fontSize: 10,),
         ),
-        (value) ?
+    ),
+          title: Text(style: TextStyle( fontSize: 10,color: Colors.black),
+              "By confirming i accept this order does not contain illegal/restricted items.Delivery partner may ask to verify the contents of the package and could choose to refuse the task if the items are not verified."),
+          value: value,
+          onChanged: (bool? value) {
+            setState(() {
+              this.value = value!;
+            });
+          },
+          controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
+        ),
+        ],
+        ),
+
+        (value)
+         ?
           Container(
               alignment: Alignment.center,
               height: 150,
@@ -374,7 +395,7 @@ class AddressTile2 extends StatelessWidget {
       )
     )
       )
-    );
+      );
   }
 
   Future<void> callApi(String pickup, String pickuplat, String pickuplng, String drop, String droplat, String droplng) async {
@@ -401,6 +422,8 @@ class AddressTile2 extends StatelessWidget {
       'destination_lat': droplat,
       'destination_lng': droplng,
       'user_id': '${userId}',
+      'destination_phone': recievercontactcontroler.text.toString(),
+      'destination_name': recievernamecontroler.text.toString(),
 
     }).then((value) {
       print(value.toString());

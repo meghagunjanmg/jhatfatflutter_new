@@ -16,13 +16,14 @@ class OrderArrayGrocery{
 
   int qty;
   int varient_id;
+  int basket;
 
 
-  OrderArrayGrocery(this.qty, this.varient_id);
+  OrderArrayGrocery(this.qty, this.varient_id,this.basket);
 
   @override
   String toString() {
-    return '{\"qty\": $qty, \"varient_id\": $varient_id}';
+    return '{\"qty\": $qty, \"varient_id\": $varient_id, \"basket\": $basket}';
   }
 }
 

@@ -538,7 +538,8 @@ class RestaurantState extends State<Restaurant> {
                                   )
                               );
                             },
-                            onSuggestionSelected: (Vendors detail) async {
+                             hideOnError: true,
+ onSuggestionSelected: (Vendors detail) async {
                               for(int i=0;i<nearStores.length;i++)
                               {
                                 if(nearStores.elementAt(i).vendor_id == detail.vendorId)

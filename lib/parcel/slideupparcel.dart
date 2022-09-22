@@ -47,8 +47,8 @@ class _SlideUpPanelParcelState extends State<SlideUpPanelParcel> {
                                     AssetImage('images/profile.png'),
                               ),
                               title: Text(
-                                widget.ongoingOrders.delivery_boy_name != null
-                                    ? '${widget.ongoingOrders.delivery_boy_name}'
+                                widget.ongoingOrders.deliveryBoyName != null
+                                    ? '${widget.ongoingOrders.deliveryBoyName}'
                                     : 'Delivery boy not assigned yet',
                                 style: Theme.of(context).textTheme.headline4,
                               ),
@@ -71,15 +71,15 @@ class _SlideUpPanelParcelState extends State<SlideUpPanelParcel> {
                                           Icon(Icons.phone, color: kMainColor),
                                       onPressed: () {
                                         if (widget.ongoingOrders
-                                                    .delivery_boy_phone !=
+                                                    .deliveryBoyPhone !=
                                                 null &&
                                             widget.ongoingOrders
-                                                    .delivery_boy_phone
+                                                    .deliveryBoyPhone
                                                     .toString()
                                                     .length >
                                                 5) {
                                           _launchURL(
-                                              "tel://${widget.ongoingOrders.delivery_boy_phone}");
+                                              "tel://${widget.ongoingOrders.deliveryBoyPhone}");
                                         } else {
                                           Toast.show(
                                               'Delivery boy not assigned yet', duration: Toast.lengthShort, gravity:  Toast.bottom);
@@ -110,9 +110,9 @@ class _SlideUpPanelParcelState extends State<SlideUpPanelParcel> {
                     color: Colors.white,
                     child: ListTile(
                       title: Text(
-                        (widget.ongoingOrders.parcel_description != null)
-                            ? '${widget.ongoingOrders.parcel_id}\n${widget.ongoingOrders.parcel_description}'
-                            : '${widget.ongoingOrders.parcel_id}',
+                        (widget.ongoingOrders.parcelDescription != null)
+                            ? '${widget.ongoingOrders.parcelId}\n${widget.ongoingOrders.parcelDescription}'
+                            : '${widget.ongoingOrders.parcelId}',
                         style: Theme.of(context).textTheme.headline4!.copyWith(
                             fontWeight: FontWeight.w500, fontSize: 15.0),
                       ),
@@ -216,8 +216,8 @@ class _SlideUpPanelParcelState extends State<SlideUpPanelParcel> {
                     color: Colors.white,
                     padding:
                         EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
-                    child: (widget.ongoingOrders.payment_method == "Card" ||
-                            widget.ongoingOrders.payment_method == "Wallet")
+                    child: (widget.ongoingOrders.paymentMethod == "Card" ||
+                            widget.ongoingOrders.paymentMethod == "Wallet")
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
@@ -226,7 +226,7 @@ class _SlideUpPanelParcelState extends State<SlideUpPanelParcel> {
                                   style: Theme.of(context).textTheme.headline4,
                                 ),
                                 Text(
-                                  '${widget.ongoingOrders.payment_status}',
+                                  '${widget.ongoingOrders.paymentStatus}',
                                   style: Theme.of(context).textTheme.headline4,
                                 ),
                               ])

@@ -5,8 +5,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
-  static final _databaseName = "jhatfatt.db";
-  static final _databaseVersion = 1;
+  static final _databaseName = "jhatfatsss.db";
+  static final _databaseVersion = 2;
 
   static final table = 'producttable';
   static final pharmatable = 'pharmaproduct';
@@ -27,6 +27,8 @@ class DatabaseHelper {
   static final productImage = 'product_img';
   static final is_id = 'is_id';
   static final is_pres= 'is_pres';
+  static final isBasket= 'isBasket';
+  static final addedBasket= 'addedBasket';
 
   static final vendor_name = 'vendor_name';
   static final vendor_phone = 'vendor_phone';
@@ -93,6 +95,8 @@ class DatabaseHelper {
             $addQnty INTEGER NOT NULL,
             $varientId TEXT NOT NULL,
             $productImage TEXT NOT NULL,
+            $isBasket INTEGER NOT NULL,
+            $addedBasket INTEGER NOT NULL,
             $is_id INTEGER NOT NULL,
             $is_pres INTEGER NOT NULL
           )
