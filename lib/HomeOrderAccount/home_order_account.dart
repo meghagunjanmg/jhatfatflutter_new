@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+import 'package:jhatfat/bean/adminsetting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jhatfat/HomeOrderAccount/Account/UI/account_page.dart';
 import 'package:jhatfat/HomeOrderAccount/Order/UI/order_page.dart';
@@ -16,6 +17,7 @@ import 'package:jhatfat/baseurlp/baseurl.dart';
 import 'package:jhatfat/restaturantui/ui/resturanthome.dart';
 
 import '../Pages/oneViewCart.dart';
+import '../bean/bannerbean.dart';
 import '../parcel/ParcelLocation.dart';
 import 'Home/UI/home2.dart';
 
@@ -37,15 +39,58 @@ class _HomeOrderAccountState extends State<HomeOrderAccount> {
   int _currentIndex = 0;
   double bottomNavBarHeight = 60.0;
   late CircularBottomNavigationController _navigationController;
-
+  String ClosedImage = '';
+  List<BannerDetails> ClosedBannerImage = [];
+  Adminsetting? admins;
   @override
   void initState() {
+    calladminsetting();
     _navigationController =
-        new CircularBottomNavigationController(_currentIndex);
+    new CircularBottomNavigationController(_currentIndex);
     getCurrency();
     _getLocation(context);
+    ClosedBanner();
+
     super.initState();
   }
+
+
+  Future<void> calladminsetting() async {
+    var url = adminsettings;
+    Uri myUri = Uri.parse(url);
+    var value = await http.get(myUri);
+    var jsonData = jsonDecode(value.body.toString());
+    if (jsonData['status'] == "1") {
+        admins = Adminsetting.fromJson(jsonData['data']);
+        print("ADMIN RES: " + admins!.cityadminId.toString());
+
+    }
+  }
+
+  Future<void> ClosedBanner() async {
+    var url2 = closed_banner;
+    Uri myUri2 = Uri.parse(url2);
+    var response = await http.get(myUri2);
+    try {
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body);
+        if (jsonData['status'] == "1") {
+          var tagObjsJson = jsonDecode(response.body)['data'] as List;
+          List<BannerDetails> tagObjs = tagObjsJson
+              .map((tagJson) => BannerDetails.fromJson(tagJson))
+              .toList();
+          setState(() {
+            ClosedBannerImage.clear();
+            ClosedBannerImage = tagObjs;
+            ClosedImage = imageBaseUrl + tagObjs[0].bannerImage;
+          });
+        }
+      }
+    } on Exception catch (_) {
+
+    }
+  }
+
 
   void getCurrency() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -91,12 +136,31 @@ class _HomeOrderAccountState extends State<HomeOrderAccount> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return
+      (admins!.status==1)?
+     Scaffold(
       body: IndexedStack(
         index: _currentIndex,
         children: _children,
       ),
       bottomNavigationBar: bottomNav(context),
+    )
+        :
+
+      Scaffold(
+        body: Dialog(
+      child: Container(
+        decoration: BoxDecoration(
+          color: white_color,
+          borderRadius:
+          BorderRadius.circular(20.0),
+        ),
+        child: Image.network(
+          ClosedImage,
+          fit: BoxFit.fill,
+        ),
+      ),
+        ),
     );
   }
 

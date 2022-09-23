@@ -1994,9 +1994,8 @@ class _oneViewCartState extends State<oneViewCart> {
             });
         }
         if(cartListI[i].is_id==1) {
-          setState(() {
-            is_id_req = 1;
-          });
+          checkId();
+
         }
 
 
@@ -2007,6 +2006,28 @@ class _oneViewCartState extends State<oneViewCart> {
         }
       }
     }
+  }
+
+  Future<void> checkId() async {
+    var url = checkid;
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    int? userId = pref.getInt('user_id');
+    Uri myUri = Uri.parse(url);
+    http.post(myUri, body: {
+      'user_id': userId.toString(),
+    }).then((value) {
+      var jsonData = jsonDecode(value.body);
+      if (jsonData['status'] == 0) {
+        setState(() {
+          is_id_req = 1;
+        });
+      }
+      else{
+        setState(() {
+          is_id_req = 0;
+        });
+      }
+    });
   }
 }
 

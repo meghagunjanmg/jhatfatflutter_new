@@ -248,15 +248,11 @@ class AppCategoryState extends State<AppCategory> {
                                 AssetImage('images/icons/ic_cart blk.png'),
                               ),
                               onPressed: () {
-                                if (isCartCount) {
                                   Navigator.pushNamed(
                                           context, PageRoutes.viewCart)
                                       .then((value) {
                                     getCartCount();
                                   });
-                                } else {
-                                  Toast.show('No Value in the cart!', duration: Toast.lengthShort, gravity:  Toast.bottom);
-                                }
                               }),
                           Positioned(
                               right: 5,

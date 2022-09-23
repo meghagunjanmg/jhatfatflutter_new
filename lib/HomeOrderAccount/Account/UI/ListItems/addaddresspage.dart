@@ -190,16 +190,13 @@ class AddAddressState extends State<AddAddressPage> {
         child:
       Container(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height - 10,
+        height: MediaQuery.of(context).size.height+120,
         child: Column(
-
           children: [
             Container(
               child: Stack(
                 children: [
-                  SingleChildScrollView(
-                    primary: true,
-                    child: Column(
+               Column(
                       children: [
                         Container(
                           height: 400,
@@ -432,7 +429,6 @@ class AddAddressState extends State<AddAddressPage> {
                         ),
                       ],
                     ),
-                  ),
                   Positioned.fill(
                       child: Visibility(
                     visible: showDialogBox,

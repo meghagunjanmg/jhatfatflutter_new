@@ -172,14 +172,12 @@ class DealProductState extends State<DealProducts>
                         AssetImage('images/icons/ic_cart blk.png'),
                       ),
                       onPressed: () {
-                        if (isCartCount) {
                           Navigator.pushNamed(context, PageRoutes.viewCart)
                               .then((value) {
 //                            setList(productVarientList);
                             getCartCount();
                           });
-                        } else {
-                        }
+
                       }),
                   Positioned(
                       right: 5,

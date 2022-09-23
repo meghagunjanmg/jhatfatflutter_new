@@ -224,19 +224,22 @@ class _SavedAddressesState extends State<SavedAddresses> {
   @override
   Widget build(BuildContext context) {
     dynamic height = MediaQuery.of(context).size.height;
-    return Stack(
+    return
+      SingleChildScrollView(
+          child:
+          Column(
+              children: [
+      Stack(
       children: [
         Stack(
           children: <Widget>[
+
             ((showAddressList != null && showAddressList.length > 0) ||
                 (addressDelivery != null && addressDelivery.length > 0))
                 ? Container(
               width: MediaQuery.of(context).size.width,
-              height: height - 130,
-              child: SingleChildScrollView(
-                primary: true,
-                scrollDirection: Axis.vertical,
-                child: Column(
+              height: MediaQuery.of(context).size.height-200,
+              child:  Column(
                   children: [
                     Visibility(
                       visible: (addressDelivery != null &&
@@ -299,6 +302,12 @@ class _SavedAddressesState extends State<SavedAddresses> {
                                                           builder:
                                                               (context) {
                                                             return EditAddresspage(
+                                                              addressDelivery[
+                                                              index]
+                                                                  .lat,
+                                                              addressDelivery[
+                                                              index]
+                                                                  .lng,
                                                               addressDelivery[
                                                               index]
                                                                   .pincode,
@@ -449,6 +458,12 @@ class _SavedAddressesState extends State<SavedAddresses> {
                                                                   return EditAddresspage(
                                                                       showAddressList[
                                                                       index]
+                                                                          .lat,
+                                                                      showAddressList[
+                                                                      index]
+                                                                          .lng,
+                                                                      showAddressList[
+                                                                      index]
                                                                           .pincode,
                                                                       showAddressList[
                                                                       index]
@@ -540,9 +555,7 @@ class _SavedAddressesState extends State<SavedAddresses> {
                     ),
                   ],
                 ),
-              ),
-            )
-                : Container(
+            ): Container(
               alignment: Alignment.center,
               width: MediaQuery.of(context).size.width,
               child: Row(
@@ -573,49 +586,6 @@ class _SavedAddressesState extends State<SavedAddresses> {
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Visibility(
-                visible: (widget.vendorId != null &&
-                    widget.vendorId.toString().length > 0 &&
-                    widget.vendorId != "")
-                    ? true
-                    : false,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      primary: kMainColor,
-                      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-    ),
-
-                  onPressed: () {
-//                  Navigator.pushNamed(context, PageRoutes.locationPage);
-  Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) {
-  return AddAddressPage(widget.vendorId);
-  })).then((value) {
-    if (widget.vendorId != null &&
-    widget.vendorId.toString().length > 0 &&
-    widget.vendorId != "") {
-    getVendorAddress(context);
-    } else {
-    setState(() {
-    isFetchAdd = true;
-    });
-    getAddress(context);
-    }
-    });
-      }, child: Text("Add New",style: TextStyle(
-    color: Colors.white,
-    fontWeight: FontWeight.w500,
-    fontSize: 20),
-    ),
-
-                ),
-              ),
-            ),
           ],
         ),
         Positioned.fill(
@@ -625,7 +595,7 @@ class _SavedAddressesState extends State<SavedAddresses> {
                 onTap: () {},
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height - 100,
+                  height: MediaQuery.of(context).size.height,
                   alignment: Alignment.center,
                   child: SizedBox(
                     height: 120,
@@ -659,7 +629,53 @@ class _SavedAddressesState extends State<SavedAddresses> {
               ),
             )),
       ],
-    );
+      ),
+
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Visibility(
+              visible: (widget.vendorId != null &&
+                  widget.vendorId.toString().length > 0 &&
+                  widget.vendorId != "")
+                  ? true
+                  : false,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  primary: kMainColor,
+                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                ),
+
+                onPressed: () {
+//                  Navigator.pushNamed(context, PageRoutes.locationPage);
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) {
+                    return AddAddressPage(widget.vendorId);
+                  })).then((value) {
+                    if (widget.vendorId != null &&
+                        widget.vendorId.toString().length > 0 &&
+                        widget.vendorId != "") {
+                      getVendorAddress(context);
+                    } else {
+                      setState(() {
+                        isFetchAdd = true;
+                      });
+                      getAddress(context);
+                    }
+                  });
+                }, child: Text("Add New",style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20),
+              ),
+
+              ),
+            ),
+          )
+])
+      );
   }
 
   void selectAddressd(dynamic value, vendorId) async {

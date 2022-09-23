@@ -1,6 +1,9 @@
 var baseUrl = "http://jhatfat.umbeo.com/api/";
 var imageBaseUrl = "http://jhatfat.umbeo.com/";
 
+var adminsettings = baseUrl + "adminsettings";
+var top_msg_banner = baseUrl + "top_message_banner";
+var closed_banner = baseUrl + "closed_banner";
 var pickdropbanner = baseUrl + "parbanner";
 var subsbanner = baseUrl + "subsbanner";
 var bigbanner = baseUrl + "bigbanner";
@@ -21,6 +24,7 @@ var newvendorUrl = baseUrl + "vendorcategorylist";
 var subscriptionList = baseUrl + "planlist";
 var addToCart = baseUrl + "order";
 var idupload = baseUrl + "upload_id";
+var checkid = baseUrl + "check_id";
 var timeSlots = baseUrl + "timeslot";
 var applyCoupon = baseUrl + "apply_coupon";
 var couponList = baseUrl + "coupon_list";

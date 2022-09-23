@@ -225,7 +225,7 @@ class SubscritionState extends State<Subscription> {
                                           child:
                                           ListTile(
                                             contentPadding: EdgeInsets.all(8.0),
-                                            title: Text("Days "+planlist[0].description,
+                                            title: Text(planlist[0].description,
                                               style: TextStyle(
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.w400,

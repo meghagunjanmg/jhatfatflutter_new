@@ -82,6 +82,13 @@ class _JuiceListState extends State<JuiceList> {
             ),
             actions: <Widget>[
               TextButton(
+                child: const Text('Clear'),
+                onPressed: () {
+                  ClearCart();
+                  Navigator.of(context).pop(true);
+                },
+              ),
+              TextButton(
                 child: const Text('OK'),
                 onPressed: () {
                   Navigator.of(context).pop(true);
@@ -92,6 +99,18 @@ class _JuiceListState extends State<JuiceList> {
         }
     );
   }
+
+  void ClearCart() {
+    DatabaseHelper db = DatabaseHelper.instance;
+    db.deleteAll();
+    getCartItem();
+
+    setState(() {
+      grocercart = 0;
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;

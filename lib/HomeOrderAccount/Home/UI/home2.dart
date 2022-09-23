@@ -37,6 +37,7 @@ import 'package:jhatfat/pharmacy/pharmastore.dart';
 import 'package:jhatfat/restaturantui/ui/resturanthome.dart';
 
 import '../../../Themes/constantfile.dart';
+import '../../../bean/adminsetting.dart';
 import '../../../restaturantui/pages/restaurant.dart';
 import 'appcategory/appcategory.dart';
 
@@ -55,6 +56,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  Adminsetting? admins;
+
   String? cityName = 'NO LOCATION SELECTED';
   String? currency = '';
   late List<NearStores> rest_nearStores = [];
@@ -62,10 +65,12 @@ class _HomeState extends State<Home> {
   String pickImage = '';
   String subsImage = '';
   String bigImage = '';
+  String TopImage = '';
   var lat = 30.3253;
   var lng = 78.0413;
   List<BannerDetails> listImage = [];
   List<BannerDetails> pickBannerImage = [];
+  List<BannerDetails> topBannerImage = [];
   List<VendorList> nearStores = [];
   List<VendorList> newnearStores = [];
   List<VendorList> nearStoresShimmer = [
@@ -158,23 +163,12 @@ class _HomeState extends State<Home> {
       openAppSettings();
     }
   }
+
   @override
   void initState() {
-    _getLocation(context);
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-    messaging.getToken().then((value) {
-      print(value);
-    });
-    getCurrency();
-
-    hitRestaurantService();
-
-    _requestPermission();
-    location.changeSettings(interval: 300, accuracy: loc.LocationAccuracy.high);
-    location.enableBackgroundMode(enable: true);
-
     super.initState();
-
+    calladminsetting();
+    Topbanner();
   }
 
   void _getLocation(context) async {
@@ -212,8 +206,14 @@ class _HomeState extends State<Home> {
 
         List<Placemark> placemarks = await placemarkFromCoordinates(lats, lngs);
         setState(() {
-          cityName = (placemarks.elementAt(0).subLocality.toString())+" ( " + (placemarks.elementAt(0).locality.toString()) + " )".toUpperCase();
-            });
+          cityName = (placemarks
+              .elementAt(0)
+              .subLocality
+              .toString()) + " ( " + (placemarks
+              .elementAt(0)
+              .locality
+              .toString()) + " )".toUpperCase();
+        });
 
         // GeoData data = await Geocoder2.getDataFromCoordinates(
         //     latitude: lats,
@@ -231,14 +231,10 @@ class _HomeState extends State<Home> {
         //   });
 
 
-
-
-
-          hitService(lat.toString(), lng.toString());
-          hitBannerUrl();
+        hitService(lat.toString(), lng.toString());
+        hitBannerUrl();
         pickbanner();
-          hitRestaurantService();
-
+        hitRestaurantService();
       } else {
         await Geolocator.openLocationSettings().then((value) {
           if (value) {
@@ -367,35 +363,68 @@ class _HomeState extends State<Home> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              (admins!.surge==1)
+                  ?
+              Padding(
+                  padding: EdgeInsets.only(top: 8.0, left: 24.0),
+                  child:
+                    Text(
+                      admins!.surgeMsg.toString(),
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 16,color: Colors.blue),
+                    )
 
+              )
+                  :
+          Padding(
+            padding: EdgeInsets.only(top: 8.0, left: 24.0),
+            child: Text(
+                    "",
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 12),
+                  )
+          ),
               Padding(
                 padding: EdgeInsets.only(top: 8.0, left: 24.0),
                 child: Row(
                   children: <Widget>[
-                    Text(
-                      "Get Delivered",
+                    GestureDetector(
+                      onTap: ()async {
+
+                        await showDialog(
+                            context: context,
+                            builder: (_) => Dialog(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: white_color,
+                                borderRadius:
+                                BorderRadius.circular(20.0),
+                              ),
+                              child: Image.network(
+                                TopImage,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                        )
+                        );
+                      },
+                    child: Text(
+                      admins!.topMessage.toString(),
                       style: Theme
                           .of(context)
                           .textTheme
                           .bodyText1,
                     ),
-                    SizedBox(
-                      width: 5.0,
-                    ),
-                    Text(
-                      "everything you need",
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .bodyText1!
-                          .copyWith(fontWeight: FontWeight.normal),
-                    ),
-                  ],
                 ),
+          ],
+              ),
               ),
               SizedBox(
                   height: 20
               ),
+
               Container(
                 width: MediaQuery
                     .of(context)
@@ -404,64 +433,68 @@ class _HomeState extends State<Home> {
                 height: 52,
                 padding: EdgeInsets.only(left: 5),
 
-              child: TypeAheadField(
-                textFieldConfiguration: TextFieldConfiguration(
-                  autofocus: false,
-                  style: DefaultTextStyle.of(context)
-                      .style
-                      .copyWith(fontStyle: FontStyle.italic),
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                        borderSide: BorderSide(color: Colors.black)),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                        borderSide: BorderSide(color: Colors.black)),
-                          prefixIcon: Icon(
-                            Icons.search,
-                            color: kHintColor,
-                          ),
-                          hintText: 'Search Store,Restaurant...',
-                        ),
-                ),
-                suggestionsCallback: (pattern) async {
-                  return await BackendService.getSuggestions(pattern,lat,lng);
-                },
-                itemBuilder: (context, Vendors suggestion) {
+                child: TypeAheadField(
+                  textFieldConfiguration: TextFieldConfiguration(
+                    autofocus: false,
+                    style: DefaultTextStyle
+                        .of(context)
+                        .style
+                        .copyWith(fontStyle: FontStyle.italic),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(color: Colors.black)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                          borderSide: BorderSide(color: Colors.black)),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: kHintColor,
+                      ),
+                      hintText: 'Search Store,Restaurant...',
+                    ),
+                  ),
+                  suggestionsCallback: (pattern) async {
+                    return await BackendService.getSuggestions(
+                        pattern, lat, lng);
+                  },
+                  itemBuilder: (context, Vendors suggestion) {
                     return ListTile(
                         title: Text('${suggestion.str1}'),
                         subtitle: Text('${suggestion.str2}'
                         )
                     );
-                },
-                hideOnError: true,
-                onSuggestionSelected: (Vendors detail) async {
-                  if (detail.uiType == "grocery" || detail.uiType == "Grocery" ||
-                      detail.uiType == 1) {
-                    Navigator.push(context, MaterialPageRoute
-                      (builder: (context) =>
-                    new AppCategory(detail.vendorName.toString(), detail.vendorId, detail.distance)));
-                  }
-                  else if (detail.uiType == "resturant" ||
-                      detail.uiType == "Resturant" ||
-                      detail.uiType == 2) {
-
-                    for(int i=0;i<rest_nearStores.length;i++)
-                      {
-                      if(rest_nearStores.elementAt(i).vendor_id == detail.vendorId)
-                        {
+                  },
+                  hideOnError: true,
+                  onSuggestionSelected: (Vendors detail) async {
+                    if (detail.uiType == "grocery" ||
+                        detail.uiType == "Grocery" ||
+                        detail.uiType == 1) {
+                      Navigator.push(context, MaterialPageRoute
+                        (builder: (context) =>
+                      new AppCategory(
+                          detail.vendorName.toString(), detail.vendorId,
+                          detail.distance)));
+                    }
+                    else if (detail.uiType == "resturant" ||
+                        detail.uiType == "Resturant" ||
+                        detail.uiType == 2) {
+                      for (int i = 0; i < rest_nearStores.length; i++) {
+                        if (rest_nearStores
+                            .elementAt(i)
+                            .vendor_id == detail.vendorId) {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
                                       Restaurant_Sub(
-                                          rest_nearStores.elementAt(i), currency)));
+                                          rest_nearStores.elementAt(i),
+                                          currency)));
                         }
                       }
-                  }
-
-   },
-              ),
+                    }
+                  },
+                ),
               ),
               // Container(
               //   width: MediaQuery
@@ -500,9 +533,9 @@ class _HomeState extends State<Home> {
                 padding: EdgeInsets.all(20),
                 child: GridView.count(
                   crossAxisCount: 3,
-                    crossAxisSpacing: 0,
-                    mainAxisSpacing: 0,
-                  childAspectRatio: 100/90,
+                  crossAxisSpacing: 0,
+                  mainAxisSpacing: 0,
+                  childAspectRatio: 100 / 90,
                   controller: ScrollController(keepScrollOffset: false),
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
@@ -547,9 +580,9 @@ class _HomeState extends State<Home> {
                       onTap: () {
                         Navigator.push(context, MaterialPageRoute
                           (builder: (context) =>
-                        new AppCategory(pickBannerImage[0].vendorName, pickBannerImage[0].vendorId, "22")));
-
-                        },
+                        new AppCategory(pickBannerImage[0].vendorName,
+                            pickBannerImage[0].vendorId, "22")));
+                      },
                       child: Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: 5, vertical: 10),
@@ -715,7 +748,6 @@ class _HomeState extends State<Home> {
               ),
 
 
-
               Padding(
                 padding: EdgeInsets.only(top: 2, bottom: 2),
                 child: Builder(
@@ -757,19 +789,12 @@ class _HomeState extends State<Home> {
                 ),
               ),
 
-
-
-
-              Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const <Widget>[Text(
-                    'For any assistance call 8178218314',
+              Text(
+                    admins!.bottomMessage.toString(),
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 12),
                   )
-                  ])
-
 
               // Padding(
               //   padding: EdgeInsets.all(0),
@@ -872,17 +897,20 @@ class _HomeState extends State<Home> {
     // }
     //
     setState(() {
-      cityName = (placemarks.elementAt(0).subLocality.toString())+" ( " + (placemarks.elementAt(0).locality.toString()) + " )".toUpperCase();
+      cityName = (placemarks
+          .elementAt(0)
+          .subLocality
+          .toString()) + " ( " + (placemarks
+          .elementAt(0)
+          .locality
+          .toString()) + " )".toUpperCase();
     });
-
 
 
     hitService(lat.toString(), lng.toString());
     hitBannerUrl();
     pickbanner();
-
   }
-
 
 
   Future<void> pickbanner() async {
@@ -898,8 +926,8 @@ class _HomeState extends State<Home> {
               .map((tagJson) => BannerDetails.fromJson(tagJson))
               .toList();
           setState(() {
-              pickBannerImage.clear();
-              pickBannerImage = tagObjs;
+            pickBannerImage.clear();
+            pickBannerImage = tagObjs;
             pickImage = imageBaseUrl + tagObjs[0].bannerImage;
           });
         }
@@ -908,6 +936,32 @@ class _HomeState extends State<Home> {
 
     }
   }
+  Future<void> Topbanner() async {
+    var url2 = top_msg_banner;
+    Uri myUri2 = Uri.parse(url2);
+    var response = await http.get(myUri2);
+    try {
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body);
+        if (jsonData['status'] == "1") {
+          var tagObjsJson = jsonDecode(response.body)['data'] as List;
+          List<BannerDetails> tagObjs = tagObjsJson
+              .map((tagJson) => BannerDetails.fromJson(tagJson))
+              .toList();
+          setState(() {
+            topBannerImage.clear();
+            topBannerImage = tagObjs;
+            TopImage = imageBaseUrl + tagObjs[0].bannerImage;
+          });
+        }
+      }
+    } on Exception catch (_) {
+
+    }
+  }
+
+
+
 
   void hitService(String lat, String lng) async {
     var endpointUrl = vendorUrl;
@@ -1168,7 +1222,6 @@ class _HomeState extends State<Home> {
   }
 
   void hitbannerVendor(BannerDetails detail) async {
-    print(detail.vendorName.toString());
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (detail.uiType == "grocery" || detail.uiType == "Grocery" ||
@@ -1182,18 +1235,25 @@ class _HomeState extends State<Home> {
     else if (detail.uiType == "resturant" ||
         detail.uiType == "Resturant" ||
         detail.uiType == 2) {
+      print("REST BANNER");
+      print("REST BANNER" + detail.vendorId.toString());
 
-      for(int i=0;i<rest_nearStores.length;i++)
-      {
-        if(rest_nearStores.elementAt(i).vendor_id == detail.vendorId)
-        {
+      for (int i = 0; i < rest_nearStores.length; i++) {
+        print("REST BANNER" + rest_nearStores
+            .elementAt(i)
+            .vendor_id.toString());
+
+        if (rest_nearStores
+            .elementAt(i)
+            .vendor_id.toString() == detail.vendorId.toString()) {
+
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) =>
                       Restaurant_Sub(
-                          rest_nearStores.elementAt(i), currency))
-          );
+                          rest_nearStores.elementAt(i),
+                          currency)));
         }
       }
     }
@@ -1226,8 +1286,7 @@ class _HomeState extends State<Home> {
             rest_nearStores.clear();
             rest_nearStores = tagObjs;
           });
-          print('Response Body: - '+rest_nearStores.toString());
-
+          print('Response Body: - ' + rest_nearStores.toString());
         } else {
 
         }
@@ -1241,7 +1300,9 @@ class _HomeState extends State<Home> {
       });
     });
   }
-  hitNavigator1(BuildContext context,lat,lng,vendor_name, vendor_id, distance) async {
+
+  hitNavigator1(BuildContext context, lat, lng, vendor_name, vendor_id,
+      distance) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("pr_vendor_id", '${vendor_id}');
     prefs.setString("pr_store_name", '${vendor_name}');
@@ -1260,7 +1321,11 @@ class _HomeState extends State<Home> {
   void callSearch() {
     var url = Search_key;
     Uri myUri = Uri.parse(url);
-    http.post(myUri, body: {'lat': lat.toString(),'lng':lng.toString(),'prod_name':searchController.text.toString()}).
+    http.post(myUri, body: {
+      'lat': lat.toString(),
+      'lng': lng.toString(),
+      'prod_name': searchController.text.toString()
+    }).
     then((value) {
       if (value.statusCode == 200) {
         var jsonData = jsonDecode(value.body);
@@ -1271,20 +1336,49 @@ class _HomeState extends State<Home> {
               .map((tagJson) => Vendors.fromJson(tagJson))
               .toList();
           if (tagObjs.isNotEmpty) {
-                          print(tagObjs.elementAt(0).vendorName);
+            print(tagObjs
+                .elementAt(0)
+                .vendorName);
           }
         }
       }
     });
   }
+
+  Future<void> calladminsetting() async {
+    var url = adminsettings;
+    Uri myUri = Uri.parse(url);
+    var value = await http.get(myUri);
+    var jsonData = jsonDecode(value.body.toString());
+    if (jsonData['status'] == "1") {
+      setState((){
+        admins = Adminsetting.fromJson(jsonData['data']);
+        print("ADMIN RES: " + admins!.cityadminId.toString());
+      });
+
+      if(admins!.status==1) {
+        _requestPermission();
+        _getLocation(context);
+        FirebaseMessaging messaging = FirebaseMessaging.instance;
+        messaging.getToken().then((value) {
+          print(value);
+        });
+        getCurrency();
+        hitRestaurantService();
+        location.changeSettings(
+            interval: 300, accuracy: loc.LocationAccuracy.high);
+        location.enableBackgroundMode(enable: true);
+      }
+    }
+  }
 }
+
 class BackendService {
   static Future<List<Vendors>> getSuggestions(String query,double lat,double lng) async {
     if (query.isEmpty && query.length < 2) {
       print('Query needs to be at least 3 chars');
       return Future.value([]);
     }
-
 
     var url = Search_key;
     Uri myUri = Uri.parse(url);

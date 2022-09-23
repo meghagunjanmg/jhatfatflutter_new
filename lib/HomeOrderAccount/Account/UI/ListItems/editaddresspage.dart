@@ -1,7 +1,12 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoder2/geocoder2.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
@@ -10,7 +15,11 @@ import 'package:jhatfat/Themes/colors.dart';
 import 'package:jhatfat/baseurlp/baseurl.dart';
 import 'package:jhatfat/bean/address.dart';
 
+import '../../../../Themes/constantfile.dart';
+
 class EditAddresspage extends StatefulWidget {
+  final dynamic lat;
+  final dynamic lng;
   final dynamic pincode;
   final dynamic houseno;
   final dynamic address;
@@ -21,12 +30,12 @@ class EditAddresspage extends StatefulWidget {
   final dynamic city_id;
   final dynamic type;
 
-  EditAddresspage(this.pincode, this.houseno, this.address, this.state,
+  EditAddresspage(this.lat,this.lng,this.pincode, this.houseno, this.address, this.state,
       this.address_id, this.vendorid, this.city_id, this.area_id, this.type);
 
   @override
   State<StatefulWidget> createState() {
-    return EditAddresspageState(pincode, houseno, address, state, type);
+    return EditAddresspageState(lat,lng,pincode, houseno, address, state, type);
   }
 }
 
@@ -53,8 +62,21 @@ class EditAddresspageState extends State<EditAddresspage> {
 
   dynamic selectAreaId;
   dynamic selectCityId;
+  dynamic lat;
+  dynamic lng;
+  CameraPosition? kGooglePlex;
 
-  EditAddresspageState(pincode, houseno, address, state, type) {
+
+  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+
+  bool isCard = false;
+  Completer<GoogleMapController> _controller = Completer();
+
+  var isVisible = false;
+
+  var currentAddress = '';
+
+  EditAddresspageState(lat,lng, pincode, houseno, address, state, type) {
     pincodeController.text = '${pincode}';
     houseController.text = '${houseno}';
     stateController.text = state;
@@ -64,6 +86,8 @@ class EditAddresspageState extends State<EditAddresspage> {
     address = address.replaceAll('${state},', '');
     streetController.text = address;
     addressType = type;
+    this.lat = double.parse(lat);
+    this.lng = double.parse(lng);
   }
 
   @override
@@ -72,146 +96,15 @@ class EditAddresspageState extends State<EditAddresspage> {
     getCityList();
   }
 
-  void getCityList() async {
-    var url = cityList;
-    Uri myUri = Uri.parse(url);
-
-    http.post(myUri, body: {
-      'vendor_id': '${widget.vendorid}',
-    }).then((value) {
-      if (value.statusCode == 200) {
-        var jsonData = jsonDecode(value.body);
-        if (jsonData['status'] == "1") {
-          var tagObjsJson = jsonDecode(value.body)['data'] as List;
-          List<CityList> tagObjs =
-              tagObjsJson.map((tagJson) => CityList.fromJson(tagJson)).toList();
-          if (tagObjs != null && tagObjs.length > 0) {
-            setState(() {
-              cityListt.clear();
-              cityListt = tagObjs;
-              areaList.clear();
-              selectAreaId = '';
-              selectArea = 'Select near by area';
-            });
-            List<CityList> tagObjs1 = tagObjs
-                .where((element) =>
-                    element.city_id.toString() == '${widget.city_id}')
-                .toList();
-            if (tagObjs1 != null && tagObjs1.length > 0) {
-              setState(() {
-                selectCity = tagObjs1[0].city_name;
-                selectCityId = tagObjs1[0].city_id;
-                streetController.text =
-                    streetController.text.replaceAll('${selectCity},', '');
-                streetController.text =
-                    streetController.text.replaceAll('${selectCity}', '');
-              });
-              if (selectCityId != null &&
-                  selectCityId != '' &&
-                  selectCityId != null) {
-                getAreaList1(selectCityId);
-              }
-            }
-          } else {
-            setState(() {
-              cityListt.clear();
-              areaList.clear();
-              selectCity = 'Select city';
-              selectCityId = '';
-              selectAreaId = '';
-              selectArea = 'Select near by area';
-            });
-          }
-        }
-      }
-    });
-  }
-
-  void getAreaList1(dynamic city_id) async {
-    var url = areaLists;
-    Uri myUri = Uri.parse(url);
-    http.post(myUri, body: {
-      'vendor_id': '${widget.vendorid}',
-      'city_id': '$city_id',
-    }).then((value) {
-      if (value.statusCode == 200) {
-        var jsonData = jsonDecode(value.body);
-        if (jsonData['status'] == "1") {
-          var tagObjsJson = jsonDecode(value.body)['data'] as List;
-          List<AreaList> tagObjs =
-              tagObjsJson.map((tagJson) => AreaList.fromJson(tagJson)).toList();
-          if (tagObjs != null && tagObjs.length > 0) {
-            setState(() {
-              areaList.clear();
-              areaList = tagObjs;
-            });
-            List<AreaList> tagObjs1 = tagObjs
-                .where((element) =>
-                    element.area_id.toString() == '${widget.area_id}')
-                .toList();
-            if (tagObjs1 != null && tagObjs1.length > 0) {
-              setState(() {
-                selectAreaId = tagObjs1[0].area_id;
-                selectArea = tagObjs1[0].area_name;
-                streetController.text =
-                    streetController.text.replaceAll(',${selectArea},', '');
-                streetController.text =
-                    streetController.text.replaceAll('${selectArea},', '');
-                streetController.text =
-                    streetController.text.replaceAll('${selectArea}', '');
-              });
-            }
-          } else {
-            setState(() {
-              areaList.clear();
-              selectAreaId = '';
-              selectArea = 'Select near by area';
-            });
-          }
-        }
-      }
-    });
-  }
-
-  void getAreaList(dynamic city_id) async {
-    var url = areaLists;
-    Uri myUri = Uri.parse(url);
-    http.post(myUri, body: {
-      'vendor_id': '${widget.vendorid}',
-      'city_id': '$city_id',
-    }).then((value) {
-      if (value.statusCode == 200) {
-        var jsonData = jsonDecode(value.body);
-        if (jsonData['status'] == "1") {
-          var tagObjsJson = jsonDecode(value.body)['data'] as List;
-          List<AreaList> tagObjs =
-              tagObjsJson.map((tagJson) => AreaList.fromJson(tagJson)).toList();
-          if (tagObjs != null && tagObjs.length > 0) {
-            setState(() {
-              areaList.clear();
-              areaList = tagObjs;
-            });
-          } else {
-            setState(() {
-              areaList.clear();
-              selectAreaId = '';
-              selectArea = 'Select near by area';
-            });
-          }
-        }
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+   return Scaffold(
       backgroundColor: kCardBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.white,
         titleSpacing: 0.0,
         title: Text(
-          'Update Address',
+          'Edit Address',
           style: Theme.of(context).textTheme.bodyText1,
         ),
       ),
@@ -220,197 +113,244 @@ class EditAddresspageState extends State<EditAddresspage> {
         child:
         Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height - 10,
+          height: MediaQuery.of(context).size.height+120,
           child: Column(
             children: [
               Container(
-                height: (MediaQuery.of(context).size.height - 77) * 0.6,
                 child: Stack(
                   children: [
-                    SingleChildScrollView(
-                      primary: true,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.95,
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              border: Border.all(color: kHintColor, width: 1),
+                    Column(
+                      children: [
+                        Container(
+                          height: 400,
+                          child:
+                          GoogleMap(
+                            gestureRecognizers: < Factory < OneSequenceGestureRecognizer >> [
+                               Factory < OneSequenceGestureRecognizer > (
+                                    () => EagerGestureRecognizer(),
+                              ),
+                            ].toSet(),
+                            mapType: MapType.normal,
+                            initialCameraPosition: CameraPosition(
+                              target: LatLng(lat,lng),
+                              zoom: 14.0,
                             ),
-                            child: DropdownButton<String>(
-                              hint: Text(addressType),
-                              isExpanded: true,
-                              underline: Container(
-                                height: 0.0,
-                                color: scaffoldBgColor,
-                              ),
-                              items: addressTyp.map((value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  addressType = value!;
-                                });
-                                print(addressType);
-                              },
+                            zoomControlsEnabled: true,
+                            myLocationButtonEnabled: true,
+                            compassEnabled: false,
+                            mapToolbarEnabled: false,
+                            buildingsEnabled: false,
+                            markers: markers.values.toSet(),
+                            onMapCreated: (GoogleMapController controller) {
+                              _controller.complete(controller);
+                              final marker = Marker(
+                                markerId: MarkerId('location'),
+                                position: LatLng(lat, lng),
+                                icon: BitmapDescriptor.defaultMarker,
+                              );
+                              setState(() {
+                                markers[MarkerId('location')] = marker;
+                              });
+
+                            },
+                            onCameraIdle: () {
+                              getMapLoc();
+                            },
+                            onCameraMove: (post) {
+                              lat = post.target.latitude;
+                              lng = post.target.longitude;
+
+                              final marker = Marker(
+                                markerId: MarkerId('location'),
+                                position: LatLng(lat, lng),
+                                icon: BitmapDescriptor.defaultMarker,
+                              );
+                              setState(() {
+                                markers[MarkerId('location')] = marker;
+                              });
+                            },
+                          ),
+                        ),
+
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.95,
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            border: Border.all(color: kHintColor, width: 1),
+                          ),
+                          child: DropdownButton<String>(
+                            hint: Text(addressType),
+                            isExpanded: true,
+                            underline: Container(
+                              height: 0.0,
+                              color: scaffoldBgColor,
                             ),
+                            items: addressTyp.map((value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                addressType = value!;
+                              });
+                              print(addressType);
+                            },
                           ),
-                          SizedBox(
-                            height: 15,
-                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
 
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.45,
-                                child:
-                                TextFormField(
-                                  controller: houseController,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.45,
+                              child:
+                              TextFormField(
+                                controller: houseController,
+                                maxLines: 1,
+                                decoration: InputDecoration(
+                                  hintText:'house No',
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide:
+                                    BorderSide(color: Colors.black, width: 1),
+                                  ),
+                                  hintStyle: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: kHintColor,
+                                      fontSize: 16),
+                                ),
+                              ),
+
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.45,
+                              child:
+                              TextFormField(
+                                controller: pincodeController,
+                                maxLines: 1,
+                                decoration: InputDecoration(
+                                  hintText:'Enter your pincode or zipcode',
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide:
+                                    BorderSide(color: Colors.black, width: 1),
+                                  ),
+                                  hintStyle: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: kHintColor,
+                                      fontSize: 16),
+                                ),
+                              ),
+
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.45,
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                border: Border.all(color: kHintColor, width: 1),
+                              ),
+                              child: DropdownButton<CityList>(
+                                hint: Text(
+                                  selectCity,
+                                  overflow: TextOverflow.clip,
                                   maxLines: 1,
-                                  decoration: InputDecoration(
-                                    hintText:'house No',
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      borderSide:
-                                      BorderSide(color: Colors.black, width: 1),
-                                    ),
-                                    hintStyle: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        color: kHintColor,
-                                        fontSize: 16),
-                                  ),
                                 ),
-
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.45,
-                                child:
-                                TextFormField(
-                                  controller: pincodeController,
-                                  maxLines: 1,
-                                  decoration: InputDecoration(
-                                    hintText:'Enter your pincode or zipcode',
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      borderSide:
-                                      BorderSide(color: Colors.black, width: 1),
-                                    ),
-                                    hintStyle: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        color: kHintColor,
-                                        fontSize: 16),
-                                  ),
+                                isExpanded: true,
+                                underline: Container(
+                                  height: 0.0,
+                                  color: scaffoldBgColor,
                                 ),
-
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.45,
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  border: Border.all(color: kHintColor, width: 1),
-                                ),
-                                child: DropdownButton<CityList>(
-                                  hint: Text(
-                                    selectCity,
-                                    overflow: TextOverflow.clip,
-                                    maxLines: 1,
-                                  ),
-                                  isExpanded: true,
-                                  underline: Container(
-                                    height: 0.0,
-                                    color: scaffoldBgColor,
-                                  ),
-                                  items: cityListt.map((value) {
-                                    return DropdownMenuItem<CityList>(
-                                      value: value,
-                                      child: Text(value.city_name,
-                                          overflow: TextOverflow.clip),
-                                    );
-                                  }).toList(),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectCity = value!.city_name;
-                                      selectCityId = value.city_id;
-                                      areaList.clear();
-                                      selectArea = 'Select near by area';
-                                      selectAreaId = '';
-                                    });
-                                    getAreaList(value!.city_id);
-                                    print(value);
-                                  },
-                                ),
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.45,
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-
-                                child:
-
-                                TextFormField(
-                                  controller: stateController,
-                                  maxLines: 1,
-                                  decoration: InputDecoration(
-                                    hintText:'state',
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      borderSide:
-                                      BorderSide(color: Colors.black, width: 1),
-                                    ),
-                                    hintStyle: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        color: kHintColor,
-                                        fontSize: 16),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
-                            child:
-                            TextFormField(
-                              controller: streetController,
-                              maxLines: 5,
-                              decoration: InputDecoration(
-                                hintText:'Address Line 1',
-                                contentPadding:
-                                EdgeInsets.only(left: 20, top: 20, bottom: 0),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  borderSide:
-                                  BorderSide(color: Colors.black, width: 1),
-                                ),
-                                hintStyle: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    color: kHintColor,
-                                    fontSize: 16),
+                                items: cityListt.map((value) {
+                                  return DropdownMenuItem<CityList>(
+                                    value: value,
+                                    child: Text(value.city_name,
+                                        overflow: TextOverflow.clip),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectCity = value!.city_name;
+                                    selectCityId = value.city_id;
+                                    areaList.clear();
+                                    selectArea = 'Select near by area';
+                                    selectAreaId = '';
+                                  });
+                                  getAreaList(value!.city_id);
+                                  print(value);
+                                },
                               ),
                             ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.45,
+                              padding: EdgeInsets.symmetric(horizontal: 10),
 
+                              child:
+
+                              TextFormField(
+                                controller: stateController,
+                                maxLines: 1,
+                                decoration: InputDecoration(
+                                  hintText:'state',
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide:
+                                    BorderSide(color: Colors.black, width: 1),
+                                  ),
+                                  hintStyle: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: kHintColor,
+                                      fontSize: 16),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10,vertical: 20),
+                          child:
+                          TextFormField(
+                            controller: streetController,
+                            maxLines: 5,
+                            decoration: InputDecoration(
+                              hintText:'Address Line 1',
+                              contentPadding:
+                              EdgeInsets.only(left: 20, top: 20, bottom: 20),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide:
+                                BorderSide(color: Colors.black, width: 1),
+                              ),
+                              hintStyle: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: kHintColor,
+                                  fontSize: 16),
+                            ),
                           ),
-                        ],
-                      ),
+
+                        ),
+                      ],
                     ),
                     Positioned.fill(
                         child: Visibility(
@@ -419,10 +359,9 @@ class EditAddresspageState extends State<EditAddresspage> {
                             onTap: () {},
                             child: Container(
                               width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height - 100,
+                              height: MediaQuery.of(context).size.height,
                               alignment: Alignment.center,
                               child: SizedBox(
-                                height: 120,
                                 width: MediaQuery.of(context).size.width * 0.9,
                                 child: Material(
                                   elevation: 5,
@@ -494,7 +433,7 @@ class EditAddresspageState extends State<EditAddresspage> {
                           borderRadius: BorderRadius.all(Radius.circular(50)),
                           color: kMainColor),
                       child: Text(
-                        'Update Address',
+                        'Save Address',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.w300,
@@ -505,12 +444,145 @@ class EditAddresspageState extends State<EditAddresspage> {
                   ),
                 ),
               ),
+
             ],
           ),
         ),
       ),
     );
   }
+
+  void getCityList() async {
+    var url = cityList;
+    Uri myUri = Uri.parse(url);
+
+    http.post(myUri, body: {
+      'vendor_id': '${widget.vendorid}',
+    }).then((value) {
+      if (value.statusCode == 200) {
+        var jsonData = jsonDecode(value.body);
+        if (jsonData['status'] == "1") {
+          var tagObjsJson = jsonDecode(value.body)['data'] as List;
+          List<CityList> tagObjs =
+          tagObjsJson.map((tagJson) => CityList.fromJson(tagJson)).toList();
+          if (tagObjs != null && tagObjs.length > 0) {
+            setState(() {
+              cityListt.clear();
+              cityListt = tagObjs;
+              areaList.clear();
+              selectAreaId = '';
+              selectArea = 'Select near by area';
+            });
+            List<CityList> tagObjs1 = tagObjs
+                .where((element) =>
+            element.city_id.toString() == '${widget.city_id}')
+                .toList();
+            if (tagObjs1 != null && tagObjs1.length > 0) {
+              setState(() {
+                selectCity = tagObjs1[0].city_name;
+                selectCityId = tagObjs1[0].city_id;
+                streetController.text =
+                    streetController.text.replaceAll('${selectCity},', '');
+                streetController.text =
+                    streetController.text.replaceAll('${selectCity}', '');
+              });
+              if (selectCityId != null &&
+                  selectCityId != '' &&
+                  selectCityId != null) {
+                getAreaList1(selectCityId);
+              }
+            }
+          } else {
+            setState(() {
+              cityListt.clear();
+              areaList.clear();
+              selectCity = 'Select city';
+              selectCityId = '';
+              selectAreaId = '';
+              selectArea = 'Select near by area';
+            });
+          }
+        }
+      }
+    });
+  }
+
+  void getAreaList1(dynamic city_id) async {
+    var url = areaLists;
+    Uri myUri = Uri.parse(url);
+    http.post(myUri, body: {
+      'vendor_id': '${widget.vendorid}',
+      'city_id': '$city_id',
+    }).then((value) {
+      if (value.statusCode == 200) {
+        var jsonData = jsonDecode(value.body);
+        if (jsonData['status'] == "1") {
+          var tagObjsJson = jsonDecode(value.body)['data'] as List;
+          List<AreaList> tagObjs =
+          tagObjsJson.map((tagJson) => AreaList.fromJson(tagJson)).toList();
+          if (tagObjs != null && tagObjs.length > 0) {
+            setState(() {
+              areaList.clear();
+              areaList = tagObjs;
+            });
+            List<AreaList> tagObjs1 = tagObjs
+                .where((element) =>
+            element.area_id.toString() == '${widget.area_id}')
+                .toList();
+            if (tagObjs1 != null && tagObjs1.length > 0) {
+              setState(() {
+                selectAreaId = tagObjs1[0].area_id;
+                selectArea = tagObjs1[0].area_name;
+                streetController.text =
+                    streetController.text.replaceAll(',${selectArea},', '');
+                streetController.text =
+                    streetController.text.replaceAll('${selectArea},', '');
+                streetController.text =
+                    streetController.text.replaceAll('${selectArea}', '');
+              });
+            }
+          } else {
+            setState(() {
+              areaList.clear();
+              selectAreaId = '';
+              selectArea = 'Select near by area';
+            });
+          }
+        }
+      }
+    });
+  }
+
+  void getAreaList(dynamic city_id) async {
+    var url = areaLists;
+    Uri myUri = Uri.parse(url);
+    http.post(myUri, body: {
+      'vendor_id': '${widget.vendorid}',
+      'city_id': '$city_id',
+    }).then((value) {
+      if (value.statusCode == 200) {
+        var jsonData = jsonDecode(value.body);
+        if (jsonData['status'] == "1") {
+          var tagObjsJson = jsonDecode(value.body)['data'] as List;
+          List<AreaList> tagObjs =
+          tagObjsJson.map((tagJson) => AreaList.fromJson(tagJson)).toList();
+          if (tagObjs != null && tagObjs.length > 0) {
+            setState(() {
+              areaList.clear();
+              areaList = tagObjs;
+            });
+          } else {
+            setState(() {
+              areaList.clear();
+              selectAreaId = '';
+              selectArea = 'Select near by area';
+            });
+          }
+        }
+      }
+    });
+  }
+
 
   void addAddres(dynamic area_id, dynamic city_id, house_no, street, pincode,
       state, BuildContext context) async {
@@ -528,8 +600,8 @@ class EditAddresspageState extends State<EditAddresspage> {
       'street': '$street',
       'state': '$state',
       'pin': '$pincode',
-      'lat': '${prefs.getString('lat')}',
-      'lng': '${prefs.getString('lng')}',
+      'lat':lat,
+      'lng': lng,
       'address_type': '${addressType}',
     }).then((value) {
       if (value.statusCode == 200) {
@@ -564,4 +636,25 @@ class EditAddresspageState extends State<EditAddresspage> {
       print(e);
     });
   }
+void getMapLoc() async {
+  _getCameraMoveLocation(LatLng(lat, lng));
+}
+
+void _getCameraMoveLocation(LatLng data) async {
+  Timer(Duration(seconds: 1), () async {
+    lat = data.latitude;
+    lng = data.longitude;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("lat", data.latitude.toStringAsFixed(8));
+    prefs.setString("lng", data.longitude.toStringAsFixed(8));
+    GeoData data1 = await Geocoder2.getDataFromCoordinates(
+        latitude: lat,
+        longitude: lng,
+        googleMapApiKey: apiKey);
+    setState(() {
+      currentAddress = data1.address;
+    });
+  });
+}
+
 }

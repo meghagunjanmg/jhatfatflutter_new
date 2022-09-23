@@ -102,6 +102,13 @@ class SingleProductState2 extends State<SingleProductPage_2> {
             ),
             actions: <Widget>[
               TextButton(
+                child: const Text('Clear'),
+                onPressed: () {
+                  ClearCart();
+                  Navigator.of(context).pop(true);
+                },
+              ),
+              TextButton(
                 child: const Text('OK'),
                 onPressed: () {
                   Navigator.of(context).pop(true);
@@ -113,6 +120,15 @@ class SingleProductState2 extends State<SingleProductPage_2> {
     );
   }
 
+
+  void ClearCart() {
+    DatabaseHelper db = DatabaseHelper.instance;
+    db.deleteAllRestProdcut();
+    getCartItem2();
+    setState(() {
+      restrocart = 0;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -135,15 +151,12 @@ class SingleProductState2 extends State<SingleProductPage_2> {
                         AssetImage('images/icons/ic_cart blk.png'),
                       ),
                       onPressed: () {
-                        if (isCartCount) {
                           Navigator.pushNamed(context, PageRoutes.viewCart)
                               .then((value) {
                             setList(widget.productVarintList);
                             getCartCount();
                           });
-                        } else {
-                          Toast.show('No Value in the cart!', duration: Toast.lengthShort, gravity:  Toast.bottom);
-                        }
+
                       }),
                   Positioned(
                       right: 5,
@@ -616,7 +629,15 @@ class SingleProductState2 extends State<SingleProductPage_2> {
 
       };
       if (value == 0) {
-        db.insert(vae);
+        db.getCountVendor()
+            .then((value) {
+          if (value != null && value < 3) {
+            db.insert(vae);
+          }
+          else {
+            showMyDialog2(context);
+          }
+        });
       } else {
         if (itemCount == 0) {
           db.delete(int.parse('${varient_id}'));
@@ -654,4 +675,24 @@ class ProductDescription extends StatelessWidget {
       ),
     );
   }
+}
+showMyDialog2(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          content: const Text(
+            'Maximum Vendor Limit Reached',
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+          ],
+        );
+      }
+  );
 }

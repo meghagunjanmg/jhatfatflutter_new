@@ -40,10 +40,10 @@ class _ItemsPageState extends State<ItemsPage>
 
   List<Tab> tabs = <Tab>[];
 
-   dynamic pageTitle;
-   dynamic vendor_id;
-   dynamic category_name;
-   dynamic category_id;
+  dynamic pageTitle;
+  dynamic vendor_id;
+  dynamic category_name;
+  dynamic category_id;
 
   dynamic currency = '';
 
@@ -106,7 +106,8 @@ class _ItemsPageState extends State<ItemsPage>
   bool isFetchList = false;
   bool isSearchOpen = false;
 
-  _ItemsPageState(this.pageTitle,this.vendor_id, this.category_name, this.category_id);
+  _ItemsPageState(this.pageTitle, this.vendor_id, this.category_name,
+      this.category_id);
 
 
   @override
@@ -121,15 +122,23 @@ class _ItemsPageState extends State<ItemsPage>
   void dispose() {
     super.dispose();
   }
+
   showMyDialog(BuildContext context) {
     showDialog(
         context: context,
-        builder: (BuildContext context){
+        builder: (BuildContext context) {
           return new AlertDialog(
             content: Text(
               'Please order Grocery and Food in seperate orders',
             ),
             actions: <Widget>[
+              TextButton(
+                child: const Text('Clear'),
+                onPressed: () {
+                  ClearCart();
+                  Navigator.of(context).pop(true);
+                },
+              ),
               TextButton(
                 child: const Text('OK'),
                 onPressed: () {
@@ -140,6 +149,15 @@ class _ItemsPageState extends State<ItemsPage>
           );
         }
     );
+  }
+
+  void ClearCart() {
+    DatabaseHelper db = DatabaseHelper.instance;
+    db.deleteAllRestProdcut();
+    getCartItem2();
+    setState(() {
+      restrocart = 0;
+    });
   }
 
   void getCartCount() {
@@ -164,9 +182,9 @@ class _ItemsPageState extends State<ItemsPage>
     db.getResturantOrderList().then((value) {
       List<RestaurantCartItem> tagObjs =
       value.map((tagJson) => RestaurantCartItem.fromJson(tagJson)).toList();
-      if(tagObjs.isNotEmpty) {
+      if (tagObjs.isNotEmpty) {
         setState(() {
-          restrocart=1;
+          restrocart = 1;
         });
       }
     });
@@ -231,7 +249,8 @@ class _ItemsPageState extends State<ItemsPage>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(pageTitle,
-                            style: Theme.of(context)
+                            style: Theme
+                                .of(context)
                                 .textTheme
                                 .bodyText1!
                                 .copyWith(color: kMainTextColor)),
@@ -247,12 +266,22 @@ class _ItemsPageState extends State<ItemsPage>
                             ),
                             SizedBox(width: 10.0),
                             Text(
-                                '${double.parse('${widget.distance}').toStringAsFixed(2)} km ',
-                                style: Theme.of(context).textTheme.overline),
+                                '${double.parse('${widget.distance}')
+                                    .toStringAsFixed(2)} km ',
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .overline),
                             Text('|',
-                                style: Theme.of(context).textTheme.overline),
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .overline),
                             Text(category_name,
-                                style: Theme.of(context).textTheme.overline),
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .overline),
                             Spacer(),
                           ],
                         ),
@@ -282,17 +311,12 @@ class _ItemsPageState extends State<ItemsPage>
                                 AssetImage('images/icons/ic_cart blk.png'),
                               ),
                               onPressed: () {
-                                if (isCartCount) {
-                                  Navigator.pushNamed(
-                                      context, PageRoutes.viewCart)
-                                      .then((value) {
-                                    setList(productVarientList);
-                                    getCartCount();
-                                  });
-                                } else {
-                                  // Toast.show('No Value in the cart!', context,
-                                  //     duration: Toast.LENGTH_SHORT);
-                                }
+                                Navigator.pushNamed(
+                                    context, PageRoutes.viewCart)
+                                    .then((value) {
+                                  setList(productVarientList);
+                                  getCartCount();
+                                });
                               }),
                           Positioned(
                               right: 5,
@@ -344,7 +368,10 @@ class _ItemsPageState extends State<ItemsPage>
                 Visibility(
                   visible: isSearchOpen,
                   child: Container(
-                    width: MediaQuery.of(context).size.width,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width,
                     height: 72,
                     padding: EdgeInsets.only(top: 5.0),
                     color: kWhiteColor,
@@ -354,7 +381,10 @@ class _ItemsPageState extends State<ItemsPage>
                           height: 15,
                         ),
                         Container(
-                          width: MediaQuery.of(context).size.width,
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width,
                           height: 52,
                           padding: EdgeInsets.only(left: 5),
                           decoration: BoxDecoration(
@@ -386,10 +416,11 @@ class _ItemsPageState extends State<ItemsPage>
                             onChanged: (value) {
                               setState(() {
                                 productVarientList = productVarientListSearch
-                                    .where((element) => element.product_name
-                                    .toString()
-                                    .toLowerCase()
-                                    .contains(value.toLowerCase()))
+                                    .where((element) =>
+                                    element.product_name
+                                        .toString()
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()))
                                     .toList();
                               });
                             },
@@ -411,10 +442,19 @@ class _ItemsPageState extends State<ItemsPage>
                   children: <Widget>[
                     Positioned(
                         top: 0.0,
-                        width: MediaQuery.of(context).size.width,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width,
                         height: isCartCount
-                            ? (MediaQuery.of(context).size.height - 190)
-                            : (MediaQuery.of(context).size.height - 130),
+                            ? (MediaQuery
+                            .of(context)
+                            .size
+                            .height - 190)
+                            : (MediaQuery
+                            .of(context)
+                            .size
+                            .height - 130),
                         child: (!isFetchList &&
                             productVarientList != null &&
                             productVarientList.length > 0)
@@ -487,8 +527,14 @@ class _ItemsPageState extends State<ItemsPage>
                                               height: 8.0,
                                             ),
                                             Text(
-                                                '$currency ${(productVarientList[index].data.length > 0) ? productVarientList[index].data[productVarientList[index].selectPos].price : 0}',
-                                                style: Theme.of(context)
+                                                '$currency ${(productVarientList[index]
+                                                    .data.length > 0)
+                                                    ? productVarientList[index]
+                                                    .data[productVarientList[index]
+                                                    .selectPos].price
+                                                    : 0}',
+                                                style: Theme
+                                                    .of(context)
                                                     .textTheme
                                                     .caption),
                                             SizedBox(
@@ -539,7 +585,8 @@ class _ItemsPageState extends State<ItemsPage>
                                               child: Text(
                                                 '${e.quantity} ${e.unit}',
                                                 style:
-                                                Theme.of(context)
+                                                Theme
+                                                    .of(context)
                                                     .textTheme
                                                     .caption,
                                               ),
@@ -564,7 +611,10 @@ class _ItemsPageState extends State<ItemsPage>
                                                 db
                                                     .getVarientCount(
                                                     int.parse(
-                                                        '${productVarientList[index].data[productVarientList[index].selectPos].varient_id}'))
+                                                        '${productVarientList[index]
+                                                            .data[productVarientList[index]
+                                                            .selectPos]
+                                                            .varient_id}'))
                                                     .then((value) {
                                                   print(
                                                       'print t val $value');
@@ -603,7 +653,9 @@ class _ItemsPageState extends State<ItemsPage>
                                             .length >
                                             0 &&
                                         int.parse(
-                                            '${productVarientList[index].data[productVarientList[index].selectPos].stock}') >
+                                            '${productVarientList[index]
+                                                .data[productVarientList[index]
+                                                .selectPos].stock}') >
                                             0)
                                         ? (productVarientList[index]
                                         .add_qnty ==
@@ -613,7 +665,8 @@ class _ItemsPageState extends State<ItemsPage>
                                       child: TextButton(
                                         child: Text(
                                           'Add',
-                                          style: Theme.of(
+                                          style: Theme
+                                              .of(
                                               context)
                                               .textTheme
                                               .caption!
@@ -626,78 +679,82 @@ class _ItemsPageState extends State<ItemsPage>
                                         ),
 
                                         onPressed: () {
+                                          if (restrocart == 1) {
+                                            print("ALREADY");
+                                            showMyDialog(context);
+                                          }
+                                          else {
+                                            setState(() {
+                                              var stock = int.parse(
+                                                  '${productVarientList[index]
+                                                      .data[productVarientList[index]
+                                                      .selectPos].stock}');
+                                              if (stock >
+                                                  productVarientList[
+                                                  index]
+                                                      .add_qnty) {
+                                                productVarientList[
+                                                index]
+                                                    .add_qnty++;
+                                                addOrMinusProduct
+                                                  (
+                                                    productVarientList[
+                                                    index]
+                                                        .is_id,
+                                                    productVarientList[
+                                                    index]
+                                                        .is_pres,
+                                                    productVarientList[
+                                                    index]
+                                                        .isbasket,
 
-    if(restrocart==1){
-    print("ALREADY");
-    showMyDialog(context);
-    }
-    else {
-      setState(() {
-        var stock = int.parse(
-            '${productVarientList[index].data[productVarientList[index]
-                .selectPos].stock}');
-        if (stock >
-            productVarientList[
-            index]
-                .add_qnty) {
-          productVarientList[
-          index]
-              .add_qnty++;
-          addOrMinusProduct
-            (
-              productVarientList[
-              index]
-                  .is_id,
-              productVarientList[
-              index]
-                  .is_pres,
-              productVarientList[
-              index]
-                  .isbasket,
-
-              productVarientList[
-              index]
-                  .product_name,
-              productVarientList[
-              index]
-                  .data[productVarientList[
-              index]
-                  .selectPos]
-                  .unit,
-              double.parse(
-                  '${productVarientList[index].data[productVarientList[index]
-                      .selectPos].price}'),
-              int.parse(
-                  '${productVarientList[index].data[productVarientList[index]
-                      .selectPos].quantity}'),
-              productVarientList[
-              index]
-                  .add_qnty,
-              productVarientList[
-              index]
-                  .data[productVarientList[
-              index]
-                  .selectPos]
-                  .varient_image,
-              productVarientList[
-              index]
-                  .data[productVarientList[
-              index]
-                  .selectPos]
-                  .varient_id,
-            productVarientList[
-            index]
-                .data[0].vendor_id
-          );
-        } else {
-          // Toast.show(
-          //     "No more stock available!",
-          //     context,
-          //     gravity: Toast
-          //         .BOTTOM);
-        }
-      });
-    }
+                                                    productVarientList[
+                                                    index]
+                                                        .product_name,
+                                                    productVarientList[
+                                                    index]
+                                                        .data[productVarientList[
+                                                    index]
+                                                        .selectPos]
+                                                        .unit,
+                                                    double.parse(
+                                                        '${productVarientList[index]
+                                                            .data[productVarientList[index]
+                                                            .selectPos]
+                                                            .price}'),
+                                                    int.parse(
+                                                        '${productVarientList[index]
+                                                            .data[productVarientList[index]
+                                                            .selectPos]
+                                                            .quantity}'),
+                                                    productVarientList[
+                                                    index]
+                                                        .add_qnty,
+                                                    productVarientList[
+                                                    index]
+                                                        .data[productVarientList[
+                                                    index]
+                                                        .selectPos]
+                                                        .varient_image,
+                                                    productVarientList[
+                                                    index]
+                                                        .data[productVarientList[
+                                                    index]
+                                                        .selectPos]
+                                                        .varient_id,
+                                                    productVarientList[
+                                                    index]
+                                                        .data[0].vendor_id
+                                                );
+                                              } else {
+                                                // Toast.show(
+                                                //     "No more stock available!",
+                                                //     context,
+                                                //     gravity: Toast
+                                                //         .BOTTOM);
+                                              }
+                                            });
+                                          }
                                         },
                                       ),
                                     )
@@ -742,9 +799,14 @@ class _ItemsPageState extends State<ItemsPage>
                                                       .selectPos]
                                                       .unit,
                                                   double.parse(
-                                                      '${productVarientList[index].data[productVarientList[index].selectPos].price}'),
+                                                      '${productVarientList[index]
+                                                          .data[productVarientList[index]
+                                                          .selectPos].price}'),
                                                   int.parse(
-                                                      '${productVarientList[index].data[productVarientList[index].selectPos].quantity}'),
+                                                      '${productVarientList[index]
+                                                          .data[productVarientList[index]
+                                                          .selectPos]
+                                                          .quantity}'),
                                                   productVarientList[
                                                   index]
                                                       .add_qnty,
@@ -760,9 +822,9 @@ class _ItemsPageState extends State<ItemsPage>
                                                   index]
                                                       .selectPos]
                                                       .varient_id,
-                                                productVarientList[
-                                                index]
-                                                    .data[0].vendor_id
+                                                  productVarientList[
+                                                  index]
+                                                      .data[0].vendor_id
                                               );
                                             },
                                             child: Icon(
@@ -778,7 +840,8 @@ class _ItemsPageState extends State<ItemsPage>
                                               index]
                                                   .add_qnty
                                                   .toString(),
-                                              style: Theme.of(
+                                              style: Theme
+                                                  .of(
                                                   context)
                                                   .textTheme
                                                   .caption),
@@ -788,7 +851,9 @@ class _ItemsPageState extends State<ItemsPage>
                                               setState(() {
                                                 var stock =
                                                 int.parse(
-                                                    '${productVarientList[index].data[productVarientList[index].selectPos].stock}');
+                                                    '${productVarientList[index]
+                                                        .data[productVarientList[index]
+                                                        .selectPos].stock}');
                                                 if (stock >
                                                     productVarientList[
                                                     index]
@@ -815,9 +880,15 @@ class _ItemsPageState extends State<ItemsPage>
                                                           .selectPos]
                                                           .unit,
                                                       double.parse(
-                                                          '${productVarientList[index].data[productVarientList[index].selectPos].price}'),
+                                                          '${productVarientList[index]
+                                                              .data[productVarientList[index]
+                                                              .selectPos]
+                                                              .price}'),
                                                       int.parse(
-                                                          '${productVarientList[index].data[productVarientList[index].selectPos].quantity}'),
+                                                          '${productVarientList[index]
+                                                              .data[productVarientList[index]
+                                                              .selectPos]
+                                                              .quantity}'),
                                                       productVarientList[
                                                       index]
                                                           .add_qnty,
@@ -829,11 +900,12 @@ class _ItemsPageState extends State<ItemsPage>
                                                       productVarientList[
                                                       index]
                                                           .data[
-                                                      productVarientList[index].selectPos]
+                                                      productVarientList[index]
+                                                          .selectPos]
                                                           .varient_id,
-                                                    productVarientList[
-                                                    index]
-                                                        .data[0].vendor_id);
+                                                      productVarientList[
+                                                      index]
+                                                          .data[0].vendor_id);
                                                 } else {
                                                   // Toast.show(
                                                   //     "No more stock available!",
@@ -855,7 +927,8 @@ class _ItemsPageState extends State<ItemsPage>
                                         : Container(
                                       child: Text(
                                         'Out off stock',
-                                        style: Theme.of(context)
+                                        style: Theme
+                                            .of(context)
                                             .textTheme
                                             .caption!
                                             .copyWith(
@@ -877,8 +950,14 @@ class _ItemsPageState extends State<ItemsPage>
                           },
                         )
                             : Container(
-                          height: MediaQuery.of(context).size.height / 2,
-                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery
+                              .of(context)
+                              .size
+                              .height / 2,
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width,
                           alignment: Alignment.center,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -911,7 +990,10 @@ class _ItemsPageState extends State<ItemsPage>
                     ),
                     Positioned(
                       bottom: 0.0,
-                      width: MediaQuery.of(context).size.width,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width,
                       child: Visibility(
                         visible: isCartCount,
                         child: Align(
@@ -939,7 +1021,8 @@ class _ItemsPageState extends State<ItemsPage>
                                   onPressed: () => hitViewCart(context),
                                   child: Text(
                                     'View Cart',
-                                    style: Theme.of(context)
+                                    style: Theme
+                                        .of(context)
                                         .textTheme
                                         .caption!
                                         .copyWith(
@@ -963,8 +1046,9 @@ class _ItemsPageState extends State<ItemsPage>
     );
   }
 
-  void addOrMinusProduct(is_id,is_pres,isBasket,product_name, unit, price, quantity, itemCount,
-      varient_image, varient_id,vendor) async {
+  void addOrMinusProduct(is_id, is_pres, isBasket, product_name, unit, price,
+      quantity, itemCount,
+      varient_image, varient_id, vendor) async {
     DatabaseHelper db = DatabaseHelper.instance;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? storename = prefs.getString('store_name');
@@ -986,7 +1070,16 @@ class _ItemsPageState extends State<ItemsPage>
         DatabaseHelper.varientId: varient_id
       };
       if (value == 0) {
-        db.insert(vae);
+        db.getCountVendor()
+            .then((value) {
+          if (value != null && value < 3) {
+            db.insert(vae);
+          }
+          else {
+            showMyDialog2(context);
+          }
+        }
+        );
       } else {
         if (itemCount == 0) {
           db.delete(int.parse('${varient_id}'));
@@ -1002,6 +1095,7 @@ class _ItemsPageState extends State<ItemsPage>
       print(e);
     });
   }
+
 
   void hitServices() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -1138,6 +1232,26 @@ class _ItemsPageState extends State<ItemsPage>
     }
     productVarientListSearch = List.from(productVarientList);
   }
+}
+showMyDialog2(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          content: const Text(
+            'Maximum Vendor Limit Reached',
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+          ],
+        );
+      }
+  );
 }
 
 // class BottomSheetWidget extends StatefulWidget {

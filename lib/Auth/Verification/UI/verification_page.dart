@@ -221,7 +221,6 @@ class _OtpVerifyState extends State<OtpVerify> {
                     setState(() {
                       showDialogBox = true;
                     });
-                    hitService(verificaitonPin, context);
                   }
                 },
                 child: Container(

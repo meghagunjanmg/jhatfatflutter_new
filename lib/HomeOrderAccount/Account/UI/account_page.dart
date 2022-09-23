@@ -90,7 +90,7 @@ class _AccountState extends State<Account> {
         ),
         BuildListTile(
             image: 'images/account/ic_notification.png',
-            text: 'Offers',
+            text: 'Notification',
             onTap: () async {
               Navigator.pushNamed(context, PageRoutes.offers);
             }

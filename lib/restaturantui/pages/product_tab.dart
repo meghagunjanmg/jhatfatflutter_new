@@ -911,11 +911,20 @@ class _ProductTabDataState extends State<ProductTabData> {
     showDialog(
         context: context,
         builder: (BuildContext context){
-          return new AlertDialog(
-            content: Text(
+          return AlertDialog(
+            content: const Text(
               'Please order Grocery and Food in seperate orders',
             ),
             actions: <Widget>[
+              TextButton(
+                child: const Text('Clear'),
+                onPressed: () {
+                  ClearCart();
+
+                  Navigator.of(context).pop(true);
+                },
+              ),
+
               TextButton(
                 child: const Text('OK'),
                 onPressed: () {
@@ -926,6 +935,16 @@ class _ProductTabDataState extends State<ProductTabData> {
           );
         }
     );
+  }
+
+  void ClearCart() {
+    DatabaseHelper db = DatabaseHelper.instance;
+    db.deleteAll();
+    getCartItem();
+
+    setState(() {
+      grocercart = 0;
+    });
   }
 
 }

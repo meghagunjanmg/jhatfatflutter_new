@@ -135,14 +135,10 @@ class ResturantPageState extends State<ResturantPageList> {
                         AssetImage('images/icons/ic_cart blk.png'),
                       ),
                       onPressed: () {
-                        if (isCartCount) {
                           Navigator.pushNamed(context, PageRoutes.restviewCart)
                               .then((value) {
                             // getCartCount();
                           });
-                        } else {
-                          Toast.show('No Value in the cart!', duration: Toast.lengthShort, gravity:  Toast.bottom);
-                        }
                       }),
                   Positioned(
                       right: 5,
@@ -422,14 +418,7 @@ class ResturantPageState extends State<ResturantPageList> {
     if (isCartCount && prefs.getString("res_vendor_id") != null &&
         prefs.getString("res_vendor_id") != "" &&
         prefs.getString("res_vendor_id") != '${item.vendor_id}') {
-      //showAlertDialog(context, item, widget.currencySymbol);
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  Restaurant_Sub(item, widget.currencySymbol))).then((value){
-        getCartCount();
-      });
+      showMyDialog(context, item, widget.currencySymbol);
 
     } else {
       prefs.setString("res_vendor_id", '${item.vendor_id}');
@@ -444,71 +433,31 @@ class ResturantPageState extends State<ResturantPageList> {
     }
   }
 
-  showAlertDialog(BuildContext context, NearStores item, currencySymbol) {
-    Widget clear = GestureDetector(
-      onTap: () {
-        Navigator.of(context, rootNavigator: true).pop('dialog');
-        deleteAllRestProduct(context, item, currencySymbol);
-      },
-      child: Card(
-        elevation: 2,
-        clipBehavior: Clip.hardEdge,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-        child: Container(
-          padding: EdgeInsets.only(left:20, right:20, top: 10, bottom: 10),
-          decoration: BoxDecoration(
-              color: red_color,
-              borderRadius: BorderRadius.all(Radius.circular(20))
-          ),
-          child: Text(
-            'Clear', style: TextStyle(fontSize: 13, color: kWhiteColor),),
-        ),
-      ),
-    );
-
-    Widget no = GestureDetector(
-      onTap: () {
-        Navigator.of(context, rootNavigator: true).pop('dialog');
-      },
-      child: Card(
-        elevation: 2,
-        clipBehavior: Clip.hardEdge,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-        ),
-        child: Container(
-          padding: EdgeInsets.only(left:20, right:20, top: 10, bottom: 10),
-          decoration: BoxDecoration(
-              color: kGreenColor,
-              borderRadius: BorderRadius.all(Radius.circular(20))
-          ),
-          child: Text(
-            'No', style: TextStyle(fontSize: 13, color: kWhiteColor),),
-        ),
-      ),
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Inconvenience Notice"),
-      content: Text(
-          "Order from different store in single order is not allowed. Sorry for inconvenience"),
-      actions: [
-        clear,
-        no
-      ],
-    );
-
-
-    // show the dialog
+  showMyDialog(BuildContext context,NearStores item, currencySymbol) {
     showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return alert;
-      },
+        context: context,
+        builder: (BuildContext context){
+          return new AlertDialog(
+            content: Text(
+              'Kindly order from one resturant',
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Clear'),
+                onPressed: () {
+                  deleteAllRestProduct(context,item, currencySymbol);
+                  Navigator.of(context).pop(true);
+                },
+              ),
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+              ),
+            ],
+          );
+        }
     );
   }
 

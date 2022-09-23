@@ -171,14 +171,8 @@ class _RestaurantState extends State<Restaurant_Sub> {
                                 color: innerBoxIsScrolled?kMainTextColor:kWhiteColor,
                               ),
                               onPressed: () {
-                                if (isCartCount) {
-                                  Navigator.pushNamed(context, PageRoutes.restviewCart)
-                                      .then((value) {
-                                    getCartCount_new();
-                                  });
-                                } else {
-                                  Toast.show('No Value in the cart!', duration: Toast.lengthShort, gravity:  Toast.bottom);
-                                }
+                                  Navigator.pushNamed(context, PageRoutes.viewCart);
+
 //                        getCurrency();
                               }),
                           Positioned(
