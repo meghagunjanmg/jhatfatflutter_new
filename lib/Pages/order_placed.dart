@@ -43,7 +43,7 @@ class OrderPlaced extends StatelessWidget {
       onWillPop: () async {
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
-              return HomeOrderAccount();
+              return HomeOrderAccount(0);
             }), (Route<dynamic> route) => true);
         return true; //
       },
@@ -86,7 +86,7 @@ class OrderPlaced extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushAndRemoveUntil(context,
                         MaterialPageRoute(builder: (context) {
-                          return HomeOrderAccount();
+                          return HomeOrderAccount(0);
                         }), (Route<dynamic> route) => false);                  },
                   child: Text("Go To Home")
               ),

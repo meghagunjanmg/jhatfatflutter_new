@@ -411,7 +411,7 @@ class DatabaseHelper {
         .update(resturantOrder, row, where: '$varientId = ?', whereArgs: [vat]);
   }
 
-  Future<int> delete(int id) async {
+  Future<int> delete(dynamic id) async {
     Database db = await instance.database;
     return await db.delete(table, where: '$varientId = ?', whereArgs: [id]);
   }

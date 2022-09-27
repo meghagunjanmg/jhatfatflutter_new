@@ -75,8 +75,19 @@ class SetLocationState extends State<SetLocation> {
   @override
   void initState() {
     super.initState();
-    _getLocation();
+    getdata();
+
+   /// _getLocation();
   }
+
+  Future<void> getdata() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    lat = double.parse(pref.getString("lat")!);
+    lng = double.parse(pref.getString("lng")!);
+    _goToTheLake(lat, lng);
+
+  }
+
 
   @override
   void dispose() {

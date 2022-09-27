@@ -4,20 +4,20 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="16"
-6-->/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c61/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_android-6.0.17/android/src/main/AndroidManifest.xml
+6-->/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c61/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_android-6.0.19/android/src/main/AndroidManifest.xml
 7        android:targetSdkVersion="16" />
-7-->/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c61/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_android-6.0.17/android/src/main/AndroidManifest.xml
+7-->/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c61/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_android-6.0.19/android/src/main/AndroidManifest.xml
 8
 9    <application>
-9-->/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c61/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_android-6.0.17/android/src/main/AndroidManifest.xml:3:3-7:17
+9-->/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c61/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_android-6.0.19/android/src/main/AndroidManifest.xml:3:3-7:17
 10        <activity
-10-->/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c61/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_android-6.0.17/android/src/main/AndroidManifest.xml:4:5-6:33
+10-->/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c61/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_android-6.0.19/android/src/main/AndroidManifest.xml:4:5-6:33
 11            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
-11-->/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c61/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_android-6.0.17/android/src/main/AndroidManifest.xml:4:15-76
+11-->/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c61/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_android-6.0.19/android/src/main/AndroidManifest.xml:4:15-76
 12            android:exported="false"
-12-->/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c61/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_android-6.0.17/android/src/main/AndroidManifest.xml:6:7-31
+12-->/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c61/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_android-6.0.19/android/src/main/AndroidManifest.xml:6:7-31
 13            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
-13-->/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c61/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_android-6.0.17/android/src/main/AndroidManifest.xml:5:7-65
+13-->/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c61/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_android-6.0.19/android/src/main/AndroidManifest.xml:5:7-65
 14    </application>
 15
 16</manifest>

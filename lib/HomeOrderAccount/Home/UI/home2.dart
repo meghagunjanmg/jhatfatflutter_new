@@ -35,6 +35,7 @@ import 'package:jhatfat/parcel/fromtoaddress.dart';
 import 'package:jhatfat/parcel/parcalstorepage.dart';
 import 'package:jhatfat/pharmacy/pharmastore.dart';
 import 'package:jhatfat/restaturantui/ui/resturanthome.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 import '../../../Themes/constantfile.dart';
 import '../../../bean/adminsetting.dart';
@@ -61,6 +62,8 @@ class _HomeState extends State<Home> {
   String? cityName = 'NO LOCATION SELECTED';
   String? currency = '';
   late List<NearStores> rest_nearStores = [];
+  String ClosedImage = '';
+  List<BannerDetails> ClosedBannerImage = [];
 
   String pickImage = '';
   String subsImage = '';
@@ -153,24 +156,76 @@ class _HomeState extends State<Home> {
   final loc.Location location = loc.Location();
   StreamSubscription<loc.LocationData>? _locationSubscription;
 
-  _requestPermission() async {
-    var status = await Permission.location.request();
-    if (status.isGranted) {
-      print('done');
-    } else if (status.isDenied) {
-      _requestPermission();
-    } else if (status.isPermanentlyDenied) {
-      openAppSettings();
-    }
-  }
+  static String id="";
+
 
   @override
   void initState() {
     super.initState();
-    calladminsetting();
-    Topbanner();
+    getData();
+
   }
 
+  Future<void> ClosedBanner() async {
+    var url2 = closed_banner;
+    Uri myUri2 = Uri.parse(url2);
+    var response = await http.get(myUri2);
+    try {
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body);
+        if (jsonData['status'] == "1") {
+          var tagObjsJson = jsonDecode(response.body)['data'] as List;
+          List<BannerDetails> tagObjs = tagObjsJson
+              .map((tagJson) => BannerDetails.fromJson(tagJson))
+              .toList();
+          setState(() {
+            ClosedBannerImage.clear();
+            ClosedBannerImage = tagObjs;
+            ClosedImage = imageBaseUrl + tagObjs[0].bannerImage;
+          });
+        }
+      }
+    } on Exception catch (_) {
+
+    }
+  }
+
+  void getCartCount() {
+    DatabaseHelper db = DatabaseHelper.instance;
+    db.queryRowBothCount().then((value) {
+      setState(() {
+        if (value != null && value > 0) {
+          cartCount = value;
+          isCartCount = true;
+        } else {
+          cartCount = 0;
+          isCartCount = false;
+        }
+      });
+    });
+  }
+
+  void getCurrency() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    var currencyUrl = currencyuri;
+    var client = http.Client();
+    Uri myUri = Uri.parse(currencyUrl);
+
+    client.get(myUri).then((value) {
+      var jsonData = jsonDecode(value.body);
+      if (value.statusCode == 200 && jsonData['status'] == "1") {
+        preferences.setString(
+            'curency', '${jsonData['data'][0]['currency_sign']}');
+
+        setState(() {
+          currency = '${jsonData['data'][0]['currency_sign']}';
+        });
+      }
+    }).catchError((e) {});
+  }
+  void callThisMethod(bool isVisible) {
+   getData();
+  }
   void _getLocation(context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -213,28 +268,17 @@ class _HomeState extends State<Home> {
               .elementAt(0)
               .locality
               .toString()) + " )".toUpperCase();
+
+          prefs.setString("addr", cityName.toString());
         });
 
-        // GeoData data = await Geocoder2.getDataFromCoordinates(
-        //     latitude: lats,
-        //     longitude: lngs,
-        //     googleMapApiKey: apiKey);
-        //
-        // if (data.city != null && data.city.isNotEmpty) {
-        //   setState(() {
-        //     cityName = data.city.toUpperCase();
-        //   });
-        // } else if (data.state != null &&
-        //     data.state.isNotEmpty) {
-        //   setState(() {
-        //     cityName = data.state.toUpperCase();
-        //   });
-
-
+        calladminsetting();
+        Topbanner();
         hitService(lat.toString(), lng.toString());
         hitBannerUrl();
         pickbanner();
         hitRestaurantService();
+
       } else {
         await Geolocator.openLocationSettings().then((value) {
           if (value) {
@@ -267,47 +311,31 @@ class _HomeState extends State<Home> {
     }
   }
 
-  void getCartCount() {
-    DatabaseHelper db = DatabaseHelper.instance;
-    db.queryRowBothCount().then((value) {
-      setState(() {
-        if (value != null && value > 0) {
-          cartCount = value;
-          isCartCount = true;
-        } else {
-          cartCount = 0;
-          isCartCount = false;
-        }
-      });
-    });
-  }
-
-  void getCurrency() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    var currencyUrl = currencyuri;
-    var client = http.Client();
-    Uri myUri = Uri.parse(currencyUrl);
-
-    client.get(myUri).then((value) {
-      var jsonData = jsonDecode(value.body);
-      if (value.statusCode == 200 && jsonData['status'] == "1") {
-        preferences.setString(
-            'curency', '${jsonData['data'][0]['currency_sign']}');
-
-        setState(() {
-          currency = '${jsonData['data'][0]['currency_sign']}';
-        });
-      }
-    }).catchError((e) {});
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return
+      VisibilityDetector(
+        key: Key(_HomeState.id),
+    onVisibilityChanged: (VisibilityInfo info) {
+    bool isVisible = info.visibleFraction != 0;
+    callThisMethod(isVisible);
+    },
+    child:
+    (admins!.status==1)?
+    Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60.0),
         child: CustomAppBar(
           actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.location_searching,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                _getLocation(context);
+              },
+            ),
             IconButton(
               icon: Icon(
                 Icons.account_circle,
@@ -317,7 +345,7 @@ class _HomeState extends State<Home> {
                 Navigator.pushNamed(context, PageRoutes.accountPage);
                 // do something
               },
-            )
+            ),
           ],
           color: kMainColor,
           leading: Padding(
@@ -850,52 +878,40 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
+    )
+        :
+    Scaffold(
+      body: Dialog(
+        child: Container(
+          decoration: BoxDecoration(
+            color: white_color,
+            borderRadius:
+            BorderRadius.circular(20.0),
+          ),
+          child: Image.network(
+            ClosedImage,
+            fit: BoxFit.fill,
+          ),
+        ),
+      ),
+    )
     );
   }
 
   void getBackResult(latss, lngss) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("lat", latss.toStringAsFixed(8));
-    prefs.setString("lng", lngss.toStringAsFixed(8));
+
     double lats = double.parse(prefs.getString('lat')!);
     double lngs = double.parse(prefs.getString('lng')!);
+    //
+    // prefs.setString("lat", latss.toStringAsFixed(8));
+    // prefs.setString("lng", lngss.toStringAsFixed(8));
 
     print("LATLONG" + lat.toString() + lng.toString());
     List<Placemark> placemarks = await placemarkFromCoordinates(lats, lngs);
 
     print("LATLONG" + placemarks.toString());
-    //
-    // String city;
-    // placemarks.map((e) =>
-    // {
-    //   setState(() {
-    //     this.lat = lat;
-    //     this.lng = lng;
-    //     String city = '${e.locality}';
-    //     cityName = '${city.toUpperCase()} (${e.subLocality})';
-    //   })
-    // });
-    //
-    // GeoData data = await Geocoder2.getDataFromCoordinates(
-    //     latitude: lats,
-    //     longitude: lngs,
-    //     googleMapApiKey: apiKey);
-    //
-    // if (data.city != null && data.city.isNotEmpty) {
-    //   setState(() {
-    //     lat = lats;
-    //     lng = lngs;
-    //     String city = '${data.city}';
-    //     cityName = '${city.toUpperCase()} (${data.city})';
-    //   });
-    // } else if (data.state != null &&
-    //     data.state.isNotEmpty) {
-    //   lat = lats;
-    //   lng = lngs;
-    //   String city = '${data.state}';
-    //   cityName = '${data.state}';
-    // }
-    //
+
     setState(() {
       cityName = (placemarks
           .elementAt(0)
@@ -904,12 +920,16 @@ class _HomeState extends State<Home> {
           .elementAt(0)
           .locality
           .toString()) + " )".toUpperCase();
-    });
+      prefs.setString("addr", cityName.toString());
 
+    });
+    calladminsetting();
+    Topbanner();
 
     hitService(lat.toString(), lng.toString());
     hitBannerUrl();
     pickbanner();
+    hitRestaurantService();
   }
 
 
@@ -1218,7 +1238,17 @@ class _HomeState extends State<Home> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     setState(() {
       cityName = pref.getString("addr")!;
+      lat = double.parse(pref.getString("lat")!);
+      lng = double.parse(pref.getString("lng")!);
     });
+    print("HOME_ORDER_HOME"+lat.toString()+lng.toString());
+
+    calladminsetting();
+    Topbanner();
+    hitService(lat.toString(), lng.toString());
+    hitBannerUrl();
+    pickbanner();
+    hitRestaurantService();
   }
 
   void hitbannerVendor(BannerDetails detail) async {
@@ -1346,6 +1376,7 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> calladminsetting() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
     var url = adminsettings;
     Uri myUri = Uri.parse(url);
     var value = await http.get(myUri);
@@ -1357,8 +1388,6 @@ class _HomeState extends State<Home> {
       });
 
       if(admins!.status==1) {
-        _requestPermission();
-        _getLocation(context);
         FirebaseMessaging messaging = FirebaseMessaging.instance;
         messaging.getToken().then((value) {
           print(value);
@@ -1368,6 +1397,9 @@ class _HomeState extends State<Home> {
         location.changeSettings(
             interval: 300, accuracy: loc.LocationAccuracy.high);
         location.enableBackgroundMode(enable: true);
+      }
+      else{
+        ClosedBanner();
       }
     }
   }
@@ -1435,4 +1467,5 @@ class BackendService {
     }
     return Future.value(vendors);
   }
+
 }

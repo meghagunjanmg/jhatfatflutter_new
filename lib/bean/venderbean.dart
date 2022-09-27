@@ -50,7 +50,7 @@ class Vendors {
   String? onlineStatus;
   String? about;
   String? vendorLoc;
-  double? distance;
+  dynamic distance;
   dynamic uiType;
   dynamic category_name;
   dynamic str1;

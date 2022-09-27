@@ -72,23 +72,6 @@
                     }
                 },
                 {
-                    "source": "/home/megha/.gradle/caches/transforms-3/19a0dfd4021b70333b258b23187eb758/transformed/jetified-play-services-basement-18.0.0/res/values-ky/values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "195",
-                        "endColumns": "153",
-                        "endOffsets": "348"
-                    },
-                    "to": {
-                        "startLines": "45",
-                        "startColumns": "4",
-                        "startOffsets": "4380",
-                        "endColumns": "157",
-                        "endOffsets": "4533"
-                    }
-                },
-                {
                     "source": "/home/megha/.gradle/caches/transforms-3/38e30c664341fe5bfcc1d9de04582443/transformed/browser-1.4.0/res/values-ky/values-ky.xml",
                     "from": {
                         "startLines": "2,3,4,5",
@@ -122,6 +105,23 @@
                         "endLines": "5,33,34,35,36,56,57,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108",
                         "endColumns": "12,84,100,140,83,63,93,69,60,86,63,58,73,61,53,116,57,60,53,73,121,83,95,101,77,77,88,66,65,68,76,86,71,75,81,72,84,78,89,91,73,84,89,51,64,82,84,61,63,62,116,93,99,94,81",
                         "endOffsets": "265,3062,3163,3304,3388,5758,5852,6242,6303,6390,6454,6513,6587,6649,6703,6820,6878,6939,6993,7067,7189,7273,7369,7471,7549,7627,7716,7783,7849,7918,7995,8082,8154,8230,8312,8385,8470,8549,8639,8731,8805,8890,8980,9032,9097,9180,9265,9327,9391,9454,9571,9665,9765,9860,9942"
+                    }
+                },
+                {
+                    "source": "/home/megha/.gradle/caches/transforms-3/3ee0f8915dc9bf42c60f3eef0b7bd28a/transformed/jetified-play-services-basement-18.1.0/res/values-ky/values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "195",
+                        "endColumns": "153",
+                        "endOffsets": "348"
+                    },
+                    "to": {
+                        "startLines": "45",
+                        "startColumns": "4",
+                        "startOffsets": "4380",
+                        "endColumns": "157",
+                        "endOffsets": "4533"
                     }
                 }
             ]

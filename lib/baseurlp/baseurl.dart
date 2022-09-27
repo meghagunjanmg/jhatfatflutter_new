@@ -15,6 +15,7 @@ var forgotPassword = baseUrl + "forgot_password";
 var forgotPasswordVerify = baseUrl + "verify_otp";
 var changePassword = baseUrl + "change_password";
 var nearByStore = baseUrl + "nearbystore";
+var nearbyrest = baseUrl + "nearbyrest";
 var bannerUrl = baseUrl + "adminbanner";
 var categoryList = baseUrl + "appcategory";
 var subCategoryList = baseUrl + "appsubcategory";

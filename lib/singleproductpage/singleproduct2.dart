@@ -151,12 +151,11 @@ class SingleProductState2 extends State<SingleProductPage_2> {
                         AssetImage('images/icons/ic_cart blk.png'),
                       ),
                       onPressed: () {
-                          Navigator.pushNamed(context, PageRoutes.viewCart)
-                              .then((value) {
-                            setList(widget.productVarintList);
-                            getCartCount();
-                          });
-
+                        Navigator.pushNamed(
+                            context, PageRoutes.viewCart)
+                            .then((value) {
+                          getCartCount();
+                        });
                       }),
                   Positioned(
                       right: 5,

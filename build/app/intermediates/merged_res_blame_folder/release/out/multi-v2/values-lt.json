@@ -4,6 +4,23 @@
             "outputFile": "/home/megha/Desktop/jhatfatflutter/build/app/intermediates/incremental/mergeReleaseResources/merged.dir/values-lt/values-lt.xml",
             "map": [
                 {
+                    "source": "/home/megha/.gradle/caches/transforms-3/3ee0f8915dc9bf42c60f3eef0b7bd28a/transformed/jetified-play-services-basement-18.1.0/res/values-lt/values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "195",
+                        "endColumns": "154",
+                        "endOffsets": "349"
+                    },
+                    "to": {
+                        "startLines": "47",
+                        "startColumns": "4",
+                        "startOffsets": "4536",
+                        "endColumns": "158",
+                        "endOffsets": "4690"
+                    }
+                },
+                {
                     "source": "/home/megha/.gradle/caches/transforms-3/19fea4fb28dedd992824e13cc158e7a1/transformed/jetified-play-services-base-18.0.1/res/values-lt/values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
@@ -37,23 +54,6 @@
                         "endLines": "7,35,36,37,38,58,59,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110",
                         "endColumns": "12,82,95,117,83,65,98,77,64,109,71,58,73,60,53,123,60,61,53,77,133,87,83,110,78,83,96,66,65,74,78,87,75,77,72,76,86,80,89,91,71,80,91,54,65,84,86,61,63,62,110,114,100,113,81",
                         "endOffsets": "375,3227,3323,3441,3525,5962,6061,6464,6529,6639,6711,6770,6844,6905,6959,7083,7144,7206,7260,7338,7472,7560,7644,7755,7834,7918,8015,8082,8148,8223,8302,8390,8466,8544,8617,8694,8781,8862,8952,9044,9116,9197,9289,9344,9410,9495,9582,9644,9708,9771,9882,9997,10098,10212,10294"
-                    }
-                },
-                {
-                    "source": "/home/megha/.gradle/caches/transforms-3/19a0dfd4021b70333b258b23187eb758/transformed/jetified-play-services-basement-18.0.0/res/values-lt/values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "195",
-                        "endColumns": "154",
-                        "endOffsets": "349"
-                    },
-                    "to": {
-                        "startLines": "47",
-                        "startColumns": "4",
-                        "startOffsets": "4536",
-                        "endColumns": "158",
-                        "endOffsets": "4690"
                     }
                 },
                 {

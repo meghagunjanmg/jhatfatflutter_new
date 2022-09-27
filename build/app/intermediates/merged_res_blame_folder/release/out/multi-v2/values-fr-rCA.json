@@ -55,23 +55,6 @@
                     }
                 },
                 {
-                    "source": "/home/megha/.gradle/caches/transforms-3/19a0dfd4021b70333b258b23187eb758/transformed/jetified-play-services-basement-18.0.0/res/values-fr-rCA/values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "199",
-                        "endColumns": "156",
-                        "endOffsets": "355"
-                    },
-                    "to": {
-                        "startLines": "45",
-                        "startColumns": "4",
-                        "startOffsets": "4490",
-                        "endColumns": "160",
-                        "endOffsets": "4646"
-                    }
-                },
-                {
                     "source": "/home/megha/.gradle/caches/transforms-3/38e30c664341fe5bfcc1d9de04582443/transformed/browser-1.4.0/res/values-fr-rCA/values-fr-rCA.xml",
                     "from": {
                         "startLines": "2,3,4,5",
@@ -105,6 +88,23 @@
                         "endLines": "5,33,34,35,36,56,57,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108",
                         "endColumns": "12,81,99,121,84,65,96,79,61,91,73,60,78,63,53,115,58,61,53,81,128,91,83,113,78,80,92,66,65,78,80,90,71,77,74,71,96,76,97,97,77,80,99,56,65,82,86,61,63,62,101,106,96,108,88",
                         "endOffsets": "283,3115,3215,3337,3422,6007,6104,6510,6572,6664,6738,6799,6878,6942,6996,7112,7171,7233,7287,7369,7498,7590,7674,7788,7867,7948,8041,8108,8174,8253,8334,8425,8497,8575,8650,8722,8819,8896,8994,9092,9170,9251,9351,9408,9474,9557,9644,9706,9770,9833,9935,10042,10139,10248,10337"
+                    }
+                },
+                {
+                    "source": "/home/megha/.gradle/caches/transforms-3/3ee0f8915dc9bf42c60f3eef0b7bd28a/transformed/jetified-play-services-basement-18.1.0/res/values-fr-rCA/values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "199",
+                        "endColumns": "156",
+                        "endOffsets": "355"
+                    },
+                    "to": {
+                        "startLines": "45",
+                        "startColumns": "4",
+                        "startOffsets": "4490",
+                        "endColumns": "160",
+                        "endOffsets": "4646"
                     }
                 },
                 {

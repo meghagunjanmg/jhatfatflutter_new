@@ -58,7 +58,7 @@ class _OtpVerifyState extends State<OtpVerify> {
   var showDialogBox = false;
   var verificaitonPin = "";
   late String phoneNo;
-  late String smsOTP;
+  late String smsOTP="";
   late String verificationId;
   String errorMessage = '';
   String contact = '';
@@ -222,7 +222,8 @@ class _OtpVerifyState extends State<OtpVerify> {
                       showDialogBox = true;
                     });
                   }
-                },
+                  verifyOtp();
+                  },
                 child: Container(
                   alignment: Alignment.center,
                   height: 52,
@@ -311,7 +312,7 @@ class _OtpVerifyState extends State<OtpVerify> {
     } else {
       messaging.getToken().then((value) {
         token = value;
-        hitService(verificaitonPin, context);
+        // hitService(verificaitonPin, context);
       });
     }
   }
@@ -331,42 +332,47 @@ class _OtpVerifyState extends State<OtpVerify> {
           },
           codeSent: smsOTPSent,
           timeout: const Duration(seconds: 60),
-          verificationCompleted: (AuthCredential phoneAuthCredential) {},
+          verificationCompleted: (AuthCredential phoneAuthCredential) {
+            verifyOtp();
+          },
           verificationFailed: (Exception exception) {
             // Navigator.pop(context, exception.message);
           });
+
     } catch (e) {
-      handleError(e as PlatformException);
+      handleError(e as FirebaseAuthException);
       // Navigator.pop(context, (e as PlatformException).message);
     }
   }
 
   //Method for verify otp entered by user
   Future<void> verifyOtp() async {
+
     if (smsOTP == null || smsOTP == '') {
       showAlertDialog(context, 'please enter 6 digit otp');
       return;
     }
     try {
-      final PhoneAuthCredential credential = PhoneAuthProvider.credential(
+      final AuthCredential credential = PhoneAuthProvider.credential(
         verificationId: verificationId,
         smsCode: smsOTP,
       );
 
-      await _auth.signInWithCredential(credential);
-     // final User currentUser = await _auth.currentUser();
-     // assert(user.user!.uid == currentUser.uid);
+       await _auth.signInWithCredential(credential);
 
       print(smsOTP);
       hitService(smsOTP, context);
 
     } catch (e) {
-      handleError(e as PlatformException);
+      print(e.toString());
+
+      handleError(e as FirebaseAuthException);
     }
   }
 
   //Method for handle the errors
-  void handleError(PlatformException error) {
+  void handleError(FirebaseAuthException error) {
+
     switch (error.code) {
       case 'ERROR_INVALID_VERIFICATION_CODE':
         FocusScope.of(context).requestFocus(FocusNode());
@@ -392,7 +398,7 @@ class _OtpVerifyState extends State<OtpVerify> {
           isDefaultAction: true,
           child: const Text('Ok'),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context, rootNavigator: true).pop("Discard");
           },
         )
       ],

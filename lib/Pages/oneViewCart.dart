@@ -5,12 +5,13 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:horizontal_calendar_view_widget/date_helper.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:jhatfat/Routes/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:toast/toast.dart';
 import 'package:jhatfat/Components/bottom_bar.dart';
 import 'package:jhatfat/HomeOrderAccount/Account/UI/ListItems/saved_addresses_page.dart';
 import 'package:jhatfat/HomeOrderAccount/home_order_account.dart';
@@ -83,10 +84,10 @@ class _oneViewCartState extends State<oneViewCart> {
       if (storename != null && storename.length > 0) {
         storeName = storename;
       }
-      if (vendorCatId != null && vendorCatId.length > 0) {
+      if (vendorCatId.length > 0) {
         vendorCatId = vendor_cat_id!;
       }
-      if (uiType != null && uiType.length > 0) {
+      if (uiType.length > 0) {
         uiType = ui_type!;
       }
       if (vendor_id != null && vendor_id.length > 0) {
@@ -115,14 +116,15 @@ class _oneViewCartState extends State<oneViewCart> {
     super.initState();
     getAddress(context);
 
+    getResCartItem();
+    getCartItem();
+    getResStoreName();
+    getStoreName();
+
     iduploaded = null;
     presuploaded = null;
 
     getid();
-
-    getResStoreName();
-    getResCartItem();
-    getCatC();
 
     firstDate = toDateMonthYear(DateTime.now());
     prepareData(firstDate);
@@ -132,8 +134,7 @@ class _oneViewCartState extends State<oneViewCart> {
         .length == 1) ? '0' + firstDate.month.toString() : firstDate
         .month}-${firstDate.day}';
     lastDate = toDateMonthYear(firstDate.add(Duration(days: 9)));
-    getStoreName();
-    getCartItem();
+
     dynamic date =
         '${firstDate.day}-${(firstDate.month
         .toString()
@@ -141,6 +142,9 @@ class _oneViewCartState extends State<oneViewCart> {
         .month}-${firstDate.year}';
 
     hitDateCounter(date);
+
+
+    getCatC();
   }
 
   void getResCartItem() async {
@@ -159,11 +163,9 @@ class _oneViewCartState extends State<oneViewCart> {
             .then((values) {
           List<AddonCartItem> tagObjsd =
           values.map((tagJson) => AddonCartItem.fromJson(tagJson)).toList();
-          if (tagObjsd != null) {
-            setState(() {
-              cartListII[i].addon = tagObjsd;
-            });
-          }
+          setState(() {
+            cartListII[i].addon = tagObjsd;
+          });
         });
       }
       setState(() {
@@ -203,7 +205,6 @@ class _oneViewCartState extends State<oneViewCart> {
       List<CartItem> tagObjs =
       value.map((tagJson) => CartItem.fromJson(tagJson)).toList();
 
-
       if (tagObjs.isEmpty) {
         setState(() {});
       }
@@ -215,51 +216,10 @@ class _oneViewCartState extends State<oneViewCart> {
         });
       }
     });
+
+    print("CART: "+cartListI.toString());
   }
 
-  void getCatC() async {
-    if (cartListI.isNotEmpty) {
-      DatabaseHelper db = DatabaseHelper.instance;
-      db.calculateTotal().then((value) {
-        var tagObjsJson = value as List;
-        setState(() {
-          if (value != null) {
-            dynamic totalAmount_1 = tagObjsJson[0]['Total'];
-            if (totalAmount_1 == null) {} else {
-              totalAmount = totalAmount_1 + deliveryCharge;
-            }
-          } else {}
-        });
-      });
-    }
-
-    if (cartListII.isNotEmpty) {
-      DatabaseHelper db = DatabaseHelper.instance;
-      db.calculateTotalRest().then((value) {
-        db.calculateTotalRestAdon().then((valued) {
-          var tagObjsJson = value as List;
-          var tagObjsJsond = valued as List;
-          print("restadd " + tagObjsJson.toString() + " " +
-              tagObjsJsond.toString());
-
-          setState(() {
-            dynamic totalAmount_1 = tagObjsJson[0]['Total'];
-            dynamic totalAmount_2 = tagObjsJsond[0]['Total'];
-
-            if (totalAmount_2 == null) {
-              if (totalAmount_1 == null) {}
-
-              else {
-                totalAmount = totalAmount_1 + deliveryCharge;
-              }
-            } else {
-              totalAmount = totalAmount_1 + totalAmount_2 + deliveryCharge;
-            }
-          });
-        });
-      });
-    }
-  }
 
   void getAddress(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -315,7 +275,7 @@ class _oneViewCartState extends State<oneViewCart> {
     });
   }
 
-  void addOrMinusProduct2(store_name, product_id, product_name, unit, price,
+  void addOrMinusProduct2( product_id, product_name, unit, price,
       quantity, itemCount,
       varient_id, index, price_d) async {
     DatabaseHelper db = DatabaseHelper.instance;
@@ -323,31 +283,34 @@ class _oneViewCartState extends State<oneViewCart> {
     existing.then((value) {
       var vae = {
         DatabaseHelper.productId: product_id,
-        DatabaseHelper.storeName: store_name,
         DatabaseHelper.productName: product_name,
         DatabaseHelper.price: (price_d * itemCount),
         DatabaseHelper.unit: unit,
         DatabaseHelper.quantitiy: quantity,
         DatabaseHelper.addQnty: itemCount,
-        DatabaseHelper.varientId: int.parse(varient_id)
+        DatabaseHelper.varientId: varient_id
       };
 
       if (value == 0) {
         db.insertRaturantOrder(vae);
-      } else {
-        if (itemCount == 0) {
-          db.deleteResProduct(int.parse(varient_id)).then((value) {
-            db.deleteAddOn(int.parse(varient_id));
+      }
+      else {
+        if (itemCount==0) {
+          db.deleteResProduct(varient_id).then((value) {
+            db.deleteAddOn(varient_id);
           });
+          getResCartItem();
+
         } else {
-          db.updateRestProductData(vae, int.parse(varient_id));
+          db.updateRestProductData(vae, varient_id);
         }
       }
-      getCatC();
       if (itemCount == 0) {
         getResCartItem();
       }
     });
+
+    getCatC();
   }
 
   Widget timewidget(BuildContext context, double itemHeight, double itemWidth) {
@@ -475,52 +438,6 @@ class _oneViewCartState extends State<oneViewCart> {
     );
   }
 
-
-  void addOrMinusProduct1(product_name, unit, price, quantity, itemCount,
-      varient_id, index, price_d) async {
-    DatabaseHelper db = DatabaseHelper.instance;
-    Future<int?> existing = db.getRestProductcount(int.parse(varient_id));
-    existing.then((value) {
-      var vae = {
-        DatabaseHelper.productId: '1',
-        DatabaseHelper.storeName: product_name,
-        DatabaseHelper.productName: product_name,
-        DatabaseHelper.price: (price_d * itemCount),
-        DatabaseHelper.unit: unit,
-        DatabaseHelper.quantitiy: quantity,
-        DatabaseHelper.addQnty: itemCount,
-        DatabaseHelper.varientId: int.parse(varient_id)
-      };
-
-
-      if (value == 0) {
-        db.insertRaturantOrder(vae);
-      } else {
-        if (itemCount == 0) {
-          db.deleteResProduct(int.parse(varient_id)).then((value) {
-            db.deleteAddOn(int.parse(varient_id));
-          });
-        } else {
-          db.updateRestProductData(vae, int.parse(varient_id));
-        }
-      }
-
-
-      db.queryAllRows().then((value) {
-        List<CartItem> tagObjs =
-        value.map((tagJson) => CartItem.fromJson(tagJson)).toList();
-        setidpres(tagObjs);
-      });
-
-      getCatC();
-
-
-      if (itemCount == 0) {
-        getCartItem();
-      }
-    });
-  }
-
   Widget cartOrderItemListTile(BuildContext context,
       String title,
       dynamic price,
@@ -578,7 +495,9 @@ class _oneViewCartState extends State<oneViewCart> {
                             cartListII[index].price =
                             (price_d * addQ);
                             cartListII[index].add_qnty = addQ;
-                            addOrMinusProduct1(
+
+                            addOrMinusProduct2(
+                            cartListII[index].varient_id,
                                 cartListII[index].product_name,
                                 cartListII[index].unit,
                                 cartListII[index].price,
@@ -614,7 +533,8 @@ class _oneViewCartState extends State<oneViewCart> {
                             cartListII[index].price =
                             (price_d * addQ);
                             cartListII[index].add_qnty = addQ;
-                            addOrMinusProduct1(
+                            addOrMinusProduct2(
+                                cartListII[index].varient_id,
                                 cartListII[index].product_name,
                                 cartListII[index].unit,
                                 cartListII[index].price,
@@ -662,7 +582,7 @@ class _oneViewCartState extends State<oneViewCart> {
               ),
             )),
         Visibility(
-            visible: (addon != null && addon.length > 0),
+            visible: (addon.length > 0),
             child: ListView.builder(
               primary: false,
               shrinkWrap: true,
@@ -704,20 +624,45 @@ class _oneViewCartState extends State<oneViewCart> {
     DatabaseHelper db = DatabaseHelper.instance;
     db.deleteAddOnId(int.parse(addonid)).then((value) {
       getResCartItem();
-      getCatC();
     });
   }
+  void getCatC() async {
+    if (cartListI.isNotEmpty) {
+      DatabaseHelper db = DatabaseHelper.instance;
+      db.calculateTotal().then((value) {
+        var tagObjsJson = value as List;
+        setState(() {
+          if (value.isNotEmpty) {
+            dynamic totalAmount_1 = tagObjsJson[0]['Total'];
+                totalAmount = totalAmount_1;
+          } else {}
+        });
+      });
+    }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    iduploaded = null;
-    presuploaded = null;
-    getid();
-    getCartItem();
-    getResCartItem();
-    setidpres(cartListI);
-    getCatC();
+
+    if (cartListII.isNotEmpty) {
+      DatabaseHelper db = DatabaseHelper.instance;
+      db.calculateTotalRest().then((value) {
+        db.calculateTotalRestAdon().then((valued) {
+          var tagObjsJson = value as List;
+          var tagObjsJsond = valued as List;
+          setState(() {
+            dynamic totalAmount_1 = tagObjsJson[0]['Total'];
+            dynamic totalAmount_2 = tagObjsJsond[0]['Total'];
+
+            if (value.isEmpty) {
+              if (valued.isEmpty) {}
+              else {
+                totalAmount = totalAmount_1 + totalAmount_2;
+              }
+            } else {
+                totalAmount = totalAmount_1;
+            }
+          });
+        });
+      });
+    }
   }
 
   void callThisMethod(bool isVisible) {
@@ -728,6 +673,7 @@ class _oneViewCartState extends State<oneViewCart> {
     getCartItem();
     getResCartItem();
     setidpres(cartListI);
+
     getCatC();
   }
   _showDialog() async{
@@ -768,6 +714,7 @@ class _oneViewCartState extends State<oneViewCart> {
   }
   @override
   Widget build(BuildContext context) {
+    getCatC();
     var size = MediaQuery
         .of(context)
         .size;
@@ -822,7 +769,6 @@ class _oneViewCartState extends State<oneViewCart> {
                           padding: EdgeInsets.all(20.0),
                           color: kCardBackgroundColor,
                         ),
-
                         Column(
                             children: <Widget>[ (cartListI.length > 0)
                                 ? ListView.separated(
@@ -949,35 +895,36 @@ class _oneViewCartState extends State<oneViewCart> {
                               Container(
                               ),
 
-
-                              (is_basket_req == 1) ?
-                              new GestureDetector(
-                                  onTap: () {
-                                    _showDialog();
-                                  },
-                                  child:
-                                  Container(
-                                    height: 30.0,
-                                    padding: EdgeInsets.all(4),
-                                    margin: EdgeInsets.all(12),
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color: kCardBackgroundColor,
-                                      borderRadius: BorderRadius.circular(30.0),
-                                    ),
-                                    child: Text(
-                                      'Special Basket',
-                                      style: TextStyle(color: Colors.black,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w300),
-                                    ),
-                                  )
-                              )
-                                  :
-                              Container(
-                              ),
                             ]
                         ),
+
+                        (is_basket_req == 1) ?
+                        new GestureDetector(
+                            onTap: () {
+                              _showDialog();
+                            },
+                            child:
+                            Container(
+                              height: 30.0,
+                              padding: EdgeInsets.all(4),
+                              margin: EdgeInsets.all(12),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: kCardBackgroundColor,
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                              child: Text(
+                                'Special Basket',
+                                style: TextStyle(color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w300),
+                              ),
+                            )
+                        )
+                            :
+                        Container(
+                        ),
+
                         (cartListII.isNotEmpty)
                             ?
                         ListView.separated(
@@ -1051,7 +998,7 @@ class _oneViewCartState extends State<oneViewCart> {
                                       .caption,
                                 ),
                                 Text(
-                                  '$currency ${totalAmount - deliveryCharge}',
+                                  '$currency ${totalAmount}',
                                   style: Theme
                                       .of(context)
                                       .textTheme
@@ -1108,7 +1055,7 @@ class _oneViewCartState extends State<oneViewCart> {
                                       .copyWith(fontWeight: FontWeight.bold),
                                 ),
                                 Text(
-                                  '$currency $totalAmount',
+                                  '$currency ${totalAmount + deliveryCharge}',
                                   style: Theme
                                       .of(context)
                                       .textTheme
@@ -1221,25 +1168,37 @@ class _oneViewCartState extends State<oneViewCart> {
                                     fontWeight: FontWeight.w400)),
 
                             onPressed: () {
-                              if (cartListI.isNotEmpty) {
-                                if (is_id_req == 1 &&
-                                    iduploaded != null) createCart(context);
-                                if (is_pres_req == 1 &&
-                                    presuploaded != null) createCart(context);
-                                if (is_pres_req == 0 &&
-                                    is_id_req == 0) createCart(context);
-                                if (is_pres_req == 0 && is_id_req == 1 &&
-                                    iduploaded != null) createCart(context);
-                                if (is_id_req == 0 && is_pres_req == 1 &&
-                                    presuploaded != null) createCart(context);
+                              if(addressDelivery!=null) {
+                                if (cartListI.isNotEmpty) {
+                                  if (is_id_req == 1 &&
+                                      iduploaded != null) createCart(context);
+                                  if (is_pres_req == 1 &&
+                                      presuploaded != null) createCart(context);
+                                  if (is_pres_req == 0 &&
+                                      is_id_req == 0) createCart(context);
+                                  if (is_pres_req == 0 && is_id_req == 1 &&
+                                      iduploaded != null) createCart(context);
+                                  if (is_id_req == 0 && is_pres_req == 1 &&
+                                      presuploaded != null) createCart(context);
+                                }
+                                else if (cartListII.isNotEmpty) {
+                                  createResCart(context);
+                                }
                               }
-
-                              else if (cartListII.isNotEmpty) {
-                                createResCart(context);
+                              else{
+                                Fluttertoast.showToast(
+                                    msg: "Select Delivery Address",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.black,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0
+                                );
                               }
                             },
                             child: Text("Pay $currency "
-                                "$totalAmount")
+                                '${totalAmount + deliveryCharge}')
                         ),
                       ],
                     ),
@@ -1308,8 +1267,8 @@ class _oneViewCartState extends State<oneViewCart> {
                     // clearCart();
                     Navigator.pushAndRemoveUntil(context,
                         MaterialPageRoute(builder: (context) {
-                          return HomeOrderAccount();
-                        }), (Route<dynamic> route) => false);
+                          return HomeOrderAccount(0);
+                        }), (Route<dynamic> route) => true);
                   },
                   child: Text(
                     'Shop Now',
@@ -1326,8 +1285,8 @@ class _oneViewCartState extends State<oneViewCart> {
   }
 
   void createResCart(BuildContext context) async {
-    if (cartListII != null && cartListII.length > 0) {
-      if (totalAmount != null && totalAmount > 0.0 && addressDelivery != null) {
+    if (cartListII.length > 0) {
+      if (totalAmount > 0.0 && addressDelivery != null) {
         var url = returant_order;
         SharedPreferences pref = await SharedPreferences.getInstance();
         int? userId = pref.getInt('user_id');
@@ -1360,7 +1319,7 @@ class _oneViewCartState extends State<oneViewCart> {
           'ui_type': ui_type
         }).then((value) {
           print('${value.statusCode} ${value.body}');
-          if (value != null && value.statusCode == 200) {
+          if (value.statusCode == 200) {
             var jsonData = jsonDecode(value.body);
             if (jsonData['status'] == "1") {
               // Toast.show(jsonData['message'], context,
@@ -1591,40 +1550,59 @@ class _oneViewCartState extends State<oneViewCart> {
     });
   }
 
-  void addOrMinusProduct(store_name, product_name, unit, price, quantity,
-      itemCount,
-      varient_image, varient_id, index, price_d,vendorid) async {
+  void addOrMinusProduct(is_id, is_pres, isBasket,addedbas, product_name, unit, price,
+      quantity, itemCount,
+      varient_image, varient_id, vendorid,storename) async {
     DatabaseHelper db = DatabaseHelper.instance;
-    Future<int?> existing = db.getcount(int.parse(varient_id));
-    existing.then((value) {
+
+    db.getcount(varient_id).then((value) {
+      print('value d - $value');
       var vae = {
         DatabaseHelper.productName: product_name,
-        DatabaseHelper.storeName: store_name,
+        DatabaseHelper.storeName: storename,
         DatabaseHelper.vendor_id: vendorid,
-        DatabaseHelper.price: (price_d * itemCount),
+        DatabaseHelper.price: (price * itemCount),
         DatabaseHelper.unit: unit,
         DatabaseHelper.quantitiy: quantity,
         DatabaseHelper.addQnty: itemCount,
         DatabaseHelper.productImage: varient_image,
-        DatabaseHelper.varientId: int.parse(varient_id)
+        DatabaseHelper.is_id: is_id,
+        DatabaseHelper.is_pres: is_pres,
+        DatabaseHelper.isBasket: isBasket,
+        DatabaseHelper.addedBasket: addedbas,
+        DatabaseHelper.varientId: varient_id
       };
       if (value == 0) {
-        db.insert(vae);
+        db.getCountVendor()
+            .then((value) {
+          if (value != null && value < 3) {
+            db.insert(vae);
+          }
+        }
+        );
       } else {
         if (itemCount == 0) {
-          db.delete(int.parse(varient_id));
+          print('Delete - $varient_id');
+
+          db.delete(varient_id);
+
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomeOrderAccount(3)),
+                (Route<dynamic> route) => true,
+          );
         } else {
-          db.updateData(vae, int.parse(varient_id));
+          db.updateData(vae, int.parse('${varient_id}')).then((vay) {
+            print('vay - $vay');
+          });
         }
       }
-      getCatC();
-      setState(() {
-        if (itemCount == 0) {
-          getCartItem();
-        }
-      });
+    }).catchError((e) {
+      print(e);
     });
-    getCartItem();
+
+
+    getCatC();
   }
 
   Widget cartOrderItemListTile1(BuildContext context,
@@ -1728,17 +1706,19 @@ class _oneViewCartState extends State<oneViewCart> {
                                   cartListI[index].price = (price_d *
                                       cartListI[index].add_qnty);
                                   addOrMinusProduct(
-                                      cartListI[index].store_name,
-                                      cartListI[index].product_name,
+                                    cartListI[index].is_id,
+                                    cartListI[index].is_pres,
+                                    cartListI[index].isBasket,
+                                  cartListI[index].addedBasket,
+                                  cartListI[index].product_name,
                                       cartListI[index].unit,
                                       cartListI[index].price,
                                       cartListI[index].qnty,
                                       cartListI[index].add_qnty,
                                       cartListI[index].product_img,
                                       cartListI[index].varient_id,
-                                      index,
-                                      price_d,
-                                    cartListI[index].vendor_id
+                                    cartListI[index].vendor_id,
+                                    cartListI[index].store_name
                                   );
                                 });
                               },
@@ -1765,7 +1745,10 @@ class _oneViewCartState extends State<oneViewCart> {
                                   cartListI[index].price = (price_d *
                                       cartListI[index].add_qnty);
                                   addOrMinusProduct(
-                                      cartListI[index].store_name,
+                                      cartListI[index].is_id,
+                                      cartListI[index].is_pres,
+                                      cartListI[index].isBasket,
+                                      cartListI[index].addedBasket,
                                       cartListI[index].product_name,
                                       cartListI[index].unit,
                                       cartListI[index].price,
@@ -1773,9 +1756,8 @@ class _oneViewCartState extends State<oneViewCart> {
                                       cartListI[index].add_qnty,
                                       cartListI[index].product_img,
                                       cartListI[index].varient_id,
-                                      index,
-                                      price_d,
-                                      cartListI[index].vendor_id
+                                      cartListI[index].vendor_id,
+                                      cartListI[index].store_name
                                   );
                                 });
                               },
@@ -1969,14 +1951,12 @@ class _oneViewCartState extends State<oneViewCart> {
     db.deleteAll().then((value) {
       cartListI.clear();
       getCartItem();
-      getCatC();
     });
 
     db.deleteAllRestProdcut().then((value) {
       db.deleteAllAddOns().then((values) {
         cartListII.clear();
         getResCartItem();
-        getCatC();
       });
     });
   }
@@ -1986,23 +1966,27 @@ class _oneViewCartState extends State<oneViewCart> {
       is_id_req=0;
       is_pres_req=0;
     });
-    if(cartListI.isNotEmpty){
-      for(int i=0;i<cartListI.length;i++) {
-        if(cartListI[i].is_pres==1) {
-            setState(() {
-              is_pres_req = 1;
-            });
+    if(cartListI.isNotEmpty) {
+      for (int i = 0; i < cartListI.length; i++) {
+        if (cartListI[i].is_pres == 1) {
+          setState(() {
+            is_pres_req = 1;
+          });
         }
-        if(cartListI[i].is_id==1) {
+        if (cartListI[i].is_id == 1) {
           checkId();
-
         }
+      }
+    }
 
-
-        if(cartListI[i].isBasket==1) {
+    if(cartListI.isNotEmpty) {
+      outerloop:
+      for (var i = 0; i < cartListI.length; i++) {
+        if (cartListI[i].isBasket == 1) {
           setState(() {
             is_basket_req = 1;
           });
+          break outerloop;
         }
       }
     }
@@ -2067,7 +2051,7 @@ class _MyDialogContentState extends State<MyDialogContent> {
                   }
 
                   return  CheckboxListTile(
-                value: (widget.cart[index].addedBasket==0)?true:false,
+                value: (widget.cart[index].addedBasket==0)?false:true,
                 ///groupValue: _selectedIndex,
                 title: Text(widget.cart[index].product_name),
                 onChanged: (bool? value) {

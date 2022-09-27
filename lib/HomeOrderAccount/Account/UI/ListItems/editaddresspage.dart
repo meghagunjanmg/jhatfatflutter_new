@@ -110,10 +110,10 @@ class EditAddresspageState extends State<EditAddresspage> {
       ),
       body:
       SingleChildScrollView(
+        primary: true,
         child:
         Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height+120,
           child: Column(
             children: [
               Container(
@@ -126,8 +126,8 @@ class EditAddresspageState extends State<EditAddresspage> {
                           child:
                           GoogleMap(
                             gestureRecognizers: < Factory < OneSequenceGestureRecognizer >> [
-                               Factory < OneSequenceGestureRecognizer > (
-                                    () => EagerGestureRecognizer(),
+                              new Factory < OneSequenceGestureRecognizer > (
+                                    () => new EagerGestureRecognizer(),
                               ),
                             ].toSet(),
                             mapType: MapType.normal,
@@ -238,7 +238,7 @@ class EditAddresspageState extends State<EditAddresspage> {
                                 controller: pincodeController,
                                 maxLines: 1,
                                 decoration: InputDecoration(
-                                  hintText:'Enter your pincode or zipcode',
+                                  hintText:'Pincode',
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                     borderSide:
@@ -600,8 +600,8 @@ class EditAddresspageState extends State<EditAddresspage> {
       'street': '$street',
       'state': '$state',
       'pin': '$pincode',
-      'lat':lat,
-      'lng': lng,
+      'lat': '$lat',
+      'lng': '$lng',
       'address_type': '${addressType}',
     }).then((value) {
       if (value.statusCode == 200) {

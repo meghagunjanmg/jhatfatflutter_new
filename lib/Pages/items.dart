@@ -1069,11 +1069,14 @@ class _ItemsPageState extends State<ItemsPage>
         DatabaseHelper.addedBasket: 0,
         DatabaseHelper.varientId: varient_id
       };
+
       if (value == 0) {
         db.getCountVendor()
             .then((value) {
           if (value != null && value < 3) {
             db.insert(vae);
+            getCartCount();
+
           }
           else {
             showMyDialog2(context);
@@ -1083,17 +1086,21 @@ class _ItemsPageState extends State<ItemsPage>
       } else {
         if (itemCount == 0) {
           db.delete(int.parse('${varient_id}'));
+          getCartCount();
+
         } else {
           db.updateData(vae, int.parse('${varient_id}')).then((vay) {
             print('vay - $vay');
             getCatC();
+            getCartCount();
+
           });
         }
       }
-      getCartCount();
     }).catchError((e) {
       print(e);
     });
+
   }
 
 

@@ -345,7 +345,7 @@
 -dontwarn sun.misc.Signal
 
 # End of content from /home/megha/.gradle/caches/transforms-3/5cafba0ec714bc11790f886e3b0d471e/transformed/rules/lib/META-INF/proguard/coroutines.pro
-# The proguard configuration file for the following section is /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/proguard.txt
+# The proguard configuration file for the following section is /home/megha/.gradle/caches/transforms-3/c3ab1ab857f2eedf147850d11689a491/transformed/jetified-firebase-auth-21.0.8/proguard.txt
 -dontwarn com.google.appengine.api.**
 -dontwarn okio.**
 -dontwarn org.apache.**
@@ -365,12 +365,12 @@
 # We keep all fields for every generated proto file as the runtime uses
 # reflection over them that ProGuard cannot detect. Without this keep
 # rule, fields may be removed that would cause runtime failures.
--keepclassmembers class * extends com.google.android.gms.internal.firebase-auth-api.zzabx {
+-keepclassmembers class * extends com.google.android.gms.internal.firebase-auth-api.zzach {
   <fields>;
 }
 
-# End of content from /home/megha/.gradle/caches/transforms-3/6b415a3bc2b441250bf51af87084b635/transformed/jetified-firebase-auth-21.0.7/proguard.txt
-# The proguard configuration file for the following section is /home/megha/.gradle/caches/transforms-3/63a55b2d265d667c75a69a4a5e2e28ed/transformed/jetified-firebase-firestore-24.2.2/proguard.txt
+# End of content from /home/megha/.gradle/caches/transforms-3/c3ab1ab857f2eedf147850d11689a491/transformed/jetified-firebase-auth-21.0.8/proguard.txt
+# The proguard configuration file for the following section is /home/megha/.gradle/caches/transforms-3/e6bf1d5698d7c30759dde75901c39363/transformed/jetified-firebase-firestore-24.3.1/proguard.txt
 # Needed for DNS resolution.  Present in OpenJDK, but not Android
 -dontwarn javax.naming.**
 
@@ -390,7 +390,7 @@
 -dontwarn okio.**
 -dontwarn com.google.j2objc.annotations.**
 
-# End of content from /home/megha/.gradle/caches/transforms-3/63a55b2d265d667c75a69a4a5e2e28ed/transformed/jetified-firebase-firestore-24.2.2/proguard.txt
+# End of content from /home/megha/.gradle/caches/transforms-3/e6bf1d5698d7c30759dde75901c39363/transformed/jetified-firebase-firestore-24.3.1/proguard.txt
 # The proguard configuration file for the following section is /home/megha/.gradle/caches/transforms-3/89ba8e05a34cf734bca3914f66f9a9fb/transformed/jetified-firebase-auth-interop-20.0.0/proguard.txt
 # Can be removed once we pull in a dependency on firebase-common that includes
 # https://github.com/firebase/firebase-android-sdk/pull/1472/commits/856f1ca1151cdd88679bbc778892f23dfa34fc06#diff-a2ed34b5a38b4c6c686b09e54865eb48
@@ -398,12 +398,12 @@
 -dontwarn com.google.auto.value.AutoValue$Builder
 
 # End of content from /home/megha/.gradle/caches/transforms-3/89ba8e05a34cf734bca3914f66f9a9fb/transformed/jetified-firebase-auth-interop-20.0.0/proguard.txt
-# The proguard configuration file for the following section is /home/megha/.gradle/caches/transforms-3/fccaa6a289edc53f66333a729d5bb147/transformed/jetified-firebase-common-20.1.1/proguard.txt
+# The proguard configuration file for the following section is /home/megha/.gradle/caches/transforms-3/51d5a07600719f8767e44db6f2a9636e/transformed/jetified-firebase-common-20.1.2/proguard.txt
 -dontwarn com.google.firebase.platforminfo.KotlinDetector
 -dontwarn com.google.auto.value.AutoValue
 -dontwarn com.google.auto.value.AutoValue$Builder
 
-# End of content from /home/megha/.gradle/caches/transforms-3/fccaa6a289edc53f66333a729d5bb147/transformed/jetified-firebase-common-20.1.1/proguard.txt
+# End of content from /home/megha/.gradle/caches/transforms-3/51d5a07600719f8767e44db6f2a9636e/transformed/jetified-firebase-common-20.1.2/proguard.txt
 # The proguard configuration file for the following section is /home/megha/.gradle/caches/transforms-3/7ba4e02eebf1c5c3cf0304c3d90bcbb5/transformed/media-1.1.0/proguard.txt
 # Copyright (C) 2017 The Android Open Source Project
 #
@@ -491,7 +491,7 @@
 
 
 # End of content from /home/megha/.gradle/caches/transforms-3/0eca67a449d06f1154e3d0c5a54f4038/transformed/jetified-play-services-tasks-18.0.1/proguard.txt
-# The proguard configuration file for the following section is /home/megha/.gradle/caches/transforms-3/19a0dfd4021b70333b258b23187eb758/transformed/jetified-play-services-basement-18.0.0/proguard.txt
+# The proguard configuration file for the following section is /home/megha/.gradle/caches/transforms-3/3ee0f8915dc9bf42c60f3eef0b7bd28a/transformed/jetified-play-services-basement-18.1.0/proguard.txt
 # Needed when building against pre-Marshmallow SDK.
 -dontwarn android.security.NetworkSecurityPolicy
 
@@ -509,6 +509,8 @@
 # non-required dependencies.
 -dontwarn javax.annotation.**
 -dontwarn org.checkerframework.**
+-dontwarn com.google.errorprone.annotations.**
+-dontwarn org.jspecify.nullness.NullMarked
 
 # Proguard flags for consumers of the Google Play services SDK
 # https://developers.google.com/android/guides/setup#add_google_play_services_to_your_project
@@ -562,7 +564,7 @@
 
 
 
-# End of content from /home/megha/.gradle/caches/transforms-3/19a0dfd4021b70333b258b23187eb758/transformed/jetified-play-services-basement-18.0.0/proguard.txt
+# End of content from /home/megha/.gradle/caches/transforms-3/3ee0f8915dc9bf42c60f3eef0b7bd28a/transformed/jetified-play-services-basement-18.1.0/proguard.txt
 # The proguard configuration file for the following section is /home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/proguard.txt
 # Copyright (C) 2018 The Android Open Source Project
 #
@@ -731,18 +733,19 @@
 -keep public class androidx.versionedparcelable.ParcelImpl
 
 # End of content from /home/megha/.gradle/caches/transforms-3/cfaa035a43a363ad38f5365ab0b90d5a/transformed/versionedparcelable-1.1.1/proguard.txt
-# The proguard configuration file for the following section is /home/megha/.gradle/caches/transforms-3/e87eddeaa90c28dfb4f9f67d59604665/transformed/jetified-firebase-components-17.0.0/proguard.txt
+# The proguard configuration file for the following section is /home/megha/.gradle/caches/transforms-3/3f685350aea8d6129eaf471360285bef/transformed/jetified-firebase-components-17.0.1/proguard.txt
 -dontwarn com.google.firebase.components.Component$Instantiation
 -dontwarn com.google.firebase.components.Component$ComponentType
 
 -keep class * implements com.google.firebase.components.ComponentRegistrar
+-keep,allowshrinking interface com.google.firebase.components.ComponentRegistrar
 
-# End of content from /home/megha/.gradle/caches/transforms-3/e87eddeaa90c28dfb4f9f67d59604665/transformed/jetified-firebase-components-17.0.0/proguard.txt
-# The proguard configuration file for the following section is /home/megha/.gradle/caches/transforms-3/2e73c289e8f397b5e9ef1611970a65f0/transformed/jetified-transport-backend-cct-3.1.6/proguard.txt
+# End of content from /home/megha/.gradle/caches/transforms-3/3f685350aea8d6129eaf471360285bef/transformed/jetified-firebase-components-17.0.1/proguard.txt
+# The proguard configuration file for the following section is /home/megha/.gradle/caches/transforms-3/a4e82ef737a7553e347ac9af11ee2c00/transformed/jetified-transport-backend-cct-3.1.7/proguard.txt
 -dontwarn com.google.auto.value.AutoValue
 -dontwarn com.google.auto.value.AutoValue$Builder
 
-# End of content from /home/megha/.gradle/caches/transforms-3/2e73c289e8f397b5e9ef1611970a65f0/transformed/jetified-transport-backend-cct-3.1.6/proguard.txt
+# End of content from /home/megha/.gradle/caches/transforms-3/a4e82ef737a7553e347ac9af11ee2c00/transformed/jetified-transport-backend-cct-3.1.7/proguard.txt
 # The proguard configuration file for the following section is /home/megha/.gradle/caches/transforms-3/9be76c5d1deb19567a11b82e71c34be8/transformed/jetified-transport-api-3.0.0/proguard.txt
 -dontwarn com.google.auto.value.AutoValue
 -dontwarn com.google.auto.value.AutoValue$Builder
@@ -802,7 +805,7 @@
 }
 
 # End of content from /home/megha/.gradle/caches/transforms-3/6177f268e213b14de8126836e971779f/transformed/rules/lib/META-INF/proguard/androidx-annotations.pro
-# The proguard configuration file for the following section is /home/megha/.gradle/caches/transforms-3/6bd2ae4dd04c2b64a50f7e9188ad8e3d/transformed/jetified-grpc-android-1.44.1/proguard.txt
+# The proguard configuration file for the following section is /home/megha/.gradle/caches/transforms-3/2926cbc8da7cfff1c5633b32799072d8/transformed/jetified-grpc-android-1.48.1/proguard.txt
 -keepclassmembers class io.grpc.okhttp.OkHttpChannelBuilder {
   io.grpc.okhttp.OkHttpChannelBuilder forTarget(java.lang.String);
   io.grpc.okhttp.OkHttpChannelBuilder scheduledExecutorService(java.util.concurrent.ScheduledExecutorService);
@@ -810,7 +813,7 @@
   io.grpc.okhttp.OkHttpChannelBuilder transportExecutor(java.util.concurrent.Executor);
 }
 
-# End of content from /home/megha/.gradle/caches/transforms-3/6bd2ae4dd04c2b64a50f7e9188ad8e3d/transformed/jetified-grpc-android-1.44.1/proguard.txt
+# End of content from /home/megha/.gradle/caches/transforms-3/2926cbc8da7cfff1c5633b32799072d8/transformed/jetified-grpc-android-1.48.1/proguard.txt
 # The proguard configuration file for the following section is /home/megha/.gradle/caches/transforms-3/3d1e58076ca9cad4ad299d957e1deefe/transformed/jetified-threetenabp-1.2.3/proguard.txt
 # Keep class members used for serialization
 # https://www.guardsquare.com/en/products/proguard/manual/examples#serializable

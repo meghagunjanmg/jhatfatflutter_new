@@ -53,7 +53,7 @@ class LoginNavigator extends StatelessWidget {
 
               break;
             case LoginRoutes.homepage:
-              builder = (BuildContext _) => HomeOrderAccount();
+              builder = (BuildContext _) => HomeOrderAccount(0);
               return MaterialPageRoute(builder: builder, settings: settings);
 
               break;

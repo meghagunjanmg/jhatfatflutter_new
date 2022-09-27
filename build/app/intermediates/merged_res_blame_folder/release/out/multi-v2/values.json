@@ -112,6 +112,23 @@
                     }
                 },
                 {
+                    "source": "/home/megha/.gradle/caches/transforms-3/29957fddd8dd8fa6e101f3f5f25e3bd6/transformed/jetified-firebase-messaging-23.0.8/res/values/values.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "81",
+                        "endOffsets": "132"
+                    },
+                    "to": {
+                        "startLines": "1171",
+                        "startColumns": "4",
+                        "startOffsets": "71262",
+                        "endColumns": "81",
+                        "endOffsets": "71339"
+                    }
+                },
+                {
                     "source": "/home/megha/Desktop/jhatfatflutter/android/app/src/main/res/values/string.xml",
                     "from": {
                         "startLines": "2,3,4",
@@ -167,20 +184,20 @@
                     }
                 },
                 {
-                    "source": "/home/megha/.gradle/caches/transforms-3/8a88ccf0b9a2acf6449055a4d64dadfc/transformed/jetified-firebase-messaging-23.0.7/res/values/values.xml",
+                    "source": "/home/megha/.gradle/caches/transforms-3/3ee0f8915dc9bf42c60f3eef0b7bd28a/transformed/jetified-play-services-basement-18.1.0/res/values/values.xml",
                     "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "81",
-                        "endOffsets": "132"
+                        "startLines": "4,7",
+                        "startColumns": "0,0",
+                        "startOffsets": "243,406",
+                        "endColumns": "63,166",
+                        "endOffsets": "306,572"
                     },
                     "to": {
-                        "startLines": "1171",
-                        "startColumns": "4",
-                        "startOffsets": "71262",
-                        "endColumns": "81",
-                        "endOffsets": "71339"
+                        "startLines": "1081,1151",
+                        "startColumns": "4,4",
+                        "startOffsets": "63342,69007",
+                        "endColumns": "67,166",
+                        "endOffsets": "63405,69169"
                     }
                 },
                 {
@@ -329,23 +346,6 @@
                         "endLines": "443,444,445,446,447,448,449,450,1143,1144,1145,1146,1147,1148,1149,1150,1152,1153,1154,1155,1156,1157,1158,1159,1160,6911,7688",
                         "endColumns": "89,79,89,89,79,80,79,79,104,180,124,106,179,122,115,102,187,104,180,124,174,147,62,61,78,20,20",
                         "endOffsets": "21908,21988,22078,22168,22248,22329,22409,22489,68067,68248,68373,68480,68660,68783,68899,69002,69357,69462,69643,69768,69943,70091,70154,70216,70295,451959,491121"
-                    }
-                },
-                {
-                    "source": "/home/megha/.gradle/caches/transforms-3/19a0dfd4021b70333b258b23187eb758/transformed/jetified-play-services-basement-18.0.0/res/values/values.xml",
-                    "from": {
-                        "startLines": "4,7",
-                        "startColumns": "0,0",
-                        "startOffsets": "243,406",
-                        "endColumns": "63,166",
-                        "endOffsets": "306,572"
-                    },
-                    "to": {
-                        "startLines": "1081,1151",
-                        "startColumns": "4,4",
-                        "startOffsets": "63342,69007",
-                        "endColumns": "67,166",
-                        "endOffsets": "63405,69169"
                     }
                 },
                 {

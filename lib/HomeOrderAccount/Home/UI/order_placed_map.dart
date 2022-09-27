@@ -11,6 +11,8 @@ import 'package:jhatfat/cancelproduct/cancelproduct.dart';
 import 'package:location/location.dart' as loc;
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../../Themes/constantfile.dart';
+
 class OrderMapPage extends StatelessWidget {
   final String? instruction;
   final String? pageTitle;
@@ -357,7 +359,7 @@ class _OrderMapState extends State<OrderMap> {
     List<LatLng> polylineCoordinates = [];
 
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      "AIzaSyALFpEOD1-mnkRiWZcNK4adNCfxrHDKXYs",
+      apiKey,
       PointLatLng(_originLatitude, _originLongitude),
       PointLatLng(_destLatitude, _destLongitude),
       travelMode: TravelMode.driving,

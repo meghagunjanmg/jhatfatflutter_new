@@ -240,7 +240,7 @@ class AppCategoryState extends State<AppCategory> {
                           }),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right: 1.0),
+                      padding: const EdgeInsets.only(right: 6.0),
                       child: Stack(
                         children: [
                           IconButton(
@@ -248,11 +248,11 @@ class AppCategoryState extends State<AppCategory> {
                                 AssetImage('images/icons/ic_cart blk.png'),
                               ),
                               onPressed: () {
-                                  Navigator.pushNamed(
-                                          context, PageRoutes.viewCart)
-                                      .then((value) {
-                                    getCartCount();
-                                  });
+                                Navigator.pushNamed(
+                                    context, PageRoutes.viewCart)
+                                    .then((value) {
+                                  getCartCount();
+                                });
                               }),
                           Positioned(
                               right: 5,
@@ -275,8 +275,7 @@ class AppCategoryState extends State<AppCategory> {
                               ))
                         ],
                       ),
-                    ),
-                  ],
+                    ),                  ],
                   bottom: PreferredSize(
                       child: GestureDetector(
                         onTap: () {

@@ -11711,12 +11711,15 @@ com.google.android.gms.common.GooglePlayServicesUtilLight:
     public static boolean isSidewinderDevice(android.content.Context)
     public static boolean uidHasPackageName(android.content.Context,int,java.lang.String)
 com.google.android.gms.common.GoogleSignatureVerifier:
-    private volatile java.lang.String zzc
+    private static volatile java.util.Set zzb
+    private volatile java.lang.String zzd
     public boolean isPackageGoogleSigned(java.lang.String)
     public boolean isUidGoogleSigned(int)
-    private final com.google.android.gms.common.zzw zzc(java.lang.String,boolean,boolean)
+    private final com.google.android.gms.common.zzx zzc(java.lang.String,boolean,boolean)
 com.google.android.gms.common.GoogleSourceStampsChecker
 com.google.android.gms.common.GoogleSourceStampsResult
+com.google.android.gms.common.PackageSignatureVerifier
+com.google.android.gms.common.PackageVerificationResult
 com.google.android.gms.common.ProGuardCanary
 com.google.android.gms.common.R$integer
 com.google.android.gms.common.R$string:
@@ -12143,6 +12146,7 @@ com.google.android.gms.common.internal.PendingResultUtil:
     public static com.google.android.gms.tasks.Task toVoidTask(com.google.android.gms.common.api.PendingResult)
 com.google.android.gms.common.internal.Preconditions:
     private void <init>()
+    public static void checkMainThread()
     public static int checkNotZero(int)
     public static int checkNotZero(int,java.lang.Object)
     public static long checkNotZero(long)
@@ -12237,6 +12241,7 @@ com.google.android.gms.common.internal.safeparcel.SafeParcelable$Constructor
 com.google.android.gms.common.internal.safeparcel.SafeParcelable$Field
 com.google.android.gms.common.internal.safeparcel.SafeParcelable$Indicator
 com.google.android.gms.common.internal.safeparcel.SafeParcelable$Param
+com.google.android.gms.common.internal.safeparcel.SafeParcelable$RemovedParam
 com.google.android.gms.common.internal.safeparcel.SafeParcelable$Reserved
 com.google.android.gms.common.internal.safeparcel.SafeParcelable$VersionField
 com.google.android.gms.common.internal.safeparcel.SafeParcelableSerializer:
@@ -12423,8 +12428,9 @@ com.google.android.gms.common.util.PlatformVersion:
     public static boolean isAtLeastJellyBeanMR1()
     public static boolean isAtLeastLollipopMR1()
     public static boolean isAtLeastM()
-    public static boolean isAtLeastS()
+    public static boolean isAtLeastSv2()
     public static boolean isAtLeastT()
+    public static boolean isAtLeastU()
 com.google.android.gms.common.util.Predicate
 com.google.android.gms.common.util.ProcessUtils:
     private void <init>()
@@ -12439,9 +12445,11 @@ com.google.android.gms.common.util.VisibleForTesting
 com.google.android.gms.common.util.WorkSourceUtil:
     private void <init>()
     public static android.os.WorkSource fromPackageAndModuleExperimentalPi(android.content.Context,java.lang.String,java.lang.String)
+    public static int get(android.os.WorkSource,int)
+    public static java.lang.String getName(android.os.WorkSource,int)
     public static java.util.List getNames(android.os.WorkSource)
     public static boolean isEmpty(android.os.WorkSource)
-    public static int zza(android.os.WorkSource)
+    public static int size(android.os.WorkSource)
 com.google.android.gms.common.util.zzc
 com.google.android.gms.common.wrappers.InstantApps:
     public void <init>()
@@ -12452,16 +12460,24 @@ com.google.android.gms.common.wrappers.PackageManagerWrapper:
 com.google.android.gms.common.zaa
 com.google.android.gms.common.zab
 com.google.android.gms.common.zza
+com.google.android.gms.common.zzaa
+com.google.android.gms.common.zzab
+com.google.android.gms.common.zzac
+com.google.android.gms.common.zzad
+com.google.android.gms.common.zzae
 com.google.android.gms.common.zzd
-com.google.android.gms.common.zzm:
+com.google.android.gms.common.zze
+com.google.android.gms.common.zzn:
     private static volatile com.google.android.gms.common.internal.zzaf zze
-    static com.google.android.gms.common.zzw zza(java.lang.String,com.google.android.gms.common.zzi,boolean,boolean)
-    static com.google.android.gms.common.zzw zzb(java.lang.String,boolean,boolean,boolean)
-    static synthetic java.lang.String zzc(boolean,java.lang.String,com.google.android.gms.common.zzi)
-    static boolean zze()
-    private static com.google.android.gms.common.zzw zzf(java.lang.String,com.google.android.gms.common.zzi,boolean,boolean)
-    private static void zzg()
-com.google.android.gms.common.zzn
+    static com.google.android.gms.common.zzx zza(java.lang.String,com.google.android.gms.common.zzj,boolean,boolean)
+    static com.google.android.gms.common.zzx zzb(java.lang.String,boolean,boolean,boolean)
+    static com.google.android.gms.common.zzx zzc(java.lang.String,boolean,boolean,boolean)
+    static synthetic java.lang.String zzd(boolean,java.lang.String,com.google.android.gms.common.zzj)
+    static boolean zzf()
+    static boolean zzg()
+    private static com.google.android.gms.common.zzx zzh(java.lang.String,com.google.android.gms.common.zzj,boolean,boolean)
+    private static com.google.android.gms.common.zzx zzi(java.lang.String,boolean,boolean,boolean,boolean)
+    private static void zzj()
 com.google.android.gms.common.zzo
 com.google.android.gms.common.zzp
 com.google.android.gms.common.zzq
@@ -12497,6 +12513,10 @@ com.google.android.gms.dynamic.zab
 com.google.android.gms.dynamic.zad
 com.google.android.gms.dynamic.zza
 com.google.android.gms.dynamite.DynamiteModule:
+    public static final int LOCAL
+    public static final int NONE
+    public static final int NO_SELECTION
+    public static final int REMOTE
     public static int getRemoteVersion(android.content.Context,java.lang.String)
     public android.os.IBinder instantiate(java.lang.String)
 com.google.android.gms.identity.R
@@ -12669,9 +12689,9 @@ com.google.android.gms.internal.common.zzai
 com.google.android.gms.internal.common.zzaj
 com.google.android.gms.internal.common.zzak
 com.google.android.gms.internal.common.zzc:
-    public static void zzc(android.os.Parcel,android.os.Parcelable)
     public static void zzd(android.os.Parcel,android.os.Parcelable)
-    public static boolean zzf(android.os.Parcel)
+    public static void zze(android.os.Parcel,android.os.Parcelable)
+    public static boolean zzg(android.os.Parcel)
 com.google.android.gms.internal.common.zze
 com.google.android.gms.internal.common.zzf
 com.google.android.gms.internal.common.zzg
@@ -12695,30 +12715,33 @@ com.google.android.gms.internal.common.zzw
 com.google.android.gms.internal.common.zzx
 com.google.android.gms.internal.common.zzy
 com.google.android.gms.internal.common.zzz
-com.google.android.gms.internal.firebase-auth-api.zzaad:
+com.google.android.gms.internal.firebase-auth-api.zzaan:
     public synthetic bridge java.lang.Object clone()
-    public abstract com.google.android.gms.internal.firebase-auth-api.zzaad zzf()
-com.google.android.gms.internal.firebase-auth-api.zzaaf:
+    public abstract com.google.android.gms.internal.firebase-auth-api.zzaan zzf()
+com.google.android.gms.internal.firebase-auth-api.zzaap:
     public void add(int,java.lang.Object)
     public java.lang.Object set(int,java.lang.Object)
-com.google.android.gms.internal.firebase-auth-api.zzaah:
+com.google.android.gms.internal.firebase-auth-api.zzaar:
     void <init>()
-com.google.android.gms.internal.firebase-auth-api.zzaat:
+com.google.android.gms.internal.firebase-auth-api.zzabd:
     private void <init>()
-com.google.android.gms.internal.firebase-auth-api.zzabc:
+com.google.android.gms.internal.firebase-auth-api.zzabm:
     void <init>()
-com.google.android.gms.internal.firebase-auth-api.zzabt:
-    public final synthetic bridge com.google.android.gms.internal.firebase-auth-api.zzaad zzf()
-com.google.android.gms.internal.firebase-auth-api.zzabw
-com.google.android.gms.internal.firebase-auth-api.zzach:
+com.google.android.gms.internal.firebase-auth-api.zzabu:
+    public static final synthetic int zzb
+    void <init>()
+com.google.android.gms.internal.firebase-auth-api.zzacd:
+    public final synthetic bridge com.google.android.gms.internal.firebase-auth-api.zzaan zzf()
+com.google.android.gms.internal.firebase-auth-api.zzacg
+com.google.android.gms.internal.firebase-auth-api.zzacr:
     public final boolean equals(java.lang.Object)
     public final int hashCode()
     public final java.lang.String toString()
-com.google.android.gms.internal.firebase-auth-api.zzacm:
+com.google.android.gms.internal.firebase-auth-api.zzacw:
     private void <init>()
-com.google.android.gms.internal.firebase-auth-api.zzaco:
+com.google.android.gms.internal.firebase-auth-api.zzacy:
     private void <init>()
-com.google.android.gms.internal.firebase-auth-api.zzadl:
+com.google.android.gms.internal.firebase-auth-api.zzadv:
     void <init>()
 com.google.android.gms.internal.firebase-auth-api.zzai:
     public synthetic bridge java.util.Iterator iterator()
@@ -12729,97 +12752,91 @@ com.google.android.gms.internal.firebase-auth-api.zze:
     private void <init>()
 com.google.android.gms.internal.firebase-auth-api.zzg:
     public void <init>()
-com.google.android.gms.internal.firebase-auth-api.zzgd:
+com.google.android.gms.internal.firebase-auth-api.zzgh:
     private void <init>()
-com.google.android.gms.internal.firebase-auth-api.zzgg:
+com.google.android.gms.internal.firebase-auth-api.zzgk:
     private void <init>()
-com.google.android.gms.internal.firebase-auth-api.zzif:
+com.google.android.gms.internal.firebase-auth-api.zzin:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzii:
+com.google.android.gms.internal.firebase-auth-api.zziq:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzil:
+com.google.android.gms.internal.firebase-auth-api.zzit:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzio:
+com.google.android.gms.internal.firebase-auth-api.zziw:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzir:
+com.google.android.gms.internal.firebase-auth-api.zziz:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zziu:
+com.google.android.gms.internal.firebase-auth-api.zzjc:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzix:
+com.google.android.gms.internal.firebase-auth-api.zzjf:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzja:
+com.google.android.gms.internal.firebase-auth-api.zzji:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzjd:
+com.google.android.gms.internal.firebase-auth-api.zzjl:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzjg:
+com.google.android.gms.internal.firebase-auth-api.zzjo:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzjj:
+com.google.android.gms.internal.firebase-auth-api.zzjr:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzjm:
+com.google.android.gms.internal.firebase-auth-api.zzju:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzjp:
+com.google.android.gms.internal.firebase-auth-api.zzjx:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzjs:
+com.google.android.gms.internal.firebase-auth-api.zzka:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzjv:
+com.google.android.gms.internal.firebase-auth-api.zzkd:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzjy:
+com.google.android.gms.internal.firebase-auth-api.zzkg:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzkb:
+com.google.android.gms.internal.firebase-auth-api.zzkj:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzke:
-    static final synthetic int[] zza
-    static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzkh:
-    static final synthetic int[] zza
-    static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzki:
-    private void <init>()
 com.google.android.gms.internal.firebase-auth-api.zzkm:
     static final synthetic int[] zza
     static void <clinit>()
 com.google.android.gms.internal.firebase-auth-api.zzkp:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzks:
+com.google.android.gms.internal.firebase-auth-api.zzkq:
+    private void <init>()
+com.google.android.gms.internal.firebase-auth-api.zzku:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzkv:
+com.google.android.gms.internal.firebase-auth-api.zzkx:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzky:
+com.google.android.gms.internal.firebase-auth-api.zzla:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzlb:
+com.google.android.gms.internal.firebase-auth-api.zzld:
     static final synthetic int[] zza
     static void <clinit>()
 com.google.android.gms.internal.firebase-auth-api.zzlg:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzll:
+com.google.android.gms.internal.firebase-auth-api.zzlj:
     static final synthetic int[] zza
     static void <clinit>()
 com.google.android.gms.internal.firebase-auth-api.zzlo:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzlr:
+com.google.android.gms.internal.firebase-auth-api.zzlt:
     static final synthetic int[] zza
     static void <clinit>()
 com.google.android.gms.internal.firebase-auth-api.zzlw:
@@ -12828,13 +12845,13 @@ com.google.android.gms.internal.firebase-auth-api.zzlw:
 com.google.android.gms.internal.firebase-auth-api.zzlz:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzmc:
+com.google.android.gms.internal.firebase-auth-api.zzme:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzmf:
+com.google.android.gms.internal.firebase-auth-api.zzmh:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzmi:
+com.google.android.gms.internal.firebase-auth-api.zzmk:
     static final synthetic int[] zza
     static void <clinit>()
 com.google.android.gms.internal.firebase-auth-api.zzmn:
@@ -12843,75 +12860,81 @@ com.google.android.gms.internal.firebase-auth-api.zzmn:
 com.google.android.gms.internal.firebase-auth-api.zzmq:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzmr:
+com.google.android.gms.internal.firebase-auth-api.zzmx:
+    static final synthetic int[] zza
+    static void <clinit>()
+com.google.android.gms.internal.firebase-auth-api.zzna:
+    static final synthetic int[] zza
+    static void <clinit>()
+com.google.android.gms.internal.firebase-auth-api.zznb:
     private void <init>()
-com.google.android.gms.internal.firebase-auth-api.zzmt:
-    static final synthetic int[] zza
-    static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzmy:
-    static final synthetic int[] zza
-    static void <clinit>()
 com.google.android.gms.internal.firebase-auth-api.zznd:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzng:
-    static final synthetic int[] zza
-    static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zznh:
-    private void <init>()
-com.google.android.gms.internal.firebase-auth-api.zznj:
-    static final synthetic int[] zza
-    static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zznm:
+com.google.android.gms.internal.firebase-auth-api.zzni:
     static final synthetic int[] zza
     static void <clinit>()
 com.google.android.gms.internal.firebase-auth-api.zznn:
-    private void <init>()
-com.google.android.gms.internal.firebase-auth-api.zznr:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzns:
+com.google.android.gms.internal.firebase-auth-api.zznq:
+    static final synthetic int[] zza
+    static void <clinit>()
+com.google.android.gms.internal.firebase-auth-api.zznr:
     private void <init>()
-com.google.android.gms.internal.firebase-auth-api.zznu:
+com.google.android.gms.internal.firebase-auth-api.zznt:
+    static final synthetic int[] zza
+    static void <clinit>()
+com.google.android.gms.internal.firebase-auth-api.zznw:
     static final synthetic int[] zza
     static void <clinit>()
 com.google.android.gms.internal.firebase-auth-api.zznx:
+    private void <init>()
+com.google.android.gms.internal.firebase-auth-api.zzob:
     static final synthetic int[] zza
     static void <clinit>()
-com.google.android.gms.internal.firebase-auth-api.zzny:
+com.google.android.gms.internal.firebase-auth-api.zzoc:
     private void <init>()
-com.google.android.gms.internal.firebase-auth-api.zzra
-com.google.android.gms.internal.firebase-auth-api.zzrb
-com.google.android.gms.internal.firebase-auth-api.zzto
-com.google.android.gms.internal.firebase-auth-api.zztx:
-    public final void zzy(java.lang.String,com.google.android.gms.internal.firebase-auth-api.zzvs)
-com.google.android.gms.internal.firebase-auth-api.zzum
-com.google.android.gms.internal.firebase-auth-api.zzuo
-com.google.android.gms.internal.firebase-auth-api.zzuq
-com.google.android.gms.internal.firebase-auth-api.zzus
-com.google.android.gms.internal.firebase-auth-api.zzux
-com.google.android.gms.internal.firebase-auth-api.zzvq:
+com.google.android.gms.internal.firebase-auth-api.zzoe:
+    static final synthetic int[] zza
+    static void <clinit>()
+com.google.android.gms.internal.firebase-auth-api.zzoh:
+    static final synthetic int[] zza
+    static void <clinit>()
+com.google.android.gms.internal.firebase-auth-api.zzoi:
+    private void <init>()
+com.google.android.gms.internal.firebase-auth-api.zzrk
+com.google.android.gms.internal.firebase-auth-api.zzrl
+com.google.android.gms.internal.firebase-auth-api.zzty
+com.google.android.gms.internal.firebase-auth-api.zzuh:
+    public final void zzy(java.lang.String,com.google.android.gms.internal.firebase-auth-api.zzwc)
+com.google.android.gms.internal.firebase-auth-api.zzuw
+com.google.android.gms.internal.firebase-auth-api.zzuy
+com.google.android.gms.internal.firebase-auth-api.zzva
+com.google.android.gms.internal.firebase-auth-api.zzvc
+com.google.android.gms.internal.firebase-auth-api.zzvh
+com.google.android.gms.internal.firebase-auth-api.zzw:
+    private void <init>()
+com.google.android.gms.internal.firebase-auth-api.zzwa:
     public final com.google.android.gms.tasks.Task zzk(com.google.firebase.FirebaseApp,com.google.firebase.auth.FirebaseUser,com.google.firebase.auth.AuthCredential,java.lang.String,com.google.firebase.auth.internal.zzbk)
     public final com.google.android.gms.tasks.Task zzm(com.google.firebase.FirebaseApp,com.google.firebase.auth.FirebaseUser,com.google.firebase.auth.EmailAuthCredential,com.google.firebase.auth.internal.zzbk)
     public final com.google.android.gms.tasks.Task zzo(com.google.firebase.FirebaseApp,com.google.firebase.auth.FirebaseUser,java.lang.String,java.lang.String,java.lang.String,com.google.firebase.auth.internal.zzbk)
     public final com.google.android.gms.tasks.Task zzq(com.google.firebase.FirebaseApp,com.google.firebase.auth.FirebaseUser,com.google.firebase.auth.PhoneAuthCredential,java.lang.String,com.google.firebase.auth.internal.zzbk)
     public final com.google.android.gms.tasks.Task zzw(java.lang.String)
-com.google.android.gms.internal.firebase-auth-api.zzvr:
+com.google.android.gms.internal.firebase-auth-api.zzwb:
     public abstract void zzm()
-com.google.android.gms.internal.firebase-auth-api.zzvs:
+com.google.android.gms.internal.firebase-auth-api.zzwc:
     public final void zzm()
-com.google.android.gms.internal.firebase-auth-api.zzvt:
-    public final void zzs(com.google.android.gms.internal.firebase-auth-api.zzra,com.google.android.gms.internal.firebase-auth-api.zzvr)
-com.google.android.gms.internal.firebase-auth-api.zzw:
-    private void <init>()
-com.google.android.gms.internal.firebase-auth-api.zzwh:
-    public final void zzm(java.lang.String,com.google.android.gms.internal.firebase-auth-api.zzwy)
-com.google.android.gms.internal.firebase-auth-api.zzwi:
+com.google.android.gms.internal.firebase-auth-api.zzwd:
+    public final void zzs(com.google.android.gms.internal.firebase-auth-api.zzrk,com.google.android.gms.internal.firebase-auth-api.zzwb)
+com.google.android.gms.internal.firebase-auth-api.zzwr:
+    public final void zzm(java.lang.String,com.google.android.gms.internal.firebase-auth-api.zzxi)
+com.google.android.gms.internal.firebase-auth-api.zzws:
     public final void zzb(java.lang.String)
-com.google.android.gms.internal.firebase-auth-api.zzwq:
+com.google.android.gms.internal.firebase-auth-api.zzxa:
     public final void zzm()
-com.google.android.gms.internal.firebase-auth-api.zzwz:
-    public abstract void zzm(java.lang.String,com.google.android.gms.internal.firebase-auth-api.zzwy)
+com.google.android.gms.internal.firebase-auth-api.zzxj:
+    public abstract void zzm(java.lang.String,com.google.android.gms.internal.firebase-auth-api.zzxi)
 com.google.android.gms.internal.identity.zza
 com.google.android.gms.internal.identity.zzb
 com.google.android.gms.internal.identity.zzc
@@ -20162,6 +20185,7 @@ com.google.common.base.Converter$IdentityConverter
 com.google.common.base.Converter$ReverseConverter
 com.google.common.base.Converter
 com.google.common.base.Defaults
+com.google.common.base.ElementTypesAreNonnullByDefault
 com.google.common.base.Enums$StringConverter
 com.google.common.base.Enums
 com.google.common.base.Equivalence$1
@@ -20192,9 +20216,7 @@ com.google.common.base.Functions$PredicateFunction
 com.google.common.base.Functions$SupplierFunction
 com.google.common.base.Functions$ToStringFunction
 com.google.common.base.Functions
-com.google.common.base.Java8Usage$SomeTypeAnnotation
-com.google.common.base.Java8Usage:
-    private void <init>()
+com.google.common.base.Java8Compatibility
 com.google.common.base.JdkPattern$JdkMatcher
 com.google.common.base.JdkPattern
 com.google.common.base.Joiner$1
@@ -20223,6 +20245,7 @@ com.google.common.base.MoreObjects$ToStringHelper:
     public com.google.common.base.MoreObjects$ToStringHelper add(java.lang.String,char)
     public com.google.common.base.MoreObjects$ToStringHelper add(java.lang.String,float)
     private com.google.common.base.MoreObjects$ToStringHelper addHolder(java.lang.Object)
+    private com.google.common.base.MoreObjects$ToStringHelper addUnconditionalHolder(java.lang.Object)
     public com.google.common.base.MoreObjects$ToStringHelper addValue(char)
     public com.google.common.base.MoreObjects$ToStringHelper addValue(double)
     public com.google.common.base.MoreObjects$ToStringHelper addValue(float)
@@ -20232,13 +20255,31 @@ com.google.common.base.MoreObjects$ToStringHelper:
     public com.google.common.base.MoreObjects$ToStringHelper addValue(boolean)
 com.google.common.base.MoreObjects:
     private void <init>()
+    public static java.lang.Object firstNonNull(java.lang.Object,java.lang.Object)
     public static com.google.common.base.MoreObjects$ToStringHelper toStringHelper(java.lang.String)
+com.google.common.base.NullnessCasts
 com.google.common.base.Objects:
     private void <init>()
 com.google.common.base.Optional$1$1
 com.google.common.base.Optional$1
-com.google.common.base.Optional
+com.google.common.base.Optional:
+    private static final long serialVersionUID
+    public static com.google.common.base.Optional absent()
+    public abstract java.util.Set asSet()
+    public abstract boolean equals(java.lang.Object)
+    public static com.google.common.base.Optional fromNullable(java.lang.Object)
+    public abstract java.lang.Object get()
+    public abstract int hashCode()
+    public static com.google.common.base.Optional of(java.lang.Object)
+    public abstract com.google.common.base.Optional or(com.google.common.base.Optional)
+    public abstract java.lang.Object or(com.google.common.base.Supplier)
+    public abstract java.lang.Object or(java.lang.Object)
+    public abstract java.lang.Object orNull()
+    public static java.lang.Iterable presentInstances(java.lang.Iterable)
+    public abstract java.lang.String toString()
+    public abstract com.google.common.base.Optional transform(com.google.common.base.Function)
 com.google.common.base.PairwiseEquivalence
+com.google.common.base.ParametricNullness
 com.google.common.base.PatternCompiler:
     public abstract com.google.common.base.CommonPattern compile(java.lang.String)
     public abstract boolean isPcreLike()
@@ -20255,6 +20296,7 @@ com.google.common.base.Platform:
     static boolean patternCompilerIsPcreLike()
     static com.google.common.base.CharMatcher precomputeCharMatcher(com.google.common.base.CharMatcher)
 com.google.common.base.Preconditions:
+    private void <init>()
     public static void checkArgument(boolean,java.lang.String,char,char)
     public static void checkArgument(boolean,java.lang.String,char,int)
     public static void checkArgument(boolean,java.lang.String,char,long)
@@ -20485,6 +20527,7 @@ com.google.common.cache.CacheLoader$SupplierToCacheLoader
 com.google.common.cache.CacheLoader$UnsupportedLoadingOperationException
 com.google.common.cache.CacheLoader
 com.google.common.cache.CacheStats
+com.google.common.cache.ElementTypesAreNonnullByDefault
 com.google.common.cache.ForwardingCache$SimpleForwardingCache
 com.google.common.cache.ForwardingCache
 com.google.common.cache.ForwardingLoadingCache$SimpleForwardingLoadingCache
@@ -20553,6 +20596,7 @@ com.google.common.cache.LongAddables$2
 com.google.common.cache.LongAddables$PureJavaLongAddable
 com.google.common.cache.LongAddables
 com.google.common.cache.LongAdder
+com.google.common.cache.ParametricNullness
 com.google.common.cache.ReferenceEntry
 com.google.common.cache.RemovalCause$1
 com.google.common.cache.RemovalCause$2
@@ -20561,8 +20605,6 @@ com.google.common.cache.RemovalCause$4
 com.google.common.cache.RemovalCause$5
 com.google.common.cache.RemovalCause
 com.google.common.cache.RemovalListener
-com.google.common.cache.RemovalListeners$1$1
-com.google.common.cache.RemovalListeners$1
 com.google.common.cache.RemovalListeners
 com.google.common.cache.RemovalNotification
 com.google.common.cache.Striped64$1
@@ -20645,6 +20687,7 @@ com.google.common.collect.ArrayTable$Row
 com.google.common.collect.ArrayTable$RowMap
 com.google.common.collect.ArrayTable
 com.google.common.collect.BaseImmutableMultimap
+com.google.common.collect.BiMap$-CC
 com.google.common.collect.BiMap
 com.google.common.collect.BoundType
 com.google.common.collect.ByFunctionOrdering:
@@ -20731,6 +20774,7 @@ com.google.common.collect.DiscreteDomain$BigIntegerDomain
 com.google.common.collect.DiscreteDomain$IntegerDomain
 com.google.common.collect.DiscreteDomain$LongDomain
 com.google.common.collect.DiscreteDomain
+com.google.common.collect.ElementTypesAreNonnullByDefault
 com.google.common.collect.EmptyContiguousSet$1
 com.google.common.collect.EmptyContiguousSet$SerializedForm
 com.google.common.collect.EmptyContiguousSet
@@ -20750,7 +20794,6 @@ com.google.common.collect.FilteredEntryMultimap$AsMap$1EntrySetImpl
 com.google.common.collect.FilteredEntryMultimap$AsMap$1KeySetImpl
 com.google.common.collect.FilteredEntryMultimap$AsMap$1ValuesImpl
 com.google.common.collect.FilteredEntryMultimap$AsMap
-com.google.common.collect.FilteredEntryMultimap$Keys$1$1
 com.google.common.collect.FilteredEntryMultimap$Keys$1
 com.google.common.collect.FilteredEntryMultimap$Keys
 com.google.common.collect.FilteredEntryMultimap$ValuePredicate
@@ -20765,6 +20808,7 @@ com.google.common.collect.FilteredKeySetMultimap$EntrySet
 com.google.common.collect.FilteredKeySetMultimap
 com.google.common.collect.FilteredMultimap
 com.google.common.collect.FilteredMultimapValues
+com.google.common.collect.FilteredSetMultimap$-CC
 com.google.common.collect.FilteredSetMultimap
 com.google.common.collect.FluentIterable$1
 com.google.common.collect.FluentIterable$2
@@ -20871,10 +20915,12 @@ com.google.common.collect.ImmutableList:
     public final com.google.common.collect.ImmutableList asList()
     public static com.google.common.collect.ImmutableList$Builder builder()
     public static com.google.common.collect.ImmutableList$Builder builderWithExpectedSize(int)
+    private static varargs com.google.common.collect.ImmutableList construct(java.lang.Object[])
     public static com.google.common.collect.ImmutableList copyOf(java.lang.Iterable)
     public static com.google.common.collect.ImmutableList copyOf(java.util.Collection)
     public static com.google.common.collect.ImmutableList copyOf(java.util.Iterator)
     public static com.google.common.collect.ImmutableList copyOf(java.lang.Object[])
+    public static com.google.common.collect.ImmutableList of(java.lang.Object)
     public static com.google.common.collect.ImmutableList of(java.lang.Object,java.lang.Object)
     public static com.google.common.collect.ImmutableList of(java.lang.Object,java.lang.Object,java.lang.Object)
     public static com.google.common.collect.ImmutableList of(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)
@@ -20896,6 +20942,7 @@ com.google.common.collect.ImmutableListMultimap
 com.google.common.collect.ImmutableMap$1
 com.google.common.collect.ImmutableMap$Builder:
     public void <init>()
+    public com.google.common.collect.ImmutableMap buildKeepingLast()
     com.google.common.collect.ImmutableMap$Builder combine(com.google.common.collect.ImmutableMap$Builder)
     public com.google.common.collect.ImmutableMap$Builder orderEntriesByValue(java.util.Comparator)
     public com.google.common.collect.ImmutableMap$Builder putAll(java.util.Map)
@@ -20910,7 +20957,7 @@ com.google.common.collect.ImmutableMap:
     public com.google.common.collect.ImmutableSetMultimap asMultimap()
     public static com.google.common.collect.ImmutableMap$Builder builder()
     public static com.google.common.collect.ImmutableMap$Builder builderWithExpectedSize(int)
-    static void checkNoConflict(boolean,java.lang.String,java.util.Map$Entry,java.util.Map$Entry)
+    static void checkNoConflict(boolean,java.lang.String,java.lang.Object,java.lang.Object)
     static java.lang.IllegalArgumentException conflictException(java.lang.String,java.lang.Object,java.lang.Object)
     static java.util.Map$Entry entryOf(java.lang.Object,java.lang.Object)
     boolean isHashCodeFast()
@@ -20920,6 +20967,12 @@ com.google.common.collect.ImmutableMap:
     public static com.google.common.collect.ImmutableMap of(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)
     public static com.google.common.collect.ImmutableMap of(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)
     public static com.google.common.collect.ImmutableMap of(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)
+    public static com.google.common.collect.ImmutableMap of(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)
+    public static com.google.common.collect.ImmutableMap of(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)
+    public static com.google.common.collect.ImmutableMap of(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)
+    public static com.google.common.collect.ImmutableMap of(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)
+    public static com.google.common.collect.ImmutableMap of(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)
+    public static varargs com.google.common.collect.ImmutableMap ofEntries(java.util.Map$Entry[])
     java.lang.Object writeReplace()
 com.google.common.collect.ImmutableMapEntrySet$EntrySetSerializedForm
 com.google.common.collect.ImmutableMapEntrySet$RegularEntrySet
@@ -21034,7 +21087,6 @@ com.google.common.collect.Iterators$8
 com.google.common.collect.Iterators$ArrayItr
 com.google.common.collect.Iterators$ConcatenatedIterator
 com.google.common.collect.Iterators$EmptyModifiableIterator
-com.google.common.collect.Iterators$MergingIterator$1
 com.google.common.collect.Iterators$MergingIterator
 com.google.common.collect.Iterators$PeekingImpl
 com.google.common.collect.Iterators:
@@ -21053,7 +21105,7 @@ com.google.common.collect.Iterators:
     public static java.util.Iterator concat(java.util.Iterator,java.util.Iterator,java.util.Iterator,java.util.Iterator)
     public static varargs java.util.Iterator concat(java.util.Iterator[])
     static varargs java.util.Iterator concatNoDefensiveCopy(java.util.Iterator[])
-    private static varargs java.util.Iterator consumingForArray(java.lang.Object[])
+    private static varargs java.util.Iterator consumingForArray(java.util.Iterator[])
     public static java.util.Iterator consumingIterator(java.util.Iterator)
     public static boolean contains(java.util.Iterator,java.lang.Object)
     public static java.util.Iterator cycle(java.lang.Iterable)
@@ -21115,6 +21167,7 @@ com.google.common.collect.LinkedListMultimap$Node
 com.google.common.collect.LinkedListMultimap$NodeIterator
 com.google.common.collect.LinkedListMultimap$ValueForKeyIterator
 com.google.common.collect.LinkedListMultimap
+com.google.common.collect.ListMultimap$-CC
 com.google.common.collect.ListMultimap
 com.google.common.collect.Lists$1
 com.google.common.collect.Lists$2
@@ -21439,10 +21492,13 @@ com.google.common.collect.MutableClassToInstanceMap$2
 com.google.common.collect.MutableClassToInstanceMap$SerializedForm
 com.google.common.collect.MutableClassToInstanceMap
 com.google.common.collect.NaturalOrdering
+com.google.common.collect.NullnessCasts
 com.google.common.collect.NullsFirstOrdering
 com.google.common.collect.NullsLastOrdering
 com.google.common.collect.ObjectArrays:
     private void <init>()
+    static varargs java.lang.Object[] checkElementsNotNull(java.lang.Object[])
+    static java.lang.Object[] checkElementsNotNull(java.lang.Object[],int)
     public static java.lang.Object[] concat(java.lang.Object,java.lang.Object[])
     public static java.lang.Object[] concat(java.lang.Object[],java.lang.Object)
     public static java.lang.Object[] concat(java.lang.Object[],java.lang.Object[],java.lang.Class)
@@ -21493,6 +21549,7 @@ com.google.common.collect.Ordering:
     public com.google.common.collect.Ordering reverse()
     public java.util.List sortedCopy(java.lang.Iterable)
     public static com.google.common.collect.Ordering usingToString()
+com.google.common.collect.ParametricNullness
 com.google.common.collect.PeekingIterator
 com.google.common.collect.Platform:
     private void <init>()
@@ -21535,6 +21592,8 @@ com.google.common.collect.RegularImmutableMap:
     private static final int SHORT_MASK
     private static final int SHORT_MAX_SIZE
     private static final long serialVersionUID
+    static com.google.common.collect.RegularImmutableMap create(int,java.lang.Object[])
+    static java.lang.Object createHashTableOrThrow(java.lang.Object[],int,int,int)
 com.google.common.collect.RegularImmutableMultiset$1
 com.google.common.collect.RegularImmutableMultiset$ElementSet
 com.google.common.collect.RegularImmutableMultiset$SerializedForm
@@ -21547,10 +21606,12 @@ com.google.common.collect.RegularImmutableTable$Values
 com.google.common.collect.RegularImmutableTable
 com.google.common.collect.ReverseNaturalOrdering
 com.google.common.collect.ReverseOrdering
+com.google.common.collect.RowSortedTable$-CC
 com.google.common.collect.RowSortedTable
 com.google.common.collect.Serialization$1
 com.google.common.collect.Serialization$FieldSetter
 com.google.common.collect.Serialization
+com.google.common.collect.SetMultimap$-CC
 com.google.common.collect.SetMultimap
 com.google.common.collect.Sets$1$1
 com.google.common.collect.Sets$1
@@ -21618,6 +21679,8 @@ com.google.common.collect.Sets:
     public static java.util.NavigableSet synchronizedNavigableSet(java.util.NavigableSet)
     public static com.google.common.collect.Sets$SetView union(java.util.Set,java.util.Set)
     public static java.util.NavigableSet unmodifiableNavigableSet(java.util.NavigableSet)
+com.google.common.collect.SingletonImmutableSet:
+    public com.google.common.collect.ImmutableList asList()
 com.google.common.collect.SingletonImmutableTable
 com.google.common.collect.SortedIterable
 com.google.common.collect.SortedIterables
@@ -21633,12 +21696,16 @@ com.google.common.collect.SortedLists$KeyPresentBehavior$4
 com.google.common.collect.SortedLists$KeyPresentBehavior$5
 com.google.common.collect.SortedLists$KeyPresentBehavior
 com.google.common.collect.SortedLists
+com.google.common.collect.SortedMapDifference$-CC
 com.google.common.collect.SortedMapDifference
+com.google.common.collect.SortedMultiset$-CC
 com.google.common.collect.SortedMultiset
+com.google.common.collect.SortedMultisetBridge$-CC
 com.google.common.collect.SortedMultisetBridge
 com.google.common.collect.SortedMultisets$ElementSet
 com.google.common.collect.SortedMultisets$NavigableElementSet
 com.google.common.collect.SortedMultisets
+com.google.common.collect.SortedSetMultimap$-CC
 com.google.common.collect.SortedSetMultimap
 com.google.common.collect.SparseImmutableTable
 com.google.common.collect.StandardRowSortedTable$1
@@ -21720,7 +21787,6 @@ com.google.common.collect.TransformedIterator:
     abstract java.lang.Object transform(java.lang.Object)
 com.google.common.collect.TransformedListIterator
 com.google.common.collect.TreeBasedTable$1
-com.google.common.collect.TreeBasedTable$2
 com.google.common.collect.TreeBasedTable$Factory
 com.google.common.collect.TreeBasedTable$TreeRow
 com.google.common.collect.TreeBasedTable
@@ -21779,13 +21845,14 @@ com.google.common.escape.ArrayBasedUnicodeEscaper
 com.google.common.escape.CharEscaper
 com.google.common.escape.CharEscaperBuilder$CharArrayDecorator
 com.google.common.escape.CharEscaperBuilder
-com.google.common.escape.Escaper$1
+com.google.common.escape.ElementTypesAreNonnullByDefault
 com.google.common.escape.Escaper
 com.google.common.escape.Escapers$1
 com.google.common.escape.Escapers$2
 com.google.common.escape.Escapers$Builder$1
 com.google.common.escape.Escapers$Builder
 com.google.common.escape.Escapers
+com.google.common.escape.ParametricNullness
 com.google.common.escape.Platform$1
 com.google.common.escape.Platform
 com.google.common.escape.UnicodeEscaper
@@ -21802,8 +21869,10 @@ com.google.common.eventbus.Dispatcher$PerThreadQueuedDispatcher$2
 com.google.common.eventbus.Dispatcher$PerThreadQueuedDispatcher$Event
 com.google.common.eventbus.Dispatcher$PerThreadQueuedDispatcher
 com.google.common.eventbus.Dispatcher
+com.google.common.eventbus.ElementTypesAreNonnullByDefault
 com.google.common.eventbus.EventBus$LoggingHandler
 com.google.common.eventbus.EventBus
+com.google.common.eventbus.ParametricNullness
 com.google.common.eventbus.Subscribe
 com.google.common.eventbus.Subscriber$1
 com.google.common.eventbus.Subscriber$SynchronizedSubscriber
@@ -21816,9 +21885,6 @@ com.google.common.eventbus.SubscriberRegistry$MethodIdentifier
 com.google.common.eventbus.SubscriberRegistry
 com.google.common.eventbus.package-info
 com.google.common.graph.AbstractBaseGraph$1
-com.google.common.graph.AbstractBaseGraph$2$1
-com.google.common.graph.AbstractBaseGraph$2$2
-com.google.common.graph.AbstractBaseGraph$2$3
 com.google.common.graph.AbstractBaseGraph$2
 com.google.common.graph.AbstractBaseGraph
 com.google.common.graph.AbstractDirectedNetworkConnections$1
@@ -21835,6 +21901,7 @@ com.google.common.graph.AbstractUndirectedNetworkConnections
 com.google.common.graph.AbstractValueGraph$1
 com.google.common.graph.AbstractValueGraph$2
 com.google.common.graph.AbstractValueGraph
+com.google.common.graph.BaseGraph$-CC
 com.google.common.graph.BaseGraph
 com.google.common.graph.DirectedGraphConnections$1$1
 com.google.common.graph.DirectedGraphConnections$1
@@ -21846,9 +21913,6 @@ com.google.common.graph.DirectedGraphConnections$3$2
 com.google.common.graph.DirectedGraphConnections$3
 com.google.common.graph.DirectedGraphConnections$4
 com.google.common.graph.DirectedGraphConnections$5
-com.google.common.graph.DirectedGraphConnections$6
-com.google.common.graph.DirectedGraphConnections$7
-com.google.common.graph.DirectedGraphConnections$8
 com.google.common.graph.DirectedGraphConnections$NodeConnection$Pred
 com.google.common.graph.DirectedGraphConnections$NodeConnection$Succ
 com.google.common.graph.DirectedGraphConnections$NodeConnection
@@ -21861,6 +21925,7 @@ com.google.common.graph.EdgesConnecting
 com.google.common.graph.ElementOrder$1
 com.google.common.graph.ElementOrder$Type
 com.google.common.graph.ElementOrder
+com.google.common.graph.ElementTypesAreNonnullByDefault
 com.google.common.graph.EndpointPair$1
 com.google.common.graph.EndpointPair$Ordered
 com.google.common.graph.EndpointPair$Unordered
@@ -21872,6 +21937,7 @@ com.google.common.graph.EndpointPairIterator
 com.google.common.graph.ForwardingGraph
 com.google.common.graph.ForwardingNetwork
 com.google.common.graph.ForwardingValueGraph
+com.google.common.graph.Graph$-CC
 com.google.common.graph.Graph
 com.google.common.graph.GraphBuilder
 com.google.common.graph.GraphConnections
@@ -21886,12 +21952,8 @@ com.google.common.graph.Graphs$TransposedValueGraph
 com.google.common.graph.Graphs
 com.google.common.graph.ImmutableGraph$Builder
 com.google.common.graph.ImmutableGraph
-com.google.common.graph.ImmutableNetwork$1
-com.google.common.graph.ImmutableNetwork$2
-com.google.common.graph.ImmutableNetwork$3
 com.google.common.graph.ImmutableNetwork$Builder
 com.google.common.graph.ImmutableNetwork
-com.google.common.graph.ImmutableValueGraph$1
 com.google.common.graph.ImmutableValueGraph$Builder
 com.google.common.graph.ImmutableValueGraph
 com.google.common.graph.IncidentEdgeSet
@@ -21905,9 +21967,11 @@ com.google.common.graph.MultiEdgesConnecting
 com.google.common.graph.MutableGraph
 com.google.common.graph.MutableNetwork
 com.google.common.graph.MutableValueGraph
+com.google.common.graph.Network$-CC
 com.google.common.graph.Network
 com.google.common.graph.NetworkBuilder
 com.google.common.graph.NetworkConnections
+com.google.common.graph.ParametricNullness
 com.google.common.graph.PredecessorsFunction
 com.google.common.graph.StandardMutableGraph
 com.google.common.graph.StandardMutableNetwork
@@ -21931,11 +21995,11 @@ com.google.common.graph.Traverser$Traversal$4
 com.google.common.graph.Traverser$Traversal
 com.google.common.graph.Traverser
 com.google.common.graph.UndirectedGraphConnections$1
-com.google.common.graph.UndirectedGraphConnections$2
 com.google.common.graph.UndirectedGraphConnections
 com.google.common.graph.UndirectedMultiNetworkConnections$1
 com.google.common.graph.UndirectedMultiNetworkConnections
 com.google.common.graph.UndirectedNetworkConnections
+com.google.common.graph.ValueGraph$-CC
 com.google.common.graph.ValueGraph
 com.google.common.graph.ValueGraphBuilder
 com.google.common.graph.package-info
@@ -21961,7 +22025,9 @@ com.google.common.hash.ChecksumHashFunction$ChecksumHasher
 com.google.common.hash.ChecksumHashFunction
 com.google.common.hash.Crc32cHashFunction$Crc32cHasher
 com.google.common.hash.Crc32cHashFunction
+com.google.common.hash.ElementTypesAreNonnullByDefault
 com.google.common.hash.FarmHashFingerprint64
+com.google.common.hash.Fingerprint2011
 com.google.common.hash.Funnel
 com.google.common.hash.Funnels$ByteArrayFunnel
 com.google.common.hash.Funnels$IntegerFunnel
@@ -21977,6 +22043,7 @@ com.google.common.hash.HashCode$IntHashCode
 com.google.common.hash.HashCode$LongHashCode
 com.google.common.hash.HashCode
 com.google.common.hash.HashFunction
+com.google.common.hash.Hasher$-CC
 com.google.common.hash.Hasher
 com.google.common.hash.Hashing$1
 com.google.common.hash.Hashing$ChecksumType$1
@@ -22020,6 +22087,7 @@ com.google.common.hash.Murmur3_128HashFunction$Murmur3_128Hasher
 com.google.common.hash.Murmur3_128HashFunction
 com.google.common.hash.Murmur3_32HashFunction$Murmur3_32Hasher
 com.google.common.hash.Murmur3_32HashFunction
+com.google.common.hash.ParametricNullness
 com.google.common.hash.PrimitiveSink
 com.google.common.hash.SipHashFunction$SipHasher
 com.google.common.hash.SipHashFunction
@@ -22027,7 +22095,9 @@ com.google.common.hash.Striped64$1
 com.google.common.hash.Striped64$Cell
 com.google.common.hash.Striped64
 com.google.common.hash.package-info
+com.google.common.html.ElementTypesAreNonnullByDefault
 com.google.common.html.HtmlEscapers
+com.google.common.html.ParametricNullness
 com.google.common.html.package-info
 com.google.common.io.AppendableWriter
 com.google.common.io.BaseEncoding$1
@@ -22130,6 +22200,7 @@ com.google.common.io.Closer$Suppressor
 com.google.common.io.Closer
 com.google.common.io.CountingInputStream
 com.google.common.io.CountingOutputStream
+com.google.common.io.ElementTypesAreNonnullByDefault
 com.google.common.io.FileBackedOutputStream$1
 com.google.common.io.FileBackedOutputStream$2
 com.google.common.io.FileBackedOutputStream$MemoryOutput
@@ -22153,6 +22224,7 @@ com.google.common.io.LittleEndianDataInputStream
 com.google.common.io.LittleEndianDataOutputStream
 com.google.common.io.MultiInputStream
 com.google.common.io.MultiReader
+com.google.common.io.ParametricNullness
 com.google.common.io.PatternFilenameFilter
 com.google.common.io.ReaderInputStream
 com.google.common.io.Resources$1
@@ -22167,6 +22239,7 @@ com.google.common.math.BigIntegerMath
 com.google.common.math.DoubleMath$1
 com.google.common.math.DoubleMath
 com.google.common.math.DoubleUtils
+com.google.common.math.ElementTypesAreNonnullByDefault
 com.google.common.math.IntMath:
     static final int FLOOR_SQRT_MAX_INT
     static final int MAX_POWER_OF_SQRT2_UNSIGNED
@@ -22247,6 +22320,7 @@ com.google.common.math.MathPreconditions:
     static java.math.BigInteger checkPositive(java.lang.String,java.math.BigInteger)
 com.google.common.math.PairedStats
 com.google.common.math.PairedStatsAccumulator
+com.google.common.math.ParametricNullness
 com.google.common.math.Quantiles$1
 com.google.common.math.Quantiles$Scale
 com.google.common.math.Quantiles$ScaleAndIndex
@@ -22257,6 +22331,7 @@ com.google.common.math.StatsAccumulator
 com.google.common.math.ToDoubleRounder$1
 com.google.common.math.ToDoubleRounder
 com.google.common.math.package-info
+com.google.common.net.ElementTypesAreNonnullByDefault
 com.google.common.net.HostAndPort
 com.google.common.net.HostSpecifier
 com.google.common.net.HttpHeaders$ReferrerPolicyValues
@@ -22264,10 +22339,9 @@ com.google.common.net.HttpHeaders
 com.google.common.net.InetAddresses$TeredoInfo
 com.google.common.net.InetAddresses
 com.google.common.net.InternetDomainName
-com.google.common.net.MediaType$1
-com.google.common.net.MediaType$2
 com.google.common.net.MediaType$Tokenizer
 com.google.common.net.MediaType
+com.google.common.net.ParametricNullness
 com.google.common.net.PercentEscaper
 com.google.common.net.UrlEscapers
 com.google.common.net.package-info
@@ -22285,6 +22359,7 @@ com.google.common.primitives.Doubles$DoubleConverter
 com.google.common.primitives.Doubles$LexicographicalComparator
 com.google.common.primitives.Doubles
 com.google.common.primitives.DoublesMethodsForWeb
+com.google.common.primitives.ElementTypesAreNonnullByDefault
 com.google.common.primitives.Floats$FloatArrayAsList
 com.google.common.primitives.Floats$FloatConverter
 com.google.common.primitives.Floats$LexicographicalComparator
@@ -22346,6 +22421,7 @@ com.google.common.primitives.Longs$LexicographicalComparator
 com.google.common.primitives.Longs$LongArrayAsList
 com.google.common.primitives.Longs$LongConverter
 com.google.common.primitives.Longs
+com.google.common.primitives.ParametricNullness
 com.google.common.primitives.ParseRequest
 com.google.common.primitives.Platform
 com.google.common.primitives.Primitives
@@ -22370,24 +22446,22 @@ com.google.common.primitives.UnsignedLongs$ParseOverflowDetection
 com.google.common.primitives.UnsignedLongs
 com.google.common.primitives.package-info
 com.google.common.reflect.AbstractInvocationHandler
-com.google.common.reflect.ClassPath$1
 com.google.common.reflect.ClassPath$ClassInfo
 com.google.common.reflect.ClassPath$LocationInfo
 com.google.common.reflect.ClassPath$ResourceInfo
 com.google.common.reflect.ClassPath
-com.google.common.reflect.Element
+com.google.common.reflect.ElementTypesAreNonnullByDefault
 com.google.common.reflect.ImmutableTypeToInstanceMap$1
 com.google.common.reflect.ImmutableTypeToInstanceMap$Builder
 com.google.common.reflect.ImmutableTypeToInstanceMap
 com.google.common.reflect.Invokable$ConstructorInvokable
 com.google.common.reflect.Invokable$MethodInvokable
 com.google.common.reflect.Invokable
-com.google.common.reflect.MutableTypeToInstanceMap$1
 com.google.common.reflect.MutableTypeToInstanceMap$UnmodifiableEntry$1
-com.google.common.reflect.MutableTypeToInstanceMap$UnmodifiableEntry$2
 com.google.common.reflect.MutableTypeToInstanceMap$UnmodifiableEntry
 com.google.common.reflect.MutableTypeToInstanceMap
 com.google.common.reflect.Parameter
+com.google.common.reflect.ParametricNullness
 com.google.common.reflect.Reflection
 com.google.common.reflect.TypeCapture
 com.google.common.reflect.TypeParameter
@@ -22406,7 +22480,6 @@ com.google.common.reflect.TypeToken$3
 com.google.common.reflect.TypeToken$4
 com.google.common.reflect.TypeToken$Bounds
 com.google.common.reflect.TypeToken$ClassSet
-com.google.common.reflect.TypeToken$InterfaceSet$1
 com.google.common.reflect.TypeToken$InterfaceSet
 com.google.common.reflect.TypeToken$SimpleTypeToken
 com.google.common.reflect.TypeToken$TypeCollector$1
@@ -22422,7 +22495,6 @@ com.google.common.reflect.TypeToken$TypeSet
 com.google.common.reflect.TypeToken
 com.google.common.reflect.TypeVisitor
 com.google.common.reflect.Types$1
-com.google.common.reflect.Types$2
 com.google.common.reflect.Types$ClassOwnership$1
 com.google.common.reflect.Types$ClassOwnership$1LocalClass
 com.google.common.reflect.Types$ClassOwnership$2
@@ -22474,7 +22546,7 @@ com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
 com.google.common.util.concurrent.AbstractFuture$Waiter
 com.google.common.util.concurrent.AbstractFuture:
     private static final com.google.common.util.concurrent.AbstractFuture$AtomicHelper ATOMIC_HELPER
-    private static final boolean GENERATE_CANCELLATION_CAUSES
+    static final boolean GENERATE_CANCELLATION_CAUSES
     private static final java.lang.Object NULL
     private static final long SPIN_THRESHOLD_NANOS
     private volatile com.google.common.util.concurrent.AbstractFuture$Listener listeners
@@ -22484,15 +22556,14 @@ com.google.common.util.concurrent.AbstractFuture:
     static void <clinit>()
     protected void <init>()
     static synthetic com.google.common.util.concurrent.AbstractFuture$AtomicHelper access$200()
-    static synthetic boolean access$300()
-    static synthetic java.lang.Object access$400(com.google.common.util.concurrent.AbstractFuture)
-    static synthetic java.lang.Object access$402(com.google.common.util.concurrent.AbstractFuture,java.lang.Object)
-    static synthetic java.lang.Object access$500(com.google.common.util.concurrent.ListenableFuture)
-    static synthetic void access$600(com.google.common.util.concurrent.AbstractFuture)
+    static synthetic java.lang.Object access$300(com.google.common.util.concurrent.AbstractFuture)
+    static synthetic java.lang.Object access$302(com.google.common.util.concurrent.AbstractFuture,java.lang.Object)
+    static synthetic java.lang.Object access$400(com.google.common.util.concurrent.ListenableFuture)
+    static synthetic void access$500(com.google.common.util.concurrent.AbstractFuture)
+    static synthetic com.google.common.util.concurrent.AbstractFuture$Listener access$700(com.google.common.util.concurrent.AbstractFuture)
+    static synthetic com.google.common.util.concurrent.AbstractFuture$Listener access$702(com.google.common.util.concurrent.AbstractFuture,com.google.common.util.concurrent.AbstractFuture$Listener)
     static synthetic com.google.common.util.concurrent.AbstractFuture$Waiter access$800(com.google.common.util.concurrent.AbstractFuture)
     static synthetic com.google.common.util.concurrent.AbstractFuture$Waiter access$802(com.google.common.util.concurrent.AbstractFuture,com.google.common.util.concurrent.AbstractFuture$Waiter)
-    static synthetic com.google.common.util.concurrent.AbstractFuture$Listener access$900(com.google.common.util.concurrent.AbstractFuture)
-    static synthetic com.google.common.util.concurrent.AbstractFuture$Listener access$902(com.google.common.util.concurrent.AbstractFuture,com.google.common.util.concurrent.AbstractFuture$Listener)
     private void addDoneString(java.lang.StringBuilder)
     public void addListener(java.lang.Runnable,java.util.concurrent.Executor)
     private void addPendingString(java.lang.StringBuilder)
@@ -22531,9 +22602,12 @@ com.google.common.util.concurrent.AbstractIdleService
 com.google.common.util.concurrent.AbstractListeningExecutorService
 com.google.common.util.concurrent.AbstractScheduledService$1
 com.google.common.util.concurrent.AbstractScheduledService$1ThreadFactoryImpl
+com.google.common.util.concurrent.AbstractScheduledService$Cancellable
 com.google.common.util.concurrent.AbstractScheduledService$CustomScheduler$ReschedulableCallable
 com.google.common.util.concurrent.AbstractScheduledService$CustomScheduler$Schedule
+com.google.common.util.concurrent.AbstractScheduledService$CustomScheduler$SupplantableFuture
 com.google.common.util.concurrent.AbstractScheduledService$CustomScheduler
+com.google.common.util.concurrent.AbstractScheduledService$FutureAsCancellable
 com.google.common.util.concurrent.AbstractScheduledService$Scheduler$1
 com.google.common.util.concurrent.AbstractScheduledService$Scheduler$2
 com.google.common.util.concurrent.AbstractScheduledService$Scheduler
@@ -22558,8 +22632,6 @@ com.google.common.util.concurrent.AbstractService
 com.google.common.util.concurrent.AbstractTransformFuture$AsyncTransformFuture
 com.google.common.util.concurrent.AbstractTransformFuture$TransformFuture
 com.google.common.util.concurrent.AbstractTransformFuture
-com.google.common.util.concurrent.AggregateFuture$1
-com.google.common.util.concurrent.AggregateFuture$2
 com.google.common.util.concurrent.AggregateFuture$ReleaseResourcesReason
 com.google.common.util.concurrent.AggregateFuture
 com.google.common.util.concurrent.AggregateFutureState$1
@@ -22574,10 +22646,6 @@ com.google.common.util.concurrent.AtomicDoubleArray
 com.google.common.util.concurrent.AtomicLongMap$1
 com.google.common.util.concurrent.AtomicLongMap
 com.google.common.util.concurrent.Atomics
-com.google.common.util.concurrent.Callables$1
-com.google.common.util.concurrent.Callables$2
-com.google.common.util.concurrent.Callables$3
-com.google.common.util.concurrent.Callables$4
 com.google.common.util.concurrent.Callables
 com.google.common.util.concurrent.ClosingFuture$10
 com.google.common.util.concurrent.ClosingFuture$11
@@ -22651,12 +22719,12 @@ com.google.common.util.concurrent.CycleDetectingLockFactory$Policy
 com.google.common.util.concurrent.CycleDetectingLockFactory$PotentialDeadlockException
 com.google.common.util.concurrent.CycleDetectingLockFactory$WithExplicitOrdering
 com.google.common.util.concurrent.CycleDetectingLockFactory
+com.google.common.util.concurrent.ElementTypesAreNonnullByDefault
 com.google.common.util.concurrent.ExecutionError
 com.google.common.util.concurrent.ExecutionList$RunnableExecutorPair
 com.google.common.util.concurrent.ExecutionList
 com.google.common.util.concurrent.ExecutionSequencer$1
 com.google.common.util.concurrent.ExecutionSequencer$2
-com.google.common.util.concurrent.ExecutionSequencer$3
 com.google.common.util.concurrent.ExecutionSequencer$RunningState
 com.google.common.util.concurrent.ExecutionSequencer$TaskNonReentrantExecutor
 com.google.common.util.concurrent.ExecutionSequencer$ThreadConfinedTaskQueue
@@ -22688,21 +22756,18 @@ com.google.common.util.concurrent.Futures$NonCancellationPropagatingFuture
 com.google.common.util.concurrent.Futures
 com.google.common.util.concurrent.FuturesGetChecked$1
 com.google.common.util.concurrent.FuturesGetChecked$GetCheckedTypeValidator
-com.google.common.util.concurrent.FuturesGetChecked$GetCheckedTypeValidatorHolder$ClassValueValidator$1
-com.google.common.util.concurrent.FuturesGetChecked$GetCheckedTypeValidatorHolder$ClassValueValidator
 com.google.common.util.concurrent.FuturesGetChecked$GetCheckedTypeValidatorHolder$WeakSetValidator
 com.google.common.util.concurrent.FuturesGetChecked$GetCheckedTypeValidatorHolder
 com.google.common.util.concurrent.FuturesGetChecked
 com.google.common.util.concurrent.GwtFluentFutureCatchingSpecialization
 com.google.common.util.concurrent.GwtFuturesCatchingSpecialization
-com.google.common.util.concurrent.IgnoreJRERequirement
 com.google.common.util.concurrent.ImmediateFuture$ImmediateCancelledFuture
 com.google.common.util.concurrent.ImmediateFuture$ImmediateFailedFuture
 com.google.common.util.concurrent.ImmediateFuture
 com.google.common.util.concurrent.InterruptibleTask$1
+com.google.common.util.concurrent.InterruptibleTask$Blocker
 com.google.common.util.concurrent.InterruptibleTask$DoNothingRunnable
 com.google.common.util.concurrent.InterruptibleTask
-com.google.common.util.concurrent.JdkFutureAdapters$ListenableFutureAdapter$1
 com.google.common.util.concurrent.JdkFutureAdapters$ListenableFutureAdapter
 com.google.common.util.concurrent.JdkFutureAdapters
 com.google.common.util.concurrent.ListenableFuture
@@ -22711,7 +22776,9 @@ com.google.common.util.concurrent.ListenableScheduledFuture
 com.google.common.util.concurrent.ListenerCallQueue$Event
 com.google.common.util.concurrent.ListenerCallQueue$PerListenerQueue
 com.google.common.util.concurrent.ListenerCallQueue
+com.google.common.util.concurrent.ListeningExecutorService$-CC
 com.google.common.util.concurrent.ListeningExecutorService
+com.google.common.util.concurrent.ListeningScheduledExecutorService$-CC
 com.google.common.util.concurrent.ListeningScheduledExecutorService
 com.google.common.util.concurrent.Monitor$Guard
 com.google.common.util.concurrent.Monitor
@@ -22750,7 +22817,9 @@ com.google.common.util.concurrent.MoreExecutors:
     public static boolean shutdownAndAwaitTermination(java.util.concurrent.ExecutorService,long,java.util.concurrent.TimeUnit)
     private static com.google.common.util.concurrent.ListenableFuture submitAndAddQueueListener(com.google.common.util.concurrent.ListeningExecutorService,java.util.concurrent.Callable,java.util.concurrent.BlockingQueue)
     private static void useDaemonThreadFactory(java.util.concurrent.ThreadPoolExecutor)
+com.google.common.util.concurrent.NullnessCasts
 com.google.common.util.concurrent.OverflowAvoidingLockSupport
+com.google.common.util.concurrent.ParametricNullness
 com.google.common.util.concurrent.Partially$GwtIncompatible
 com.google.common.util.concurrent.Partially
 com.google.common.util.concurrent.Platform
@@ -22763,14 +22832,7 @@ com.google.common.util.concurrent.SequentialExecutor$1
 com.google.common.util.concurrent.SequentialExecutor$QueueWorker
 com.google.common.util.concurrent.SequentialExecutor$WorkerRunningState
 com.google.common.util.concurrent.SequentialExecutor
-com.google.common.util.concurrent.Service$1
 com.google.common.util.concurrent.Service$Listener
-com.google.common.util.concurrent.Service$State$1
-com.google.common.util.concurrent.Service$State$2
-com.google.common.util.concurrent.Service$State$3
-com.google.common.util.concurrent.Service$State$4
-com.google.common.util.concurrent.Service$State$5
-com.google.common.util.concurrent.Service$State$6
 com.google.common.util.concurrent.Service$State
 com.google.common.util.concurrent.Service
 com.google.common.util.concurrent.ServiceManager$1
@@ -22791,7 +22853,6 @@ com.google.common.util.concurrent.SettableFuture:
     public static com.google.common.util.concurrent.SettableFuture create()
     public boolean setException(java.lang.Throwable)
     public boolean setFuture(com.google.common.util.concurrent.ListenableFuture)
-com.google.common.util.concurrent.SimpleTimeLimiter$1$1
 com.google.common.util.concurrent.SimpleTimeLimiter$1
 com.google.common.util.concurrent.SimpleTimeLimiter
 com.google.common.util.concurrent.SmoothRateLimiter$1
@@ -22799,11 +22860,6 @@ com.google.common.util.concurrent.SmoothRateLimiter$SmoothBursty
 com.google.common.util.concurrent.SmoothRateLimiter$SmoothWarmingUp
 com.google.common.util.concurrent.SmoothRateLimiter
 com.google.common.util.concurrent.Striped$1
-com.google.common.util.concurrent.Striped$2
-com.google.common.util.concurrent.Striped$3
-com.google.common.util.concurrent.Striped$4
-com.google.common.util.concurrent.Striped$5
-com.google.common.util.concurrent.Striped$6
 com.google.common.util.concurrent.Striped$CompactStriped
 com.google.common.util.concurrent.Striped$LargeLazyStriped
 com.google.common.util.concurrent.Striped$PaddedLock
@@ -22832,7 +22888,6 @@ com.google.common.util.concurrent.UncaughtExceptionHandlers
 com.google.common.util.concurrent.UncheckedExecutionException
 com.google.common.util.concurrent.UncheckedTimeoutException
 com.google.common.util.concurrent.Uninterruptibles
-com.google.common.util.concurrent.WrappingExecutorService$1
 com.google.common.util.concurrent.WrappingExecutorService
 com.google.common.util.concurrent.WrappingScheduledExecutorService
 com.google.common.util.concurrent.internal.InternalFutureFailureAccess:
@@ -22840,6 +22895,8 @@ com.google.common.util.concurrent.internal.InternalFutureFailureAccess:
     protected abstract java.lang.Throwable tryInternalFastPathGetFailure()
 com.google.common.util.concurrent.internal.InternalFutures
 com.google.common.util.concurrent.package-info
+com.google.common.xml.ElementTypesAreNonnullByDefault
+com.google.common.xml.ParametricNullness
 com.google.common.xml.XmlEscapers
 com.google.common.xml.package-info
 com.google.errorprone.annotations.CanIgnoreReturnValue
@@ -22855,6 +22912,7 @@ com.google.errorprone.annotations.Immutable
 com.google.errorprone.annotations.IncompatibleModifiers
 com.google.errorprone.annotations.InlineMe
 com.google.errorprone.annotations.InlineMeValidationDisabled
+com.google.errorprone.annotations.Keep
 com.google.errorprone.annotations.Modifier
 com.google.errorprone.annotations.MustBeClosed
 com.google.errorprone.annotations.NoAllocation
@@ -22989,23 +23047,16 @@ com.google.firebase.auth.FacebookAuthProvider:
     public static final java.lang.String FACEBOOK_SIGN_IN_METHOD
     public static final java.lang.String PROVIDER_ID
     private void <init>()
-com.google.firebase.auth.FederatedAuthProvider:
-    public abstract void zza(android.app.Activity)
-    public abstract void zzb(android.app.Activity)
 com.google.firebase.auth.FirebaseAuth:
     public com.google.android.gms.tasks.Task getPendingAuthResult()
     public boolean isSignInWithEmailLink(java.lang.String)
     public com.google.android.gms.tasks.Task setFirebaseUIVersion(java.lang.String)
     public com.google.android.gms.tasks.Task updateCurrentUser(com.google.firebase.auth.FirebaseUser)
     public final com.google.android.gms.tasks.Task zze(com.google.firebase.auth.FirebaseUser,com.google.firebase.auth.AuthCredential)
-    public final com.google.android.gms.tasks.Task zzj(android.app.Activity,com.google.firebase.auth.FederatedAuthProvider,com.google.firebase.auth.FirebaseUser)
-    public final com.google.android.gms.tasks.Task zzk(android.app.Activity,com.google.firebase.auth.FederatedAuthProvider,com.google.firebase.auth.FirebaseUser)
 com.google.firebase.auth.FirebaseAuthProvider
 com.google.firebase.auth.FirebaseUser:
     public abstract java.lang.String getProviderId()
     public com.google.android.gms.tasks.Task reauthenticate(com.google.firebase.auth.AuthCredential)
-    public com.google.android.gms.tasks.Task startActivityForLinkWithProvider(android.app.Activity,com.google.firebase.auth.FederatedAuthProvider)
-    public com.google.android.gms.tasks.Task startActivityForReauthenticateWithProvider(android.app.Activity,com.google.firebase.auth.FederatedAuthProvider)
 com.google.firebase.auth.GithubAuthProvider:
     public static final java.lang.String GITHUB_SIGN_IN_METHOD
     public static final java.lang.String PROVIDER_ID
@@ -23035,8 +23086,6 @@ com.google.firebase.auth.OAuthProvider$CredentialBuilder:
 com.google.firebase.auth.OAuthProvider:
     public static com.google.firebase.auth.AuthCredential getCredential(java.lang.String,java.lang.String,java.lang.String)
     public java.lang.String getProviderId()
-    public final void zza(android.app.Activity)
-    public final void zzb(android.app.Activity)
 com.google.firebase.auth.PhoneAuthOptions$Builder:
     public com.google.firebase.auth.PhoneAuthOptions$Builder requireSmsValidation(boolean)
 com.google.firebase.auth.PhoneAuthOptions:
@@ -23074,8 +23123,6 @@ com.google.firebase.auth.internal.zzbd:
     public final com.google.android.gms.tasks.Task zza()
 com.google.firebase.auth.internal.zzbm:
     public final com.google.android.gms.tasks.Task zza()
-    public final void zzh(android.content.Context,com.google.firebase.auth.FirebaseAuth,com.google.firebase.auth.FirebaseUser)
-    public final boolean zzj(android.app.Activity,com.google.android.gms.tasks.TaskCompletionSource,com.google.firebase.auth.FirebaseAuth,com.google.firebase.auth.FirebaseUser)
 com.google.firebase.auth.internal.zzn:
     public final com.google.firebase.auth.MultiFactorInfo getMultiFactorInfo()
 com.google.firebase.auth.internal.zzo:
@@ -23089,6 +23136,7 @@ com.google.firebase.auth.zze:
 com.google.firebase.auth.zzu
 com.google.firebase.components.BuildConfig
 com.google.firebase.components.Component$Builder:
+    public com.google.firebase.components.Component$Builder name(java.lang.String)
     public com.google.firebase.components.Component$Builder publishes(java.lang.Class)
 com.google.firebase.components.Component:
     public boolean isLazy()
@@ -23102,6 +23150,7 @@ com.google.firebase.components.ComponentDiscovery:
 com.google.firebase.components.ComponentRuntime:
     public varargs void <init>(java.util.concurrent.Executor,java.lang.Iterable,com.google.firebase.components.Component[])
     public void discoverComponents()
+    java.util.Collection getAllComponentsForTest()
     public void initializeAllComponentsForTests()
     private static synthetic com.google.firebase.components.ComponentRegistrar lambda$toProviders$1(com.google.firebase.components.ComponentRegistrar)
     private static java.lang.Iterable toProviders(java.lang.Iterable)
@@ -23277,6 +23326,9 @@ com.google.firebase.events.Event:
     public java.lang.Object getPayload()
 com.google.firebase.events.Subscriber:
     public abstract void subscribe(java.lang.Class,java.util.concurrent.Executor,com.google.firebase.events.EventHandler)
+com.google.firebase.firestore.AggregateQuery
+com.google.firebase.firestore.AggregateQuerySnapshot
+com.google.firebase.firestore.AggregateSource
 com.google.firebase.firestore.BuildConfig
 com.google.firebase.firestore.CollectionReference:
     public com.google.android.gms.tasks.Task add(java.lang.Object)
@@ -23378,6 +23430,7 @@ com.google.firebase.firestore.Query:
     public com.google.firebase.firestore.ListenerRegistration addSnapshotListener(com.google.firebase.firestore.EventListener)
     public com.google.firebase.firestore.ListenerRegistration addSnapshotListener(java.util.concurrent.Executor,com.google.firebase.firestore.EventListener)
     private com.google.firebase.firestore.core.Bound boundFromDocumentSnapshot(java.lang.String,com.google.firebase.firestore.DocumentSnapshot,boolean)
+    com.google.firebase.firestore.AggregateQuery count()
     public com.google.firebase.firestore.Query endAt(com.google.firebase.firestore.DocumentSnapshot)
     public com.google.firebase.firestore.Query endBefore(com.google.firebase.firestore.DocumentSnapshot)
     public com.google.android.gms.tasks.Task get()
@@ -23412,6 +23465,7 @@ com.google.firebase.firestore.R$drawable
 com.google.firebase.firestore.R$id
 com.google.firebase.firestore.R$integer
 com.google.firebase.firestore.R$layout
+com.google.firebase.firestore.R$raw
 com.google.firebase.firestore.R$string
 com.google.firebase.firestore.R$style
 com.google.firebase.firestore.R$styleable
@@ -23458,7 +23512,11 @@ com.google.firebase.firestore.core.FirestoreClient:
     private static final java.lang.String LOG_TAG
     private static final int MAX_CONCURRENT_LIMBO_RESOLUTIONS
     public com.google.android.gms.tasks.Task configureFieldIndexes(java.util.List)
-    private synthetic void lambda$configureFieldIndexes$18(java.util.List)
+    private synthetic void lambda$configureFieldIndexes$21(java.util.List)
+    private static synthetic void lambda$runCountQuery$14(com.google.android.gms.tasks.TaskCompletionSource,java.lang.Long)
+    private static synthetic void lambda$runCountQuery$15(com.google.android.gms.tasks.TaskCompletionSource,java.lang.Exception)
+    private synthetic void lambda$runCountQuery$16(com.google.firebase.firestore.core.Query,com.google.android.gms.tasks.TaskCompletionSource)
+    public com.google.android.gms.tasks.Task runCountQuery(com.google.firebase.firestore.core.Query)
 com.google.firebase.firestore.core.ListenSequence:
     public static final long INVALID
 com.google.firebase.firestore.core.Query:
@@ -23467,6 +23525,7 @@ com.google.firebase.firestore.core.Query:
 com.google.firebase.firestore.core.SyncEngine:
     public java.util.Map getActiveLimboDocumentResolutions()
     public java.util.List getEnqueuedLimboDocumentResolutions()
+    public com.google.android.gms.tasks.Task runCountQuery(com.google.firebase.firestore.core.Query)
 com.google.firebase.firestore.core.Target:
     public static final long NO_LIMIT
 com.google.firebase.firestore.core.TargetIdGenerator:
@@ -23974,6 +24033,8 @@ com.google.firebase.firestore.remote.Datastore:
     static final java.lang.String SSL_DEPENDENCY_ERROR_MESSAGE
     com.google.firebase.firestore.core.DatabaseInfo getDatabaseInfo()
     com.google.firebase.firestore.util.AsyncQueue getWorkerQueue()
+    private synthetic java.lang.Long lambda$runCountQuery$1(com.google.android.gms.tasks.Task)
+    public com.google.android.gms.tasks.Task runCountQuery(com.google.firebase.firestore.core.Query)
 com.google.firebase.firestore.remote.FirebaseClientGrpcMetadataProvider:
     private static final java.lang.String HEART_BEAT_TAG
 com.google.firebase.firestore.remote.FirestoreCallCredentials:
@@ -23990,6 +24051,7 @@ com.google.firebase.firestore.remote.RemoteStore:
     private static final java.lang.String LOG_TAG
     private static final int MAX_PENDING_WRITES
     void forceEnableNetwork()
+    public com.google.android.gms.tasks.Task runCountQuery(com.google.firebase.firestore.core.Query)
 com.google.firebase.firestore.remote.Stream
 com.google.firebase.firestore.remote.WatchChange$WatchTargetChange:
     public void <init>(com.google.firebase.firestore.remote.WatchChange$WatchTargetChangeType,java.util.List)
@@ -24148,6 +24210,7 @@ com.google.firebase.installations.R$drawable
 com.google.firebase.installations.R$id
 com.google.firebase.installations.R$integer
 com.google.firebase.installations.R$layout
+com.google.firebase.installations.R$raw
 com.google.firebase.installations.R$string
 com.google.firebase.installations.R$style
 com.google.firebase.installations.R$styleable
@@ -24418,6 +24481,7 @@ com.google.firebase.messaging.R$drawable
 com.google.firebase.messaging.R$id
 com.google.firebase.messaging.R$integer
 com.google.firebase.messaging.R$layout
+com.google.firebase.messaging.R$raw
 com.google.firebase.messaging.R$string
 com.google.firebase.messaging.R$style
 com.google.firebase.messaging.R$styleable
@@ -24557,6 +24621,8 @@ com.google.firebase.platforminfo.LibraryVersionComponent:
 com.google.firebase.provider.FirebaseInitProvider:
     static final java.lang.String EMPTY_APPLICATION_ID_PROVIDER_AUTHORITY
     private static final java.lang.String TAG
+com.google.firebase.tracing.FirebaseTrace:
+    private void <init>()
 com.google.firestore.admin.v1.Index$Builder:
     public com.google.firestore.admin.v1.Index$Builder addAllFields(java.lang.Iterable)
     public com.google.firestore.admin.v1.Index$Builder addFields(int,com.google.firestore.admin.v1.Index$IndexField$Builder)
@@ -24804,6 +24870,12 @@ com.google.firestore.bundle.NamedQuery$1
 com.google.firestore.bundle.NamedQuery$Builder
 com.google.firestore.bundle.NamedQuery
 com.google.firestore.bundle.NamedQueryOrBuilder
+com.google.firestore.v1.AggregationResult$1
+com.google.firestore.v1.AggregationResult$AggregateFieldsDefaultEntryHolder
+com.google.firestore.v1.AggregationResult$Builder
+com.google.firestore.v1.AggregationResult
+com.google.firestore.v1.AggregationResultOrBuilder
+com.google.firestore.v1.AggregationResultProto
 com.google.firestore.v1.ArrayValue$Builder:
     public com.google.firestore.v1.ArrayValue$Builder addValues(int,com.google.firestore.v1.Value$Builder)
     public com.google.firestore.v1.ArrayValue$Builder addValues(int,com.google.firestore.v1.Value)
@@ -25708,6 +25780,7 @@ com.google.firestore.v1.FirestoreGrpc$FirestoreStub:
     public void listDocuments(com.google.firestore.v1.ListDocumentsRequest,io.grpc.stub.StreamObserver)
     public io.grpc.stub.StreamObserver listen(io.grpc.stub.StreamObserver)
     public void rollback(com.google.firestore.v1.RollbackRequest,io.grpc.stub.StreamObserver)
+    public void runAggregationQuery(com.google.firestore.v1.RunAggregationQueryRequest,io.grpc.stub.StreamObserver)
     public void runQuery(com.google.firestore.v1.RunQueryRequest,io.grpc.stub.StreamObserver)
     public void updateDocument(com.google.firestore.v1.UpdateDocumentRequest,io.grpc.stub.StreamObserver)
     public io.grpc.stub.StreamObserver write(io.grpc.stub.StreamObserver)
@@ -25723,6 +25796,7 @@ com.google.firestore.v1.FirestoreGrpc:
     private static final int METHODID_LIST_COLLECTION_IDS
     private static final int METHODID_LIST_DOCUMENTS
     private static final int METHODID_ROLLBACK
+    private static final int METHODID_RUN_AGGREGATION_QUERY
     private static final int METHODID_RUN_QUERY
     private static final int METHODID_UPDATE_DOCUMENT
     private static final int METHODID_WRITE
@@ -25734,6 +25808,7 @@ com.google.firestore.v1.FirestoreGrpc:
     private static volatile io.grpc.MethodDescriptor getListCollectionIdsMethod
     private static volatile io.grpc.MethodDescriptor getListDocumentsMethod
     private static volatile io.grpc.MethodDescriptor getRollbackMethod
+    private static volatile io.grpc.MethodDescriptor getRunAggregationQueryMethod
     private static volatile io.grpc.MethodDescriptor getRunQueryMethod
     private static volatile io.grpc.MethodDescriptor getUpdateDocumentMethod
     private static volatile io.grpc.ServiceDescriptor serviceDescriptor
@@ -25744,6 +25819,7 @@ com.google.firestore.v1.FirestoreGrpc:
     public static io.grpc.MethodDescriptor getListCollectionIdsMethod()
     public static io.grpc.MethodDescriptor getListDocumentsMethod()
     public static io.grpc.MethodDescriptor getRollbackMethod()
+    public static io.grpc.MethodDescriptor getRunAggregationQueryMethod()
     public static io.grpc.MethodDescriptor getRunQueryMethod()
     public static io.grpc.ServiceDescriptor getServiceDescriptor()
     public static io.grpc.MethodDescriptor getUpdateDocumentMethod()
@@ -26003,6 +26079,16 @@ com.google.firestore.v1.RollbackRequest$1
 com.google.firestore.v1.RollbackRequest$Builder
 com.google.firestore.v1.RollbackRequest
 com.google.firestore.v1.RollbackRequestOrBuilder
+com.google.firestore.v1.RunAggregationQueryRequest$1
+com.google.firestore.v1.RunAggregationQueryRequest$Builder
+com.google.firestore.v1.RunAggregationQueryRequest$ConsistencySelectorCase
+com.google.firestore.v1.RunAggregationQueryRequest$QueryTypeCase
+com.google.firestore.v1.RunAggregationQueryRequest
+com.google.firestore.v1.RunAggregationQueryRequestOrBuilder
+com.google.firestore.v1.RunAggregationQueryResponse$1
+com.google.firestore.v1.RunAggregationQueryResponse$Builder
+com.google.firestore.v1.RunAggregationQueryResponse
+com.google.firestore.v1.RunAggregationQueryResponseOrBuilder
 com.google.firestore.v1.RunQueryRequest$1
 com.google.firestore.v1.RunQueryRequest$Builder
 com.google.firestore.v1.RunQueryRequest$ConsistencySelectorCase
@@ -26013,6 +26099,18 @@ com.google.firestore.v1.RunQueryResponse$1
 com.google.firestore.v1.RunQueryResponse$Builder
 com.google.firestore.v1.RunQueryResponse
 com.google.firestore.v1.RunQueryResponseOrBuilder
+com.google.firestore.v1.StructuredAggregationQuery$1
+com.google.firestore.v1.StructuredAggregationQuery$Aggregation$Builder
+com.google.firestore.v1.StructuredAggregationQuery$Aggregation$Count$Builder
+com.google.firestore.v1.StructuredAggregationQuery$Aggregation$Count
+com.google.firestore.v1.StructuredAggregationQuery$Aggregation$CountOrBuilder
+com.google.firestore.v1.StructuredAggregationQuery$Aggregation$OperatorCase
+com.google.firestore.v1.StructuredAggregationQuery$Aggregation
+com.google.firestore.v1.StructuredAggregationQuery$AggregationOrBuilder
+com.google.firestore.v1.StructuredAggregationQuery$Builder
+com.google.firestore.v1.StructuredAggregationQuery$QueryTypeCase
+com.google.firestore.v1.StructuredAggregationQuery
+com.google.firestore.v1.StructuredAggregationQueryOrBuilder
 com.google.firestore.v1.StructuredQuery$Builder:
     public com.google.firestore.v1.StructuredQuery$Builder addAllFrom(java.lang.Iterable)
     public com.google.firestore.v1.StructuredQuery$Builder addAllOrderBy(java.lang.Iterable)
@@ -27371,6 +27469,7 @@ com.google.gson.Gson:
     static final boolean DEFAULT_PRETTY_PRINT
     static final boolean DEFAULT_SERIALIZE_NULLS
     static final boolean DEFAULT_SPECIALIZE_FLOAT_VALUES
+    static final boolean DEFAULT_USE_JDK_UNSAFE
     private static final java.lang.String JSON_NON_EXECUTABLE_PREFIX
     public void <init>()
     public com.google.gson.internal.Excluder excluder()
@@ -27391,6 +27490,7 @@ com.google.gson.GsonBuilder:
     public com.google.gson.GsonBuilder addSerializationExclusionStrategy(com.google.gson.ExclusionStrategy)
     public com.google.gson.GsonBuilder disableHtmlEscaping()
     public com.google.gson.GsonBuilder disableInnerClassSerialization()
+    public com.google.gson.GsonBuilder disableJdkUnsafe()
     public com.google.gson.GsonBuilder enableComplexMapKeySerialization()
     public varargs com.google.gson.GsonBuilder excludeFieldsWithModifiers(int[])
     public com.google.gson.GsonBuilder excludeFieldsWithoutExposeAnnotation()
@@ -27522,19 +27622,10 @@ com.google.gson.internal.Excluder:
 com.google.gson.internal.GsonBuildConfig
 com.google.gson.internal.JavaVersion:
     private void <init>()
+    public static int getMajorJavaVersion()
 com.google.gson.internal.LazilyParsedNumber:
     private void readObject(java.io.ObjectInputStream)
     private java.lang.Object writeReplace()
-com.google.gson.internal.LinkedHashTreeMap$1
-com.google.gson.internal.LinkedHashTreeMap$AvlBuilder
-com.google.gson.internal.LinkedHashTreeMap$AvlIterator
-com.google.gson.internal.LinkedHashTreeMap$EntrySet$1
-com.google.gson.internal.LinkedHashTreeMap$EntrySet
-com.google.gson.internal.LinkedHashTreeMap$KeySet$1
-com.google.gson.internal.LinkedHashTreeMap$KeySet
-com.google.gson.internal.LinkedHashTreeMap$LinkedTreeMapIterator
-com.google.gson.internal.LinkedHashTreeMap$Node
-com.google.gson.internal.LinkedHashTreeMap
 com.google.gson.internal.LinkedTreeMap:
     private void readObject(java.io.ObjectInputStream)
     private java.lang.Object writeReplace()
@@ -27567,14 +27658,14 @@ com.google.gson.internal.bind.TreeTypeAdapter:
     public static com.google.gson.TypeAdapterFactory newFactory(com.google.gson.reflect.TypeToken,java.lang.Object)
     public static com.google.gson.TypeAdapterFactory newFactoryWithMatchRawType(com.google.gson.reflect.TypeToken,java.lang.Object)
     public static com.google.gson.TypeAdapterFactory newTypeHierarchyFactory(java.lang.Class,java.lang.Object)
-com.google.gson.internal.bind.TypeAdapters$25:
+com.google.gson.internal.bind.TypeAdapters$26:
     private static final java.lang.String DAY_OF_MONTH
     private static final java.lang.String HOUR_OF_DAY
     private static final java.lang.String MINUTE
     private static final java.lang.String MONTH
     private static final java.lang.String SECOND
     private static final java.lang.String YEAR
-com.google.gson.internal.bind.TypeAdapters$29
+com.google.gson.internal.bind.TypeAdapters$30
 com.google.gson.internal.bind.TypeAdapters:
     private void <init>()
     public static com.google.gson.TypeAdapterFactory newFactory(com.google.gson.reflect.TypeToken,com.google.gson.TypeAdapter)
@@ -27585,6 +27676,8 @@ com.google.gson.internal.bind.util.ISO8601Utils:
     public static java.lang.String format(java.util.Date,boolean)
     public static java.lang.String format(java.util.Date,boolean,java.util.TimeZone)
     private static void padInt(java.lang.StringBuilder,int,int)
+com.google.gson.internal.reflect.ReflectionHelper:
+    private void <init>()
 com.google.gson.internal.sql.SqlTypesSupport:
     private void <init>()
 com.google.gson.reflect.TypeToken:
@@ -27599,6 +27692,7 @@ com.google.gson.reflect.TypeToken:
     private static boolean matches(java.lang.reflect.Type,java.lang.reflect.Type,java.util.Map)
     private static boolean typeEquals(java.lang.reflect.ParameterizedType,java.lang.reflect.ParameterizedType,java.util.Map)
 com.google.gson.stream.JsonReader:
+    static final int BUFFER_SIZE
     private static final long MIN_INCOMPLETE_INTEGER
     private static final int NUMBER_CHAR_DECIMAL
     private static final int NUMBER_CHAR_DIGIT
@@ -27827,7 +27921,7 @@ com.google.protobuf.ApiProto
 com.google.protobuf.ArrayDecoders$Registers:
     void <init>()
 com.google.protobuf.ArrayDecoders:
-    void <init>()
+    private void <init>()
 com.google.protobuf.BinaryReader$SafeHeapReader:
     public int getTotalBytesRead()
     public void readGroupList(java.util.List,java.lang.Class,com.google.protobuf.ExtensionRegistryLite)
@@ -27882,7 +27976,11 @@ com.google.protobuf.ByteString:
     public static com.google.protobuf.ByteString copyFrom(java.nio.ByteBuffer,int)
     public abstract void copyTo(java.nio.ByteBuffer)
     public void copyTo(byte[],int)
+    public static final com.google.protobuf.ByteString empty()
     public final boolean endsWith(com.google.protobuf.ByteString)
+    private static int extractHexDigit(java.lang.String,int)
+    public static com.google.protobuf.ByteString fromHex(java.lang.String)
+    private static int hexDigit(char)
     public abstract java.io.InputStream newInput()
     public static com.google.protobuf.ByteString$Output newOutput()
     public static com.google.protobuf.ByteString$Output newOutput(int)
@@ -28036,6 +28134,7 @@ com.google.protobuf.CodedOutputStream:
     public static int computeByteBufferSize(int,java.nio.ByteBuffer)
     public static int computeByteBufferSizeNoTag(java.nio.ByteBuffer)
     public static int computeGroupSize(int,com.google.protobuf.MessageLite)
+    public static int computeRawVarint32Size(int)
     public static int computeRawVarint64Size(long)
     public abstract int getTotalBytesWritten()
     static com.google.protobuf.CodedOutputStream newInstance(com.google.protobuf.ByteOutput,int)
@@ -28069,6 +28168,7 @@ com.google.protobuf.CodedOutputStreamWriter:
     public void writeGroupList(int,java.util.List)
     public void writeMessage(int,java.lang.Object)
     public void writeMessageList(int,java.util.List)
+com.google.protobuf.CompileTimeConstant
 com.google.protobuf.DescriptorProtos$1
 com.google.protobuf.DescriptorProtos$DescriptorProto$Builder
 com.google.protobuf.DescriptorProtos$DescriptorProto$ExtensionRange$Builder
@@ -28322,7 +28422,6 @@ com.google.protobuf.GeneratedMessageLite$Builder:
     public synthetic bridge com.google.protobuf.MessageLite$Builder clear()
     public synthetic bridge com.google.protobuf.AbstractMessageLite$Builder clone()
     public synthetic bridge com.google.protobuf.MessageLite$Builder clone()
-    public final boolean isInitialized()
     public synthetic bridge com.google.protobuf.AbstractMessageLite$Builder mergeFrom(com.google.protobuf.CodedInputStream,com.google.protobuf.ExtensionRegistryLite)
     public synthetic bridge com.google.protobuf.AbstractMessageLite$Builder mergeFrom(byte[],int,int)
     public synthetic bridge com.google.protobuf.AbstractMessageLite$Builder mergeFrom(byte[],int,int,com.google.protobuf.ExtensionRegistryLite)
@@ -28372,6 +28471,7 @@ com.google.protobuf.GeneratedMessageLite$GeneratedExtension:
 com.google.protobuf.GeneratedMessageLite$SerializedForm
 com.google.protobuf.GeneratedMessageLite:
     static synthetic com.google.protobuf.GeneratedMessageLite$GeneratedExtension access$000(com.google.protobuf.ExtensionLite)
+    static synthetic com.google.protobuf.GeneratedMessageLite access$200(com.google.protobuf.GeneratedMessageLite,byte[],int,int,com.google.protobuf.ExtensionRegistryLite)
     private static com.google.protobuf.GeneratedMessageLite$GeneratedExtension checkIsLite(com.google.protobuf.ExtensionLite)
     protected static com.google.protobuf.Internal$BooleanList emptyBooleanList()
     protected static com.google.protobuf.Internal$DoubleList emptyDoubleList()
@@ -28400,8 +28500,8 @@ com.google.protobuf.GeneratedMessageLite:
     protected static com.google.protobuf.GeneratedMessageLite parseFrom(com.google.protobuf.GeneratedMessageLite,byte[],com.google.protobuf.ExtensionRegistryLite)
     private static com.google.protobuf.GeneratedMessageLite parsePartialDelimitedFrom(com.google.protobuf.GeneratedMessageLite,java.io.InputStream,com.google.protobuf.ExtensionRegistryLite)
     protected static com.google.protobuf.GeneratedMessageLite parsePartialFrom(com.google.protobuf.GeneratedMessageLite,com.google.protobuf.CodedInputStream)
-    private static com.google.protobuf.GeneratedMessageLite parsePartialFrom(com.google.protobuf.GeneratedMessageLite,byte[],com.google.protobuf.ExtensionRegistryLite)
     protected boolean parseUnknownField(int,com.google.protobuf.CodedInputStream)
+com.google.protobuf.InlineMe
 com.google.protobuf.Int32Value$Builder:
     public com.google.protobuf.Int32Value$Builder clearValue()
     public int getValue()
@@ -28484,7 +28584,9 @@ com.google.protobuf.InvalidProtocolBufferException$InvalidWireTypeException:
     private static final long serialVersionUID
 com.google.protobuf.InvalidProtocolBufferException:
     private static final long serialVersionUID
+    public void <init>(java.lang.Exception)
     public void <init>(java.lang.String,java.io.IOException)
+    public void <init>(java.lang.String,java.lang.Exception)
     public com.google.protobuf.MessageLite getUnfinishedMessage()
     public java.io.IOException unwrapIOException()
 com.google.protobuf.JavaType:
@@ -28590,7 +28692,7 @@ com.google.protobuf.MessageLiteToString:
     private static final java.lang.String BYTES_SUFFIX
     private static final java.lang.String LIST_SUFFIX
     private static final java.lang.String MAP_SUFFIX
-    void <init>()
+    private void <init>()
 com.google.protobuf.MessageSchema:
     private static final int ENFORCE_UTF8_MASK
     private static final int FIELD_TYPE_MASK
@@ -28887,8 +28989,8 @@ com.google.protobuf.Utf8$UnsafeProcessor:
     void encodeUtf8Direct(java.lang.CharSequence,java.nio.ByteBuffer)
 com.google.protobuf.Utf8:
     private static final long ASCII_MASK_LONG
-    public static final int COMPLETE
-    public static final int MALFORMED
+    static final int COMPLETE
+    static final int MALFORMED
     static final int MAX_BYTES_PER_CHAR
     private static final int UNSAFE_COUNT_ASCII_THRESHOLD
     private void <init>()
@@ -29730,333 +29832,55 @@ com.razorpay.razorpay_flutter.RazorpayDelegate:
 com.razorpay.razorpay_flutter.RazorpayFlutterPlugin:
     private void <init>(io.flutter.plugin.common.PluginRegistry$Registrar)
     public static void registerWith(io.flutter.plugin.common.PluginRegistry$Registrar)
-com.squareup.okhttp.Address
-com.squareup.okhttp.Authenticator
-com.squareup.okhttp.Cache$1
-com.squareup.okhttp.Cache$2
-com.squareup.okhttp.Cache$CacheRequestImpl$1
-com.squareup.okhttp.Cache$CacheRequestImpl
-com.squareup.okhttp.Cache$CacheResponseBody$1
-com.squareup.okhttp.Cache$CacheResponseBody
-com.squareup.okhttp.Cache$Entry
-com.squareup.okhttp.Cache
-com.squareup.okhttp.CacheControl$1
-com.squareup.okhttp.CacheControl$Builder
-com.squareup.okhttp.CacheControl
-com.squareup.okhttp.Call$1
-com.squareup.okhttp.Call$ApplicationInterceptorChain
-com.squareup.okhttp.Call$AsyncCall
-com.squareup.okhttp.Call
-com.squareup.okhttp.Callback
-com.squareup.okhttp.CertificatePinner$1
-com.squareup.okhttp.CertificatePinner$Builder
-com.squareup.okhttp.CertificatePinner
-com.squareup.okhttp.Challenge
-com.squareup.okhttp.CipherSuite
-com.squareup.okhttp.Connection
-com.squareup.okhttp.ConnectionPool$1
-com.squareup.okhttp.ConnectionPool
-com.squareup.okhttp.ConnectionSpec$1
-com.squareup.okhttp.ConnectionSpec$Builder
-com.squareup.okhttp.ConnectionSpec
-com.squareup.okhttp.Credentials:
-    private void <init>()
-com.squareup.okhttp.Dispatcher
-com.squareup.okhttp.Dns$1
-com.squareup.okhttp.Dns
-com.squareup.okhttp.FormEncodingBuilder
-com.squareup.okhttp.Handshake
-com.squareup.okhttp.Headers$Builder:
-    public com.squareup.okhttp.Headers$Builder add(java.lang.String)
-    public com.squareup.okhttp.Headers$Builder add(java.lang.String,java.lang.String)
-    com.squareup.okhttp.Headers$Builder addLenient(java.lang.String)
-    public java.lang.String get(java.lang.String)
-com.squareup.okhttp.Headers:
-    private void <init>(java.lang.String[])
-    public java.lang.String get(java.lang.String)
-    private static java.lang.String get(java.lang.String[],java.lang.String)
-    public java.util.Date getDate(java.lang.String)
-    public java.util.Set names()
-    public com.squareup.okhttp.Headers$Builder newBuilder()
-    public static com.squareup.okhttp.Headers of(java.util.Map)
-    public static varargs com.squareup.okhttp.Headers of(java.lang.String[])
-    public java.util.Map toMultimap()
-    public java.util.List values(java.lang.String)
-com.squareup.okhttp.HttpUrl$1:
-    static final synthetic int[] $SwitchMap$com$squareup$okhttp$HttpUrl$Builder$ParseResult
-    static void <clinit>()
-com.squareup.okhttp.HttpUrl$Builder$ParseResult
-com.squareup.okhttp.HttpUrl$Builder:
-    public com.squareup.okhttp.HttpUrl$Builder addEncodedPathSegment(java.lang.String)
-    public com.squareup.okhttp.HttpUrl$Builder addEncodedQueryParameter(java.lang.String,java.lang.String)
-    public com.squareup.okhttp.HttpUrl$Builder addPathSegment(java.lang.String)
-    public com.squareup.okhttp.HttpUrl$Builder addQueryParameter(java.lang.String,java.lang.String)
-    public com.squareup.okhttp.HttpUrl$Builder encodedFragment(java.lang.String)
-    public com.squareup.okhttp.HttpUrl$Builder encodedPassword(java.lang.String)
-    public com.squareup.okhttp.HttpUrl$Builder encodedPath(java.lang.String)
-    public com.squareup.okhttp.HttpUrl$Builder encodedQuery(java.lang.String)
-    public com.squareup.okhttp.HttpUrl$Builder encodedUsername(java.lang.String)
-    public com.squareup.okhttp.HttpUrl$Builder fragment(java.lang.String)
-    private boolean isDot(java.lang.String)
-    private boolean isDotDot(java.lang.String)
-    com.squareup.okhttp.HttpUrl$Builder$ParseResult parse(com.squareup.okhttp.HttpUrl,java.lang.String)
-    private static int parsePort(java.lang.String,int,int)
-    public com.squareup.okhttp.HttpUrl$Builder password(java.lang.String)
-    private void pop()
-    private static int portColonOffset(java.lang.String,int,int)
-    private void push(java.lang.String,int,int,boolean,boolean)
-    public com.squareup.okhttp.HttpUrl$Builder query(java.lang.String)
-    com.squareup.okhttp.HttpUrl$Builder reencodeForUri()
-    private void removeAllCanonicalQueryParameters(java.lang.String)
-    public com.squareup.okhttp.HttpUrl$Builder removeAllEncodedQueryParameters(java.lang.String)
-    public com.squareup.okhttp.HttpUrl$Builder removeAllQueryParameters(java.lang.String)
-    public com.squareup.okhttp.HttpUrl$Builder removePathSegment(int)
-    private void resolvePath(java.lang.String,int,int)
-    private static int schemeDelimiterOffset(java.lang.String,int,int)
-    public com.squareup.okhttp.HttpUrl$Builder setEncodedPathSegment(int,java.lang.String)
-    public com.squareup.okhttp.HttpUrl$Builder setEncodedQueryParameter(java.lang.String,java.lang.String)
-    public com.squareup.okhttp.HttpUrl$Builder setPathSegment(int,java.lang.String)
-    public com.squareup.okhttp.HttpUrl$Builder setQueryParameter(java.lang.String,java.lang.String)
-    private int skipLeadingAsciiWhitespace(java.lang.String,int,int)
-    private int skipTrailingAsciiWhitespace(java.lang.String,int,int)
-    private static int slashCount(java.lang.String,int,int)
-    public com.squareup.okhttp.HttpUrl$Builder username(java.lang.String)
-com.squareup.okhttp.HttpUrl:
-    static final java.lang.String FORM_ENCODE_SET
-    static final java.lang.String FRAGMENT_ENCODE_SET
-    static final java.lang.String FRAGMENT_ENCODE_SET_URI
-    static final java.lang.String PASSWORD_ENCODE_SET
-    static final java.lang.String PATH_SEGMENT_ENCODE_SET
-    static final java.lang.String PATH_SEGMENT_ENCODE_SET_URI
-    static final java.lang.String QUERY_COMPONENT_ENCODE_SET
-    static final java.lang.String QUERY_COMPONENT_ENCODE_SET_URI
-    static final java.lang.String QUERY_ENCODE_SET
-    static final java.lang.String USERNAME_ENCODE_SET
-    static synthetic java.lang.String access$100(com.squareup.okhttp.HttpUrl)
-    static synthetic int access$200(java.lang.String,int,int,java.lang.String)
-    static synthetic java.lang.String access$300(com.squareup.okhttp.HttpUrl)
-    static synthetic int access$400(com.squareup.okhttp.HttpUrl)
-    static java.lang.String canonicalize(java.lang.String,int,int,java.lang.String,boolean,boolean,boolean)
-    static java.lang.String canonicalize(java.lang.String,java.lang.String,boolean,boolean,boolean)
-    static void canonicalize(okio.Buffer,java.lang.String,int,int,java.lang.String,boolean,boolean,boolean)
-    private static int delimiterOffset(java.lang.String,int,int,java.lang.String)
-    public java.lang.String encodedFragment()
-    public java.lang.String encodedPassword()
-    public java.lang.String encodedPath()
-    public java.util.List encodedPathSegments()
-    public java.lang.String encodedQuery()
-    public java.lang.String encodedUsername()
-    public java.lang.String fragment()
-    public static com.squareup.okhttp.HttpUrl get(java.net.URI)
-    public static com.squareup.okhttp.HttpUrl get(java.net.URL)
-    static com.squareup.okhttp.HttpUrl getChecked(java.lang.String)
-    public boolean isHttps()
-    public com.squareup.okhttp.HttpUrl$Builder newBuilder()
-    public static com.squareup.okhttp.HttpUrl parse(java.lang.String)
-    public java.lang.String password()
-    public java.util.List pathSegments()
-    public int pathSize()
-    public java.lang.String query()
-    public java.lang.String queryParameter(java.lang.String)
-    public java.lang.String queryParameterName(int)
-    public java.util.Set queryParameterNames()
-    public java.lang.String queryParameterValue(int)
-    public java.util.List queryParameterValues(java.lang.String)
-    public int querySize()
-    static java.util.List queryStringToNamesAndValues(java.lang.String)
-    public com.squareup.okhttp.HttpUrl resolve(java.lang.String)
-    public java.lang.String scheme()
-    public java.net.URI uri()
-    public java.net.URL url()
-    public java.lang.String username()
-com.squareup.okhttp.Interceptor$Chain
-com.squareup.okhttp.Interceptor
-com.squareup.okhttp.MediaType
-com.squareup.okhttp.MultipartBuilder$MultipartRequestBody
-com.squareup.okhttp.MultipartBuilder
-com.squareup.okhttp.OkHttpClient$1
-com.squareup.okhttp.OkHttpClient
-com.squareup.okhttp.Protocol:
-    public static com.squareup.okhttp.Protocol get(java.lang.String)
-com.squareup.okhttp.Request$Builder:
-    private void <init>(com.squareup.okhttp.Request)
-    synthetic void <init>(com.squareup.okhttp.Request,com.squareup.okhttp.Request$1)
-    public com.squareup.okhttp.Request$Builder addHeader(java.lang.String,java.lang.String)
-    public com.squareup.okhttp.Request$Builder cacheControl(com.squareup.okhttp.CacheControl)
-    public com.squareup.okhttp.Request$Builder delete()
-    public com.squareup.okhttp.Request$Builder delete(com.squareup.okhttp.RequestBody)
-    public com.squareup.okhttp.Request$Builder get()
-    public com.squareup.okhttp.Request$Builder head()
-    public com.squareup.okhttp.Request$Builder headers(com.squareup.okhttp.Headers)
-    public com.squareup.okhttp.Request$Builder method(java.lang.String,com.squareup.okhttp.RequestBody)
-    public com.squareup.okhttp.Request$Builder patch(com.squareup.okhttp.RequestBody)
-    public com.squareup.okhttp.Request$Builder post(com.squareup.okhttp.RequestBody)
-    public com.squareup.okhttp.Request$Builder put(com.squareup.okhttp.RequestBody)
-    public com.squareup.okhttp.Request$Builder removeHeader(java.lang.String)
-    public com.squareup.okhttp.Request$Builder tag(java.lang.Object)
-    public com.squareup.okhttp.Request$Builder url(java.lang.String)
-    public com.squareup.okhttp.Request$Builder url(java.net.URL)
-com.squareup.okhttp.Request:
-    private volatile com.squareup.okhttp.CacheControl cacheControl
-    private volatile java.net.URI javaNetUri
-    private volatile java.net.URL javaNetUrl
-    static synthetic com.squareup.okhttp.Headers access$1000(com.squareup.okhttp.Request)
-    static synthetic com.squareup.okhttp.HttpUrl access$600(com.squareup.okhttp.Request)
-    static synthetic java.lang.String access$700(com.squareup.okhttp.Request)
-    static synthetic com.squareup.okhttp.RequestBody access$800(com.squareup.okhttp.Request)
-    static synthetic java.lang.Object access$900(com.squareup.okhttp.Request)
-    public com.squareup.okhttp.RequestBody body()
-    public com.squareup.okhttp.CacheControl cacheControl()
-    public java.lang.String header(java.lang.String)
-    public java.util.List headers(java.lang.String)
-    public boolean isHttps()
-    public java.lang.String method()
-    public com.squareup.okhttp.Request$Builder newBuilder()
-    public java.lang.Object tag()
-    public java.net.URI uri()
-    public java.net.URL url()
-    public java.lang.String urlString()
-com.squareup.okhttp.RequestBody$1
-com.squareup.okhttp.RequestBody$2
-com.squareup.okhttp.RequestBody$3
-com.squareup.okhttp.RequestBody:
-    public void <init>()
-    public long contentLength()
-    public abstract com.squareup.okhttp.MediaType contentType()
-    public static com.squareup.okhttp.RequestBody create(com.squareup.okhttp.MediaType,java.io.File)
-    public static com.squareup.okhttp.RequestBody create(com.squareup.okhttp.MediaType,java.lang.String)
-    public static com.squareup.okhttp.RequestBody create(com.squareup.okhttp.MediaType,okio.ByteString)
-    public static com.squareup.okhttp.RequestBody create(com.squareup.okhttp.MediaType,byte[])
-    public static com.squareup.okhttp.RequestBody create(com.squareup.okhttp.MediaType,byte[],int,int)
-    public abstract void writeTo(okio.BufferedSink)
-com.squareup.okhttp.Response$1
-com.squareup.okhttp.Response$Builder
-com.squareup.okhttp.Response
-com.squareup.okhttp.ResponseBody$1
-com.squareup.okhttp.ResponseBody
-com.squareup.okhttp.Route
-com.squareup.okhttp.TlsVersion
-com.squareup.okhttp.internal.ConnectionSpecSelector
-com.squareup.okhttp.internal.DiskLruCache$1
-com.squareup.okhttp.internal.DiskLruCache$2
-com.squareup.okhttp.internal.DiskLruCache$3
-com.squareup.okhttp.internal.DiskLruCache$4
-com.squareup.okhttp.internal.DiskLruCache$Editor$1
-com.squareup.okhttp.internal.DiskLruCache$Editor
-com.squareup.okhttp.internal.DiskLruCache$Entry
-com.squareup.okhttp.internal.DiskLruCache$Snapshot
-com.squareup.okhttp.internal.DiskLruCache
-com.squareup.okhttp.internal.FaultHidingSink
-com.squareup.okhttp.internal.Internal
-com.squareup.okhttp.internal.InternalCache
-com.squareup.okhttp.internal.NamedRunnable
-com.squareup.okhttp.internal.OptionalMethod
-com.squareup.okhttp.internal.Platform$Android
-com.squareup.okhttp.internal.Platform$JdkPlatform
-com.squareup.okhttp.internal.Platform$JdkWithJettyBootPlatform
-com.squareup.okhttp.internal.Platform$JettyNegoProvider
-com.squareup.okhttp.internal.Platform
-com.squareup.okhttp.internal.RouteDatabase
-com.squareup.okhttp.internal.Util$1
-com.squareup.okhttp.internal.Util
-com.squareup.okhttp.internal.Version
-com.squareup.okhttp.internal.framed.ErrorCode
-com.squareup.okhttp.internal.framed.FrameReader$Handler
-com.squareup.okhttp.internal.framed.FrameReader
-com.squareup.okhttp.internal.framed.FrameWriter
-com.squareup.okhttp.internal.framed.FramedConnection$1
-com.squareup.okhttp.internal.framed.FramedConnection$2
-com.squareup.okhttp.internal.framed.FramedConnection$3
-com.squareup.okhttp.internal.framed.FramedConnection$4
-com.squareup.okhttp.internal.framed.FramedConnection$5
-com.squareup.okhttp.internal.framed.FramedConnection$6
-com.squareup.okhttp.internal.framed.FramedConnection$7
-com.squareup.okhttp.internal.framed.FramedConnection$Builder
-com.squareup.okhttp.internal.framed.FramedConnection$Listener$1
-com.squareup.okhttp.internal.framed.FramedConnection$Listener
-com.squareup.okhttp.internal.framed.FramedConnection$Reader$1
-com.squareup.okhttp.internal.framed.FramedConnection$Reader$2
-com.squareup.okhttp.internal.framed.FramedConnection$Reader$3
-com.squareup.okhttp.internal.framed.FramedConnection$Reader
-com.squareup.okhttp.internal.framed.FramedConnection
-com.squareup.okhttp.internal.framed.FramedStream$1
-com.squareup.okhttp.internal.framed.FramedStream$FramedDataSink
-com.squareup.okhttp.internal.framed.FramedStream$FramedDataSource
-com.squareup.okhttp.internal.framed.FramedStream$StreamTimeout
-com.squareup.okhttp.internal.framed.FramedStream
-com.squareup.okhttp.internal.framed.Header
-com.squareup.okhttp.internal.framed.HeadersMode
-com.squareup.okhttp.internal.framed.Hpack$Reader
-com.squareup.okhttp.internal.framed.Hpack$Writer
-com.squareup.okhttp.internal.framed.Hpack
-com.squareup.okhttp.internal.framed.Http2$ContinuationSource
-com.squareup.okhttp.internal.framed.Http2$FrameLogger
-com.squareup.okhttp.internal.framed.Http2$Reader
-com.squareup.okhttp.internal.framed.Http2$Writer
-com.squareup.okhttp.internal.framed.Http2
-com.squareup.okhttp.internal.framed.Huffman$Node
-com.squareup.okhttp.internal.framed.Huffman
-com.squareup.okhttp.internal.framed.NameValueBlockReader$1
-com.squareup.okhttp.internal.framed.NameValueBlockReader$2
-com.squareup.okhttp.internal.framed.NameValueBlockReader
-com.squareup.okhttp.internal.framed.Ping
-com.squareup.okhttp.internal.framed.PushObserver$1
-com.squareup.okhttp.internal.framed.PushObserver
-com.squareup.okhttp.internal.framed.Settings
-com.squareup.okhttp.internal.framed.Spdy3$Reader
-com.squareup.okhttp.internal.framed.Spdy3$Writer
-com.squareup.okhttp.internal.framed.Spdy3
-com.squareup.okhttp.internal.framed.Variant
-com.squareup.okhttp.internal.http.AuthenticatorAdapter
-com.squareup.okhttp.internal.http.CacheRequest
-com.squareup.okhttp.internal.http.CacheStrategy$1
-com.squareup.okhttp.internal.http.CacheStrategy$Factory
-com.squareup.okhttp.internal.http.CacheStrategy
-com.squareup.okhttp.internal.http.HeaderParser
-com.squareup.okhttp.internal.http.Http1xStream$1
-com.squareup.okhttp.internal.http.Http1xStream$AbstractSource
-com.squareup.okhttp.internal.http.Http1xStream$ChunkedSink
-com.squareup.okhttp.internal.http.Http1xStream$ChunkedSource
-com.squareup.okhttp.internal.http.Http1xStream$FixedLengthSink
-com.squareup.okhttp.internal.http.Http1xStream$FixedLengthSource
-com.squareup.okhttp.internal.http.Http1xStream$UnknownLengthSource
-com.squareup.okhttp.internal.http.Http1xStream
-com.squareup.okhttp.internal.http.Http2xStream$StreamFinishingSource
-com.squareup.okhttp.internal.http.Http2xStream
-com.squareup.okhttp.internal.http.HttpDate$1
-com.squareup.okhttp.internal.http.HttpDate
-com.squareup.okhttp.internal.http.HttpEngine$1
-com.squareup.okhttp.internal.http.HttpEngine$2
-com.squareup.okhttp.internal.http.HttpEngine$NetworkInterceptorChain
-com.squareup.okhttp.internal.http.HttpEngine
-com.squareup.okhttp.internal.http.HttpMethod
-com.squareup.okhttp.internal.http.HttpStream
-com.squareup.okhttp.internal.http.OkHeaders$1
-com.squareup.okhttp.internal.http.OkHeaders
-com.squareup.okhttp.internal.http.RealResponseBody
-com.squareup.okhttp.internal.http.RequestException
-com.squareup.okhttp.internal.http.RequestLine
-com.squareup.okhttp.internal.http.RetryableSink
-com.squareup.okhttp.internal.http.RouteException
-com.squareup.okhttp.internal.http.RouteSelector
-com.squareup.okhttp.internal.http.StatusLine:
-    public static final int HTTP_CONTINUE
-    public static final int HTTP_PERM_REDIRECT
-    public static final int HTTP_TEMP_REDIRECT
-    public static com.squareup.okhttp.internal.http.StatusLine get(com.squareup.okhttp.Response)
-com.squareup.okhttp.internal.http.StreamAllocation
-com.squareup.okhttp.internal.io.FileSystem$1
-com.squareup.okhttp.internal.io.FileSystem
-com.squareup.okhttp.internal.io.RealConnection
-com.squareup.okhttp.internal.tls.AndroidTrustRootIndex
-com.squareup.okhttp.internal.tls.CertificateChainCleaner
-com.squareup.okhttp.internal.tls.DistinguishedNameParser
-com.squareup.okhttp.internal.tls.OkHostnameVerifier
-com.squareup.okhttp.internal.tls.RealTrustRootIndex
-com.squareup.okhttp.internal.tls.TrustRootIndex
 com.tekartik.sqflite.BuildConfig
-com.tekartik.sqflite.Constant
+com.tekartik.sqflite.Constant:
+    static final java.lang.String CMD_GET
+    static final java.lang.String ERROR_BAD_PARAM
+    static final java.lang.String ERROR_DATABASE_CLOSED
+    static final java.lang.String ERROR_OPEN_FAILED
+    static final java.lang.String MEMORY_DATABASE_PATH
+    public static final java.lang.String METHOD_BATCH
+    public static final java.lang.String METHOD_CLOSE_DATABASE
+    public static final java.lang.String METHOD_DEBUG
+    public static final java.lang.String METHOD_DEBUG_MODE
+    public static final java.lang.String METHOD_DELETE_DATABASE
+    public static final java.lang.String METHOD_EXECUTE
+    public static final java.lang.String METHOD_GET_DATABASES_PATH
+    public static final java.lang.String METHOD_GET_PLATFORM_VERSION
+    public static final java.lang.String METHOD_INSERT
+    public static final java.lang.String METHOD_OPEN_DATABASE
+    public static final java.lang.String METHOD_OPTIONS
+    public static final java.lang.String METHOD_QUERY
+    public static final java.lang.String METHOD_UPDATE
+    static final java.lang.String PARAM_CMD
+    public static final java.lang.String PARAM_CONTINUE_OR_ERROR
+    public static final java.lang.String PARAM_ERROR
+    public static final java.lang.String PARAM_ERROR_CODE
+    public static final java.lang.String PARAM_ERROR_DATA
+    public static final java.lang.String PARAM_ERROR_MESSAGE
+    static final java.lang.String PARAM_ID
+    public static final java.lang.String PARAM_IN_TRANSACTION
+    static final java.lang.String PARAM_LOG_LEVEL
+    public static final java.lang.String PARAM_METHOD
+    public static final java.lang.String PARAM_NO_RESULT
+    static final java.lang.String PARAM_OPERATIONS
+    static final java.lang.String PARAM_PATH
+    static final java.lang.String PARAM_QUERY_AS_MAP_LIST
+    static final java.lang.String PARAM_READ_ONLY
+    public static final java.lang.String PARAM_RECOVERED
+    public static final java.lang.String PARAM_RECOVERED_IN_TRANSACTION
+    public static final java.lang.String PARAM_RESULT
+    static final java.lang.String PARAM_SINGLE_INSTANCE
+    public static final java.lang.String PARAM_SQL
+    public static final java.lang.String PARAM_SQL_ARGUMENTS
+    static final java.lang.String PARAM_THREAD_PRIORITY
+    public static final java.lang.String PLUGIN_KEY
+    static final java.lang.String SQLITE_ERROR
+    public static final java.lang.String TAG
+    public void <init>()
 com.tekartik.sqflite.Database:
+    static final boolean WAL_ENABLED_BY_DEFAULT
+    private static final java.lang.String WAL_ENABLED_META_NAME
     public boolean enableWriteAheadLogging()
 com.tekartik.sqflite.LogLevel:
     static final int none
@@ -31461,6 +31285,7 @@ io.grpc.ForwardingServerCall$SimpleForwardingServerCall
 io.grpc.ForwardingServerCall
 io.grpc.ForwardingServerCallListener$SimpleForwardingServerCallListener
 io.grpc.ForwardingServerCallListener
+io.grpc.GlobalInterceptors
 io.grpc.Grpc$TransportAttr
 io.grpc.Grpc:
     private void <init>()
@@ -31529,12 +31354,18 @@ io.grpc.InternalConfigSelector$Result:
     public static io.grpc.InternalConfigSelector$Result forError(io.grpc.Status)
 io.grpc.InternalDecompressorRegistry:
     private void <init>()
+io.grpc.InternalGlobalInterceptors
 io.grpc.InternalInstrumented:
     public abstract com.google.common.util.concurrent.ListenableFuture getStats()
 io.grpc.InternalKnownTransport
 io.grpc.InternalLogId:
     public java.lang.String getDetails()
     public java.lang.String getTypeName()
+io.grpc.InternalManagedChannelProvider:
+    private void <init>()
+    public static io.grpc.ManagedChannelBuilder builderForAddress(io.grpc.ManagedChannelProvider,java.lang.String,int)
+    public static io.grpc.ManagedChannelBuilder builderForTarget(io.grpc.ManagedChannelProvider,java.lang.String)
+    public static io.grpc.ManagedChannelProvider$NewChannelBuilderResult newChannelBuilder(io.grpc.ManagedChannelProvider,java.lang.String,io.grpc.ChannelCredentials)
 io.grpc.InternalMetadata:
     public void <init>()
     public static io.grpc.Metadata$Key keyOf(java.lang.String,io.grpc.Metadata$AsciiMarshaller)
@@ -31545,6 +31376,7 @@ io.grpc.InternalMetadata:
 io.grpc.InternalMethodDescriptor
 io.grpc.InternalServer
 io.grpc.InternalServerInterceptors
+io.grpc.InternalServerProvider
 io.grpc.InternalServiceProviders$PriorityAccessor
 io.grpc.InternalServiceProviders:
     private void <init>()
@@ -31630,10 +31462,12 @@ io.grpc.ManagedChannelProvider$ProviderNotFoundException:
     private static final long serialVersionUID
 io.grpc.ManagedChannelProvider:
     protected abstract io.grpc.ManagedChannelBuilder builderForAddress(java.lang.String,int)
+    protected abstract java.util.Collection getSupportedSocketAddressTypes()
     protected io.grpc.ManagedChannelProvider$NewChannelBuilderResult newChannelBuilder(java.lang.String,io.grpc.ChannelCredentials)
 io.grpc.ManagedChannelRegistry$ProviderNotFoundException
 io.grpc.ManagedChannelRegistry:
     public synchronized void deregister(io.grpc.ManagedChannelProvider)
+    io.grpc.ManagedChannelBuilder newChannelBuilder(io.grpc.NameResolverRegistry,java.lang.String,io.grpc.ChannelCredentials)
     io.grpc.ManagedChannelBuilder newChannelBuilder(java.lang.String,io.grpc.ChannelCredentials)
     public synchronized void register(io.grpc.ManagedChannelProvider)
 io.grpc.Metadata$1:
@@ -31695,6 +31529,8 @@ io.grpc.NameResolver$Args:
 io.grpc.NameResolver$ResolutionResult:
     public io.grpc.NameResolver$ResolutionResult$Builder toBuilder()
 io.grpc.NameResolver$ResolutionResultAttr
+io.grpc.NameResolverProvider:
+    protected java.util.Collection getProducedSocketAddressTypes()
 io.grpc.NameResolverRegistry:
     private static final java.lang.String UNKNOWN_SCHEME
     public synchronized void deregister(io.grpc.NameResolverProvider)
@@ -31946,8 +31782,8 @@ io.grpc.internal.ConnectionClientTransport:
 io.grpc.internal.ConscryptLoader
 io.grpc.internal.Deframer:
     public abstract void setFullStreamDecompressor(io.grpc.internal.GzipInflatingBuffer)
-io.grpc.internal.DelayedClientCall$4
-io.grpc.internal.DelayedClientCall$7:
+io.grpc.internal.DelayedClientCall$5
+io.grpc.internal.DelayedClientCall$8:
     public boolean isReady()
 io.grpc.internal.DelayedClientCall:
     public final io.grpc.Attributes getAttributes()
@@ -31980,6 +31816,7 @@ io.grpc.internal.DnsNameResolver:
     protected void setResourceResolver(io.grpc.internal.DnsNameResolver$ResourceResolver)
 io.grpc.internal.DnsNameResolverProvider:
     private static final java.lang.String SCHEME
+    protected java.util.Collection getProducedSocketAddressTypes()
 io.grpc.internal.ExponentialBackoffPolicy:
     io.grpc.internal.ExponentialBackoffPolicy setInitialBackoffNanos(long)
     io.grpc.internal.ExponentialBackoffPolicy setJitter(double)
@@ -31992,7 +31829,6 @@ io.grpc.internal.FailingClientTransport$1
 io.grpc.internal.FailingClientTransport:
     public com.google.common.util.concurrent.ListenableFuture getStats()
     public void ping(io.grpc.internal.ClientTransport$PingCallback,java.util.concurrent.Executor)
-io.grpc.internal.FixedObjectPool
 io.grpc.internal.ForwardingClientStream:
     public io.grpc.Attributes getAttributes()
     public void setMessageCompression(boolean)
@@ -32086,7 +31922,7 @@ io.grpc.internal.LongCounterFactory:
     void <init>()
 io.grpc.internal.ManagedChannelImpl$1ResetConnectBackoff
 io.grpc.internal.ManagedChannelImpl$1StatsFetcher
-io.grpc.internal.ManagedChannelImpl$5:
+io.grpc.internal.ManagedChannelImpl$4:
     public boolean isReady()
 io.grpc.internal.ManagedChannelImpl$LbHelperImpl$1AddOobChannel
 io.grpc.internal.ManagedChannelImpl$LbHelperImpl$1ManagedOobChannelCallback
@@ -32113,18 +31949,19 @@ io.grpc.internal.ManagedChannelImpl$SubchannelImpl:
 io.grpc.internal.ManagedChannelImpl:
     static final long IDLE_TIMEOUT_MILLIS_DISABLE
     static final long SUBCHANNEL_SHUTDOWN_DELAY_SECONDS
-    static synthetic boolean access$5000(io.grpc.internal.ManagedChannelImpl)
-    static synthetic io.grpc.internal.ObjectPool access$5600(io.grpc.internal.ManagedChannelImpl)
-    static synthetic io.grpc.internal.ClientTransportFactory access$5700(io.grpc.internal.ManagedChannelImpl)
+    static synthetic boolean access$4900(io.grpc.internal.ManagedChannelImpl)
+    static synthetic io.grpc.internal.ObjectPool access$5500(io.grpc.internal.ManagedChannelImpl)
+    static synthetic io.grpc.internal.ClientTransportFactory access$5600(io.grpc.internal.ManagedChannelImpl)
     static synthetic java.lang.String access$600(io.grpc.internal.ManagedChannelImpl)
-    static synthetic void access$6100(io.grpc.internal.ManagedChannelImpl,io.grpc.ConnectivityStateInfo)
-    static synthetic io.grpc.internal.ClientTransportFactory access$6500(io.grpc.internal.ManagedChannelImpl)
-    static synthetic io.grpc.NameResolver$Args access$6600(io.grpc.internal.ManagedChannelImpl)
-    static synthetic io.grpc.NameResolver$Factory access$6700(io.grpc.internal.ManagedChannelImpl)
+    static synthetic void access$6000(io.grpc.internal.ManagedChannelImpl,io.grpc.ConnectivityStateInfo)
+    static synthetic io.grpc.internal.ClientTransportFactory access$6400(io.grpc.internal.ManagedChannelImpl)
+    static synthetic io.grpc.NameResolver$Args access$6500(io.grpc.internal.ManagedChannelImpl)
+    static synthetic io.grpc.NameResolver$Factory access$6600(io.grpc.internal.ManagedChannelImpl)
+    static synthetic io.grpc.internal.ManagedChannelImpl$ExecutorHolder access$6700(io.grpc.internal.ManagedChannelImpl)
     static synthetic io.grpc.ChannelCredentials access$6800(io.grpc.internal.ManagedChannelImpl)
     static synthetic io.grpc.NameResolverRegistry access$6900(io.grpc.internal.ManagedChannelImpl)
-    static synthetic io.grpc.internal.ManagedChannelImpl$ExecutorHolder access$7900(io.grpc.internal.ManagedChannelImpl)
     static synthetic java.util.Set access$800(io.grpc.internal.ManagedChannelImpl)
+    static synthetic io.grpc.internal.ManagedChannelImpl$ExecutorHolder access$8000(io.grpc.internal.ManagedChannelImpl)
     io.grpc.InternalConfigSelector getConfigSelector()
     public com.google.common.util.concurrent.ListenableFuture getStats()
     private void handleInternalSubchannelState(io.grpc.ConnectivityStateInfo)
@@ -32409,21 +32246,23 @@ io.grpc.okhttp.OkHttpChannelBuilder:
 io.grpc.okhttp.OkHttpChannelProvider:
     public synthetic bridge io.grpc.ManagedChannelBuilder builderForAddress(java.lang.String,int)
     public io.grpc.okhttp.OkHttpChannelBuilder builderForAddress(java.lang.String,int)
+    protected java.util.Collection getSupportedSocketAddressTypes()
     public io.grpc.ManagedChannelProvider$NewChannelBuilderResult newChannelBuilder(java.lang.String,io.grpc.ChannelCredentials)
 io.grpc.okhttp.OkHttpClientStream:
     public static final int ABSENT_ID
 io.grpc.okhttp.OkHttpClientTransport$2:
     public io.grpc.internal.TransportTracer$FlowControlWindows read()
-io.grpc.okhttp.OkHttpClientTransport$4$1:
+io.grpc.okhttp.OkHttpClientTransport$3$1:
     public okio.Timeout timeout()
 io.grpc.okhttp.OkHttpClientTransport$ClientFrameHandler:
     public void alternateService(int,java.lang.String,okio.ByteString,java.lang.String,int,long)
 io.grpc.okhttp.OkHttpClientTransport:
-    void <init>(java.lang.String,java.util.concurrent.Executor,io.grpc.okhttp.internal.framed.FrameReader,io.grpc.okhttp.internal.framed.FrameWriter,io.grpc.okhttp.OkHttpFrameLogger,int,java.net.Socket,com.google.common.base.Supplier,java.lang.Runnable,com.google.common.util.concurrent.SettableFuture,int,int,java.lang.Runnable,io.grpc.internal.TransportTracer)
+    void <init>(io.grpc.okhttp.OkHttpChannelBuilder$OkHttpTransportFactory,java.lang.String,com.google.common.base.Supplier,io.grpc.okhttp.internal.framed.Variant,java.lang.Runnable,com.google.common.util.concurrent.SettableFuture,java.lang.Runnable)
     io.grpc.okhttp.OkHttpClientTransport$ClientFrameHandler getHandler()
     int getPendingStreamSize()
     javax.net.SocketFactory getSocketFactory()
     public com.google.common.util.concurrent.ListenableFuture getStats()
+    void setNextStreamId(int)
 io.grpc.okhttp.OkHttpFrameLogger:
     private static final int BUFFER_LENGTH_THRESHOLD
     public void logPriority(io.grpc.okhttp.OkHttpFrameLogger$Direction,int,int,int,boolean)
@@ -32450,6 +32289,12 @@ io.grpc.okhttp.internal.ConnectionSpec:
     public boolean isCompatible(javax.net.ssl.SSLSocket)
     public boolean isTls()
     private static boolean nonEmptyIntersection(java.lang.String[],java.lang.String[])
+io.grpc.okhttp.internal.Credentials:
+    private void <init>()
+io.grpc.okhttp.internal.Headers:
+    public java.lang.String get(java.lang.String)
+    private static java.lang.String get(java.lang.String[],java.lang.String)
+    public io.grpc.okhttp.internal.Headers$Builder newBuilder()
 io.grpc.okhttp.internal.OkHostnameVerifier:
     private static final int ALT_DNS_NAME
     private static final int ALT_IPA_NAME
@@ -32464,27 +32309,15 @@ io.grpc.okhttp.internal.Platform:
     public void logW(java.lang.String)
     public void tagSocket(java.net.Socket)
     public void untagSocket(java.net.Socket)
+io.grpc.okhttp.internal.StatusLine:
+    public static final int HTTP_CONTINUE
+    public static final int HTTP_PERM_REDIRECT
+    public static final int HTTP_TEMP_REDIRECT
 io.grpc.okhttp.internal.TlsVersion:
     public java.lang.String javaName()
-io.grpc.okhttp.internal.Util$1
 io.grpc.okhttp.internal.Util:
     private void <init>()
-    public static void checkOffsetAndCount(long,long,long)
-    public static void closeAll(java.io.Closeable,java.io.Closeable)
-    public static void closeQuietly(java.io.Closeable)
-    public static void closeQuietly(java.net.ServerSocket)
-    public static void closeQuietly(java.net.Socket)
-    public static boolean discard(okio.Source,int,java.util.concurrent.TimeUnit)
     public static boolean equal(java.lang.Object,java.lang.Object)
-    public static java.util.List immutableList(java.util.List)
-    public static java.util.Map immutableMap(java.util.Map)
-    public static boolean isAndroidGetsocknameError(java.lang.AssertionError)
-    public static java.lang.String md5Hex(java.lang.String)
-    public static okio.ByteString sha1(okio.ByteString)
-    public static java.lang.String shaBase64(java.lang.String)
-    public static boolean skipAll(okio.Source,int,java.util.concurrent.TimeUnit)
-    public static java.util.concurrent.ThreadFactory threadFactory(java.lang.String,boolean)
-    public static java.lang.String toHumanReadableAscii(java.lang.String)
 io.grpc.okhttp.internal.framed.ErrorCode:
     public static io.grpc.okhttp.internal.framed.ErrorCode fromSpdy3Rst(int)
     public static io.grpc.okhttp.internal.framed.ErrorCode fromSpdyGoAway(int)
@@ -32582,6 +32415,14 @@ io.grpc.okhttp.internal.framed.Settings:
     boolean persistValue(int)
 io.grpc.okhttp.internal.framed.Variant:
     public abstract io.grpc.okhttp.internal.Protocol getProtocol()
+io.grpc.okhttp.internal.proxy.HttpUrl:
+    static void canonicalize(okio.Buffer,java.lang.String,int,int,java.lang.String,boolean,boolean,boolean)
+    private static void fakeEofExceptionMethod()
+    public boolean isHttps()
+    public io.grpc.okhttp.internal.proxy.HttpUrl$Builder newBuilder()
+    public java.lang.String scheme()
+io.grpc.okhttp.internal.proxy.Request:
+    public io.grpc.okhttp.internal.proxy.Request$Builder newBuilder()
 io.grpc.protobuf.lite.ProtoLiteUtils$MessageMarshaller:
     public java.lang.Class getMessageClass()
     public com.google.protobuf.MessageLite getMessagePrototype()
@@ -39409,16 +39250,339 @@ org.apache.commons.io.serialization.FullClassNameMatcher
 org.apache.commons.io.serialization.RegexpClassNameMatcher
 org.apache.commons.io.serialization.ValidatingObjectInputStream
 org.apache.commons.io.serialization.WildcardClassNameMatcher
-org.checkerframework.checker.nullness.compatqual.KeyForDecl
-org.checkerframework.checker.nullness.compatqual.KeyForType
-org.checkerframework.checker.nullness.compatqual.MonotonicNonNullDecl
-org.checkerframework.checker.nullness.compatqual.MonotonicNonNullType
-org.checkerframework.checker.nullness.compatqual.NonNullDecl
-org.checkerframework.checker.nullness.compatqual.NonNullType
-org.checkerframework.checker.nullness.compatqual.NullableDecl
-org.checkerframework.checker.nullness.compatqual.NullableType
-org.checkerframework.checker.nullness.compatqual.PolyNullDecl
-org.checkerframework.checker.nullness.compatqual.PolyNullType
+org.checkerframework.checker.builder.qual.CalledMethods
+org.checkerframework.checker.builder.qual.NotCalledMethods
+org.checkerframework.checker.builder.qual.ReturnsReceiver
+org.checkerframework.checker.calledmethods.qual.CalledMethods
+org.checkerframework.checker.calledmethods.qual.CalledMethodsBottom
+org.checkerframework.checker.calledmethods.qual.CalledMethodsPredicate
+org.checkerframework.checker.calledmethods.qual.EnsuresCalledMethods
+org.checkerframework.checker.calledmethods.qual.EnsuresCalledMethodsIf$List
+org.checkerframework.checker.calledmethods.qual.EnsuresCalledMethodsIf
+org.checkerframework.checker.compilermsgs.qual.CompilerMessageKey
+org.checkerframework.checker.compilermsgs.qual.CompilerMessageKeyBottom
+org.checkerframework.checker.compilermsgs.qual.UnknownCompilerMessageKey
+org.checkerframework.checker.fenum.qual.AwtAlphaCompositingRule
+org.checkerframework.checker.fenum.qual.AwtColorSpace
+org.checkerframework.checker.fenum.qual.AwtCursorType
+org.checkerframework.checker.fenum.qual.AwtFlowLayout
+org.checkerframework.checker.fenum.qual.Fenum
+org.checkerframework.checker.fenum.qual.FenumBottom
+org.checkerframework.checker.fenum.qual.FenumTop
+org.checkerframework.checker.fenum.qual.FenumUnqualified
+org.checkerframework.checker.fenum.qual.PolyFenum
+org.checkerframework.checker.fenum.qual.SwingBoxOrientation
+org.checkerframework.checker.fenum.qual.SwingCompassDirection
+org.checkerframework.checker.fenum.qual.SwingElementOrientation
+org.checkerframework.checker.fenum.qual.SwingHorizontalOrientation
+org.checkerframework.checker.fenum.qual.SwingSplitPaneOrientation
+org.checkerframework.checker.fenum.qual.SwingTextOrientation
+org.checkerframework.checker.fenum.qual.SwingTitleJustification
+org.checkerframework.checker.fenum.qual.SwingTitlePosition
+org.checkerframework.checker.fenum.qual.SwingVerticalOrientation
+org.checkerframework.checker.formatter.qual.ConversionCategory
+org.checkerframework.checker.formatter.qual.Format
+org.checkerframework.checker.formatter.qual.FormatBottom
+org.checkerframework.checker.formatter.qual.FormatMethod
+org.checkerframework.checker.formatter.qual.InvalidFormat
+org.checkerframework.checker.formatter.qual.ReturnsFormat
+org.checkerframework.checker.formatter.qual.UnknownFormat
+org.checkerframework.checker.guieffect.qual.AlwaysSafe
+org.checkerframework.checker.guieffect.qual.PolyUI
+org.checkerframework.checker.guieffect.qual.PolyUIEffect
+org.checkerframework.checker.guieffect.qual.PolyUIType
+org.checkerframework.checker.guieffect.qual.SafeEffect
+org.checkerframework.checker.guieffect.qual.SafeType
+org.checkerframework.checker.guieffect.qual.UI
+org.checkerframework.checker.guieffect.qual.UIEffect
+org.checkerframework.checker.guieffect.qual.UIPackage
+org.checkerframework.checker.guieffect.qual.UIType
+org.checkerframework.checker.i18n.qual.LocalizableKey
+org.checkerframework.checker.i18n.qual.LocalizableKeyBottom
+org.checkerframework.checker.i18n.qual.Localized
+org.checkerframework.checker.i18n.qual.UnknownLocalizableKey
+org.checkerframework.checker.i18n.qual.UnknownLocalized
+org.checkerframework.checker.i18nformatter.qual.I18nChecksFormat
+org.checkerframework.checker.i18nformatter.qual.I18nConversionCategory
+org.checkerframework.checker.i18nformatter.qual.I18nFormat
+org.checkerframework.checker.i18nformatter.qual.I18nFormatBottom
+org.checkerframework.checker.i18nformatter.qual.I18nFormatFor
+org.checkerframework.checker.i18nformatter.qual.I18nInvalidFormat
+org.checkerframework.checker.i18nformatter.qual.I18nMakeFormat
+org.checkerframework.checker.i18nformatter.qual.I18nUnknownFormat
+org.checkerframework.checker.i18nformatter.qual.I18nValidFormat
+org.checkerframework.checker.index.qual.EnsuresLTLengthOf$List
+org.checkerframework.checker.index.qual.EnsuresLTLengthOf
+org.checkerframework.checker.index.qual.EnsuresLTLengthOfIf$List
+org.checkerframework.checker.index.qual.EnsuresLTLengthOfIf
+org.checkerframework.checker.index.qual.GTENegativeOne
+org.checkerframework.checker.index.qual.HasSubsequence
+org.checkerframework.checker.index.qual.IndexFor
+org.checkerframework.checker.index.qual.IndexOrHigh
+org.checkerframework.checker.index.qual.IndexOrLow
+org.checkerframework.checker.index.qual.LTEqLengthOf
+org.checkerframework.checker.index.qual.LTLengthOf
+org.checkerframework.checker.index.qual.LTOMLengthOf
+org.checkerframework.checker.index.qual.LengthOf
+org.checkerframework.checker.index.qual.LessThan
+org.checkerframework.checker.index.qual.LessThanBottom
+org.checkerframework.checker.index.qual.LessThanUnknown
+org.checkerframework.checker.index.qual.LowerBoundBottom
+org.checkerframework.checker.index.qual.LowerBoundUnknown
+org.checkerframework.checker.index.qual.NegativeIndexFor
+org.checkerframework.checker.index.qual.NonNegative
+org.checkerframework.checker.index.qual.PolyIndex
+org.checkerframework.checker.index.qual.PolyLength
+org.checkerframework.checker.index.qual.PolyLowerBound
+org.checkerframework.checker.index.qual.PolySameLen
+org.checkerframework.checker.index.qual.PolyUpperBound
+org.checkerframework.checker.index.qual.Positive
+org.checkerframework.checker.index.qual.SameLen
+org.checkerframework.checker.index.qual.SameLenBottom
+org.checkerframework.checker.index.qual.SameLenUnknown
+org.checkerframework.checker.index.qual.SearchIndexBottom
+org.checkerframework.checker.index.qual.SearchIndexFor
+org.checkerframework.checker.index.qual.SearchIndexUnknown
+org.checkerframework.checker.index.qual.SubstringIndexBottom
+org.checkerframework.checker.index.qual.SubstringIndexFor
+org.checkerframework.checker.index.qual.SubstringIndexUnknown
+org.checkerframework.checker.index.qual.UpperBoundBottom
+org.checkerframework.checker.index.qual.UpperBoundUnknown
+org.checkerframework.checker.initialization.qual.FBCBottom
+org.checkerframework.checker.initialization.qual.Initialized
+org.checkerframework.checker.initialization.qual.NotOnlyInitialized
+org.checkerframework.checker.initialization.qual.UnderInitialization
+org.checkerframework.checker.initialization.qual.UnknownInitialization
+org.checkerframework.checker.interning.qual.CompareToMethod
+org.checkerframework.checker.interning.qual.EqualsMethod
+org.checkerframework.checker.interning.qual.FindDistinct
+org.checkerframework.checker.interning.qual.InternMethod
+org.checkerframework.checker.interning.qual.Interned
+org.checkerframework.checker.interning.qual.InternedDistinct
+org.checkerframework.checker.interning.qual.PolyInterned
+org.checkerframework.checker.interning.qual.UnknownInterned
+org.checkerframework.checker.interning.qual.UsesObjectEquals
+org.checkerframework.checker.lock.qual.EnsuresLockHeld$List
+org.checkerframework.checker.lock.qual.EnsuresLockHeld
+org.checkerframework.checker.lock.qual.EnsuresLockHeldIf$List
+org.checkerframework.checker.lock.qual.EnsuresLockHeldIf
+org.checkerframework.checker.lock.qual.GuardSatisfied
+org.checkerframework.checker.lock.qual.GuardedBy
+org.checkerframework.checker.lock.qual.GuardedByBottom
+org.checkerframework.checker.lock.qual.GuardedByUnknown
+org.checkerframework.checker.lock.qual.Holding
+org.checkerframework.checker.lock.qual.LockHeld
+org.checkerframework.checker.lock.qual.LockPossiblyHeld
+org.checkerframework.checker.lock.qual.LockingFree
+org.checkerframework.checker.lock.qual.MayReleaseLocks
+org.checkerframework.checker.lock.qual.ReleasesNoLocks
+org.checkerframework.checker.nullness.qual.AssertNonNullIfNonNull
+org.checkerframework.checker.nullness.qual.EnsuresKeyFor$List
+org.checkerframework.checker.nullness.qual.EnsuresKeyFor
+org.checkerframework.checker.nullness.qual.EnsuresKeyForIf$List
+org.checkerframework.checker.nullness.qual.EnsuresKeyForIf
+org.checkerframework.checker.nullness.qual.EnsuresNonNull$List
+org.checkerframework.checker.nullness.qual.EnsuresNonNull
+org.checkerframework.checker.nullness.qual.EnsuresNonNullIf$List
+org.checkerframework.checker.nullness.qual.EnsuresNonNullIf
+org.checkerframework.checker.nullness.qual.KeyFor
+org.checkerframework.checker.nullness.qual.KeyForBottom
+org.checkerframework.checker.nullness.qual.MonotonicNonNull
+org.checkerframework.checker.nullness.qual.NonNull
+org.checkerframework.checker.nullness.qual.Nullable
+org.checkerframework.checker.nullness.qual.PolyKeyFor
+org.checkerframework.checker.nullness.qual.PolyNull
+org.checkerframework.checker.nullness.qual.RequiresNonNull
+org.checkerframework.checker.nullness.qual.UnknownKeyFor
+org.checkerframework.checker.optional.qual.MaybePresent
+org.checkerframework.checker.optional.qual.OptionalBottom
+org.checkerframework.checker.optional.qual.PolyPresent
+org.checkerframework.checker.optional.qual.Present
+org.checkerframework.checker.propkey.qual.PropertyKey
+org.checkerframework.checker.propkey.qual.PropertyKeyBottom
+org.checkerframework.checker.propkey.qual.UnknownPropertyKey
+org.checkerframework.checker.regex.qual.PartialRegex
+org.checkerframework.checker.regex.qual.PolyRegex
+org.checkerframework.checker.regex.qual.Regex
+org.checkerframework.checker.regex.qual.RegexBottom
+org.checkerframework.checker.regex.qual.UnknownRegex
+org.checkerframework.checker.signature.qual.ArrayWithoutPackage
+org.checkerframework.checker.signature.qual.BinaryName
+org.checkerframework.checker.signature.qual.BinaryNameOrPrimitiveType
+org.checkerframework.checker.signature.qual.BinaryNameWithoutPackage
+org.checkerframework.checker.signature.qual.CanonicalName
+org.checkerframework.checker.signature.qual.CanonicalNameAndBinaryName
+org.checkerframework.checker.signature.qual.CanonicalNameOrEmpty
+org.checkerframework.checker.signature.qual.CanonicalNameOrPrimitiveType
+org.checkerframework.checker.signature.qual.ClassGetName
+org.checkerframework.checker.signature.qual.ClassGetSimpleName
+org.checkerframework.checker.signature.qual.DotSeparatedIdentifiers
+org.checkerframework.checker.signature.qual.DotSeparatedIdentifiersOrPrimitiveType
+org.checkerframework.checker.signature.qual.FieldDescriptor
+org.checkerframework.checker.signature.qual.FieldDescriptorForPrimitive
+org.checkerframework.checker.signature.qual.FieldDescriptorWithoutPackage
+org.checkerframework.checker.signature.qual.FqBinaryName
+org.checkerframework.checker.signature.qual.FullyQualifiedName
+org.checkerframework.checker.signature.qual.Identifier
+org.checkerframework.checker.signature.qual.IdentifierOrPrimitiveType
+org.checkerframework.checker.signature.qual.InternalForm
+org.checkerframework.checker.signature.qual.MethodDescriptor
+org.checkerframework.checker.signature.qual.PolySignature
+org.checkerframework.checker.signature.qual.PrimitiveType
+org.checkerframework.checker.signature.qual.SignatureBottom
+org.checkerframework.checker.signature.qual.SignatureUnknown
+org.checkerframework.checker.signedness.qual.PolySigned
+org.checkerframework.checker.signedness.qual.Signed
+org.checkerframework.checker.signedness.qual.SignedPositive
+org.checkerframework.checker.signedness.qual.SignedPositiveFromUnsigned
+org.checkerframework.checker.signedness.qual.SignednessBottom
+org.checkerframework.checker.signedness.qual.SignednessGlb
+org.checkerframework.checker.signedness.qual.UnknownSignedness
+org.checkerframework.checker.signedness.qual.Unsigned
+org.checkerframework.checker.tainting.qual.PolyTainted
+org.checkerframework.checker.tainting.qual.Tainted
+org.checkerframework.checker.tainting.qual.Untainted
+org.checkerframework.checker.units.qual.A
+org.checkerframework.checker.units.qual.Acceleration
+org.checkerframework.checker.units.qual.Angle
+org.checkerframework.checker.units.qual.Area
+org.checkerframework.checker.units.qual.C
+org.checkerframework.checker.units.qual.Current
+org.checkerframework.checker.units.qual.K
+org.checkerframework.checker.units.qual.Length
+org.checkerframework.checker.units.qual.Luminance
+org.checkerframework.checker.units.qual.Mass
+org.checkerframework.checker.units.qual.MixedUnits
+org.checkerframework.checker.units.qual.PolyUnit
+org.checkerframework.checker.units.qual.Prefix
+org.checkerframework.checker.units.qual.Speed
+org.checkerframework.checker.units.qual.Substance
+org.checkerframework.checker.units.qual.Temperature
+org.checkerframework.checker.units.qual.Time
+org.checkerframework.checker.units.qual.UnitsBottom
+org.checkerframework.checker.units.qual.UnitsMultiple
+org.checkerframework.checker.units.qual.UnitsRelations
+org.checkerframework.checker.units.qual.UnknownUnits
+org.checkerframework.checker.units.qual.cd
+org.checkerframework.checker.units.qual.degrees
+org.checkerframework.checker.units.qual.g
+org.checkerframework.checker.units.qual.h
+org.checkerframework.checker.units.qual.kg
+org.checkerframework.checker.units.qual.km2
+org.checkerframework.checker.units.qual.km
+org.checkerframework.checker.units.qual.kmPERh
+org.checkerframework.checker.units.qual.m2
+org.checkerframework.checker.units.qual.m
+org.checkerframework.checker.units.qual.mPERs2
+org.checkerframework.checker.units.qual.mPERs
+org.checkerframework.checker.units.qual.min
+org.checkerframework.checker.units.qual.mm2
+org.checkerframework.checker.units.qual.mm
+org.checkerframework.checker.units.qual.mol
+org.checkerframework.checker.units.qual.radians
+org.checkerframework.checker.units.qual.s
+org.checkerframework.common.aliasing.qual.LeakedToResult
+org.checkerframework.common.aliasing.qual.MaybeAliased
+org.checkerframework.common.aliasing.qual.MaybeLeaked
+org.checkerframework.common.aliasing.qual.NonLeaked
+org.checkerframework.common.aliasing.qual.Unique
+org.checkerframework.common.initializedfields.qual.EnsuresInitializedFields$List
+org.checkerframework.common.initializedfields.qual.EnsuresInitializedFields
+org.checkerframework.common.initializedfields.qual.InitializedFields
+org.checkerframework.common.initializedfields.qual.InitializedFieldsBottom
+org.checkerframework.common.initializedfields.qual.PolyInitializedFields
+org.checkerframework.common.reflection.qual.ClassBound
+org.checkerframework.common.reflection.qual.ClassVal
+org.checkerframework.common.reflection.qual.ClassValBottom
+org.checkerframework.common.reflection.qual.ForName
+org.checkerframework.common.reflection.qual.GetClass
+org.checkerframework.common.reflection.qual.GetConstructor
+org.checkerframework.common.reflection.qual.GetMethod
+org.checkerframework.common.reflection.qual.Invoke
+org.checkerframework.common.reflection.qual.MethodVal
+org.checkerframework.common.reflection.qual.MethodValBottom
+org.checkerframework.common.reflection.qual.NewInstance
+org.checkerframework.common.reflection.qual.UnknownClass
+org.checkerframework.common.reflection.qual.UnknownMethod
+org.checkerframework.common.returnsreceiver.qual.BottomThis
+org.checkerframework.common.returnsreceiver.qual.This
+org.checkerframework.common.returnsreceiver.qual.UnknownThis
+org.checkerframework.common.subtyping.qual.Bottom
+org.checkerframework.common.subtyping.qual.Unqualified
+org.checkerframework.common.util.report.qual.ReportCall
+org.checkerframework.common.util.report.qual.ReportCreation
+org.checkerframework.common.util.report.qual.ReportInherit
+org.checkerframework.common.util.report.qual.ReportOverride
+org.checkerframework.common.util.report.qual.ReportReadWrite
+org.checkerframework.common.util.report.qual.ReportUnqualified
+org.checkerframework.common.util.report.qual.ReportUse
+org.checkerframework.common.util.report.qual.ReportWrite
+org.checkerframework.common.value.qual.ArrayLen
+org.checkerframework.common.value.qual.ArrayLenRange
+org.checkerframework.common.value.qual.BoolVal
+org.checkerframework.common.value.qual.BottomVal
+org.checkerframework.common.value.qual.DoubleVal
+org.checkerframework.common.value.qual.EnsuresMinLenIf$List
+org.checkerframework.common.value.qual.EnsuresMinLenIf
+org.checkerframework.common.value.qual.EnumVal
+org.checkerframework.common.value.qual.IntRange
+org.checkerframework.common.value.qual.IntRangeFromGTENegativeOne
+org.checkerframework.common.value.qual.IntRangeFromNonNegative
+org.checkerframework.common.value.qual.IntRangeFromPositive
+org.checkerframework.common.value.qual.IntVal
+org.checkerframework.common.value.qual.MatchesRegex
+org.checkerframework.common.value.qual.MinLen
+org.checkerframework.common.value.qual.MinLenFieldInvariant
+org.checkerframework.common.value.qual.PolyValue
+org.checkerframework.common.value.qual.StaticallyExecutable
+org.checkerframework.common.value.qual.StringVal
+org.checkerframework.common.value.qual.UnknownVal
+org.checkerframework.dataflow.qual.Deterministic
+org.checkerframework.dataflow.qual.Pure$Kind
+org.checkerframework.dataflow.qual.Pure
+org.checkerframework.dataflow.qual.SideEffectFree
+org.checkerframework.dataflow.qual.TerminatesExecution
+org.checkerframework.framework.qual.AnnotatedFor
+org.checkerframework.framework.qual.CFComment
+org.checkerframework.framework.qual.ConditionalPostconditionAnnotation
+org.checkerframework.framework.qual.Covariant
+org.checkerframework.framework.qual.DefaultFor
+org.checkerframework.framework.qual.DefaultQualifier$List
+org.checkerframework.framework.qual.DefaultQualifier
+org.checkerframework.framework.qual.DefaultQualifierForUse
+org.checkerframework.framework.qual.DefaultQualifierInHierarchy
+org.checkerframework.framework.qual.EnsuresQualifier$List
+org.checkerframework.framework.qual.EnsuresQualifier
+org.checkerframework.framework.qual.EnsuresQualifierIf$List
+org.checkerframework.framework.qual.EnsuresQualifierIf
+org.checkerframework.framework.qual.FieldInvariant
+org.checkerframework.framework.qual.FromByteCode
+org.checkerframework.framework.qual.FromStubFile
+org.checkerframework.framework.qual.HasQualifierParameter
+org.checkerframework.framework.qual.IgnoreInWholeProgramInference
+org.checkerframework.framework.qual.InheritedAnnotation
+org.checkerframework.framework.qual.InvisibleQualifier
+org.checkerframework.framework.qual.JavaExpression
+org.checkerframework.framework.qual.LiteralKind
+org.checkerframework.framework.qual.MonotonicQualifier
+org.checkerframework.framework.qual.NoDefaultQualifierForUse
+org.checkerframework.framework.qual.NoQualifierParameter
+org.checkerframework.framework.qual.PolymorphicQualifier
+org.checkerframework.framework.qual.PostconditionAnnotation
+org.checkerframework.framework.qual.PreconditionAnnotation
+org.checkerframework.framework.qual.PurityUnqualified
+org.checkerframework.framework.qual.QualifierArgument
+org.checkerframework.framework.qual.QualifierForLiterals
+org.checkerframework.framework.qual.RelevantJavaTypes
+org.checkerframework.framework.qual.RequiresQualifier$List
+org.checkerframework.framework.qual.RequiresQualifier
+org.checkerframework.framework.qual.StubFiles
+org.checkerframework.framework.qual.SubtypeOf
+org.checkerframework.framework.qual.TargetLocations
+org.checkerframework.framework.qual.TypeKind
+org.checkerframework.framework.qual.TypeUseLocation
+org.checkerframework.framework.qual.Unused
+org.checkerframework.framework.qual.UpperBoundFor
 org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 org.intellij.lang.annotations.Flow
 org.intellij.lang.annotations.Identifier
@@ -40701,16 +40865,15 @@ com.google.android.gms.internal.auth-api-phone.zzc
 com.google.android.gms.internal.auth-api.zzd:
     private static com.google.android.gms.internal.auth-api.zzf zze
 com.google.android.gms.internal.auth-api.zzf
-com.google.android.gms.internal.firebase-auth-api.zzabk:
-    private static volatile boolean zzb
-com.google.android.gms.internal.firebase-auth-api.zzabz
-com.google.android.gms.internal.firebase-auth-api.zzach
-com.google.android.gms.internal.firebase-auth-api.zzwd:
+com.google.android.gms.internal.firebase-auth-api.zzabu:
+    private static volatile boolean zzc
+com.google.android.gms.internal.firebase-auth-api.zzacr
+com.google.android.gms.internal.firebase-auth-api.zzwn:
     private static final java.lang.String zza
     private void <init>()
-com.google.android.gms.internal.firebase-auth-api.zzxy:
+com.google.android.gms.internal.firebase-auth-api.zzyi:
     private static final java.lang.String zza
-com.google.android.gms.internal.firebase-auth-api.zzyo:
+com.google.android.gms.internal.firebase-auth-api.zzyy:
     private static final java.lang.String zza
 com.google.android.gms.internal.safetynet.zzb:
     private static com.google.android.gms.internal.safetynet.zzd zzc
@@ -40806,8 +40969,6 @@ com.razorpay.RzpPluginCompatibilityResponse:
 com.razorpay.RzpPluginRegisterCallback
 com.razorpay.b__J_:
     private static int UPI_REQUEST_CODE
-com.squareup.okhttp.Request:
-    private final com.squareup.okhttp.RequestBody body
 io.flutter.Log:
     public static int ASSERT
     public static int DEBUG
@@ -40832,8 +40993,6 @@ io.flutter.plugins.camera.CameraRegionUtils:
 io.flutter.plugins.camera.DartMessenger:
     static final synthetic boolean $assertionsDisabled
 io.flutter.plugins.camera.MethodCallHandlerImpl:
-    static final synthetic boolean $assertionsDisabled
-io.flutter.plugins.firebase.messaging.FlutterFirebasePermissionManager:
     static final synthetic boolean $assertionsDisabled
 io.flutter.view.TextureRegistry$SurfaceTextureEntry$-CC
 io.grpc.Attributes$Builder:

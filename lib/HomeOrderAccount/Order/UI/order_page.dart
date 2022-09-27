@@ -1711,7 +1711,7 @@ class OrderPageState extends State<OrderPage> {
                                     // clearCart();
                                     Navigator.pushAndRemoveUntil(context,
                                         MaterialPageRoute(builder: (context) {
-                                      return HomeOrderAccount();
+                                      return HomeOrderAccount(0);
                                     }), (Route<dynamic> route) => false);
                                   },
                                   child: Text(

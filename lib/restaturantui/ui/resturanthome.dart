@@ -47,8 +47,8 @@ class Restaurant extends StatefulWidget {
 class RestaurantState extends State<Restaurant> {
   late final String? pageTitle;
 
-  late double lat;
-  late double lng;
+  late double lat=0.0;
+  late double lng=0.0;
 
   String cityName = '';
 
@@ -74,20 +74,28 @@ class RestaurantState extends State<Restaurant> {
 
   @override
   void initState() {
-    _getDemoLocation();
     super.initState();
-    _hitServices();
-
+    getData();
   }
   void callThisMethod(bool isVisible){
     debugPrint('_HomeScreenState.callThisMethod: isVisible: ${isVisible}');
-    _getDemoLocation();
-    _hitServices();
+    getData();
+  }
+
+  void getData() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    setState((){
+      cityName = pref.getString("addr")!;
+      lat = double.parse(pref.getString("lat")!);
+      lng = double.parse(pref.getString("lng")!);
+      print("HOME_RES" + lat.toString() + lng.toString());
+      _hitServices();
+    });
 
   }
+
   void _hitServices() {
     getCurrentSymbol();
-    _getDemoLocation();
     // _getLocation();
     getCartCount();
     hitProductUrl();
@@ -267,16 +275,12 @@ class RestaurantState extends State<Restaurant> {
     setState(() {
       isFetchRestStore = true;
     });
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    print(
-        'data - ${prefs.getString('lat')} - ${prefs.getString('lng')} - ${prefs.getString('vendor_cat_id')} - ${prefs.getString('ui_type')}');
-    var url = nearByStore;
+
+    var url = nearbyrest;
     Uri myUri = Uri.parse(url);
     http.post(myUri, body: {
-      'lat': '${prefs.getString('lat')}',
-      'lng': '${prefs.getString('lng')}',
-      'vendor_category_id': '${prefs.getString('vendor_cat_id')}',
-      'ui_type': '${prefs.getString('ui_type')}'
+      'lat': lat.toString(),
+      'lng':lng.toString(),
     }).then((value) {
       print('${value.statusCode} ${value.body}');
       if (value.statusCode == 200) {
@@ -1117,300 +1121,6 @@ class RestaurantState extends State<Restaurant> {
     }
   }
 
-  // Bottom Sheet for Address Starts Here
-  // void _addressBottomSheet(context, width) {
-  //   showModalBottomSheet(
-  //       context: context,
-  //       builder: (BuildContext bc) {
-  //         return Material(
-  //           elevation: 7.0,
-  //           child: Container(
-  //             color: Colors.white,
-  //             child: Wrap(
-  //               children: <Widget>[
-  //                 Container(
-  //                   child: Container(
-  //                     padding: EdgeInsets.all(8.0),
-  //                     child: Column(
-  //                       children: <Widget>[
-  //                         Container(
-  //                           width: width,
-  //                           padding: EdgeInsets.all(fixPadding),
-  //                           alignment: Alignment.center,
-  //                           child: Text(
-  //                             'Select Address'.toUpperCase(),
-  //                             style: headingStyle,
-  //                           ),
-  //                         ),
-  //                         Divider(),
-  //                         InkWell(
-  //                           onTap: () {
-  //                             setState(() {
-  //                               currentAddress = '76A, New York, US.';
-  //                               address1 = true;
-  //                               address2 = false;
-  //                             });
-  //                             Navigator.pop(context);
-  //                           },
-  //                           child: Row(
-  //                             mainAxisAlignment: MainAxisAlignment.start,
-  //                             crossAxisAlignment: CrossAxisAlignment.center,
-  //                             children: <Widget>[
-  //                               Container(
-  //                                 width: 26.0,
-  //                                 height: 26.0,
-  //                                 decoration: BoxDecoration(
-  //                                     color:
-  //                                         (address1) ? kMainColor : kWhiteColor,
-  //                                     borderRadius: BorderRadius.circular(13.0),
-  //                                     border: Border.all(
-  //                                         width: 1.0,
-  //                                         color: kHintColor.withOpacity(0.7))),
-  //                                 child: Icon(Icons.check,
-  //                                     color: kWhiteColor, size: 15.0),
-  //                               ),
-  //                               widthSpace,
-  //                               Text(
-  //                                 '76A, New York, US.',
-  //                                 style: listItemTitleStyle,
-  //                               ),
-  //                             ],
-  //                           ),
-  //                         ),
-  //                         heightSpace,
-  //                         InkWell(
-  //                           onTap: () {
-  //                             setState(() {
-  //                               currentAddress = '55C, California, US.';
-  //                               address1 = false;
-  //                               address2 = true;
-  //                             });
-  //                             Navigator.pop(context);
-  //                           },
-  //                           child: Row(
-  //                             mainAxisAlignment: MainAxisAlignment.start,
-  //                             crossAxisAlignment: CrossAxisAlignment.center,
-  //                             children: <Widget>[
-  //                               Container(
-  //                                 width: 26.0,
-  //                                 height: 26.0,
-  //                                 decoration: BoxDecoration(
-  //                                     color:
-  //                                         (address2) ? kMainColor : kWhiteColor,
-  //                                     borderRadius: BorderRadius.circular(13.0),
-  //                                     border: Border.all(
-  //                                         width: 1.0,
-  //                                         color: kHintColor.withOpacity(0.7))),
-  //                                 child: Icon(Icons.check,
-  //                                     color: kWhiteColor, size: 15.0),
-  //                               ),
-  //                               widthSpace,
-  //                               Text(
-  //                                 '55C, California, US.',
-  //                                 style: listItemTitleStyle,
-  //                               ),
-  //                             ],
-  //                           ),
-  //                         ),
-  //                         heightSpace,
-  //                         InkWell(
-  //                           onTap: () {
-  //                             Navigator.pop(context);
-  //                             Navigator.of(context)
-  //                                 .push(MaterialPageRoute(builder: (context) {
-  //                               return AddAddressPage();
-  //                             })).then((value) {
-  //                               // getAddress();
-  //                             });
-  //                           },
-  //                           child: Row(
-  //                             mainAxisAlignment: MainAxisAlignment.start,
-  //                             crossAxisAlignment: CrossAxisAlignment.center,
-  //                             children: <Widget>[
-  //                               Container(
-  //                                 width: 26.0,
-  //                                 height: 26.0,
-  //                                 child: Icon(
-  //                                   Icons.add,
-  //                                   color: Colors.blue,
-  //                                   size: 20.0,
-  //                                 ),
-  //                               ),
-  //                               widthSpace,
-  //                               Text(
-  //                                 'Add New Address',
-  //                                 style: TextStyle(
-  //                                   fontSize: 15.0,
-  //                                   color: Colors.blue,
-  //                                   fontFamily: 'Roboto',
-  //                                   fontWeight: FontWeight.w500,
-  //                                 ),
-  //                               ),
-  //                             ],
-  //                           ),
-  //                         ),
-  //                         heightSpace,
-  //                       ],
-  //                     ),
-  //                   ),
-  //                 )
-  //               ],
-  //             ),
-  //           ),
-  //         );
-  //       });
-  // }
-
-//   void getBackResult(latss, lngss) async {
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
-//     // prefs.setString("lat", "29.006057");
-//     prefs.setString("lat", double.parse('${latss}').toStringAsFixed(8));
-//     // prefs.setString("lng", "77.027535");
-//     prefs.setString("lng", double.parse('${lngss}').toStringAsFixed(8));
-//     double lats = double.parse(prefs.getString('lat'));
-//     double lngs = double.parse(prefs.getString('lng'));
-//     // lats = 29.006057;
-//     // lngs = 77.027535;
-//     final coordinates = new Coordinates(lats, lngs);
-//     await Geocoder.local
-//         .findAddressesFromCoordinates(coordinates)
-//         .then((value) {
-// //          print("${value[0].featureName} : ${value[0].countryName} : ${value[0].locality} : ${value[0].subAdminArea} : ${value[0].adminArea} : ${value[0].subLocality} : ${value[0].addressLine}");
-//       if (value[0].locality != null && value[0].locality.isNotEmpty) {
-//         setState(() {
-//           this.lat = lat;
-//           this.lng = lng;
-//           String city = '${value[0].locality}';
-//           cityName = '${city.toUpperCase()} (${value[0].subLocality})';
-//         });
-//       } else if (value[0].subAdminArea != null &&
-//           value[0].subAdminArea.isNotEmpty) {
-//         this.lat = lat;
-//         this.lng = lng;
-//         String city = '${value[0].subAdminArea}';
-//         cityName = '${city.toUpperCase()}';
-//       }
-//       _hitServices();
-//     });
-//   }
-//   void _getLocation() async {
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
-//     LocationPermission permission = await Geolocator.checkPermission();
-//     if (permission == LocationPermission.whileInUse ||
-//         permission == LocationPermission.always) {
-//       bool isLocationServiceEnableds =
-//       await Geolocator.isLocationServiceEnabled();
-//       if (isLocationServiceEnableds) {
-//         Position position = await Geolocator.getCurrentPosition(
-//             desiredAccuracy: LocationAccuracy.best);
-//         double lat = position.latitude;
-//         double lng = position.longitude;
-//         // 29.006057, 77.027535
-//         // prefs.setString("lat", "29.006057");
-//         prefs.setString("lat", lat.toStringAsFixed(8));
-//         // prefs.setString("lng", "77.027535");
-//         prefs.setString("lng", lng.toStringAsFixed(8));
-//         // lat = 29.006057;
-//         // lng = 77.027535;
-//         final coordinates = new Coordinates(lat, lng);
-//         await Geocoder.local
-//             .findAddressesFromCoordinates(coordinates)
-//             .then((value) {
-// //          print("${value[0].featureName} : ${value[0].countryName} : ${value[0].locality} : ${value[0].subAdminArea} : ${value[0].adminArea} : ${value[0].subLocality} : ${value[0].addressLine}");
-//           if (value[0].locality != null && value[0].locality.isNotEmpty) {
-//             setState(() {
-//               this.lat = lat;
-//               this.lng = lng;
-//               String city = '${value[0].locality}';
-//               cityName = '${city.toUpperCase()} (${value[0].subLocality})';
-//             });
-//           } else if (value[0].subAdminArea != null &&
-//               value[0].subAdminArea.isNotEmpty) {
-//             this.lat = lat;
-//             this.lng = lng;
-//             String city = '${value[0].subAdminArea}';
-//             cityName = '${city.toUpperCase()}';
-//           }
-//         }).catchError((e) {
-//           print(e);
-//         });
-//         // hitService();
-//         // hitBannerUrl();
-//       } else {
-//         await Geolocator.openLocationSettings().then((value) {
-//           if (value) {
-//             _getLocation();
-//           } else {
-//             Toast.show('Location permission is required!', context,
-//                 duration: Toast.LENGTH_SHORT);
-//           }
-//         }).catchError((e) {
-//           Toast.show('Location permission is required!', context,
-//               duration: Toast.LENGTH_SHORT);
-//         });
-//       }
-//     } else if (permission == LocationPermission.denied) {
-//       LocationPermission permissiond = await Geolocator.requestPermission();
-//       if (permissiond == LocationPermission.whileInUse ||
-//           permissiond == LocationPermission.always) {
-//         _getLocation();
-//       } else {
-//         Toast.show('Location permission is required!', context,
-//             duration: Toast.LENGTH_SHORT);
-//       }
-//     } else if (permission == LocationPermission.deniedForever) {
-//       await Geolocator.openAppSettings().then((value) {
-//         _getLocation();
-//       }).catchError((e) {
-//         Toast.show('Location permission is required!', context,
-//             duration: Toast.LENGTH_SHORT);
-//       });
-//     }
-//   }
-//
-  void _getDemoLocation() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? lati = prefs.getString('lat');
-    String? longi = prefs.getString('lng');
-    lat = double.parse(lati!);
-    lng = double.parse(longi!);
-
-    print("LATLONG" + lat.toString() + lng.toString());
-    List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
-
-    print("LATLONG" + placemarks.toString());
-
-    setState(() {
-      cityName = (placemarks
-          .elementAt(0)
-          .subLocality
-          .toString()) + " ( " + (placemarks
-          .elementAt(0)
-          .locality
-          .toString()) + " )".toUpperCase();
-    });
-  }
-    //
-    // GeoData data = await Geocoder2.getDataFromCoordinates(
-    //     latitude: lat,
-    //     longitude: lng,
-    //     googleMapApiKey:apiKey);
-    //
-    //   if (data.city != null && data.city.isNotEmpty) {
-    //     setState(() {
-    //       this.lat = lat;
-    //       this.lng = lng;
-    //       String city = '${data.city}';
-    //       cityName = '${city.toUpperCase()} (${data.city})';
-    //     });
-    //   } else if (data.state != null &&
-    //       data.state.isNotEmpty) {
-    //     this.lat = lat;
-    //     this.lng = lng;
-    //     String city = '${data.state}';
-    //     cityName = '${data.state}';
-    //   }
-    // }
   }
 
   double calculateDistance(lat1, lon1, lat2, lon2){
@@ -1421,7 +1131,7 @@ class RestaurantState extends State<Restaurant> {
             (1 - c((lon2 - lon1) * p))/2;
     return 12742 * asin(sqrt(a));
   }
-class BackendService {
+   class BackendService {
   static Future<List<Vendors>> getSuggestions(String query,double lat,double lng) async {
     if (query.isEmpty && query.length < 4) {
       print('Query needs to be at least 3 chars');
