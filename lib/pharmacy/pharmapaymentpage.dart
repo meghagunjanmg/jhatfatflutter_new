@@ -479,7 +479,7 @@ class PaymentPharmaPageState extends State<PaymentPharmaPage> {
                                               });
                                               if (paymentVia[index]
                                                       .payment_mode ==
-                                                  "Razor Pay") {
+                                                  "Card/Upi/Netbanking") {
                                                 openCheckout(
                                                     "${paymentVia[index].payment_key}",
                                                     totalAmount * 100);
@@ -1327,7 +1327,7 @@ class PaymentPharmaPageState extends State<PaymentPharmaPage> {
           _inProgress = false;
           showDialogBox = true;
         });
-        placedOrder("success", "Card");
+        placedOrder("success", "RazorPay");
       }
     });
   }
@@ -1353,7 +1353,7 @@ class PaymentPharmaPageState extends State<PaymentPharmaPage> {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    placedOrder("success", "Card");
+    placedOrder("success", "RazorPay");
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {

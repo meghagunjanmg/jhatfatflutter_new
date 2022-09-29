@@ -4297,7 +4297,6 @@ MAGIC_OTP_RESEND_CLICKED
 common_google_play_services_resolutio...
 ordering
 valueType_
-setPackageName
 HEADER_NAME
 TLS_RSA_WITH_RC4_128_SHA
 isAmazonPluginIntegrated
@@ -4463,7 +4462,6 @@ com.google.firebase.auth.internal.STATUS
 PERMISSION_DEFINITIONS_NOT_FOUND
 device
 activity
-PackageName
 INT32
 limitType_
 ToolbarWidgetWrapper

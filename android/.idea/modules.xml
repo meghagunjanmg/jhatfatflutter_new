@@ -75,10 +75,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-885866687/android.location.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/-885866687/android.location.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-885866687/android.location.main.iml" filepath="$PROJECT_DIR$/.idea/modules/-885866687/android.location.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-885866687/android.location.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/-885866687/android.location.unitTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1115392938/android.package_info_plus.iml" filepath="$PROJECT_DIR$/.idea/modules/1115392938/android.package_info_plus.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1115392938/android.package_info_plus.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/1115392938/android.package_info_plus.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1115392938/android.package_info_plus.main.iml" filepath="$PROJECT_DIR$/.idea/modules/1115392938/android.package_info_plus.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1115392938/android.package_info_plus.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/1115392938/android.package_info_plus.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1607204249/android.path_provider_android.iml" filepath="$PROJECT_DIR$/.idea/modules/-1607204249/android.path_provider_android.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1607204249/android.path_provider_android.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/-1607204249/android.path_provider_android.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1607204249/android.path_provider_android.main.iml" filepath="$PROJECT_DIR$/.idea/modules/-1607204249/android.path_provider_android.main.iml" />
@@ -87,10 +83,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/1624956585/android.permission_handler.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/1624956585/android.permission_handler.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/1624956585/android.permission_handler.main.iml" filepath="$PROJECT_DIR$/.idea/modules/1624956585/android.permission_handler.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/1624956585/android.permission_handler.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/1624956585/android.permission_handler.unitTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1262514753/android.razorpay_flutter.iml" filepath="$PROJECT_DIR$/.idea/modules/1262514753/android.razorpay_flutter.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1262514753/android.razorpay_flutter.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/1262514753/android.razorpay_flutter.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1262514753/android.razorpay_flutter.main.iml" filepath="$PROJECT_DIR$/.idea/modules/1262514753/android.razorpay_flutter.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1262514753/android.razorpay_flutter.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/1262514753/android.razorpay_flutter.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/124893118/android.shared_preferences_android.iml" filepath="$PROJECT_DIR$/.idea/modules/124893118/android.shared_preferences_android.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/124893118/android.shared_preferences_android.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/124893118/android.shared_preferences_android.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/124893118/android.shared_preferences_android.main.iml" filepath="$PROJECT_DIR$/.idea/modules/124893118/android.shared_preferences_android.main.iml" />
@@ -103,6 +95,14 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/494543854/android.url_launcher_android.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/494543854/android.url_launcher_android.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/494543854/android.url_launcher_android.main.iml" filepath="$PROJECT_DIR$/.idea/modules/494543854/android.url_launcher_android.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/494543854/android.url_launcher_android.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/494543854/android.url_launcher_android.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/582456383/com.razorpay.razorpay_flutter.android.razorpay_flutter.iml" filepath="$PROJECT_DIR$/.idea/modules/582456383/com.razorpay.razorpay_flutter.android.razorpay_flutter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/582456383/com.razorpay.razorpay_flutter.android.razorpay_flutter.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/582456383/com.razorpay.razorpay_flutter.android.razorpay_flutter.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/582456383/com.razorpay.razorpay_flutter.android.razorpay_flutter.main.iml" filepath="$PROJECT_DIR$/.idea/modules/582456383/com.razorpay.razorpay_flutter.android.razorpay_flutter.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/582456383/com.razorpay.razorpay_flutter.android.razorpay_flutter.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/582456383/com.razorpay.razorpay_flutter.android.razorpay_flutter.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1959737789/io.flutter.plugins.packageinfo.android.package_info_plus.iml" filepath="$PROJECT_DIR$/.idea/modules/-1959737789/io.flutter.plugins.packageinfo.android.package_info_plus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1959737789/io.flutter.plugins.packageinfo.android.package_info_plus.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/-1959737789/io.flutter.plugins.packageinfo.android.package_info_plus.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1959737789/io.flutter.plugins.packageinfo.android.package_info_plus.main.iml" filepath="$PROJECT_DIR$/.idea/modules/-1959737789/io.flutter.plugins.packageinfo.android.package_info_plus.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1959737789/io.flutter.plugins.packageinfo.android.package_info_plus.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/-1959737789/io.flutter.plugins.packageinfo.android.package_info_plus.unitTest.iml" />
     </modules>
   </component>
 </project>

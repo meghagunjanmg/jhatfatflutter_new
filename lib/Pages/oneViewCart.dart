@@ -36,6 +36,7 @@ class oneViewCart extends StatefulWidget {
 
 class _oneViewCartState extends State<oneViewCart> {
   String storeName = '';
+  dynamic packcharge = 0.0;
   String vendorCatId = '';
   String uiType = '';
   dynamic vendorId = '';
@@ -79,7 +80,10 @@ class _oneViewCartState extends State<oneViewCart> {
     String? vendor_cat_id = prefs.getString('vendor_cat_id');
     String? ui_type = prefs.getString('ui_type');
     dynamic vendor_id = prefs.getString('res_vendor_id');
+
+    dynamic package_charge = prefs.getString('res_pack_charge');
     setState(() {
+      packcharge = double.parse(package_charge);
       currency = prefs.getString('curency')!;
       if (storename != null && storename.length > 0) {
         storeName = storename;
@@ -1038,6 +1042,40 @@ class _oneViewCartState extends State<oneViewCart> {
                           color: kCardBackgroundColor,
                           thickness: 1.0,
                         ),
+
+                        (cartListII.isNotEmpty)?
+                        Container(
+                          color: Colors.white,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 4.0, horizontal: 20.0),
+                          child: Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  'Packaging Charges',
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .caption,
+                                ),
+                                Text(
+                                  '$currency $packcharge',
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .caption,
+                                ),
+                              ]),
+                        )
+                            :
+                        Container(),
+
+                        Divider(
+                          color: kCardBackgroundColor,
+                          thickness: 1.0,
+                        ),
+
                         Container(
                           color: Colors.white,
                           padding: EdgeInsets.symmetric(
@@ -1172,8 +1210,34 @@ class _oneViewCartState extends State<oneViewCart> {
                                 if (cartListI.isNotEmpty) {
                                   if (is_id_req == 1 &&
                                       iduploaded != null) createCart(context);
+                                  else if(is_id_req == 1 &&
+                                      iduploaded == null) {
+                                    Fluttertoast.showToast(
+                                      msg: "Upload Id Proof",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.CENTER,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.black,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0
+                                  );
+                                  }
+
                                   if (is_pres_req == 1 &&
                                       presuploaded != null) createCart(context);
+                                  else if(is_pres_req == 1 &&
+                                      presuploaded == null) {
+                                    Fluttertoast.showToast(
+                                      msg: "Upload Prescription",
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.CENTER,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.black,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0
+                                  );
+                                  }
+
                                   if (is_pres_req == 0 &&
                                       is_id_req == 0) createCart(context);
                                   if (is_pres_req == 0 && is_id_req == 1 &&
@@ -1198,7 +1262,7 @@ class _oneViewCartState extends State<oneViewCart> {
                               }
                             },
                             child: Text("Pay $currency "
-                                '${totalAmount + deliveryCharge}')
+                                '${totalAmount + deliveryCharge + packcharge}')
                         ),
                       ],
                     ),
@@ -1618,7 +1682,6 @@ class _oneViewCartState extends State<oneViewCart> {
       dynamic is_pres,
       dynamic index) {
 
-    print("BASKET: "+isbasket.toString());
     String selected;
     return Column(
       children: <Widget>[

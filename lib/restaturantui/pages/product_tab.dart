@@ -913,11 +913,11 @@ class _ProductTabDataState extends State<ProductTabData> {
         builder: (BuildContext context){
           return AlertDialog(
             content: const Text(
-              'Please order Grocery and Food in seperate orders',
+              'Restraunt orders to be placed separately.\nPlease clear/empty cart to add item.in seperate orders',
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Clear'),
+                child: const Text('Clear Cart'),
                 onPressed: () {
                   ClearCart();
 

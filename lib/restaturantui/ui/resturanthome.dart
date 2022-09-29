@@ -31,6 +31,7 @@ import 'package:jhatfat/restaturantui/pages/recentproductorder.dart';
 import 'package:jhatfat/restaturantui/pages/restaurant.dart';
 import 'package:jhatfat/restaturantui/searchResturant.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+import '../../HomeOrderAccount/home_order_account.dart';
 import '../../bean/venderbean.dart';
 
 class Restaurant extends StatefulWidget {
@@ -350,8 +351,12 @@ class RestaurantState extends State<Restaurant> {
                       size: 24.0,
                     ),
                     onPressed: () {
-                      Navigator.of(context).pop();
-                    },
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomeOrderAccount(0)),
+                              (Route<dynamic> route) => false);
+                      },
                   ),
                   actions: <Widget>[
                     Padding(
@@ -1055,6 +1060,7 @@ class RestaurantState extends State<Restaurant> {
       // });
     } else {
       prefs.setString("res_vendor_id", '${item.vendor_id}');
+      prefs.setString("res_pack_charge", '${item.packaging_charges}');
       prefs.setString("store_resturant_name", '${item.vendor_name}');
       Navigator.push(
               context,
@@ -1072,11 +1078,11 @@ class RestaurantState extends State<Restaurant> {
         builder: (BuildContext context){
           return new AlertDialog(
             content: Text(
-              'Kindly order from one resturant',
+              'Your cart contains dishes from a different resturant. Do you want to discard the selection and add dishes from this resturant.',
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Clear'),
+                child: const Text('Clear Cart'),
                 onPressed: () {
                   deleteAllRestProduct(context,item, currencySymbol);
                   Navigator.of(context).pop(true);
@@ -1101,6 +1107,7 @@ class RestaurantState extends State<Restaurant> {
     database.deleteAllAddOns();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("res_vendor_id", '${item.vendor_id}');
+    prefs.setString("res_pack_charge", '${item.packaging_charges}');
     prefs.setString("store_resturant_name", '${item.vendor_name}');
     Navigator.push(
             context,

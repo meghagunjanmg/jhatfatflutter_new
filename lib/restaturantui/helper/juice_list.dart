@@ -78,11 +78,11 @@ class _JuiceListState extends State<JuiceList> {
         builder: (BuildContext context){
           return new AlertDialog(
             content: Text(
-              'Please order Grocery and Food in seperate orders',
+              'Please order Restraunt orders to be placed separately\nPlease clear/empty cart to add item.in seperate orders',
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Clear'),
+                child: const Text('Clear Cart'),
                 onPressed: () {
                   ClearCart();
                   Navigator.of(context).pop(true);

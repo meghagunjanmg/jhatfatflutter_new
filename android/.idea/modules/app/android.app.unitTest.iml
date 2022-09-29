@@ -169,7 +169,7 @@
     <orderEntry type="module" module-name="android.geocoding.main" scope="TEST" />
     <orderEntry type="module" module-name="android.flutter_keyboard_visibility.main" scope="TEST" />
     <orderEntry type="module" module-name="android.fluttertoast.main" scope="TEST" />
-    <orderEntry type="module" module-name="android.razorpay_flutter.main" scope="TEST" />
+    <orderEntry type="module" module-name="com.razorpay.razorpay_flutter.android.razorpay_flutter.main" scope="TEST" />
     <orderEntry type="module" module-name="android.permission_handler.main" scope="TEST" />
     <orderEntry type="module" module-name="android.image_picker_android.main" scope="TEST" />
     <orderEntry type="module" module-name="android.flutter_paystack.main" scope="TEST" />
@@ -178,11 +178,11 @@
     <orderEntry type="module" module-name="android.url_launcher_android.main" scope="TEST" />
     <orderEntry type="module" module-name="android.google_maps_flutter_android.main" scope="TEST" />
     <orderEntry type="module" module-name="android.camera_android.main" scope="TEST" />
-    <orderEntry type="module" module-name="android.package_info_plus.main" scope="TEST" />
+    <orderEntry type="module" module-name="io.flutter.plugins.packageinfo.android.package_info_plus.main" scope="TEST" />
     <orderEntry type="module" module-name="android.google_api_headers.main" scope="TEST" />
     <orderEntry type="module" module-name="android.location.main" scope="TEST" />
     <orderEntry type="module" module-name="android.app.main" scope="TEST" />
-    <orderEntry type="library" scope="TEST" name="Gradle: ./../build/app/intermediates/flutter/debug/libs.jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: /home/megha/Desktop/jhatfatflutter/build/app/intermediates/flutter/debug/libs.jar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: io.flutter:flutter_embedding_debug:1.0.0-5e9e0e0aa8be4ff69facadd706b713f0bb54d5b3" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.5.2" level="project" />

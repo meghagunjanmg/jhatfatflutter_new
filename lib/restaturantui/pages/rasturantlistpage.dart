@@ -422,6 +422,7 @@ class ResturantPageState extends State<ResturantPageList> {
 
     } else {
       prefs.setString("res_vendor_id", '${item.vendor_id}');
+      prefs.setString("res_pack_charge", '${item.packaging_charges}');
       prefs.setString("store_resturant_name", '${item.vendor_name}');
       Navigator.push(
           context,
@@ -439,11 +440,11 @@ class ResturantPageState extends State<ResturantPageList> {
         builder: (BuildContext context){
           return new AlertDialog(
             content: Text(
-              'Kindly order from one resturant',
+              'Your cart contains dishes from a different resturant. Do you want to discard the selection and add dishes from this resturant.',
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Clear'),
+                child: const Text('Clear Cart'),
                 onPressed: () {
                   deleteAllRestProduct(context,item, currencySymbol);
                   Navigator.of(context).pop(true);
@@ -469,6 +470,7 @@ class ResturantPageState extends State<ResturantPageList> {
     getCartCount();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("res_vendor_id", '${item.vendor_id}');
+    prefs.setString("res_pack_charge", '${item.packaging_charges}');
     prefs.setString("store_resturant_name", '${item.vendor_name}');
     Navigator.push(
         context,

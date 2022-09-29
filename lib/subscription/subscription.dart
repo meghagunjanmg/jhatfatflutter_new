@@ -5,10 +5,10 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_paystack/flutter_paystack.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:toast/toast.dart';
 import 'package:jhatfat/Components/bottom_bar.dart';
 import 'package:jhatfat/Components/list_tile.dart';
 import 'package:jhatfat/Pages/order_placed.dart';
@@ -30,7 +30,7 @@ class Subscription extends StatefulWidget {
 }
 
 class SubscritionState extends State<Subscription> {
-  PaystackPlugin p = new PaystackPlugin();
+  String subsid="0";
   Razorpay _razorpay = new Razorpay();
   var publicKey = '';
   var razorPayKey = '';
@@ -45,14 +45,6 @@ class SubscritionState extends State<Subscription> {
   bool razor = false;
   bool paystack = false;
 
-  final _formKey = GlobalKey<FormState>();
-  final _verticalSizeBox = const SizedBox(height: 20.0);
-  final _horizontalSizeBox = const SizedBox(width: 10.0);
-  String _cardNumber="";
-  String _cvv="";
-  int _expiryMonth = 0;
-  int _expiryYear = 0;
-
   var showDialogBox = false;
 
   int radioId = -1;
@@ -60,8 +52,6 @@ class SubscritionState extends State<Subscription> {
   var setProgressText = 'Proceeding to placed order please wait!....';
 
   var showPaymentDialog = false;
-
-  var _inProgress = false;
 
   double walletAmount = 0.0;
   double walletUsedAmount = 0.0;
@@ -106,6 +96,37 @@ class SubscritionState extends State<Subscription> {
       print(e);
     });
   }
+
+  void SubscriptionAPI() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    int? userId = preferences.getInt('user_id');
+    var url = subscribe;
+    var client = http.Client();
+    Uri myUri = Uri.parse(url);
+    client.post(myUri,body: {
+      "user_id":userId.toString(),
+      "subs_id":subsid,
+    }).then((value) {
+      print('${value.statusCode} - ${value.body}');
+      if (value.statusCode == 200) {
+        var jsonData = jsonDecode(value.body);
+        if (jsonData['status'] == "1") {
+          Fluttertoast.showToast(
+              msg: "Subscription Applied",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.black,
+              textColor: Colors.white,
+              fontSize: 16.0
+          );
+        }
+      }
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
   void getVendorPayment() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
@@ -148,7 +169,7 @@ class SubscritionState extends State<Subscription> {
         'key': '${keyRazorPay}',
         'amount': amount,
         'name': '${prefs.getString('user_name')}',
-        'description': 'Grocery Shopping',
+        'description': 'Subscription',
         'prefill': {
           'contact': '${prefs.getString('user_phone')}',
           'email': '${prefs.getString('user_email')}'
@@ -165,11 +186,6 @@ class SubscritionState extends State<Subscription> {
       }
     });
   }
-
-  void payStatck(String key) async {
-    p.initialize(publicKey: key);
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -193,84 +209,89 @@ class SubscritionState extends State<Subscription> {
           ),
         ),
         body:
+        ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: planlist.length,
+            itemBuilder: (context, i) {
+    return(
+    Container(
+    child: Card(
+    shadowColor: kMainColor,
+    margin:EdgeInsets.all(20),
+    child:Container(
+    height: 380,
+    color: Colors.white,
+    child: Row(
+    children: [
+    Expanded(
+    child:Container(
+    alignment: Alignment.topLeft,
+    child: Column(
+    children: [
+    ListTile(
+    contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
+    title: Text(planlist[i].plans.toString(),
+    style: TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+    color: Colors.black),),
+    ),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Image.network(imageBaseUrl+planlist[i].banner,
+            height: 100,
+            fit:BoxFit.fill
+        ),
+      ),
+    ListTile(
+    contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
+    title: Text(planlist[i].description.toString(),
+    style: TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w400,
+    color: Colors.black),),
+    ),
 
-        Container(
-            child: Card(
-                shadowColor: kMainColor,
-                margin:EdgeInsets.all(20),
-                child:Container(
-                    height: 300,
-                    color: Colors.white,
-                    child: Row(
-                        children: [
-                          Expanded(
-                              child:Container(
-                                  alignment: Alignment.topLeft,
-                                  child: Column(
-                                      children: [
-                                        Expanded(
-                                          flex: 5,
-                                          child:
-                                          ListTile(
-                                            contentPadding: EdgeInsets.all(8.0),
-                                            title: Text(planlist[0].plans,
-                                              style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.black),),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          flex: 5,
-                                          child:
-                                          ListTile(
-                                            contentPadding: EdgeInsets.all(8.0),
-                                            title: Text(planlist[0].description,
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.black),),
-                                          ),
-                                        ),
+    ListTile(
+    title: Text("For "+planlist[i].days.toString()+" Days @ "+"${currency}"+planlist[i].amount.toString(),
+    style: TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+    color: Colors.black),),
+    contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
+    ),
 
-                                        Expanded(
-                                          flex: 5,
-                                          child:
-                                          ListTile(
-                                            title: Text("For "+planlist[0].days+" Days @ "+"${currency}"+planlist[0].amount.toString(),
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.black),),
-                                            contentPadding: EdgeInsets.all(8.0),
-                                          ),
-                                        ),
-
-                                        Expanded(
-                                          flex: 8,
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.all(18.0),
-                                                child:
-                                                ElevatedButton(
-                                                    onPressed: () {
-                                                      openCheckout(tagObjs[0].payment_key, planlist[0].amount * 100);
-                                                    },
-                                                    child: Text("Payment")
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      ]
-                                  )
-                              )
-                          )
-                        ]
-                    ))
-            )));
+      Padding(padding: EdgeInsets.all(10),
+      child : ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0),
+            ),
+            primary: kMainColor,
+            padding:EdgeInsets.symmetric(
+                horizontal: 50, vertical: 20),
+            textStyle: TextStyle(
+                color: kWhiteColor, fontWeight: FontWeight.w400)),
+        onPressed: () {
+          setState(() {
+            subsid = planlist[i].planId.toString();
+          });
+          openCheckout(tagObjs[0].payment_key, double.parse(planlist[i].amount.toString()) * 100);
+        },
+        child: Text("Payment")
+    ),
+      ),
+    ]
+    )
+    )
+    )
+    ]
+    )
+    )
+    )
+    )
+    );
+    }));
   }
 
 
@@ -280,62 +301,21 @@ class SubscritionState extends State<Subscription> {
     razorPay(keyRazorPay, amount);
   }
 
-  _startAfreshCharge() async {
-    _formKey.currentState?.save();
-
-    Charge charge = Charge()
-      ..amount = 100 // In base currency
-      ..email = 'customer@email.com'
-      ..currency = 'NGN'
-      ..card = _getCardFromUI()
-      ..reference = _getReference();
-
-    _chargeCard(charge);
-  }
-
-  _chargeCard(Charge charge) async {
-    p.chargeCard(context, charge: charge).then((value) {
-      print('${value.status}');
-      print('${value.toString()}');
-      print('${value.card}');
-      if (value.status && value.message == "Success") {
-        setState(() {
-          showPaymentDialog = false;
-          _inProgress = false;
-          showDialogBox = true;
-        });
-      }
-    });
-  }
-
-  String _getReference() {
-    String platform;
-    if (Platform.isIOS) {
-      platform = 'iOS';
-    } else {
-      platform = 'Android';
-    }
-
-    return 'ChargedFrom${platform}_${DateTime.now().millisecondsSinceEpoch}';
-  }
-
-  PaymentCard _getCardFromUI() {
-    return PaymentCard(
-      number: _cardNumber,
-      cvc: _cvv,
-      expiryMonth: _expiryMonth,
-      expiryYear: _expiryYear,
-    );
-  }
-
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    SubscriptionAPI();
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
     setState(() {
       showDialogBox = false;
     });
+    Fluttertoast.showToast(
+        msg: "ERROR: " + response.message.toString());
+
   }
 
-  void _handleExternalWallet(ExternalWalletResponse response) {}
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    Fluttertoast.showToast(
+        msg: "ERROR: " + response.toString());
+  }
 }

@@ -480,7 +480,7 @@ class PaymentPageState extends State<PaymentPage> {
                                       });
                                       if (paymentVia[index]
                                           .payment_mode ==
-                                          "Razor Pay") {
+                                          "Card/Upi/Netbanking") {
                                         openCheckout(
                                             "${paymentVia[index].payment_key}",
                                             totalAmount * 100);
@@ -1141,7 +1141,7 @@ class PaymentPageState extends State<PaymentPage> {
           _inProgress = false;
           showDialogBox = true;
         });
-        placedOrder("success", "Card");
+        placedOrder("success", "RazorPay");
       }
     });
   }
@@ -1167,7 +1167,7 @@ class PaymentPageState extends State<PaymentPage> {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    placedOrder("success", "Card");
+    placedOrder("success", "RazorPay");
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {

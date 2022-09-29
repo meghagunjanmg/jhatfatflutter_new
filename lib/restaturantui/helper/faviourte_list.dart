@@ -318,6 +318,7 @@ class _FavouriteRestaurantsListState extends State<FavouriteRestaurantsList> {
       showMyDialog(context);
     } else {
       prefs.setString("res_vendor_id", '${item.vendor_id}');
+      prefs.setString("res_pack_charge", '${item.packaging_charges}');
       prefs.setString("store_resturant_name", '${item.vendor_name}');
       Navigator.push(
           context,
@@ -334,11 +335,11 @@ class _FavouriteRestaurantsListState extends State<FavouriteRestaurantsList> {
         builder: (BuildContext context){
           return new AlertDialog(
             content: Text(
-              'Please order Grocery and Food in seperate orders',
+              'Restraunt orders to be placed separately.\nPlease clear/empty cart to add item.in seperate orders',
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Clear'),
+                child: const Text('Clear Cart'),
                 onPressed: () {
                   ClearCart();
                   Navigator.of(context).pop(true);
@@ -430,6 +431,7 @@ class _FavouriteRestaurantsListState extends State<FavouriteRestaurantsList> {
     database.deleteAllAddOns();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("res_vendor_id", '${item.vendor_id}');
+    prefs.setString("res_pack_charge", '${item.packaging_charges}');
     prefs.setString("store_resturant_name", '${item.vendor_name}');
     Navigator.push(
             context,

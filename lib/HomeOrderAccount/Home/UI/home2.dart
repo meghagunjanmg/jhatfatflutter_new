@@ -40,6 +40,7 @@ import 'package:visibility_detector/visibility_detector.dart';
 import '../../../Themes/constantfile.dart';
 import '../../../bean/adminsetting.dart';
 import '../../../restaturantui/pages/restaurant.dart';
+import '../Closed.dart';
 import 'appcategory/appcategory.dart';
 
 
@@ -57,7 +58,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  Adminsetting? admins;
+  late Adminsetting admins;
 
   String? cityName = 'NO LOCATION SELECTED';
   String? currency = '';
@@ -95,58 +96,10 @@ class _HomeState extends State<Home> {
   List<NearStores> nearStores1 = [];
   List<NearStores> nearStoresSearch1 = [];
   List<NearStores> nearStoresShimmer1 = [
-    NearStores(
-        "",
-        "",
-        0,
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""),
-    NearStores(
-        "",
-        "",
-        0,
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""),
-    NearStores(
-        "",
-        "",
-        0,
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""),
-    NearStores(
-        "",
-        "",
-        0,
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "")
+    NearStores("", "", 0, "", "", "", "", "", "", "", "", "",""),
+    NearStores("", "", 0, "", "", "", "", "", "", "", "", "",""),
+    NearStores("", "", 0, "", "", "", "", "", "", "", "", "",""),
+    NearStores("", "", 0, "", "", "", "", "", "", "", "", "",""),
   ];
   List<String> listImages1 = ['', '', '', '', ''];
   double userLat = 0.0;
@@ -166,29 +119,6 @@ class _HomeState extends State<Home> {
 
   }
 
-  Future<void> ClosedBanner() async {
-    var url2 = closed_banner;
-    Uri myUri2 = Uri.parse(url2);
-    var response = await http.get(myUri2);
-    try {
-      if (response.statusCode == 200) {
-        var jsonData = jsonDecode(response.body);
-        if (jsonData['status'] == "1") {
-          var tagObjsJson = jsonDecode(response.body)['data'] as List;
-          List<BannerDetails> tagObjs = tagObjsJson
-              .map((tagJson) => BannerDetails.fromJson(tagJson))
-              .toList();
-          setState(() {
-            ClosedBannerImage.clear();
-            ClosedBannerImage = tagObjs;
-            ClosedImage = imageBaseUrl + tagObjs[0].bannerImage;
-          });
-        }
-      }
-    } on Exception catch (_) {
-
-    }
-  }
 
   void getCartCount() {
     DatabaseHelper db = DatabaseHelper.instance;
@@ -273,11 +203,7 @@ class _HomeState extends State<Home> {
         });
 
         calladminsetting();
-        Topbanner();
-        hitService(lat.toString(), lng.toString());
-        hitBannerUrl();
-        pickbanner();
-        hitRestaurantService();
+
 
       } else {
         await Geolocator.openLocationSettings().then((value) {
@@ -321,7 +247,6 @@ class _HomeState extends State<Home> {
     callThisMethod(isVisible);
     },
     child:
-    (admins!.status==1)?
     Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60.0),
@@ -391,13 +316,13 @@ class _HomeState extends State<Home> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              (admins!.surge==1)
+              (admins.surge==1)
                   ?
               Padding(
                   padding: EdgeInsets.only(top: 8.0, left: 24.0),
                   child:
                     Text(
-                      admins!.surgeMsg.toString(),
+                      admins.surgeMsg.toString(),
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontSize: 16,color: Colors.blue),
@@ -439,7 +364,7 @@ class _HomeState extends State<Home> {
                         );
                       },
                     child: Text(
-                      admins!.topMessage.toString(),
+                      admins.topMessage.toString(),
                       style: Theme
                           .of(context)
                           .textTheme
@@ -818,7 +743,7 @@ class _HomeState extends State<Home> {
               ),
 
               Text(
-                    admins!.bottomMessage.toString(),
+                    admins.bottomMessage.toString(),
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 12),
@@ -879,22 +804,7 @@ class _HomeState extends State<Home> {
         ),
       ),
     )
-        :
-    Scaffold(
-      body: Dialog(
-        child: Container(
-          decoration: BoxDecoration(
-            color: white_color,
-            borderRadius:
-            BorderRadius.circular(20.0),
-          ),
-          child: Image.network(
-            ClosedImage,
-            fit: BoxFit.fill,
-          ),
-        ),
-      ),
-    )
+
     );
   }
 
@@ -924,12 +834,7 @@ class _HomeState extends State<Home> {
 
     });
     calladminsetting();
-    Topbanner();
 
-    hitService(lat.toString(), lng.toString());
-    hitBannerUrl();
-    pickbanner();
-    hitRestaurantService();
   }
 
 
@@ -1244,11 +1149,7 @@ class _HomeState extends State<Home> {
     print("HOME_ORDER_HOME"+lat.toString()+lng.toString());
 
     calladminsetting();
-    Topbanner();
-    hitService(lat.toString(), lng.toString());
-    hitBannerUrl();
-    pickbanner();
-    hitRestaurantService();
+
   }
 
   void hitbannerVendor(BannerDetails detail) async {
@@ -1387,19 +1288,27 @@ class _HomeState extends State<Home> {
         print("ADMIN RES: " + admins!.cityadminId.toString());
       });
 
-      if(admins!.status==1) {
+      if(admins.status==1) {
         FirebaseMessaging messaging = FirebaseMessaging.instance;
         messaging.getToken().then((value) {
           print(value);
         });
         getCurrency();
+        Topbanner();
+        hitService(lat.toString(), lng.toString());
+        hitBannerUrl();
+        pickbanner();
         hitRestaurantService();
         location.changeSettings(
             interval: 300, accuracy: loc.LocationAccuracy.high);
         location.enableBackgroundMode(enable: true);
       }
       else{
-        ClosedBanner();
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Closed()),
+                (Route<dynamic> route) => false);
       }
     }
   }

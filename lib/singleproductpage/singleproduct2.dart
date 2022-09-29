@@ -98,11 +98,11 @@ class SingleProductState2 extends State<SingleProductPage_2> {
         builder: (BuildContext context){
           return new AlertDialog(
             content: Text(
-              'Please order Grocery and Food in seperate orders',
+              'Grocery orders to be placed separately.\nPlease clear/empty cart to add item.in seperate orders',
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Clear'),
+                child: const Text('Clear Cart'),
                 onPressed: () {
                   ClearCart();
                   Navigator.of(context).pop(true);
