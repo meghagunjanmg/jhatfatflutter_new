@@ -1,5 +1,5 @@
-var baseUrl = "http://jhatfat.umbeo.com/api/";
-var imageBaseUrl = "http://jhatfat.umbeo.com/";
+var baseUrl = "http://jhatfat.com/api/";
+var imageBaseUrl = "http://jhatfat.com/";
 
 var adminsettings = baseUrl + "adminsettings";
 var top_msg_banner = baseUrl + "top_message_banner";

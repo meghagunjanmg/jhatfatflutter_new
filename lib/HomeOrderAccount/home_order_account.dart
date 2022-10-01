@@ -58,26 +58,29 @@ class _HomeOrderAccountState extends State<HomeOrderAccount> {
 
   @override
   void initState() {
+    super.initState();
     _requestPermission();
-
     getData();
     _navigationController =
     new CircularBottomNavigationController(_currentIndex);
     getCurrency();
-    super.initState();
   }
 
   void getData() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-        cityName = pref.getString("addr")!;
-        lat = double.parse(pref.getString("lat")!);
-        lng = double.parse(pref.getString("lng")!);
+    try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      cityName = pref.getString("addr")!;
+      lat = double.parse(pref.getString("lat")!);
+      lng = double.parse(pref.getString("lng")!);
 
-    pref.setString("lat", lat.toString());
-    pref.setString("lng", lng.toString());
-    pref.setString("addr", cityName.toString());
+      pref.setString("lat", lat.toString());
+      pref.setString("lng", lng.toString());
+      pref.setString("addr", cityName.toString());
 
-    print("HOME_ORDER" + lat.toString() + lng.toString());
+      print("HOME_ORDER" + lat.toString() + lng.toString());
+    } catch (e) {
+      print(e);
+    }
   }
 
   _requestPermission() async {

@@ -1,7 +1,7 @@
 # compiler: R8
 # compiler_version: 3.1.66
 # min_api: 21
-# pg_map_id: 2a44a96
+# pg_map_id: 04a9b0a
 # common_typos_disable
 # {"id":"com.android.tools.r8.mapping","version":"1.0"}
 a4.FirebaseApp$$ExternalSyntheticLambda0 -> a4.c:
@@ -41772,7 +41772,6 @@ com.razorpay.r_$Z$ -> com.razorpay.l4:
 com.razorpay.r__Q_ -> com.razorpay.m4:
 com.razorpay.razorpay_flutter.RazorpayDelegate -> e6.a:
     android.app.Activity activity -> g
-    java.lang.String packageName -> j
     io.flutter.plugin.common.MethodChannel$Result pendingResult -> h
     java.util.Map pendingReply -> i
     void onExternalWalletSelected(java.lang.String,com.razorpay.PaymentData) -> a
@@ -41782,8 +41781,7 @@ com.razorpay.razorpay_flutter.RazorpayDelegate -> e6.a:
     void openCheckout(java.util.Map,io.flutter.plugin.common.MethodChannel$Result) -> e
     void resync(io.flutter.plugin.common.MethodChannel$Result) -> f
     void sendReply(java.util.Map) -> g
-    void setPackageName(java.lang.String) -> h
-    int translateRzpPaymentError(int) -> i
+    int translateRzpPaymentError(int) -> h
 com.razorpay.razorpay_flutter.RazorpayFlutterPlugin -> e6.b:
     java.lang.String CHANNEL_NAME -> i
     com.razorpay.razorpay_flutter.RazorpayDelegate razorpayDelegate -> g

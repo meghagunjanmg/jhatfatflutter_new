@@ -58,7 +58,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late Adminsetting admins;
+  Adminsetting? admins;
 
   String? cityName = 'NO LOCATION SELECTED';
   String? currency = '';
@@ -115,8 +115,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    getData();
-
+      getData();
   }
 
 
@@ -316,13 +315,13 @@ class _HomeState extends State<Home> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              (admins.surge==1)
+              (admins!.surge==1)
                   ?
               Padding(
                   padding: EdgeInsets.only(top: 8.0, left: 24.0),
                   child:
                     Text(
-                      admins.surgeMsg.toString(),
+                      admins!.surgeMsg.toString(),
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontSize: 16,color: Colors.blue),
@@ -364,7 +363,7 @@ class _HomeState extends State<Home> {
                         );
                       },
                     child: Text(
-                      admins.topMessage.toString(),
+                      admins!.topMessage.toString(),
                       style: Theme
                           .of(context)
                           .textTheme
@@ -743,7 +742,7 @@ class _HomeState extends State<Home> {
               ),
 
               Text(
-                    admins.bottomMessage.toString(),
+                    admins!.bottomMessage.toString(),
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 12),
@@ -1141,12 +1140,23 @@ class _HomeState extends State<Home> {
 
   void getData() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    setState(() {
-      cityName = pref.getString("addr")!;
-      lat = double.parse(pref.getString("lat")!);
-      lng = double.parse(pref.getString("lng")!);
-    });
-    print("HOME_ORDER_HOME"+lat.toString()+lng.toString());
+
+    try {
+      setState(() {
+            cityName = pref.getString("addr")!;
+            lat = double.parse(pref.getString("lat")!);
+            lng = double.parse(pref.getString("lng")!);
+          });
+      print("HOME_ORDER_HOME"+lat.toString()+lng.toString());
+    } catch (e) {
+      print(e);
+    }
+
+    if(pref.getString("lat")==null || pref.getString("lat").toString().isEmpty)
+{
+  _getLocation(context);
+}
+
 
     calladminsetting();
 
@@ -1276,19 +1286,15 @@ class _HomeState extends State<Home> {
     });
   }
 
-  Future<void> calladminsetting() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
+  void calladminsetting() async {
     var url = adminsettings;
     Uri myUri = Uri.parse(url);
     var value = await http.get(myUri);
     var jsonData = jsonDecode(value.body.toString());
     if (jsonData['status'] == "1") {
-      setState((){
         admins = Adminsetting.fromJson(jsonData['data']);
         print("ADMIN RES: " + admins!.cityadminId.toString());
-      });
-
-      if(admins.status==1) {
+      if(admins!.status==1) {
         FirebaseMessaging messaging = FirebaseMessaging.instance;
         messaging.getToken().then((value) {
           print(value);
@@ -1303,7 +1309,7 @@ class _HomeState extends State<Home> {
             interval: 300, accuracy: loc.LocationAccuracy.high);
         location.enableBackgroundMode(enable: true);
       }
-      else{
+      else {
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
@@ -1311,6 +1317,20 @@ class _HomeState extends State<Home> {
                 (Route<dynamic> route) => false);
       }
     }
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    messaging.getToken().then((value) {
+      print(value);
+    });
+    getCurrency();
+    Topbanner();
+    hitService(lat.toString(), lng.toString());
+    hitBannerUrl();
+    pickbanner();
+    hitRestaurantService();
+    location.changeSettings(
+        interval: 300, accuracy: loc.LocationAccuracy.high);
+    location.enableBackgroundMode(enable: true);
+
   }
 }
 
