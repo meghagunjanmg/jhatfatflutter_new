@@ -53,11 +53,21 @@ Future<void> main() async {
 }
 _requestPermission() async {
   var status = await Permission.location.request();
+  var status1 = await Permission.notification.request();
   if (status.isGranted) {
     print('done');
   } else if (status.isDenied) {
     _requestPermission();
   } else if (status.isPermanentlyDenied) {
+    openAppSettings();
+  }
+
+
+  if (status1.isGranted) {
+    print('done');
+  } else if (status1.isDenied) {
+    _requestPermission();
+  } else if (status1.isPermanentlyDenied) {
     openAppSettings();
   }
 }
@@ -134,9 +144,9 @@ class PushNotificationService {
     new AndroidInitializationSettings('app_icon');
 
     var iOSSettings = IOSInitializationSettings(
-      requestSoundPermission: false,
-      requestBadgePermission: false,
-      requestAlertPermission: false,
+      requestSoundPermission: true,
+      requestBadgePermission: true,
+      requestAlertPermission: true,
     );
     var initSetttings =
     InitializationSettings(android: androidSettings, iOS: iOSSettings);

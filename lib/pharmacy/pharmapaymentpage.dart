@@ -470,7 +470,7 @@ class PaymentPharmaPageState extends State<PaymentPharmaPage> {
                                             image:
                                                 'images/payment/credit_card.png',
                                             text:
-                                                '${paymentVia[index].payment_mode}',
+                                                'Card/UPI/NetBanking',
                                             onTap: () async{
                                               setState(() {
                                                 setProgressText =
@@ -479,7 +479,7 @@ class PaymentPharmaPageState extends State<PaymentPharmaPage> {
                                               });
                                               if (paymentVia[index]
                                                       .payment_mode ==
-                                                  "Card/Upi/Netbanking") {
+                                                  "Razor Pay") {
                                                 openCheckout(
                                                     "${paymentVia[index].payment_key}",
                                                     totalAmount * 100);

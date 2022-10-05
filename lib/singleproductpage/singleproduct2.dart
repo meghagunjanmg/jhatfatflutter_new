@@ -98,7 +98,7 @@ class SingleProductState2 extends State<SingleProductPage_2> {
         builder: (BuildContext context){
           return new AlertDialog(
             content: Text(
-              'Grocery orders to be placed separately.\nPlease clear/empty cart to add item.in seperate orders',
+              'Grocery orders are to be placed separately.\nPlease clear/empty cart to add item. ',
             ),
             actions: <Widget>[
               TextButton(

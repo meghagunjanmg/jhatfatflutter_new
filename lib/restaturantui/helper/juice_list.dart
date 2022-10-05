@@ -78,7 +78,7 @@ class _JuiceListState extends State<JuiceList> {
         builder: (BuildContext context){
           return new AlertDialog(
             content: Text(
-              'Please order Restraunt orders to be placed separately\nPlease clear/empty cart to add item.in seperate orders',
+              'Restraunt orders are to be placed separately.\nPlease clear/empty cart to add item.',
             ),
             actions: <Widget>[
               TextButton(

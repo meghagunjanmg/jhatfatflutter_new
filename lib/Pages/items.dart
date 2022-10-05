@@ -129,7 +129,7 @@ class _ItemsPageState extends State<ItemsPage>
         builder: (BuildContext context) {
           return new AlertDialog(
             content: Text(
-              'Grocery orders to be placed separately.\nPlease clear/empty cart to add item.in seperate orders',
+              'Grocery orders are to be placed separately.\nPlease clear/empty cart to add item. ',
             ),
             actions: <Widget>[
               TextButton(
@@ -232,9 +232,22 @@ class _ItemsPageState extends State<ItemsPage>
           return true;
         }
       },
-      child: DefaultTabController(
+      child:
+      Stack(
+        children: <Widget>[
+
+          Container(
+      child :
+          Stack(
+          children: <Widget>[
+      DefaultTabController(
         length: tabs.length,
-        child: Scaffold(
+        child:
+        Stack(
+            children: [
+              Container(
+                margin:  EdgeInsets.only(bottom: 50),
+                child: Scaffold(
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(115.0),
             child: Stack(
@@ -433,616 +446,627 @@ class _ItemsPageState extends State<ItemsPage>
               ],
             ),
           ),
-          body: DefaultTabController(
+          body:
+          DefaultTabController(
             length: tabs.length,
             child: TabBarView(
               controller: tabController,
               children: tabs.map((Tab tab) {
                 return Stack(
-                  children: <Widget>[
-                    Positioned(
-                        top: 0.0,
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width,
-                        height: isCartCount
-                            ? (MediaQuery
-                            .of(context)
-                            .size
-                            .height - 190)
-                            : (MediaQuery
-                            .of(context)
-                            .size
-                            .height - 130),
-                        child: (!isFetchList &&
-                            productVarientList != null &&
-                            productVarientList.length > 0)
-                            ? ListView.separated(
-                          itemCount: productVarientList.length,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(
-                                    MaterialPageRoute(builder: (context) {
-                                      return SingleProductPage(
-                                          productVarientList[index],
-                                          currency);
-                                    })).then((value) {
-                                  setList(productVarientList);
-                                  getCartCount();
-                                });
-                              },
-                              behavior: HitTestBehavior.opaque,
-                              child: Stack(
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 20.0,
-                                            top: 30.0,
-                                            right: 14.0),
-                                        child:
-                                        (productVarientList != null &&
-                                            productVarientList
-                                                .length >
-                                                0)
-                                            ? Image.network(
-                                          imageBaseUrl +
-                                              productVarientList[
-                                              index]
-                                                  .products_image,
-                                          height: 93.3,
-                                          width: 93.3,
-                                        )
-                                            : Image(
-                                          image: AssetImage(
-                                              'images/logos/logo_user.png'),
-                                          height: 93.3,
-                                          width: 93.3,
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                  right: 20),
-                                              child: Text(
-                                                  productVarientList[
-                                                  index]
-                                                      .product_name,
-                                                  style:
-                                                  bottomNavigationTextStyle
-                                                      .copyWith(
-                                                      fontSize:
-                                                      15)),
-                                            ),
-                                            SizedBox(
-                                              height: 8.0,
-                                            ),
-                                            Text(
-                                                '$currency ${(productVarientList[index]
-                                                    .data.length > 0)
-                                                    ? productVarientList[index]
-                                                    .data[productVarientList[index]
-                                                    .selectPos].price
-                                                    : 0}',
-                                                style: Theme
-                                                    .of(context)
-                                                    .textTheme
-                                                    .caption),
-                                            SizedBox(
-                                              height: 20.0,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Positioned(
-                                    left: 120,
-                                    bottom: 5,
-                                    child: Container(
-                                      height: 30.0,
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 12.0),
-                                      decoration: BoxDecoration(
-                                        color: kCardBackgroundColor,
-                                        borderRadius:
-                                        BorderRadius.circular(30.0),
-                                      ),
-                                      child: (productVarientList[index]
-                                          .data !=
-                                          null &&
-                                          productVarientList[index]
-                                              .data
-                                              .length >
-                                              0)
-                                          ? DropdownButton<VarientList>(
-                                          underline: Container(
-                                            height: 0.0,
-                                            color:
-                                            kCardBackgroundColor,
-                                          ),
-                                          value: productVarientList[
-                                          index]
-                                              .data[
-                                          productVarientList[
-                                          index]
-                                              .selectPos],
-                                          items: productVarientList[
-                                          index]
-                                              .data
-                                              .map((e) {
-                                            return DropdownMenuItem<
-                                                VarientList>(
-                                              child: Text(
-                                                '${e.quantity} ${e.unit}',
-                                                style:
-                                                Theme
-                                                    .of(context)
-                                                    .textTheme
-                                                    .caption,
-                                              ),
-                                              value: e,
-                                            );
-                                          }).toList(),
-                                          onChanged: (vale) {
-                                            setState(() {
-                                              int indexd =
-                                              productVarientList[
-                                              index]
-                                                  .data
-                                                  .indexOf(vale!);
-                                              if (indexd != -1) {
-                                                productVarientList[
-                                                index]
-                                                    .selectPos =
-                                                    indexd;
-                                                DatabaseHelper db =
-                                                    DatabaseHelper
-                                                        .instance;
-                                                db
-                                                    .getVarientCount(
-                                                    int.parse(
-                                                        '${productVarientList[index]
-                                                            .data[productVarientList[index]
-                                                            .selectPos]
-                                                            .varient_id}'))
-                                                    .then((value) {
-                                                  print(
-                                                      'print t val $value');
-                                                  if (value == null) {
-                                                    setState(() {
-                                                      productVarientList[
-                                                      index]
-                                                          .add_qnty = 0;
-                                                    });
-                                                  } else {
-                                                    setState(() {
-                                                      productVarientList[
-                                                      index]
-                                                          .add_qnty =
-                                                          value;
-                                                      isCartCount =
-                                                      true;
-                                                    });
-                                                  }
-                                                });
-                                              }
-                                            });
-                                          })
-                                          : Text(''),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    height: 30,
-                                    right: 20.0,
-                                    bottom: 5,
-                                    child: (productVarientList[index]
-                                        .data !=
-                                        null &&
-                                        productVarientList[index]
-                                            .data
-                                            .length >
-                                            0 &&
-                                        int.parse(
-                                            '${productVarientList[index]
-                                                .data[productVarientList[index]
-                                                .selectPos].stock}') >
-                                            0)
-                                        ? (productVarientList[index]
-                                        .add_qnty ==
-                                        0
-                                        ? Container(
-                                      height: 30.0,
-                                      child: TextButton(
-                                        child: Text(
-                                          'Add',
-                                          style: Theme
-                                              .of(
-                                              context)
-                                              .textTheme
-                                              .caption!
-                                              .copyWith(
-                                              color:
-                                              kMainColor,
-                                              fontWeight:
-                                              FontWeight
-                                                  .bold),
-                                        ),
+                  children: [
+                Container(
+                margin:  EdgeInsets.only(bottom: 50),
 
-                                        onPressed: () {
-                                          if (restrocart == 1) {
-                                            print("ALREADY");
-                                            showMyDialog(context);
-                                          }
-                                          else {
-                                            setState(() {
-                                              var stock = int.parse(
-                                                  '${productVarientList[index]
-                                                      .data[productVarientList[index]
-                                                      .selectPos].stock}');
-                                              if (stock >
-                                                  productVarientList[
-                                                  index]
-                                                      .add_qnty) {
-                                                productVarientList[
-                                                index]
-                                                    .add_qnty++;
-                                                addOrMinusProduct
-                                                  (
-                                                    productVarientList[
-                                                    index]
-                                                        .is_id,
-                                                    productVarientList[
-                                                    index]
-                                                        .is_pres,
-                                                    productVarientList[
-                                                    index]
-                                                        .isbasket,
-
-                                                    productVarientList[
-                                                    index]
-                                                        .product_name,
-                                                    productVarientList[
-                                                    index]
-                                                        .data[productVarientList[
-                                                    index]
-                                                        .selectPos]
-                                                        .unit,
-                                                    double.parse(
-                                                        '${productVarientList[index]
-                                                            .data[productVarientList[index]
-                                                            .selectPos]
-                                                            .price}'),
-                                                    int.parse(
-                                                        '${productVarientList[index]
-                                                            .data[productVarientList[index]
-                                                            .selectPos]
-                                                            .quantity}'),
-                                                    productVarientList[
-                                                    index]
-                                                        .add_qnty,
-                                                    productVarientList[
-                                                    index]
-                                                        .data[productVarientList[
-                                                    index]
-                                                        .selectPos]
-                                                        .varient_image,
-                                                    productVarientList[
-                                                    index]
-                                                        .data[productVarientList[
-                                                    index]
-                                                        .selectPos]
-                                                        .varient_id,
-                                                    productVarientList[
-                                                    index]
-                                                        .data[0].vendor_id
-                                                );
-                                              } else {
-                                                // Toast.show(
-                                                //     "No more stock available!",
-                                                //     context,
-                                                //     gravity: Toast
-                                                //         .BOTTOM);
-                                              }
-                                            });
-                                          }
-                                        },
-                                      ),
-                                    )
-                                        : Container(
-                                      height: 30.0,
-                                      padding:
-                                      EdgeInsets.symmetric(
-                                          horizontal: 11.0),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: kMainColor),
-                                        borderRadius:
-                                        BorderRadius
-                                            .circular(30.0),
-                                      ),
-                                      child: Row(
-                                        children: <Widget>[
-                                          InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                productVarientList[
-                                                index]
-                                                    .add_qnty--;
-                                              });
-                                              addOrMinusProduct(
-                                                  productVarientList[
-                                                  index]
-                                                      .is_id,
-                                                  productVarientList[
-                                                  index]
-                                                      .is_pres,
-                                                  productVarientList[
-                                                  index]
-                                                      .isbasket,
-                                                  productVarientList[
-                                                  index]
-                                                      .product_name,
-                                                  productVarientList[
-                                                  index]
-                                                      .data[productVarientList[
-                                                  index]
-                                                      .selectPos]
-                                                      .unit,
-                                                  double.parse(
-                                                      '${productVarientList[index]
-                                                          .data[productVarientList[index]
-                                                          .selectPos].price}'),
-                                                  int.parse(
-                                                      '${productVarientList[index]
-                                                          .data[productVarientList[index]
-                                                          .selectPos]
-                                                          .quantity}'),
-                                                  productVarientList[
-                                                  index]
-                                                      .add_qnty,
-                                                  productVarientList[
-                                                  index]
-                                                      .data[productVarientList[
-                                                  index]
-                                                      .selectPos]
-                                                      .varient_image,
-                                                  productVarientList[
-                                                  index]
-                                                      .data[productVarientList[
-                                                  index]
-                                                      .selectPos]
-                                                      .varient_id,
-                                                  productVarientList[
-                                                  index]
-                                                      .data[0].vendor_id
-                                              );
-                                            },
-                                            child: Icon(
-                                              Icons.remove,
-                                              color: kMainColor,
-                                              size: 20.0,
-                                              //size: 23.3,
-                                            ),
-                                          ),
-                                          SizedBox(width: 8.0),
-                                          Text(
-                                              productVarientList[
-                                              index]
-                                                  .add_qnty
-                                                  .toString(),
-                                              style: Theme
-                                                  .of(
-                                                  context)
-                                                  .textTheme
-                                                  .caption),
-                                          SizedBox(width: 8.0),
-                                          InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                var stock =
-                                                int.parse(
-                                                    '${productVarientList[index]
-                                                        .data[productVarientList[index]
-                                                        .selectPos].stock}');
-                                                if (stock >
-                                                    productVarientList[
-                                                    index]
-                                                        .add_qnty) {
-                                                  productVarientList[
-                                                  index]
-                                                      .add_qnty++;
-                                                  addOrMinusProduct(
-                                                      productVarientList[
-                                                      index]
-                                                          .is_id,
-                                                      productVarientList[
-                                                      index]
-                                                          .is_pres,
-                                                      productVarientList[
-                                                      index]
-                                                          .isbasket,
-                                                      productVarientList[
-                                                      index]
-                                                          .product_name,
-                                                      productVarientList[
-                                                      index]
-                                                          .data[productVarientList[index]
-                                                          .selectPos]
-                                                          .unit,
-                                                      double.parse(
-                                                          '${productVarientList[index]
-                                                              .data[productVarientList[index]
-                                                              .selectPos]
-                                                              .price}'),
-                                                      int.parse(
-                                                          '${productVarientList[index]
-                                                              .data[productVarientList[index]
-                                                              .selectPos]
-                                                              .quantity}'),
-                                                      productVarientList[
-                                                      index]
-                                                          .add_qnty,
-                                                      productVarientList[
-                                                      index]
-                                                          .data[productVarientList[index]
-                                                          .selectPos]
-                                                          .varient_image,
-                                                      productVarientList[
-                                                      index]
-                                                          .data[
-                                                      productVarientList[index]
-                                                          .selectPos]
-                                                          .varient_id,
-                                                      productVarientList[
-                                                      index]
-                                                          .data[0].vendor_id);
-                                                } else {
-                                                  // Toast.show(
-                                                  //     "No more stock available!",
-                                                  //     context,
-                                                  //     gravity: Toast
-                                                  //         .BOTTOM);
-                                                }
-                                              });
-                                            },
-                                            child: Icon(
-                                              Icons.add,
-                                              color: kMainColor,
-                                              size: 20.0,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ))
-                                        : Container(
-                                      child: Text(
-                                        'Out off stock',
-                                        style: Theme
-                                            .of(context)
-                                            .textTheme
-                                            .caption!
-                                            .copyWith(
-                                            color: kMainColor,
-                                            fontWeight:
-                                            FontWeight
-                                                .bold),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                          separatorBuilder: (context, index) {
-                            return SizedBox(
-                              height: 5,
-                            );
-                          },
-                        )
-                            : Container(
-                          height: MediaQuery
-                              .of(context)
-                              .size
-                              .height / 2,
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width,
-                          alignment: Alignment.center,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              isFetchList
-                                  ? CircularProgressIndicator()
-                                  : Container(
-                                width: 0.5,
-                              ),
-                              isFetchList
-                                  ? SizedBox(
-                                width: 10,
-                              )
-                                  : Container(
-                                width: 0.5,
-                              ),
-                              Text(
-                                (!isFetchList)
-                                    ? 'No product available for this category'
-                                    : 'Fetching Products..',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                    color: kMainTextColor),
-                              )
-                            ],
-                          ),
-                        )
-                    ),
-                    Positioned(
-                      bottom: 0.0,
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width,
-                      child: Visibility(
-                        visible: isCartCount,
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 20.0),
-                            color: kMainColor,
-                            height: 60.0,
-                            child: Row(
-                              children: <Widget>[
-                                Image.asset(
-                                  'images/icons/ic_cart wt.png',
-                                  height: 19.0,
-                                  width: 18.3,
-                                ),
-                                SizedBox(width: 20.7),
-                                Text(
-                                  '$cartCount items | $currency $totalAmount',
-                                  style: bottomBarTextStyle.copyWith(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                Spacer(),
-                                TextButton(
-                                  onPressed: () => hitViewCart(context),
-                                  child: Text(
-                                    'View Cart',
-                                    style: Theme
-                                        .of(context)
-                                        .textTheme
-                                        .caption!
-                                        .copyWith(
-                                        color: kMainColor,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
+                 child: Padding(padding: EdgeInsets.symmetric(vertical: 20),
+                child:
+                Stack(
+                children: <Widget>[
+                Positioned(
+                top: 0.0,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width,
+                height: isCartCount
+                ? (MediaQuery
+                    .of(context)
+                    .size
+                    .height - 190)
+                    : (MediaQuery
+                    .of(context)
+                    .size
+                    .height - 130),
+                child: (!isFetchList &&
+                productVarientList != null &&
+                productVarientList.length > 0)
+                ? ListView.separated(
+                itemCount: productVarientList.length,
+                itemBuilder: (context, index) {
+                return GestureDetector(
+                onTap: () {
+                Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) {
+                return SingleProductPage(
+                productVarientList[index],
+                currency);
+                })).then((value) {
+                setList(productVarientList);
+                getCartCount();
+                });
+                },
+                behavior: HitTestBehavior.opaque,
+                child: Stack(
+                children: <Widget>[
+                Row(
+                mainAxisAlignment:
+                MainAxisAlignment.start,
+                children: <Widget>[
+                Padding(
+                padding: EdgeInsets.only(
+                left: 20.0,
+                top: 30.0,
+                right: 14.0),
+                child:
+                (productVarientList != null &&
+                productVarientList
+                    .length >
+                0)
+                ? Image.network(
+                imageBaseUrl +
+                productVarientList[
+                index]
+                    .products_image,
+                height: 93.3,
+                width: 93.3,
+                )
+                    : Image(
+                image: AssetImage(
+                'images/logos/logo_user.png'),
+                height: 93.3,
+                width: 93.3,
+                ),
+                ),
+                Expanded(
+                child: Column(
+                crossAxisAlignment:
+                CrossAxisAlignment.start,
+                children: <Widget>[
+                Container(
+                padding: EdgeInsets.only(
+                right: 20),
+                child: Text(
+                productVarientList[
+                index]
+                    .product_name,
+                style:
+                bottomNavigationTextStyle
+                    .copyWith(
+                fontSize:
+                15)),
+                ),
+                SizedBox(
+                height: 8.0,
+                ),
+                Text(
+                '$currency ${(productVarientList[index]
+                    .data.length > 0)
+                ? productVarientList[index]
+                    .data[productVarientList[index]
+                    .selectPos].price
+                    : 0}',
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .caption),
+                SizedBox(
+                height: 20.0,
+                ),
+                ],
+                ),
+                ),
+                ],
+                ),
+                Positioned(
+                left: 120,
+                bottom: 5,
+                child: Container(
+                height: 30.0,
+                padding: EdgeInsets.symmetric(
+                horizontal: 12.0),
+                decoration: BoxDecoration(
+                color: kCardBackgroundColor,
+                borderRadius:
+                BorderRadius.circular(30.0),
+                ),
+                child: (productVarientList[index]
+                    .data !=
+                null &&
+                productVarientList[index]
+                    .data
+                    .length >
+                0)
+                ? DropdownButton<VarientList>(
+                underline: Container(
+                height: 0.0,
+                color:
+                kCardBackgroundColor,
+                ),
+                value: productVarientList[
+                index]
+                    .data[
+                productVarientList[
+                index]
+                    .selectPos],
+                items: productVarientList[
+                index]
+                    .data
+                    .map((e) {
+                return DropdownMenuItem<
+                VarientList>(
+                child: Text(
+                '${e.quantity} ${e.unit}',
+                style:
+                Theme
+                    .of(context)
+                    .textTheme
+                    .caption,
+                ),
+                value: e,
                 );
+                }).toList(),
+                onChanged: (vale) {
+                setState(() {
+                int indexd =
+                productVarientList[
+                index]
+                    .data
+                    .indexOf(vale!);
+                if (indexd != -1) {
+                productVarientList[
+                index]
+                    .selectPos =
+                indexd;
+                DatabaseHelper db =
+                DatabaseHelper
+                    .instance;
+                db
+                    .getVarientCount(
+                int.parse(
+                '${productVarientList[index]
+                    .data[productVarientList[index]
+                    .selectPos]
+                    .varient_id}'))
+                    .then((value) {
+                print(
+                'print t val $value');
+                if (value == null) {
+                setState(() {
+                productVarientList[
+                index]
+                    .add_qnty = 0;
+                });
+                } else {
+                setState(() {
+                productVarientList[
+                index]
+                    .add_qnty =
+                value;
+                isCartCount =
+                true;
+                });
+                }
+                });
+                }
+                });
+                })
+                    : Text(''),
+                ),
+                ),
+                Positioned(
+                height: 30,
+                right: 20.0,
+                bottom: 5,
+                child: (productVarientList[index]
+                    .data !=
+                null &&
+                productVarientList[index]
+                    .data
+                    .length >
+                0 &&
+                int.parse(
+                '${productVarientList[index]
+                    .data[productVarientList[index]
+                    .selectPos].stock}') >
+                0)
+                ? (productVarientList[index]
+                    .add_qnty ==
+                0
+                ? Container(
+                height: 30.0,
+                child: TextButton(
+                child: Text(
+                'Add',
+                style: Theme
+                    .of(
+                context)
+                    .textTheme
+                    .caption!
+                    .copyWith(
+                color:
+                kMainColor,
+                fontWeight:
+                FontWeight
+                    .bold),
+                ),
+
+                onPressed: () {
+                if (restrocart == 1) {
+                print("ALREADY");
+                showMyDialog(context);
+                }
+                else {
+                setState(() {
+                var stock = int.parse(
+                '${productVarientList[index]
+                    .data[productVarientList[index]
+                    .selectPos].stock}');
+                if (stock >
+                productVarientList[
+                index]
+                    .add_qnty) {
+                productVarientList[
+                index]
+                    .add_qnty++;
+                addOrMinusProduct
+                (
+                productVarientList[
+                index]
+                    .is_id,
+                productVarientList[
+                index]
+                    .is_pres,
+                productVarientList[
+                index]
+                    .isbasket,
+
+                productVarientList[
+                index]
+                    .product_name,
+                productVarientList[
+                index]
+                    .data[productVarientList[
+                index]
+                    .selectPos]
+                    .unit,
+                double.parse(
+                '${productVarientList[index]
+                    .data[productVarientList[index]
+                    .selectPos]
+                    .price}'),
+                int.parse(
+                '${productVarientList[index]
+                    .data[productVarientList[index]
+                    .selectPos]
+                    .quantity}'),
+                productVarientList[
+                index]
+                    .add_qnty,
+                productVarientList[
+                index]
+                    .data[productVarientList[
+                index]
+                    .selectPos]
+                    .varient_image,
+                productVarientList[
+                index]
+                    .data[productVarientList[
+                index]
+                    .selectPos]
+                    .varient_id,
+                productVarientList[
+                index]
+                    .data[0].vendor_id
+                );
+                } else {
+                // Toast.show(
+                //     "No more stock available!",
+                //     context,
+                //     gravity: Toast
+                //         .BOTTOM);
+                }
+                });
+                }
+                },
+                ),
+                )
+                    : Container(
+                height: 30.0,
+                padding:
+                EdgeInsets.symmetric(
+                horizontal: 11.0),
+                decoration: BoxDecoration(
+                border: Border.all(
+                color: kMainColor),
+                borderRadius:
+                BorderRadius
+                    .circular(30.0),
+                ),
+                child: Row(
+                children: <Widget>[
+                InkWell(
+                onTap: () {
+                setState(() {
+                productVarientList[
+                index]
+                    .add_qnty--;
+                });
+                addOrMinusProduct(
+                productVarientList[
+                index]
+                    .is_id,
+                productVarientList[
+                index]
+                    .is_pres,
+                productVarientList[
+                index]
+                    .isbasket,
+                productVarientList[
+                index]
+                    .product_name,
+                productVarientList[
+                index]
+                    .data[productVarientList[
+                index]
+                    .selectPos]
+                    .unit,
+                double.parse(
+                '${productVarientList[index]
+                    .data[productVarientList[index]
+                    .selectPos].price}'),
+                int.parse(
+                '${productVarientList[index]
+                    .data[productVarientList[index]
+                    .selectPos]
+                    .quantity}'),
+                productVarientList[
+                index]
+                    .add_qnty,
+                productVarientList[
+                index]
+                    .data[productVarientList[
+                index]
+                    .selectPos]
+                    .varient_image,
+                productVarientList[
+                index]
+                    .data[productVarientList[
+                index]
+                    .selectPos]
+                    .varient_id,
+                productVarientList[
+                index]
+                    .data[0].vendor_id
+                );
+                },
+                child: Icon(
+                Icons.remove,
+                color: kMainColor,
+                size: 20.0,
+                //size: 23.3,
+                ),
+                ),
+                SizedBox(width: 8.0),
+                Text(
+                productVarientList[
+                index]
+                    .add_qnty
+                    .toString(),
+                style: Theme
+                    .of(
+                context)
+                    .textTheme
+                    .caption),
+                SizedBox(width: 8.0),
+                InkWell(
+                onTap: () {
+                setState(() {
+                var stock =
+                int.parse(
+                '${productVarientList[index]
+                    .data[productVarientList[index]
+                    .selectPos].stock}');
+                if (stock >
+                productVarientList[
+                index]
+                    .add_qnty) {
+                productVarientList[
+                index]
+                    .add_qnty++;
+                addOrMinusProduct(
+                productVarientList[
+                index]
+                    .is_id,
+                productVarientList[
+                index]
+                    .is_pres,
+                productVarientList[
+                index]
+                    .isbasket,
+                productVarientList[
+                index]
+                    .product_name,
+                productVarientList[
+                index]
+                    .data[productVarientList[index]
+                    .selectPos]
+                    .unit,
+                double.parse(
+                '${productVarientList[index]
+                    .data[productVarientList[index]
+                    .selectPos]
+                    .price}'),
+                int.parse(
+                '${productVarientList[index]
+                    .data[productVarientList[index]
+                    .selectPos]
+                    .quantity}'),
+                productVarientList[
+                index]
+                    .add_qnty,
+                productVarientList[
+                index]
+                    .data[productVarientList[index]
+                    .selectPos]
+                    .varient_image,
+                productVarientList[
+                index]
+                    .data[
+                productVarientList[index]
+                    .selectPos]
+                    .varient_id,
+                productVarientList[
+                index]
+                    .data[0].vendor_id);
+                } else {
+                // Toast.show(
+                //     "No more stock available!",
+                //     context,
+                //     gravity: Toast
+                //         .BOTTOM);
+                }
+                });
+                },
+                child: Icon(
+                Icons.add,
+                color: kMainColor,
+                size: 20.0,
+                ),
+                ),
+                ],
+                ),
+                ))
+                    : Container(
+                child: Text(
+                'Out off stock',
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .caption!
+                    .copyWith(
+                color: kMainColor,
+                fontWeight:
+                FontWeight
+                    .bold),
+                ),
+                ),
+                ),
+                ],
+                ),
+                );
+                },
+                separatorBuilder: (context, index) {
+                return SizedBox(
+                height: 5,
+                );
+                },
+                )
+                    : Container(
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height / 2,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width,
+                alignment: Alignment.center,
+                child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                isFetchList
+                ? CircularProgressIndicator()
+                    : Container(
+                width: 0.5,
+                ),
+                isFetchList
+                ? SizedBox(
+                width: 10,
+                )
+                    : Container(
+                width: 0.5,
+                ),
+                Text(
+                (!isFetchList)
+                ? 'No product available for this category'
+                    : 'Fetching Products..',
+                style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: kMainTextColor),
+                )
+                ],
+                ),
+                )
+                )],
+                )
+                )
+                ),
+                  ]);
               }).toList(),
             ),
           ),
         ),
+              )
+          ]
+        ),
       ),
+          ])
+      ),
+          Positioned(
+        child: Visibility(
+            visible: isCartCount,
+            child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    color: kMainColor,
+                    height: 60.0,
+                    child: Row(
+                        children: <Widget>[
+                          Image.asset(
+                            'images/icons/ic_cart wt.png',
+                            height: 19.0,
+                            width: 18.3,
+                          ),
+                          SizedBox(width: 20.7),
+                          Text(
+                            '$cartCount items | $currency $totalAmount',
+                            style: bottomBarTextStyle.copyWith(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          Spacer(),
+                          TextButton(
+                            onPressed: () => hitViewCart(context),
+                            child: Text(
+                              'View Cart',
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .caption!
+                                  .copyWith(
+                                  color: kMainColor,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ]
+                    )
+                )
+            )
+        )
+    )
+])
     );
   }
 
