@@ -235,18 +235,12 @@ class _ItemsPageState extends State<ItemsPage>
       child:
       Stack(
         children: <Widget>[
-
-          Container(
-      child :
-          Stack(
-          children: <Widget>[
       DefaultTabController(
         length: tabs.length,
         child:
         Stack(
             children: [
               Container(
-                margin:  EdgeInsets.only(bottom: 50),
                 child: Scaffold(
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(115.0),
@@ -449,15 +443,13 @@ class _ItemsPageState extends State<ItemsPage>
           body:
           DefaultTabController(
             length: tabs.length,
-            child: TabBarView(
+            child:
+            TabBarView(
               controller: tabController,
               children: tabs.map((Tab tab) {
                 return Stack(
                   children: [
                 Container(
-                margin:  EdgeInsets.only(bottom: 50),
-
-                 child: Padding(padding: EdgeInsets.symmetric(vertical: 20),
                 child:
                 Stack(
                 children: <Widget>[
@@ -467,20 +459,26 @@ class _ItemsPageState extends State<ItemsPage>
                     .of(context)
                     .size
                     .width,
+                
                 height: isCartCount
                 ? (MediaQuery
                     .of(context)
                     .size
-                    .height - 190)
+                    .height)
                     : (MediaQuery
                     .of(context)
                     .size
-                    .height - 130),
+                    .height),
                 child: (!isFetchList &&
                 productVarientList != null &&
                 productVarientList.length > 0)
-                ? ListView.separated(
-                itemCount: productVarientList.length,
+                ?
+           ListView.builder(
+             padding: EdgeInsets.only(bottom: 500),
+             physics: const AlwaysScrollableScrollPhysics(), // new
+             controller: new ScrollController(),//
+             // new
+                  itemCount: productVarientList.length,
                 itemBuilder: (context, index) {
                 return GestureDetector(
                 onTap: () {
@@ -495,7 +493,8 @@ class _ItemsPageState extends State<ItemsPage>
                 });
                 },
                 behavior: HitTestBehavior.opaque,
-                child: Stack(
+                child:
+                Stack(
                 children: <Widget>[
                 Row(
                 mainAxisAlignment:
@@ -964,11 +963,6 @@ class _ItemsPageState extends State<ItemsPage>
                 ),
                 );
                 },
-                separatorBuilder: (context, index) {
-                return SizedBox(
-                height: 5,
-                );
-                },
                 )
                     : Container(
                 height: MediaQuery
@@ -1011,61 +1005,56 @@ class _ItemsPageState extends State<ItemsPage>
                 )],
                 )
                 )
-                ),
                   ]);
               }).toList(),
             ),
           ),
         ),
+              ),
+
+              Positioned(
+                  child: Visibility(
+                      visible: isCartCount,
+                      child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child:
+                          GestureDetector(
+    onTap:() { Navigator.pushNamed(
+    context, PageRoutes.viewCart)
+        .then((value) {
+    setList(productVarientList);
+    getCartCount();
+    });},
+                   child: Container(
+                              color: kMainColor,
+                              height: 60.0,
+                              child: Row(
+                                  children: <Widget>[
+                                    Image.asset(
+                                      'images/icons/ic_cart wt.png',
+                                      height: 19.0,
+                                      width: 18.3,
+                                    ),
+                                    SizedBox(width: 20.7),
+                                    DefaultTextStyle(
+                                      style: bottomBarTextStyle.copyWith(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500),
+                                      child: Text(
+                                          '$cartCount items | $currency $totalAmount'
+                                      ),
+                                    )
+                                  ]
+                              )
+                          )
+                      )
+                  )
+              )
               )
           ]
         ),
       ),
-          ])
-      ),
-          Positioned(
-        child: Visibility(
-            visible: isCartCount,
-            child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
-                    color: kMainColor,
-                    height: 60.0,
-                    child: Row(
-                        children: <Widget>[
-                          Image.asset(
-                            'images/icons/ic_cart wt.png',
-                            height: 19.0,
-                            width: 18.3,
-                          ),
-                          SizedBox(width: 20.7),
-                          Text(
-                            '$cartCount items | $currency $totalAmount',
-                            style: bottomBarTextStyle.copyWith(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          Spacer(),
-                          TextButton(
-                            onPressed: () => hitViewCart(context),
-                            child: Text(
-                              'View Cart',
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .caption!
-                                  .copyWith(
-                                  color: kMainColor,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ]
-                    )
-                )
-            )
-        )
-    )
+
 ])
     );
   }
