@@ -105,7 +105,10 @@ class RestaurantState extends State<Restaurant> {
     hitRestaurantService();
   }
 
-  void getCartCount() {
+  Future<void> getCartCount() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("vendor_cat_id", "12");
+    prefs.setString("ui_type", "2");
     DatabaseHelper db = DatabaseHelper.instance;
     db.queryRowCountRest().then((value) {
       setState(() {

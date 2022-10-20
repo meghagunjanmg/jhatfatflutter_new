@@ -335,7 +335,6 @@ class _OtpVerifyState extends State<OtpVerify> {
           codeSent: smsOTPSent,
           timeout: const Duration(seconds: 60),
           verificationCompleted: (AuthCredential phoneAuthCredential) {
-            verifyOtp();
           },
           verificationFailed: (Exception exception) {
             // Navigator.pop(context, exception.message);
