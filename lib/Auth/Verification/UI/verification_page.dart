@@ -54,7 +54,7 @@ class _OtpVerifyState extends State<OtpVerify> {
   final TextEditingController _controller = TextEditingController();
   late FirebaseMessaging messaging;
   bool isDialogShowing = false;
-  dynamic token = 'token';
+  dynamic token = '';
   var showDialogBox = false;
   var verificaitonPin = "";
   late String phoneNo;
@@ -326,16 +326,19 @@ class _OtpVerifyState extends State<OtpVerify> {
       print("** "+verificationId);
     };
     try {
-      await _auth.verifyPhoneNumber(
+      _auth.verifyPhoneNumber(
           phoneNumber: contact,
           codeAutoRetrievalTimeout: (String verId) {
             verificationId = verId;
           },
           codeSent: smsOTPSent,
-          timeout: const Duration(seconds: 60),
+          timeout: const Duration(seconds: 120),
           verificationCompleted: (AuthCredential phoneAuthCredential) {
+
           },
           verificationFailed: (Exception exception) {
+            print("ERROR  "+exception.toString());
+            handleError(exception);
             // Navigator.pop(context, exception.message);
           });
 
@@ -346,7 +349,6 @@ class _OtpVerifyState extends State<OtpVerify> {
 
   //Method for verify otp entered by user
   Future<void> verifyOtp() async {
-
     if (smsOTP == null || smsOTP == '') {
       showAlertDialog(context, 'please enter 6 digit otp');
       return;
@@ -356,14 +358,15 @@ class _OtpVerifyState extends State<OtpVerify> {
         verificationId: verificationId,
         smsCode: smsOTP,
       );
+      print("ERROR**  "+credential.toString());
 
-      await _auth.signInWithCredential(credential);
+      _auth.signInWithCredential(credential);
 
       print(smsOTP);
       hitService(smsOTP, context);
 
     } catch (e) {
-      print(e.toString());
+      print("ERROR***  "+ e.toString());
       handleError(e);
     }
   }

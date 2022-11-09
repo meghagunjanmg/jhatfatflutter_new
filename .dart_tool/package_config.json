@@ -734,6 +734,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "responsive_grid",
+      "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c61/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/responsive_grid-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
       "name": "rxdart",
       "rootUri": "file:///media/megha/043164b3-92b2-484c-a9aa-c1c188a673c61/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.27.5",
       "packageUri": "lib/",
@@ -980,7 +986,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2022-09-27T05:52:28.615696Z",
+  "generated": "2022-11-02T07:03:27.330908Z",
   "generator": "pub",
   "generatorVersion": "2.18.0"
 }
