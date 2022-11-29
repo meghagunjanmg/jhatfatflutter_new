@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -64,6 +65,9 @@ class OrderPageState extends State<OrderPage> {
     setState(() {
       userId =  preferences.getInt('user_id');
     });
+
+    print("userid:  "+userId.toString());
+
     var url = onGoingOrdersUrl;
     Uri myUri = Uri.parse(url);
 
@@ -98,15 +102,17 @@ class OrderPageState extends State<OrderPage> {
                     onGoingOrders[i].cart_id) {
                   print("IF " + onGoingOrders[i].data[j].order_cart_id + " " +
                       onGoingOrders[i].cart_id);
-                  vendor = vendor +","+ onGoingOrders[i].data[j].vendor_name;
+                  if( !vendor.contains(onGoingOrders[i].data[j].vendor_name)) {
+                    vendor = vendor +"\n"+ onGoingOrders[i].data[j].vendor_name;
+                  }
                 }
               }
-
               VendorName.add(vendor);
               vendor = '';
               print("NAME " + i.toString() + " " + vendor);
             }
           }
+          VendorName.toSet().toList();
         }
         if (countFetch == 4) {
           setState(() {
@@ -171,7 +177,9 @@ class OrderPageState extends State<OrderPage> {
                     onGoingOrders[i].cart_id) {
                   print("IF " + onGoingOrders[i].data[j].order_cart_id + " " +
                       onGoingOrders[i].cart_id);
-                  vendor = vendor +","+ onGoingOrders[i].data[j].vendor_name;
+                  if( !vendor.contains(onGoingOrders[i].data[j].vendor_name)) {
+                    vendor = vendor +"\n"+ onGoingOrders[i].data[j].vendor_name;
+                  }
                 }
               }
 
@@ -212,7 +220,7 @@ class OrderPageState extends State<OrderPage> {
     var url = completeOrders;
     Uri myUri = Uri.parse(url);
 
-    http.post(myUri, body: {'user_id': '$userId'}).then((value) {
+    http.post(myUri, body: {'user_id': '$userId'}).then((value) async {
       print('${value.body}');
 
       if (value.statusCode == 200 && value.body != null) {
@@ -240,6 +248,8 @@ class OrderPageState extends State<OrderPage> {
             for (int i = 0; i < onGoingOrders.length; i++) {
               print("MAIN " + onGoingOrders[i].cart_id + " " +
                   onGoingOrders[i].vendor_name);
+              await FirebaseFirestore.instance.collection('location').doc(onGoingOrders[i].cart_id.toString()).delete();
+
               for (int j = 0; j < onGoingOrders[i].data.length; j++) {
                 print("DATA " + onGoingOrders[i].data[j].order_cart_id + " " +
                     onGoingOrders[i].data[j].vendor_name);
@@ -247,7 +257,9 @@ class OrderPageState extends State<OrderPage> {
                     onGoingOrders[i].cart_id) {
                   print("IF " + onGoingOrders[i].data[j].order_cart_id + " " +
                       onGoingOrders[i].cart_id);
-                  vendor = vendor +","+ onGoingOrders[i].data[j].vendor_name;
+                  if( !vendor.contains(onGoingOrders[i].data[j].vendor_name)) {
+                    vendor = vendor +"\n"+ onGoingOrders[i].data[j].vendor_name;
+                  }
                 }
               }
 
@@ -255,6 +267,7 @@ class OrderPageState extends State<OrderPage> {
               vendor = '';
               print("NAME " + i.toString() + " " + vendor);
             }
+
           }
         }
       }
@@ -383,7 +396,7 @@ class OrderPageState extends State<OrderPage> {
     var url = user_completed_orders;
     Uri myUri = Uri.parse(url);
 
-    http.post(myUri, body: {'user_id': '$userId'}).then((value) {
+    http.post(myUri, body: {'user_id': '$userId'}).then((value) async {
       if (value.statusCode == 200 && value.body != null) {
         print('${value.body}');
         if (value.body.contains("[{\"order_details\":\"no orders found\"}]") ||
@@ -397,6 +410,9 @@ class OrderPageState extends State<OrderPage> {
           List<OrderHistoryRestaurant> tagObjs = tagObjsJson
               .map((tagJson) => OrderHistoryRestaurant.fromJson(tagJson))
               .toList();
+          for(int i =0;i<tagObjs.length;i++){
+            await FirebaseFirestore.instance.collection('location').doc(tagObjs[i].cart_id.toString()).delete();
+          }
           if (tagObjs.length > 0) {
             setState(() {
               onRestGoingOrders.clear();
@@ -675,7 +691,9 @@ class OrderPageState extends State<OrderPage> {
     var url = parcel_user_completed_order;
     Uri myUri = Uri.parse(url);
 
-    http.post(myUri, body: {'user_id': '$userId'}).then((value) {
+    print(userId.toString());
+
+    http.post(myUri, body: {'user_id': '$userId'}).then((value) async {
       if (value.statusCode == 200 && value.body != null) {
         print('${value.body}');
         if (value.body.contains("[{\"order_details\":\"no orders found\"}]") ||
@@ -689,6 +707,9 @@ class OrderPageState extends State<OrderPage> {
           List<TodayOrderParcel> tagObjs = tagObjsJson
               .map((tagJson) => TodayOrderParcel.fromJson(tagJson))
               .toList();
+          for(int i =0;i<tagObjs.length;i++){
+            await FirebaseFirestore.instance.collection('location').doc(tagObjs[i].parcelId.toString()).delete();
+          }
           if (tagObjs.length > 0) {
             setState(() {
               onParcelGoingOrders.clear();
@@ -820,7 +841,6 @@ class OrderPageState extends State<OrderPage> {
               color: Colors.transparent,
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height - 157,
-              alignment: Alignment.center,
               child: SingleChildScrollView(
                 primary: true,
                 child: Column(
@@ -974,7 +994,8 @@ class OrderPageState extends State<OrderPage> {
                                                     ),
                                                   ),
                                                   Text(
-                                      VendorName[t],
+                                                  VendorName[t]
+                                      ,
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .caption!

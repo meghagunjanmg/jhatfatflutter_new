@@ -26,15 +26,15 @@ class LocationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SetLocation(lat, lng);
+    return SetLocatio(lat, lng);
   }
 }
 
-class SetLocation extends StatefulWidget {
+class SetLocatio extends StatefulWidget {
   final dynamic lat;
   final dynamic lng;
 
-  SetLocation(this.lat, this.lng);
+  SetLocatio(this.lat, this.lng);
 
   @override
   SetLocationState createState() => SetLocationState(lat, lng);
@@ -42,7 +42,7 @@ class SetLocation extends StatefulWidget {
 
 GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: apiKey);
 
-class SetLocationState extends State<SetLocation> {
+class SetLocationState extends State<SetLocatio> {
   dynamic lat;
   dynamic lng;
   CameraPosition? kGooglePlex;
@@ -59,6 +59,7 @@ class SetLocationState extends State<SetLocation> {
   Completer<GoogleMapController> _controller = Completer();
 
   var isVisible = false;
+  bool button = false;
 
   var currentAddress = '';
 
@@ -70,13 +71,16 @@ class SetLocationState extends State<SetLocation> {
         zoom: 19.151926040649414);
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
+
   }
 
   @override
   void initState() {
     super.initState();
     ////_getLocation();
-
+    setState(() {
+      button = false;
+    });
     getdata();
 
   }
@@ -169,6 +173,7 @@ class SetLocationState extends State<SetLocation> {
           googleMapApiKey: apiKey);
       setState(() {
         currentAddress = data1.address;
+        button = true;
       });
     });
   }
@@ -188,6 +193,10 @@ class SetLocationState extends State<SetLocation> {
     // }).catchError((e) {
     //   print(e);
     // });
+
+    setState(() {
+      button = false;
+    });
 
     final Prediction? p = await PlacesAutocomplete.show(
       context: context,
@@ -378,7 +387,7 @@ class SetLocationState extends State<SetLocation> {
               ],
             ),
           ),
-
+          (button)?
           ElevatedButton(
             style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
@@ -396,7 +405,25 @@ class SetLocationState extends State<SetLocation> {
               style:
               TextStyle(color: kWhiteColor, fontWeight: FontWeight.w400),
             ),
-          ),
+          )
+              :
+             ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                primary: Colors.grey,
+                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                textStyle:TextStyle(color: Colors.black, fontWeight: FontWeight.w400)),
+
+            onPressed: () {
+            },
+            child: Text(
+              'Continue',
+              style:
+              TextStyle(color: Colors.black, fontWeight: FontWeight.w400),
+            ),
+          )
 
         ],
       ),

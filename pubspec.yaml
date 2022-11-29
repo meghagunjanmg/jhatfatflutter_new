@@ -137,6 +137,7 @@ flutter:
     - assets/driving_pin.png
     - assets/friend1.jpg
     - assets/friend2.jpg
+    - assets/map.jpg
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

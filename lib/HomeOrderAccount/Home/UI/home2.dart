@@ -75,6 +75,7 @@ class _HomeState extends State<Home> {
   String subsImage = '';
   String bigImage = '';
   String TopImage = '';
+  String subsenddate = '';
   var lat = 30.3253;
   var lng = 78.0413;
   List<BannerDetails> listImage = [];
@@ -117,7 +118,8 @@ class _HomeState extends State<Home> {
 
   static String id="";
 
-  bool subscription = false;
+  bool subscriptionbanner = true;
+  bool subscriptionStore = false;
 
   @override
   void initState() {
@@ -326,16 +328,14 @@ class _HomeState extends State<Home> {
             children: <Widget>[
               (admins!.surge==1)
                   ?
-              Padding(
-                  padding: EdgeInsets.only(top: 8.0, left: 24.0),
-                  child:
+              Wrap(
+                  children:<Widget>[
                     Text(
                       admins!.surgeMsg.toString(),
                       textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
+                      overflow: TextOverflow.visible,
                       style: TextStyle(fontSize: 16,color: Colors.blue),
-                    )
-
+                    )]
               )
                   :
           Padding(
@@ -347,10 +347,21 @@ class _HomeState extends State<Home> {
                     style: TextStyle(fontSize: 12),
                   )
           ),
-              Padding(
+
+          Container(
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
+            height: 60,
+             alignment: Alignment.center,
+             child:
+             Padding(
                 padding: EdgeInsets.only(top: 8.0, left: 24.0),
-                child: Row(
+                child:
+                Row(
                   children: <Widget>[
+
                     GestureDetector(
                       onTap: ()async {
 
@@ -371,17 +382,37 @@ class _HomeState extends State<Home> {
                         )
                         );
                       },
-                    child: Text(
-                      admins!.topMessage.toString(),
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .bodyText1,
+                    child:
+                    Container(
+                        child:
+                          Stack(
+                            children: <Widget>[
+                              Container(
+                                alignment: Alignment.center,
+                                child: Image.asset(
+                                  'assets/backgg.png',
+                                  fit: BoxFit.fitWidth,
+                                  width: MediaQuery.of(context).size.width * 0.85 ,
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(5),
+                                  width: MediaQuery.of(context).size.width * 0.70,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    admins!.topMessage.toString(),
+                                    maxLines: 2,
+                                    style:  orderMapAppBarTextStyle
+                                        .copyWith(color: Colors.white,fontWeight: FontWeight.w900,fontSize: 15,fontFamily: 'OpenSans'),
+                                  ),)
+                            ],
+                        ),
                     ),
                 ),
           ],
               ),
               ),
+          ),
               SizedBox(
                   height: 20
               ),
@@ -578,7 +609,7 @@ class _HomeState extends State<Home> {
               ),
             ),
 
-              ( !subscription )?
+              (subscriptionbanner)?
               Padding(
                 padding: EdgeInsets.only(top: 5, bottom: 2),
                 child: Builder(
@@ -619,6 +650,8 @@ class _HomeState extends State<Home> {
 
                 ),
               )        :
+                  Container(),
+              (subscriptionStore)?
               Padding(
                 padding: EdgeInsets.only(top: 5, bottom: 2),
                 child:
@@ -630,6 +663,17 @@ class _HomeState extends State<Home> {
       child:
       Column(
       children:[
+        (subsenddate.isNotEmpty)?
+            Align(
+              alignment: Alignment.centerLeft,
+      child: Padding(
+      padding: EdgeInsets.all(10),
+                  child:Text("Your Subscription ends on "+subsenddate,style: TextStyle(fontSize: 18,color: kMainColor,fontWeight: FontWeight.bold),),
+      )):
+        Padding(
+          padding: EdgeInsets.only(top: 8.0, left: 24.0,right: 24.0),
+          child:Text(""),
+        ),
       Padding(
       padding: EdgeInsets.only(top: 8.0, left: 24.0,right: 24.0),
                   child:
@@ -690,7 +734,10 @@ class _HomeState extends State<Home> {
         ]
     )
     ),
-    ])),
+    ]))
+              :
+                  Container(),
+
               Visibility(
                 visible: (!isFetch && listImage.length == 0) ? false : true,
                 child: Padding(
@@ -1165,25 +1212,24 @@ class _HomeState extends State<Home> {
 
   void getData() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-
     try {
       setState(() {
             cityName = pref.getString("addr")!;
             lat = double.parse(pref.getString("lat")!);
             lng = double.parse(pref.getString("lng")!);
        });
+      calladminsetting();
+
       print("HOME_ORDER_HOME"+lat.toString()+lng.toString());
     } catch (e) {
       print(e);
     }
 
     if(pref.getString("lat")==null || pref.getString("lat").toString().isEmpty)
-{
-  _getLocation(context);
-}
+        {
+          _getLocation(context);
+        }
 
-
-    calladminsetting();
 
   }
 
@@ -1320,15 +1366,40 @@ class _HomeState extends State<Home> {
     var jsonData = jsonDecode(value.body.toString());
     if (jsonData['status'] == "1") {
       setState(() {
-        subscription = true;
+         subscriptionbanner = false;
+         subscriptionStore = true;
         callSubStore();
       });
       }
-      else {
+      else if(jsonData['status'] == "2") {
       setState(() {
-        subscription = false;
+        subscriptionbanner = false;
+        subscriptionStore = false;
+        subsenddate = '';
+        ///callSubStore();
       });
       }
+      else{
+      setState(() {
+        subscriptionbanner = true;
+        subscriptionStore = false;
+        subsenddate = '';
+        ///callSubStore();
+      });
+    }
+
+      if(jsonData['enddate']!=null || jsonData['enddate'].toString().isNotEmpty){
+        setState(() {
+          subsenddate=jsonData['enddate'].toString();
+        });
+      }
+
+    if(jsonData['allowmultishop']!=null || jsonData['allowmultishop'].toString().isNotEmpty){
+      prefs.setString("allowmultishop", jsonData['allowmultishop'].toString());
+    }
+    else{
+      prefs.setString("allowmultishop", "0");
+    }
     }
   void callSubStore() async {
     var url = subsstore;
@@ -1353,9 +1424,9 @@ class _HomeState extends State<Home> {
     var value = await http.get(myUri);
     var jsonData = jsonDecode(value.body.toString());
     if (jsonData['status'] == "1") {
-        admins = Adminsetting.fromJson(jsonData['data']);
-        print("ADMIN RES: " + admins!.cityadminId.toString());
-      if(admins!.status==1) {
+      admins = Adminsetting.fromJson(jsonData['data']);
+      print("ADMIN RES: " + admins!.cityadminId.toString());
+      if (admins!.status == 1) {
         FirebaseMessaging messaging = FirebaseMessaging.instance;
         messaging.getToken().then((value) {
           print(value);
@@ -1366,9 +1437,9 @@ class _HomeState extends State<Home> {
         hitBannerUrl();
         pickbanner();
         hitRestaurantService();
-        location.changeSettings(
-            interval: 300, accuracy: loc.LocationAccuracy.high);
-        location.enableBackgroundMode(enable: true);
+        // location.changeSettings(
+        //     interval: 300, accuracy: loc.LocationAccuracy.high);
+        // location.enableBackgroundMode(enable: true);
       }
       else {
         Navigator.pushAndRemoveUntil(
@@ -1378,22 +1449,6 @@ class _HomeState extends State<Home> {
                 (Route<dynamic> route) => false);
       }
     }
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-    messaging.getToken().then((value) {
-      print(value);
-    });
-
-
-    getCurrency();
-    Topbanner();
-    hitService(lat.toString(), lng.toString());
-    hitBannerUrl();
-    pickbanner();
-    hitRestaurantService();
-    location.changeSettings(
-        interval: 300, accuracy: loc.LocationAccuracy.high);
-    location.enableBackgroundMode(enable: true);
-
   }
 }
 

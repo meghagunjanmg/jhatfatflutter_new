@@ -34,8 +34,10 @@ class SingleProductState extends State<SingleProductPage> {
   var cartCount = 0;
 
   int restrocart=0;
+  List<VarientList> productVarint = [];
 
   SingleProductState(List<VarientList> productVarintList) {
+    productVarint = productVarintList;
     setList(productVarintList);
   }
 
@@ -57,6 +59,14 @@ class SingleProductState extends State<SingleProductPage> {
       });
     }
   }
+
+  void setList2(List<VarientList> tagObjs) {
+    for (int i = 0; i < tagObjs.length; i++) {
+          setState(() {
+            tagObjs[i].add_qnty = 0;
+          });
+        }
+    }
 
   @override
   void initState() {
@@ -326,10 +336,19 @@ class SingleProductState extends State<SingleProductPage> {
                                               height: 8.0,
                                             ),
                                             Text(
-                                                '${widget.currency} ${widget.productVarintList[index].price}',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .caption),
+                                                (widget.productVarintList[index].toString().length < 0||widget.productVarintList[index].strick_price
+                                                    <=
+                                                    widget.productVarintList[index].price ||
+                                                    widget.productVarintList[index].strick_price==null )
+                                                    ? ''
+                                                    :'${widget.currency}  ${widget.productVarintList[index].strick_price}',
+
+                                                style: TextStyle(decoration: TextDecoration.lineThrough)),
+                                            Text(
+    '${widget.currency} ${widget.productVarintList[index].price}',
+                                              //style: TextStyle(decoration: TextDecoration.lineThrough)
+                                            ),
+
                                             SizedBox(
                                               height: 20.0,
                                             ),
@@ -635,29 +654,52 @@ class SingleProductState extends State<SingleProductPage> {
         DatabaseHelper.addedBasket: 0,
         DatabaseHelper.varientId: int.parse('${varient_id}')
       };
+      bool allow = (prefs.getString("allowmultishop").toString()!="1") ;
       if (value == 0) {
-        db.getCountVendor()
-            .then((value) {
-          if (value != null && value < 3) {
-            db.insert(vae);
+        if(allow) {
+          db.getVendorcount()
+              .then((value) {
+            print("VENDORCOUNT"+value.toString());
+            if (value != null && value < 3) {
+              db.insert(vae);
+              getCartCount();
+            }
+            else {
+              showMyDialog2(context);
+              for (int i = 0; i < widget.productVarintList.length; i++) {
+                if(widget.productVarintList[i].varient_id==varient_id) {
+                  setState(() {
+                    widget.productVarintList[i].add_qnty = 0;
+                  });
+                }
+              }
+            }
           }
-          else {
-            showMyDialog2(context);
-          }
-        });
-      } else {
+          );
+        }
+        else{
+          db.insert(vae);
+          getCartCount();
+        }
+      }
+
+      else {
         if (itemCount == 0) {
           db.delete(int.parse('${varient_id}'));
+          getCartCount();
         } else {
           db.updateData(vae, int.parse('${varient_id}')).then((vay) {
             print('vay - $vay');
+            getCartCount();
           });
         }
       }
-      getCartCount();
+    }).catchError((e) {
+      print(e);
     });
   }
 }
+
 
 
 class ProductDescription extends StatelessWidget {

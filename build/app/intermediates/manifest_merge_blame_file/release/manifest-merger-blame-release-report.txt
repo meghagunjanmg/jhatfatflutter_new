@@ -1,8 +1,8 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="com.jhatfat"
-4    android:versionCode="22"
-5    android:versionName="22.0" >
+4    android:versionCode="24"
+5    android:versionName="24.0" >
 6
 7    <uses-sdk
 8        android:minSdkVersion="21"
