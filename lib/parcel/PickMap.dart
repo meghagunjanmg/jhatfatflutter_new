@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +20,8 @@ import 'package:jhatfat/Themes/colors.dart';
 import 'package:jhatfat/Themes/constantfile.dart';
 import 'package:jhatfat/bean/latlng.dart';
 
+import '../baseurlp/baseurl.dart';
+
 class PickMap extends StatelessWidget {
   final dynamic lat;
   final dynamic lng;
@@ -26,15 +30,15 @@ class PickMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SetLocation(lat, lng);
+    return SetLocationss(lat, lng);
   }
 }
 
-class SetLocation extends StatefulWidget {
+class SetLocationss extends StatefulWidget {
   final dynamic lat;
   final dynamic lng;
 
-  SetLocation(this.lat, this.lng);
+  SetLocationss(this.lat, this.lng);
 
   @override
   SetLocationState createState() => SetLocationState(lat, lng);
@@ -42,7 +46,7 @@ class SetLocation extends StatefulWidget {
 
 GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: apiKey);
 
-class SetLocationState extends State<SetLocation> {
+class SetLocationState extends State<SetLocationss> {
   dynamic lat;
   dynamic lng;
   CameraPosition? kGooglePlex;
@@ -65,10 +69,8 @@ class SetLocationState extends State<SetLocation> {
 
   Future<void> _goToTheLake(lat, lng) async {
     final CameraPosition _kLake = CameraPosition(
-        bearing: 192.8334901395799,
         target: LatLng(lat, lng),
-        tilt: 59.440717697143555,
-        zoom: 19.151926040649414);
+        zoom: 14.151926040649414);
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
@@ -112,8 +114,6 @@ class SetLocationState extends State<SetLocation> {
         Timer(Duration(seconds: 5), () async {
           double lat = position.latitude;
           double lng = position.longitude;
-          prefs.setString("lat", lat.toStringAsFixed(8));
-          prefs.setString("lng", lng.toStringAsFixed(8));
           GeoData data = await Geocoder2.getDataFromCoordinates(
               latitude: lat,
               longitude: lng,
@@ -163,9 +163,6 @@ class SetLocationState extends State<SetLocation> {
     Timer(Duration(seconds: 1), () async {
       lat = data.latitude;
       lng = data.longitude;
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString("lat", data.latitude.toStringAsFixed(8));
-      prefs.setString("lng", data.longitude.toStringAsFixed(8));
       GeoData data1 = await Geocoder2.getDataFromCoordinates(
           latitude: lat,
           longitude: lng,
@@ -398,8 +395,8 @@ class SetLocationState extends State<SetLocation> {
                 textStyle:TextStyle(color: kWhiteColor, fontWeight: FontWeight.w400)),
 
             onPressed: () {
-              setData();
-              Navigator.pop(context);
+              CheckLocation(lat,lng);
+
             },
             child: Text(
               'Continue',
@@ -445,6 +442,41 @@ class SetLocationState extends State<SetLocation> {
 
   void getMapLoc() async {
     _getCameraMoveLocation(LatLng(lat, lng));
+  }
+
+  void CheckLocation(lat, lng) {
+    var url = parcel_check_location;
+    Uri myUri = Uri.parse(url);
+    var client = http.Client();
+    client.post(myUri, body: {'lat': lat.toString(),'lng':lng.toString()})
+        .then((value) {
+      if (value.statusCode == 200) {
+        var jsonData = jsonDecode(value.body);
+        if (jsonData['status'] == 1) {
+          setData();
+          Navigator.pop(context);
+        }
+        else{
+          dailog(jsonData['message']);
+        }
+      }}).catchError((e) {
+      print(e);
+      });
+  }
+  Future<bool> dailog(message) async {
+    return (await showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text('Notice'),
+        content: new Text(message),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: new Text('OK'),
+          ),
+        ],
+      ),
+    )) ?? false;
   }
 }
 
