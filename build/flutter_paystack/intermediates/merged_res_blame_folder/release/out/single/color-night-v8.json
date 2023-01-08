@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/color-night-v8/material_timepicker_clockface.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/761820c4e0eefc7de03e7c1fd0be13ee/transformed/material-1.4.0-alpha01/res/color-night-v8/material_timepicker_clockface.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/color-night-v8/material_timepicker_button_stroke.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/761820c4e0eefc7de03e7c1fd0be13ee/transformed/material-1.4.0-alpha01/res/color-night-v8/material_timepicker_button_stroke.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/color-night-v8/material_timepicker_modebutton_tint.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/761820c4e0eefc7de03e7c1fd0be13ee/transformed/material-1.4.0-alpha01/res/color-night-v8/material_timepicker_modebutton_tint.xml"
+    }
+]

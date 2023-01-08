@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/fluttertoast/intermediates/merged_res/release/drawable/notification_bg_low.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/aa701b47cec244085d46a1a42fcc7fb9/transformed/core-1.6.0/res/drawable/notification_bg_low.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/fluttertoast/intermediates/merged_res/release/drawable/corner.xml",
+        "source": "/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c61/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/fluttertoast-8.0.9/android/src/main/res/drawable/corner.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/fluttertoast/intermediates/merged_res/release/drawable/toast_bg.xml",
+        "source": "/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c61/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/fluttertoast-8.0.9/android/src/main/res/drawable/toast_bg.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/fluttertoast/intermediates/merged_res/release/drawable/notification_bg.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/aa701b47cec244085d46a1a42fcc7fb9/transformed/core-1.6.0/res/drawable/notification_bg.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/fluttertoast/intermediates/merged_res/release/drawable/notification_icon_background.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/aa701b47cec244085d46a1a42fcc7fb9/transformed/core-1.6.0/res/drawable/notification_icon_background.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/fluttertoast/intermediates/merged_res/release/drawable/notification_tile_bg.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/aa701b47cec244085d46a1a42fcc7fb9/transformed/core-1.6.0/res/drawable/notification_tile_bg.xml"
+    }
+]

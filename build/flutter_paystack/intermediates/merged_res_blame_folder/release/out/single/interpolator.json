@@ -1,0 +1,46 @@
+[
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/interpolator/btn_radio_to_on_mtrl_animation_interpolator_0.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/res/interpolator/btn_radio_to_on_mtrl_animation_interpolator_0.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/interpolator/mtrl_fast_out_linear_in.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/761820c4e0eefc7de03e7c1fd0be13ee/transformed/material-1.4.0-alpha01/res/interpolator/mtrl_fast_out_linear_in.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/interpolator/mtrl_fast_out_slow_in.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/761820c4e0eefc7de03e7c1fd0be13ee/transformed/material-1.4.0-alpha01/res/interpolator/mtrl_fast_out_slow_in.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/interpolator/mtrl_linear_out_slow_in.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/761820c4e0eefc7de03e7c1fd0be13ee/transformed/material-1.4.0-alpha01/res/interpolator/mtrl_linear_out_slow_in.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/interpolator/btn_checkbox_unchecked_mtrl_animation_interpolator_0.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/res/interpolator/btn_checkbox_unchecked_mtrl_animation_interpolator_0.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/interpolator/fast_out_slow_in.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/res/interpolator/fast_out_slow_in.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/interpolator/mtrl_linear.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/761820c4e0eefc7de03e7c1fd0be13ee/transformed/material-1.4.0-alpha01/res/interpolator/mtrl_linear.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/interpolator/btn_checkbox_unchecked_mtrl_animation_interpolator_1.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/res/interpolator/btn_checkbox_unchecked_mtrl_animation_interpolator_1.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/interpolator/btn_checkbox_checked_mtrl_animation_interpolator_0.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/res/interpolator/btn_checkbox_checked_mtrl_animation_interpolator_0.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/interpolator/btn_radio_to_off_mtrl_animation_interpolator_0.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/res/interpolator/btn_radio_to_off_mtrl_animation_interpolator_0.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/interpolator/btn_checkbox_checked_mtrl_animation_interpolator_1.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/res/interpolator/btn_checkbox_checked_mtrl_animation_interpolator_1.xml"
+    }
+]

@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "/home/megha/Desktop/jhatfatflutter/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-ldrtl-v17/values-ldrtl-v17.xml",
+            "map": [
+                {
+                    "source": "/home/megha/.gradle/caches/transforms-3/761820c4e0eefc7de03e7c1fd0be13ee/transformed/material-1.4.0-alpha01/res/values-ldrtl-v17/values-ldrtl-v17.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,191",
+                        "endColumns": "135,140",
+                        "endOffsets": "186,327"
+                    }
+                }
+            ]
+        }
+    ]
+}

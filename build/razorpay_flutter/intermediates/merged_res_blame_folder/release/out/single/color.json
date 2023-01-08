@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/razorpay_flutter/intermediates/merged_res/release/color/common_google_signin_btn_text_dark.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/9ec004ea7c193d27af7cb282c873ebc8/transformed/jetified-play-services-base-17.5.0/res/color/common_google_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/razorpay_flutter/intermediates/merged_res/release/color/wallet_secondary_text_holo_dark.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/6acb413f356befd67cdcd358c579f814/transformed/jetified-play-services-wallet-18.1.3/res/color/wallet_secondary_text_holo_dark.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/razorpay_flutter/intermediates/merged_res/release/color/wallet_primary_text_holo_light.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/6acb413f356befd67cdcd358c579f814/transformed/jetified-play-services-wallet-18.1.3/res/color/wallet_primary_text_holo_light.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/razorpay_flutter/intermediates/merged_res/release/color/common_google_signin_btn_tint.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/9ec004ea7c193d27af7cb282c873ebc8/transformed/jetified-play-services-base-17.5.0/res/color/common_google_signin_btn_tint.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/razorpay_flutter/intermediates/merged_res/release/color/common_google_signin_btn_text_light.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/9ec004ea7c193d27af7cb282c873ebc8/transformed/jetified-play-services-base-17.5.0/res/color/common_google_signin_btn_text_light.xml"
+    }
+]

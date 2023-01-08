@@ -1,0 +1,62 @@
+[
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_res/release/layout/notification_action.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/aa701b47cec244085d46a1a42fcc7fb9/transformed/core-1.6.0/res/layout/notification_action.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_res/release/layout/notification_template_big_media.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/7ba4e02eebf1c5c3cf0304c3d90bcbb5/transformed/media-1.1.0/res/layout/notification_template_big_media.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_res/release/layout/notification_template_media.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/7ba4e02eebf1c5c3cf0304c3d90bcbb5/transformed/media-1.1.0/res/layout/notification_template_media.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_res/release/layout/notification_template_media_custom.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/7ba4e02eebf1c5c3cf0304c3d90bcbb5/transformed/media-1.1.0/res/layout/notification_template_media_custom.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_res/release/layout/notification_template_icon_group.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/aa701b47cec244085d46a1a42fcc7fb9/transformed/core-1.6.0/res/layout/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_res/release/layout/notification_media_action.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/7ba4e02eebf1c5c3cf0304c3d90bcbb5/transformed/media-1.1.0/res/layout/notification_media_action.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_res/release/layout/notification_action_tombstone.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/aa701b47cec244085d46a1a42fcc7fb9/transformed/core-1.6.0/res/layout/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_res/release/layout/notification_media_cancel_action.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/7ba4e02eebf1c5c3cf0304c3d90bcbb5/transformed/media-1.1.0/res/layout/notification_media_cancel_action.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_res/release/layout/custom_dialog.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/aa701b47cec244085d46a1a42fcc7fb9/transformed/core-1.6.0/res/layout/custom_dialog.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_res/release/layout/notification_template_part_time.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/aa701b47cec244085d46a1a42fcc7fb9/transformed/core-1.6.0/res/layout/notification_template_part_time.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_res/release/layout/notification_template_big_media_narrow.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/7ba4e02eebf1c5c3cf0304c3d90bcbb5/transformed/media-1.1.0/res/layout/notification_template_big_media_narrow.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_res/release/layout/notification_template_lines_media.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/7ba4e02eebf1c5c3cf0304c3d90bcbb5/transformed/media-1.1.0/res/layout/notification_template_lines_media.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_res/release/layout/notification_template_big_media_narrow_custom.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/7ba4e02eebf1c5c3cf0304c3d90bcbb5/transformed/media-1.1.0/res/layout/notification_template_big_media_narrow_custom.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_res/release/layout/notification_template_part_chronometer.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/aa701b47cec244085d46a1a42fcc7fb9/transformed/core-1.6.0/res/layout/notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_local_notifications/intermediates/merged_res/release/layout/notification_template_big_media_custom.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/7ba4e02eebf1c5c3cf0304c3d90bcbb5/transformed/media-1.1.0/res/layout/notification_template_big_media_custom.xml"
+    }
+]

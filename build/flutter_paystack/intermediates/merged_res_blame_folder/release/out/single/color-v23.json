@@ -1,0 +1,38 @@
+[
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/color-v23/abc_btn_colored_borderless_text_material.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/res/color-v23/abc_btn_colored_borderless_text_material.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/color-v23/abc_tint_btn_checkable.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/res/color-v23/abc_tint_btn_checkable.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/color-v23/abc_tint_switch_track.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/res/color-v23/abc_tint_switch_track.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/color-v23/abc_btn_colored_text_material.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/res/color-v23/abc_btn_colored_text_material.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/color-v23/abc_tint_edittext.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/res/color-v23/abc_tint_edittext.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/color-v23/abc_color_highlight_material.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/res/color-v23/abc_color_highlight_material.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/color-v23/abc_tint_default.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/res/color-v23/abc_tint_default.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/color-v23/abc_tint_spinner.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/res/color-v23/abc_tint_spinner.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/color-v23/abc_tint_seek_thumb.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/c0f3f20b388f4fd17719d5b4717873f3/transformed/appcompat-1.2.0/res/color-v23/abc_tint_seek_thumb.xml"
+    }
+]

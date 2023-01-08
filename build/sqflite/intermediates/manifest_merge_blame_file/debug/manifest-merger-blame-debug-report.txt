@@ -1,0 +1,11 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.tekartik.sqflite" >
+4
+5    <uses-sdk
+6        android:minSdkVersion="16"
+6-->/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c61/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/sqflite-2.1.0/android/src/main/AndroidManifest.xml
+7        android:targetSdkVersion="16" />
+7-->/media/megha/043164b3-92b2-484c-a9aa-c1c188a673c61/Softwares/flutter_linux_3.3.0-stable/flutter/.pub-cache/hosted/pub.dartlang.org/sqflite-2.1.0/android/src/main/AndroidManifest.xml
+8
+9</manifest>

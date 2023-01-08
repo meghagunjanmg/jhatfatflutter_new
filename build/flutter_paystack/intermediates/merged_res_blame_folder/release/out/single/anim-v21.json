@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/anim-v21/design_bottom_sheet_slide_in.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/761820c4e0eefc7de03e7c1fd0be13ee/transformed/material-1.4.0-alpha01/res/anim-v21/design_bottom_sheet_slide_in.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/anim-v21/mtrl_bottom_sheet_slide_out.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/761820c4e0eefc7de03e7c1fd0be13ee/transformed/material-1.4.0-alpha01/res/anim-v21/mtrl_bottom_sheet_slide_out.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/anim-v21/design_bottom_sheet_slide_out.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/761820c4e0eefc7de03e7c1fd0be13ee/transformed/material-1.4.0-alpha01/res/anim-v21/design_bottom_sheet_slide_out.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/flutter_paystack/intermediates/merged_res/release/anim-v21/mtrl_bottom_sheet_slide_in.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/761820c4e0eefc7de03e7c1fd0be13ee/transformed/material-1.4.0-alpha01/res/anim-v21/mtrl_bottom_sheet_slide_in.xml"
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/razorpay_flutter/intermediates/merged_res/release/drawable-watch-v20/common_google_signin_btn_text_light_normal.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/364fc305d144bf7e28bcc1b4f448958e/transformed/jetified-play-services-auth-17.0.0/res/drawable-watch-v20/common_google_signin_btn_text_light_normal.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/razorpay_flutter/intermediates/merged_res/release/drawable-watch-v20/common_google_signin_btn_text_disabled.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/364fc305d144bf7e28bcc1b4f448958e/transformed/jetified-play-services-auth-17.0.0/res/drawable-watch-v20/common_google_signin_btn_text_disabled.xml"
+    },
+    {
+        "merged": "/home/megha/Desktop/jhatfatflutter/build/razorpay_flutter/intermediates/merged_res/release/drawable-watch-v20/common_google_signin_btn_text_dark_normal.xml",
+        "source": "/home/megha/.gradle/caches/transforms-3/364fc305d144bf7e28bcc1b4f448958e/transformed/jetified-play-services-auth-17.0.0/res/drawable-watch-v20/common_google_signin_btn_text_dark_normal.xml"
+    }
+]
