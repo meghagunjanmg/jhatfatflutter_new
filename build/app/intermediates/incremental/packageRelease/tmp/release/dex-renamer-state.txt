@@ -1,4 +1,4 @@
-#Sat Jan 07 22:44:02 IST 2023
+#Sat Jan 14 16:23:08 IST 2023
 base.0=/home/megha/Desktop/jhatfatflutter/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
 renamed.0=classes.dex
 path.0=classes.dex
