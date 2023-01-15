@@ -91,7 +91,6 @@ class _OtpVerifyState extends State<OtpVerify> {
     contact = pref.getString("user_phone")!;
 
     print(contact);
-
     generateOtp('+91$contact');
   }
   @override
@@ -353,12 +352,6 @@ class _OtpVerifyState extends State<OtpVerify> {
     if (smsOTP == null || smsOTP == '') {
       showAlertDialog(context, 'please enter 6 digit otp');
       return;
-    }
-
-    if(Platform.isIOS) {
-      if (smsOTP == "123456") {
-        hitService(smsOTP, context);
-      }
     }
 
     try {
